@@ -88,7 +88,7 @@ map <leader>s diw"0P
 map <leader>x "-Pldw
 
 " Easymotion
-map <Space> <Plug>(easymotion-bd-w)
+map <Space> <Plug>(easymotion-bd-f)
 "use for case insensitive:  let g:EasyMotion_smartcase = 1
 
 " change dict.get to direct access

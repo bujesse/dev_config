@@ -71,6 +71,7 @@ source /usr/local/bin/virtualenvwrapper.sh
 
 # Python stuff
 alias python=python3
+alias pip=pip3
 VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
 
 # Aliases go here
@@ -89,3 +90,8 @@ function venv() {
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
