@@ -1,95 +1,267 @@
-" Vundle
-set nocompatible              " be iMproved, required
-filetype off                  " required
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'easymotion/vim-easymotion'
-call vundle#end()
-filetype plugin indent on
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append '!' to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append '!' to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append '!' to auto-approve removal
+"===========================================================
+" SETTINGS
+"===========================================================
 
-" vim-airline
-let g:airline_theme='wombat'
+" Automatically install vim-plug and run PlugInstall if vim-plug is not found.
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" Basic configs
+call plug#begin('~/.vim/bundle')
+" tpope
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish'  " crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
+Plug 'tpope/vim-unimpaired'  " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
+Plug 'tpope/vim-commentary'  " gc to toggle comments
+
+" files/git/searching
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+Plug 'mhinz/vim-grepper'
+
+" text editing/navigating
+Plug 'tmsvg/pear-tree'
+Plug 'nelstrom/vim-visual-star-search'
+Plug 'michaeljsmith/vim-indent-object'  " vii - visually select inside code block using current indentation; viI - include trailing line
+Plug 'easymotion/vim-easymotion'
+
+" language/autcocomplete/linting/fixing
+Plug 'sheerun/vim-polyglot'
+Plug 'natebosch/vim-lsc'
+Plug 'ajh17/VimCompletesMe'
+Plug 'dense-analysis/ale'
+
+" ui
+" Plug 'bluz71/vim-moonfly-colors'
+Plug 'morhetz/gruvbox'
+Plug 'vim-airline/vim-airline'
+call plug#end()
+
+" colorscheme moonfly
+colorscheme gruvbox
+
+
+" === BASIC CONFIGS ===
+"
+" Hints:    https://bluz71.github.io/2018/03/12/vim-hints.html
+" Tips:     https://bluz71.github.io/2017/05/15/vim-tips-tricks.html
+" Plugins:  https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html
+" Mappings: https://bluz71.github.io/2017/06/14/a-few-vim-tmux-mappings.html
+
+
+" Enable syntax highlighting.
+syntax on
+
 let mapleader=","
 set backspace=indent,eol,start
-syntax on
+set completeopt=menu,menuone,noinsert,noselect
+set hidden            " Switch to another buffer without writing or abandoning changes
+set history=200       " Keep 200 changes of undo history
+set hlsearch
+set gdefault          " Always do global substitutes
+set ignorecase
+set incsearch
+set infercase         " Smart casing when completing
+set nojoinspaces      " No to double-spaces when joining lines
+set nofixendofline
+set noshowmatch       " No jumping jumping cursors when matching pairs
+set noswapfile        " No backup files
 set scrolloff=2
+set showcmd
+set showmatch
+set showmode
+set smartcase
+set tabstop=4 shiftwidth=4 expandtab
+set termguicolors     " Enable 24-bit color support for terminal Vim
+set timeoutlen=1000
+set ttimeoutlen=10
+set ttyfast
+set updatetime=300
+" Set the persistent undo directory on temporary private fast storage.
+let s:undoDir="/tmp/.undodir_" . $USER
+if !isdirectory(s:undoDir)
+    call mkdir(s:undoDir, "", 0700)
+endif
+let &undodir=s:undoDir
+set undofile          " Maintain undo history
+map <leader>/ :noh<CR>
+map <leader>c :ccl<CR>
 
-" Relative numbering and toggle
-set number relativenumber
-map <leader>r :set rnu!<CR>
+" Make timeout longer for leader
+nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
+autocmd CursorMoved * :set timeoutlen=1000
 
-" Move up/down editor lines
-" nnoremap j gj
-" nnoremap k gk
+" display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
+nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
-" Center screen after High/Low commands
 nnoremap L Lzz
 nnoremap H Hzz
 
-" Allow HIdden buffers
-set hidden
+imap jk <Esc>
+imap kj <Esc>
 
-" Rendering
-set ttyfast
-
-" Status bar
-set laststatus=2
-
-" Last line
-set showmode
-set showcmd
-
-" Searching
-" nnoremap / /\v
-" vnoremap / /\v
-set hlsearch
-hi Search ctermbg=DarkBlue
-hi Search ctermfg=Black
-set incsearch
-set ignorecase
-set smartcase
-set showmatch
-map <leader>/ :noh<enter>
+highlight Visual cterm=NONE ctermfg=NONE
 
 " Visualize tabs and newlines
 set listchars=tab:▸\ ,eol:¬
-" Uncomment this to enable by default:
-" set list " To enable by default
-" Or use your leader key + l to toggle on/off
-map <leader>l :set list!<CR> " Toggle tabs and EOL
+map <leader>l :set list!<CR>
 
-" Tabbing
-set tabstop=4 shiftwidth=4 expandtab
+" Relative numbering and toggle
+set number relativenumber
+map <leader>r :set rnu!<CR>  
 
-" Remap ESC (insert and visual modes)
-imap jk <Esc>
-imap kj <Esc>
-vmap jk <Esc>
-vmap kj <Esc>
 
-" Timeout for escape characters (important for remaping ESC)
-set timeoutlen=125
+" === PLUGIN CONFIG ===
 
-" Replace word with last yank
-map <leader>s diw"0P
 
-" Replace word with last cut
-map <leader>x "-Pldw
+" ALE
+let g:ale_linters = {
+\  'javascript': ['eslint'],
+\  'python':     ['flake8'],
+\  'css':        ['csslint'],
+\  'scss':       ['sasslint'],
+\  'json':       ['jsonlint'],
+\  'yaml':       ['yamllint']
+\}
+let g:ale_fixers = {
+\  'python':     ['autopep8'],
+\  'javascript': ['eslint'],
+\  'css':        ['prettier'],
+\  'scss':       ['prettier'],
+\  'json':       ['prettier'],
+\  'yml':        ['prettier']
+\}
+let g:ale_linters_explicit = 1
+let g:ale_open_list = 1
+" highlight ALEErrorSign ctermbg=NONE ctermfg=red
+" highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+nmap <Leader>af <Plug>(ale_fix)
+nmap <Leader>al <Plug>(ale_toggle)
+let g:ale_type_map = {'flake8': {'ES': 'WS'}}
+let g:ale_python_flake8_options="--ignore=E501,W391"
+
+" vim-grepper
+let g:grepper = {}
+let g:grepper.tools = ["rg"]
+let g:grepper.searchreg = 0
+let g:grepper.highlight = 0
+runtime autoload/grepper.vim
+" Customize regex
+nnoremap <Leader>f :GrepperRg<Space>-i<Space>""<Left>
+nnoremap gs :Grepper -cword -noprompt<CR>
+xmap gs <Plug>(GrepperOperator)
+
+" vim-lsc
+" https://github.com/natebosch/vim-lsc/wiki/Language-Servers
+let g:lsc_server_commands = {
+ \  'python': {
+ \    'command': 'pyls',
+ \    'log_level': -1,
+ \    'suppress_stderr': v:true,
+ \  },
+ \  'javascript': {
+ \    'command': 'typescript-language-server --stdio',
+ \    'log_level': -1,
+ \    'suppress_stderr': v:true,
+ \  }
+ \}
+let g:lsc_auto_map = {
+ \  'GoToDefinition': 'gd',
+ \  'FindReferences': 'gr',
+ \  'Rename': 'gR',
+ \  'ShowHover': 'gh',
+ \  'FindCodeActions': 'ga',
+ \  'Completion': 'omnifunc',
+ \}
+let g:lsc_enable_autocomplete  = v:true
+let g:lsc_enable_diagnostics   = v:false
+let g:lsc_reference_highlights = v:true
+let g:lsc_trace_level          = 'off'
+
+" NERDTree
+let NERDTreeHijackNetrw = 0
+let g:NERDTreeDirArrowExpandable = "▷"
+let g:NERDTreeDirArrowCollapsible = "◢"
+let g:NERDTreeUpdateOnWrite = 1
+noremap <silent> <Leader>t :NERDTreeToggle<CR> <C-w>=
+noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
+
+" fzf
+" Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
+nnoremap <silent> <Leader>o :Files<CR>
+nnoremap <silent> <Leader>rg :Rg<Space>
+nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <Leader>g :GFiles?<CR>
+
+" vim-gitgutter
+let g:gitgutter_grep                    = 'rg'
+let g:gitgutter_map_keys                = 0
+let g:gitgutter_sign_added              = '▎'
+let g:gitgutter_sign_modified           = '▎'
+let g:gitgutter_sign_modified_removed   = '▶'
+let g:gitgutter_sign_removed            = '▶'
+let g:gitgutter_sign_removed_first_line = '◥'
+nmap [g <Plug>(GitGutterPrevHunk)
+nmap ]g <Plug>(GitGutterNextHunk)
+nmap <Leader>p <Plug>(GitGutterPreviewHunk)
+nmap <Leader>+ <Plug>(GitGutterStageHunk)
+nmap <Leader>- <Plug>(GitGutterUndoHunk)
+
+" pear-tree
+let g:pear_tree_repeatable_expand = 0
+let g:pear_tree_smart_backspace   = 1
+let g:pear_tree_smart_closers     = 1
+let g:pear_tree_smart_openers     = 1
+
+" vim-wordmotion
+nmap cw ce
 
 " Easymotion
 map <Space> <Plug>(easymotion-bd-f)
-"use for case insensitive:  let g:EasyMotion_smartcase = 1
+let g:EasyMotion_smartcase = 1
 
-" change dict.get to direct access
-nmap <leader>g f.cf([<Esc>f)s]<Esc>
+"
+" === CUSTOM MACROS ===
+
+" Replace [w]ord with last yank (repeatable)
+nnoremap <Leader>w ciw<C-r>0<Esc>
+
+" The following commands will work for word under cursor or visual selection
+" [s]ubstitute in current file
+nnoremap <Leader>s :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s//<Left>
+xnoremap <Leader>s "sy:%s/<C-r>s//<Left>
+
+" [S]ubstitute in entire project
+nnoremap <Leader>S
+  \ :let @s='\<'.expand('<cword>').'\>'<CR>
+  \ :Grepper -cword -noprompt<CR>
+  \ :cfdo %s/<C-r>s// \| update
+  \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+xmap <Leader>S
+  \ "sy \|
+  \ :GrepperRg <C-r>s<CR>
+  \ :cfdo %s/<C-r>s// \| update
+  \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" nearby find and [r]eplace
+nnoremap <silent> <Leader>r :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent> <Leader>r "sy:let @/=@s<CR>cgn
+nnoremap <Enter> gnzz
+xmap <Enter> .<Esc>gnzz
+xnoremap ! <Esc>ngnzz
+autocmd! BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+autocmd! CmdwinEnter *        nnoremap <buffer> <CR> <CR>
+
+" Apply the 'q' register macro to the visual selection
+xnoremap Q :'<,'>:normal @q<CR>
+
+" Replace word with last cut
+" map <leader>x "-Pldw
+
