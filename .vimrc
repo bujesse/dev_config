@@ -1,3 +1,10 @@
+" TODO:
+" - figure out what substitution/replace methods I want
+" -- Global refactor/rename?
+" - spell check?
+" - python debugger
+" - git merge tool
+"
 "===========================================================
 " SETTINGS
 "===========================================================
@@ -13,9 +20,9 @@ call plug#begin('~/.vim/bundle')
 " tpope
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-abolish'  " crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
-Plug 'tpope/vim-unimpaired'  " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
-Plug 'tpope/vim-commentary'  " gc to toggle comments
+Plug 'tpope/vim-abolish'               " crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
+Plug 'tpope/vim-unimpaired'            " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
+Plug 'tpope/vim-commentary'            " gc to toggle comments
 
 " files/git/searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
@@ -26,16 +33,18 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 Plug 'mhinz/vim-grepper'
 
 " text editing/navigating
-Plug 'tmsvg/pear-tree'
+Plug 'tmsvg/pear-tree'                 " Auto-input closing paired characters
 Plug 'nelstrom/vim-visual-star-search'
-Plug 'michaeljsmith/vim-indent-object'  " vii - visually select inside code block using current indentation; viI - include trailing line
+Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
 Plug 'easymotion/vim-easymotion'
+Plug 'tommcdo/vim-lion'                " Align text around a chosen character
 
 " language/autcocomplete/linting/fixing
 Plug 'sheerun/vim-polyglot'
 Plug 'natebosch/vim-lsc'
 Plug 'ajh17/VimCompletesMe'
 Plug 'dense-analysis/ale'
+Plug 'davidhalter/jedi-vim'            " python renaming/usages
 
 " ui
 " Plug 'bluz71/vim-moonfly-colors'
@@ -78,18 +87,19 @@ set showmatch
 set showmode
 set smartcase
 set tabstop=4 shiftwidth=4 expandtab
-set termguicolors     " Enable 24-bit color support for terminal Vim
+set termguicolors " Enable 24-bit color support for terminal Vim
 set timeoutlen=1000
 set ttimeoutlen=10
 set ttyfast
 set updatetime=300
-" Set the persistent undo directory on temporary private fast storage.
+                  " Set the persistent undo directory on temporary private fast storage.
 let s:undoDir="/tmp/.undodir_" . $USER
 if !isdirectory(s:undoDir)
     call mkdir(s:undoDir, "", 0700)
 endif
 let &undodir=s:undoDir
 set undofile          " Maintain undo history
+
 map <leader>/ :noh<CR>
 map <leader>c :ccl<CR>
 
@@ -107,15 +117,16 @@ nnoremap H Hzz
 imap jk <Esc>
 imap kj <Esc>
 
-highlight Visual cterm=NONE ctermfg=NONE
-
 " Visualize tabs and newlines
 set listchars=tab:▸\ ,eol:¬
 map <leader>l :set list!<CR>
 
 " Relative numbering and toggle
 set number relativenumber
-map <leader>r :set rnu!<CR>  
+map <leader>r :set rnu!<CR>
+
+" Auto remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
 
 
 " === PLUGIN CONFIG ===
@@ -159,6 +170,7 @@ nnoremap gs :Grepper -cword -noprompt<CR>
 xmap gs <Plug>(GrepperOperator)
 
 " vim-lsc
+" Use with jedi-vim for python since that has better rename and usage finding
 " https://github.com/natebosch/vim-lsc/wiki/Language-Servers
 let g:lsc_server_commands = {
  \  'python': {
@@ -184,6 +196,17 @@ let g:lsc_enable_autocomplete  = v:true
 let g:lsc_enable_diagnostics   = v:false
 let g:lsc_reference_highlights = v:true
 let g:lsc_trace_level          = 'off'
+
+" jedi-vim
+" Everything else is handled by vim-lsc
+let g:jedi#usages_command = "gu"
+let g:jedi#rename_command = "R"
+let g:jedi#goto_command = ""
+let g:jedi#goto_assignments_command = ""
+let g:jedi#goto_stubs_command = ""
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = ""
+let g:jedi#completions_command = ""
 
 " NERDTree
 let NERDTreeHijackNetrw = 0
@@ -227,7 +250,10 @@ nmap cw ce
 map <Space> <Plug>(easymotion-bd-f)
 let g:EasyMotion_smartcase = 1
 
-"
+" vim-lion
+let g:lion_squeeze_spaces = 1
+
+
 " === CUSTOM MACROS ===
 
 " Replace [w]ord with last yank (repeatable)
@@ -261,7 +287,4 @@ autocmd! CmdwinEnter *        nnoremap <buffer> <CR> <CR>
 
 " Apply the 'q' register macro to the visual selection
 xnoremap Q :'<,'>:normal @q<CR>
-
-" Replace word with last cut
-" map <leader>x "-Pldw
 
