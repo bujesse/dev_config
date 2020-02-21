@@ -10,6 +10,12 @@
 " SETTINGS
 "===========================================================
 
+" Pre-Reqs:
+" - vim version > 8
+" - must have conceal feature (just install with brew to get all the features)
+" - must have language servers installed
+" - brew install fzf fd ripgrep
+
 " Automatically install vim-plug and run PlugInstall if vim-plug is not found.
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
