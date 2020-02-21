@@ -4,6 +4,7 @@
 " - spell check?
 " - python debugger
 " - git merge tool
+" - figure out optimal windowing/tabbing/buffers/splits
 "
 "===========================================================
 " SETTINGS
@@ -38,6 +39,7 @@ Plug 'nelstrom/vim-visual-star-search'
 Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
 Plug 'easymotion/vim-easymotion'
 Plug 'tommcdo/vim-lion'                " Align text around a chosen character
+Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
 
 " language/autcocomplete/linting/fixing
 Plug 'sheerun/vim-polyglot'
@@ -101,7 +103,7 @@ let &undodir=s:undoDir
 set undofile          " Maintain undo history
 
 map <leader>/ :noh<CR>
-map <leader>c :ccl<CR>
+highlight Visual cterm=NONE
 
 " Make timeout longer for leader
 nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
@@ -119,7 +121,7 @@ imap kj <Esc>
 
 " Visualize tabs and newlines
 set listchars=tab:▸\ ,eol:¬
-map <leader>l :set list!<CR>
+map <leader>L :set list!<CR>
 
 " Relative numbering and toggle
 set number relativenumber
@@ -252,6 +254,10 @@ let g:EasyMotion_smartcase = 1
 
 " vim-lion
 let g:lion_squeeze_spaces = 1
+
+" vim-toggle-quickfix
+nnoremap <silent> <Leader>c :call togglequickfix#ToggleQuickfix()<CR>
+nnoremap <silent> <Leader>l :call togglequickfix#ToggleLocation()<CR>
 
 
 " === CUSTOM MACROS ===
