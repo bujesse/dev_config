@@ -52,6 +52,7 @@ Plug 'davidhalter/jedi-vim'            " python renaming/usages
 " Plug 'bluz71/vim-moonfly-colors'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
+Plug 'Yggdroot/indentLine'
 call plug#end()
 
 " colorscheme moonfly
@@ -189,6 +190,8 @@ let g:lsc_server_commands = {
 let g:lsc_auto_map = {
  \  'GoToDefinition': 'gd',
  \  'FindReferences': 'gr',
+ \  'NextReference': ']r',
+ \  'PreviousReference': '[r',
  \  'Rename': 'gR',
  \  'ShowHover': 'gh',
  \  'FindCodeActions': 'ga',
@@ -209,6 +212,7 @@ let g:jedi#goto_stubs_command = ""
 let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = ""
 let g:jedi#completions_command = ""
+let g:jedi#completions_enabled = 0
 
 " NERDTree
 let NERDTreeHijackNetrw = 0
@@ -258,6 +262,10 @@ let g:lion_squeeze_spaces = 1
 " vim-toggle-quickfix
 nnoremap <silent> <Leader>c :call togglequickfix#ToggleQuickfix()<CR>
 nnoremap <silent> <Leader>l :call togglequickfix#ToggleLocation()<CR>
+
+" indentLine
+let g:indentLine_faster     = 1
+let g:indentLine_setConceal = 0
 
 
 " === CUSTOM MACROS ===
