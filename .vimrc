@@ -5,6 +5,11 @@
 " - python debugger
 " - git merge tool
 " - figure out optimal windowing/tabbing/buffers/splits
+" - more formatting/organization/better grouping of this file
+" - start using tmux
+" - limit amount of autocomplete results
+" - underline colors/style
+" - master targets.vim
 "
 "===========================================================
 " SETTINGS
@@ -46,19 +51,21 @@ Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block
 Plug 'easymotion/vim-easymotion'
 Plug 'tommcdo/vim-lion'                " Align text around a chosen character
 Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
+Plug 'wellle/targets.vim'
 
 " language/autcocomplete/linting/fixing
 Plug 'sheerun/vim-polyglot'
 Plug 'natebosch/vim-lsc'
 Plug 'ajh17/VimCompletesMe'
 Plug 'dense-analysis/ale'
-Plug 'davidhalter/jedi-vim'            " python renaming/usages
+Plug 'davidhalter/jedi-vim' " python renaming/usages
+Plug 'tmhedberg/SimpylFold' " python folding
 
 " ui
 " Plug 'bluz71/vim-moonfly-colors'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
-Plug 'Yggdroot/indentLine'
+Plug 'nathanaelkane/vim-indent-guides'
 call plug#end()
 
 " colorscheme moonfly
@@ -79,17 +86,18 @@ syntax on
 let mapleader=","
 set backspace=indent,eol,start
 set completeopt=menu,menuone,noinsert,noselect
-set hidden            " Switch to another buffer without writing or abandoning changes
-set history=200       " Keep 200 changes of undo history
+set foldmethod=syntax
+set gdefault      " Always do global substitutes
+set hidden        " Switch to another buffer without writing or abandoning changes
+set history=200   " Keep 200 changes of undo history
 set hlsearch
-set gdefault          " Always do global substitutes
 set ignorecase
 set incsearch
-set infercase         " Smart casing when completing
-set nojoinspaces      " No to double-spaces when joining lines
+set infercase     " Smart casing when completing
 set nofixendofline
-set noshowmatch       " No jumping jumping cursors when matching pairs
-set noswapfile        " No backup files
+set nojoinspaces  " No to double-spaces when joining lines
+set noshowmatch   " No jumping jumping cursors when matching pairs
+set noswapfile    " No backup files
 set scrolloff=2
 set showcmd
 set showmatch
@@ -101,7 +109,8 @@ set timeoutlen=1000
 set ttimeoutlen=10
 set ttyfast
 set updatetime=300
-                  " Set the persistent undo directory on temporary private fast storage.
+
+" Set the persistent undo directory on temporary private fast storage.
 let s:undoDir="/tmp/.undodir_" . $USER
 if !isdirectory(s:undoDir)
     call mkdir(s:undoDir, "", 0700)
@@ -123,8 +132,25 @@ nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 nnoremap L Lzz
 nnoremap H Hzz
 
+noremap n nzz
+noremap N Nzz
+
 imap jk <Esc>
 imap kj <Esc>
+
+" Y should behave like D and C
+noremap Y y$
+
+" U feels like a more natural companion to u
+nnoremap U <C-r>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" nmap ]t :tabn<CR>
+" nmap [t :tabp<CR>
 
 " Visualize tabs and newlines
 set listchars=tab:▸\ ,eol:¬
@@ -135,7 +161,15 @@ set number relativenumber
 map <leader>r :set rnu!<CR>
 
 " Auto remove trailing whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+autocmd BufWritePre * :call TrimWhitespace()
+
+" Close current buffer and move to the previous one
+nmap <Leader>w :bp <BAR> bd #<CR>
 
 
 " === PLUGIN CONFIG ===
@@ -159,7 +193,7 @@ let g:ale_fixers = {
 \  'yml':        ['prettier']
 \}
 let g:ale_linters_explicit = 1
-let g:ale_open_list = 1
+let g:ale_open_list = 0
 " highlight ALEErrorSign ctermbg=NONE ctermfg=red
 " highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 nmap <Leader>af <Plug>(ale_fix)
@@ -210,21 +244,21 @@ let g:lsc_trace_level          = 'off'
 
 " jedi-vim
 " Everything else is handled by vim-lsc
-let g:jedi#usages_command = "gu"
-let g:jedi#rename_command = "R"
-let g:jedi#goto_command = ""
+let g:jedi#usages_command           = "gu"
+let g:jedi#rename_command           = "R"
+let g:jedi#goto_command             = ""
 let g:jedi#goto_assignments_command = ""
-let g:jedi#goto_stubs_command = ""
+let g:jedi#goto_stubs_command       = ""
 let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = ""
-let g:jedi#completions_command = ""
-let g:jedi#completions_enabled = 0
+let g:jedi#documentation_command    = ""
+let g:jedi#completions_command      = ""
+let g:jedi#completions_enabled      = 0
 
 " NERDTree
-let NERDTreeHijackNetrw = 0
-let g:NERDTreeDirArrowExpandable = "▷"
+let NERDTreeHijackNetrw           = 0
+let g:NERDTreeDirArrowExpandable  = "▷"
 let g:NERDTreeDirArrowCollapsible = "◢"
-let g:NERDTreeUpdateOnWrite = 1
+let g:NERDTreeUpdateOnWrite       = 1
 noremap <silent> <Leader>t :NERDTreeToggle<CR> <C-w>=
 noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
 
@@ -269,15 +303,19 @@ let g:lion_squeeze_spaces = 1
 nnoremap <silent> <Leader>c :call togglequickfix#ToggleQuickfix()<CR>
 nnoremap <silent> <Leader>l :call togglequickfix#ToggleLocation()<CR>
 
-" indentLine
-let g:indentLine_faster     = 1
-let g:indentLine_setConceal = 0
+" vim-indent-guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level           = 2
+let g:indent_guides_guide_size            = 1
+
+" vim-airline
+let g:airline#extensions#tabline#enabled = 1
 
 
 " === CUSTOM MACROS ===
 
-" Replace [w]ord with last yank (repeatable)
-nnoremap <Leader>w ciw<C-r>0<Esc>
+" Replace word with last yank (repeatable)
+nnoremap <Leader>v ciw<C-r>0<Esc>
 
 " The following commands will work for word under cursor or visual selection
 " [s]ubstitute in current file
@@ -307,4 +345,10 @@ autocmd! CmdwinEnter *        nnoremap <buffer> <CR> <CR>
 
 " Apply the 'q' register macro to the visual selection
 xnoremap Q :'<,'>:normal @q<CR>
+
+" === PERFORMANCE STUFF ===
+augroup syntaxSyncMinLines
+    autocmd!
+    autocmd Syntax * syntax sync minlines=2000
+augroup END
 
