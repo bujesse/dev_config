@@ -258,6 +258,7 @@ let g:lsc_enable_autocomplete  = v:true
 let g:lsc_enable_diagnostics   = v:false
 let g:lsc_reference_highlights = v:true
 let g:lsc_trace_level          = 'off'
+let g:pyindent_searchpair_timeout = 10  " This solves some kind of issue with pyindent making newlines lag
 
 " jedi-vim
 " Everything else is handled by vim-lsc
