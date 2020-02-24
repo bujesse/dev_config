@@ -3,14 +3,13 @@
 " -- Global refactor/rename?
 " - spell check?
 " - python debugger
-" - git merge tool
 " - figure out optimal windowing/tabbing/buffers/splits
 " - more formatting/organization/better grouping of this file
 " - start using tmux
 " - limit amount of autocomplete results
 " - underline colors/style
 " - master targets.vim
-"
+" - master fugitive (merging)
 "===========================================================
 " SETTINGS
 "===========================================================
@@ -35,6 +34,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'               " crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
 Plug 'tpope/vim-unimpaired'            " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
 Plug 'tpope/vim-commentary'            " gc to toggle comments
+Plug 'tpope/vim-fugitive'              " git wrapper
 
 " files/git/searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
@@ -48,10 +48,13 @@ Plug 'mhinz/vim-grepper'
 Plug 'tmsvg/pear-tree'                 " Auto-input closing paired characters
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'     " I think I'll try using f and t movements instead of this
+Plug 'rhysd/clever-f.vim'              " highlight/lock f and t movements and bind to f and t instead of ; and ,
 Plug 'tommcdo/vim-lion'                " Align text around a chosen character
 Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
 Plug 'wellle/targets.vim'
+Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
+Plug 'mbbill/undotree'                 " undo history visualizer
 
 " language/autcocomplete/linting/fixing
 Plug 'sheerun/vim-polyglot'
@@ -71,19 +74,14 @@ call plug#end()
 " colorscheme moonfly
 colorscheme gruvbox
 
-
 " === BASIC CONFIGS ===
-"
-" Hints:    https://bluz71.github.io/2018/03/12/vim-hints.html
-" Tips:     https://bluz71.github.io/2017/05/15/vim-tips-tricks.html
-" Plugins:  https://bluz71.github.io/2017/05/21/vim-plugins-i-like.html
-" Mappings: https://bluz71.github.io/2017/06/14/a-few-vim-tmux-mappings.html
 
 
 " Enable syntax highlighting.
 syntax on
 
 let mapleader=","
+set autoindent
 set backspace=indent,eol,start
 set completeopt=menu,menuone,noinsert,noselect
 set foldmethod=syntax
@@ -94,6 +92,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set infercase     " Smart casing when completing
+set nocompatible
 set nofixendofline
 set nojoinspaces  " No to double-spaces when joining lines
 set noshowmatch   " No jumping jumping cursors when matching pairs
@@ -103,6 +102,7 @@ set showcmd
 set showmatch
 set showmode
 set smartcase
+set smarttab
 set tabstop=4 shiftwidth=4 expandtab
 set termguicolors " Enable 24-bit color support for terminal Vim
 set timeoutlen=1000
@@ -132,8 +132,8 @@ nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 nnoremap L Lzz
 nnoremap H Hzz
 
-noremap n nzz
-noremap N Nzz
+nnoremap n nzz
+nnoremap N Nzz
 
 imap jk <Esc>
 imap kj <Esc>
@@ -170,6 +170,15 @@ autocmd BufWritePre * :call TrimWhitespace()
 
 " Close current buffer and move to the previous one
 nmap <Leader>w :bp <BAR> bd #<CR>
+
+" quick-toggle for zA fold
+nnoremap <space> zAzz
+
+" Apply the 'q' register macro to the visual selection
+xnoremap Q :'<,'>:normal @q<CR>
+
+" Source vimrc
+nmap <silent> <leader>. :source $MYVIMRC<CR>
 
 
 " === PLUGIN CONFIG ===
@@ -293,8 +302,13 @@ let g:pear_tree_smart_openers     = 1
 nmap cw ce
 
 " Easymotion
-map <Space> <Plug>(easymotion-bd-f)
-let g:EasyMotion_smartcase = 1
+" map <Space> <Plug>(easymotion-bd-f)
+" let g:EasyMotion_smartcase = 1
+
+" clever-f
+let g:clever_f_across_no_line    = 1
+let g:clever_f_fix_key_direction = 1
+let g:clever_f_smart_case        = 1
 
 " vim-lion
 let g:lion_squeeze_spaces = 1
@@ -310,6 +324,23 @@ let g:indent_guides_guide_size            = 1
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
+
+" FastFold
+nmap zuz <Plug>(FastFoldUpdate)
+let g:fastfold_savehook = 1
+let g:fastfold_fold_command_suffixes =  ['a','A','o','O','c','C','M','R']
+let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+
+" undotree
+let g:undotree_HighlightChangedWithSign = 0
+let g:undotree_WindowLayout             = 4
+nnoremap <Leader>u :UndotreeToggle<CR>
+
+" vim-fugitive
+nnoremap <silent> <Leader>B :Gblame<CR>
+nnoremap <silent> <Leader>C :Gclog %<CR>
+nnoremap <silent> <Leader>D :Gdiffsplit<CR>
+nnoremap <silent> <Leader>G :Gstatus<CR>
 
 
 " === CUSTOM MACROS ===
@@ -342,9 +373,6 @@ xmap <Enter> .<Esc>gnzz
 xnoremap ! <Esc>ngnzz
 autocmd! BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 autocmd! CmdwinEnter *        nnoremap <buffer> <CR> <CR>
-
-" Apply the 'q' register macro to the visual selection
-xnoremap Q :'<,'>:normal @q<CR>
 
 " === PERFORMANCE STUFF ===
 augroup syntaxSyncMinLines
