@@ -10,6 +10,8 @@
 " - underline colors/style
 " - master targets.vim
 " - master fugitive (merging)
+" - work on zshrc organization
+
 "===========================================================
 " SETTINGS
 "===========================================================
@@ -56,7 +58,7 @@ Plug 'wellle/targets.vim'
 Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
 Plug 'mbbill/undotree'                 " undo history visualizer
 
-" language/autcocomplete/linting/fixing
+" language/autocomplete/linting/fixing
 Plug 'sheerun/vim-polyglot'
 Plug 'natebosch/vim-lsc'
 Plug 'ajh17/VimCompletesMe'
@@ -85,30 +87,36 @@ set autoindent
 set backspace=indent,eol,start
 set completeopt=menu,menuone,noinsert,noselect
 set foldmethod=syntax
+set foldopen+=quickfix,search,undo
 set gdefault      " Always do global substitutes
 set hidden        " Switch to another buffer without writing or abandoning changes
 set history=200   " Keep 200 changes of undo history
 set hlsearch
+set lazyredraw
 set ignorecase
 set incsearch
 set infercase     " Smart casing when completing
 set nocompatible
 set nofixendofline
 set nojoinspaces  " No to double-spaces when joining lines
-set noshowmatch   " No jumping jumping cursors when matching pairs
+set noshowmatch   " No jumping cursors when matching pairs
 set noswapfile    " No backup files
+set pumheight=15
 set scrolloff=2
 set showcmd
 set showmatch
 set showmode
 set smartcase
 set smarttab
+set spell spelllang=en_us
+set spellfile=$HOME/.vim/spell/en.utf-8.add  " zg to add to spellfile
+set splitright
 set tabstop=4 shiftwidth=4 expandtab
 set termguicolors " Enable 24-bit color support for terminal Vim
 set timeoutlen=1000
 set ttimeoutlen=10
 set ttyfast
-set updatetime=300
+set updatetime=150
 
 " Set the persistent undo directory on temporary private fast storage.
 let s:undoDir="/tmp/.undodir_" . $USER
@@ -158,7 +166,7 @@ map <leader>L :set list!<CR>
 
 " Relative numbering and toggle
 set number relativenumber
-map <leader>r :set rnu!<CR>
+map <leader>R :set rnu!<CR>
 
 " Auto remove trailing whitespace on save
 fun! TrimWhitespace()
@@ -274,7 +282,7 @@ noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
 " fzf
 " Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
 nnoremap <silent> <Leader>o :Files<CR>
-nnoremap <silent> <Leader>rg :Rg<Space>
+nnoremap <silent> <Leader>F :Rg<Space>
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <Leader>g :GFiles?<CR>
 
@@ -380,3 +388,9 @@ augroup syntaxSyncMinLines
     autocmd Syntax * syntax sync minlines=2000
 augroup END
 
+
+set autoread
+augroup autoRead
+    autocmd!
+    autocmd CursorHold * silent! checktime
+augroup END
