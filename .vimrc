@@ -64,7 +64,6 @@ Plug 'natebosch/vim-lsc'
 Plug 'ajh17/VimCompletesMe'
 Plug 'dense-analysis/ale'
 Plug 'davidhalter/jedi-vim' " python renaming/usages
-Plug 'tmhedberg/SimpylFold' " python folding
 
 " ui
 " Plug 'bluz71/vim-moonfly-colors'
@@ -88,8 +87,8 @@ set backspace=indent,eol,start
 set breakindent       " Wrap long lines *with* indentation
 set breakindentopt=shift:2
 set completeopt=menu,menuone,noinsert,noselect
-set foldmethod=syntax
 set foldopen+=quickfix,search,undo
+set foldmethod=indent
 set gdefault      " Always do global substitutes
 set hidden        " Switch to another buffer without writing or abandoning changes
 set history=200   " Keep 200 changes of undo history
