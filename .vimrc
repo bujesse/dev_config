@@ -29,7 +29,7 @@ endif
   Plug 'tmsvg/pear-tree'                 " Auto-input closing paired characters
   Plug 'nelstrom/vim-visual-star-search'
   Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
-  " Plug 'easymotion/vim-easymotion'     " I think I'll try using f and t movements instead of this
+  Plug 'easymotion/vim-easymotion'
   Plug 'tommcdo/vim-lion'                " Align text around a chosen character
   Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
   Plug 'wellle/targets.vim'
@@ -292,8 +292,8 @@ endif
   let g:pear_tree_smart_openers     = 1
 
   " Easymotion
-  " map <Space> <Plug>(easymotion-bd-f)
-  " let g:EasyMotion_smartcase = 1
+  let g:EasyMotion_smartcase = 1
+  nmap s <Plug>(easymotion-s2)
 
   " vim-lion
   let g:lion_squeeze_spaces = 1
