@@ -12,6 +12,8 @@
 " - master fugitive (merging)
 " - work on zshrc organization
 " - python syntax highlighting
+" - figure out how to hit enter to select and autocomplete
+" - vim on the command line
 
 "===========================================================
 " SETTINGS
@@ -265,6 +267,8 @@ let g:lsc_enable_autocomplete  = v:true
 let g:lsc_enable_diagnostics   = v:false
 let g:lsc_reference_highlights = v:true
 let g:lsc_trace_level          = 'off'
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 " jedi-vim
 " Everything else is handled by vim-lsc
