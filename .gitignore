@@ -7,6 +7,7 @@
 !.zshrc
 !.profile
 !.ideavimrc
+!.vim.requirements.txt
 
 # ...even if they are in subdirectories
 */

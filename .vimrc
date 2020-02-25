@@ -12,6 +12,7 @@
 " - master fugitive (merging)
 " - work on zshrc organization
 " - python syntax highlighting
+" - python yapf config (ale-fixing)
 " - figure out how to hit enter to select and autocomplete
 " - vim on the command line
 
@@ -211,7 +212,7 @@ let g:ale_linters = {
 \  'yaml':       ['yamllint']
 \}
 let g:ale_fixers = {
-\  'python':     ['autopep8'],
+\  'python':     ['yapf'],
 \  'javascript': ['eslint'],
 \  'css':        ['prettier'],
 \  'scss':       ['prettier'],
