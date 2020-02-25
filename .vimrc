@@ -37,6 +37,7 @@ Plug 'tpope/vim-abolish'               " crs and crc to change between cases; te
 Plug 'tpope/vim-unimpaired'            " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
 Plug 'tpope/vim-commentary'            " gc to toggle comments
 Plug 'tpope/vim-fugitive'              " git wrapper
+Plug 'tpope/vim-sleuth'
 
 " files/git/searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
@@ -84,6 +85,8 @@ syntax on
 let mapleader=","
 set autoindent
 set backspace=indent,eol,start
+set breakindent       " Wrap long lines *with* indentation
+set breakindentopt=shift:2
 set completeopt=menu,menuone,noinsert,noselect
 set foldmethod=syntax
 set foldopen+=quickfix,search,undo
@@ -105,6 +108,8 @@ set scrolloff=2
 set showcmd
 set showmatch
 set showmode
+set signcolumn=auto   " Only render sign column when needed
+set showbreak=↳       " Use this to wrap long lines
 set smartcase
 set smarttab
 set spell spelllang=en_us
@@ -126,6 +131,8 @@ let &undodir=s:undoDir
 set undofile          " Maintain undo history
 
 map <leader>/ :noh<CR>
+
+" Don't make the colors reversed
 highlight Visual cterm=NONE
 
 " Make timeout longer for leader
