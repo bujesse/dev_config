@@ -51,7 +51,6 @@ Plug 'tmsvg/pear-tree'                 " Auto-input closing paired characters
 Plug 'nelstrom/vim-visual-star-search'
 Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
 " Plug 'easymotion/vim-easymotion'     " I think I'll try using f and t movements instead of this
-Plug 'rhysd/clever-f.vim'              " highlight/lock f and t movements and bind to f and t instead of ; and ,
 Plug 'tommcdo/vim-lion'                " Align text around a chosen character
 Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
 Plug 'wellle/targets.vim'
@@ -258,7 +257,6 @@ let g:lsc_enable_autocomplete  = v:true
 let g:lsc_enable_diagnostics   = v:false
 let g:lsc_reference_highlights = v:true
 let g:lsc_trace_level          = 'off'
-let g:pyindent_searchpair_timeout = 10  " This solves some kind of issue with pyindent making newlines lag
 
 " jedi-vim
 " Everything else is handled by vim-lsc
@@ -313,11 +311,6 @@ nmap cw ce
 " Easymotion
 " map <Space> <Plug>(easymotion-bd-f)
 " let g:EasyMotion_smartcase = 1
-
-" clever-f
-let g:clever_f_across_no_line    = 1
-let g:clever_f_fix_key_direction = 1
-let g:clever_f_smart_case        = 1
 
 " vim-lion
 let g:lion_squeeze_spaces = 1
