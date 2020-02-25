@@ -11,6 +11,7 @@
 " - master targets.vim
 " - master fugitive (merging)
 " - work on zshrc organization
+" - python syntax highlighting
 
 "===========================================================
 " SETTINGS
@@ -79,7 +80,7 @@ colorscheme gruvbox
 
 
 " Enable syntax highlighting.
-syntax on
+syntax enable
 
 let mapleader=","
 set autoindent
@@ -103,6 +104,7 @@ set nojoinspaces  " No to double-spaces when joining lines
 set noshowmatch   " No jumping cursors when matching pairs
 set noswapfile    " No backup files
 set pumheight=15
+set re=1          " Somehow this makes syntax highlighting in vim 100x faster
 set scrolloff=2
 set showcmd
 set showmatch
@@ -348,6 +350,7 @@ nnoremap <Leader>u :UndotreeToggle<CR>
 nnoremap <silent> <Leader>B :Gblame<CR>
 nnoremap <silent> <Leader>C :Gclog %<CR>
 nnoremap <silent> <Leader>D :Gdiffsplit<CR>
+nnoremap <silent> <Leader>M :Git mergetool<CR>
 nnoremap <silent> <Leader>G :Gstatus<CR>
 
 
