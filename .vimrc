@@ -35,7 +35,6 @@ endif
   Plug 'wellle/targets.vim'
   Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
   Plug 'mbbill/undotree'                 " undo history visualizer
-  Plug 'chaoren/vim-wordmotion'
 
   " language/autocomplete/linting/fixing
   Plug 'sheerun/vim-polyglot'
@@ -291,9 +290,6 @@ endif
   let g:pear_tree_smart_backspace   = 1
   let g:pear_tree_smart_closers     = 1
   let g:pear_tree_smart_openers     = 1
-
-  " vim-wordmotion
-  nmap cw ce
 
   " Easymotion
   " map <Space> <Plug>(easymotion-bd-f)
