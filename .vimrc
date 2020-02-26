@@ -1,408 +1,441 @@
 " Automatically install vim-plug and run PlugInstall if vim-plug is not found.
 if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 
 " === Plugins ===
-  call plug#begin('~/.vim/bundle')
-  " tpope
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-repeat'
-  Plug 'tpope/vim-abolish'               " crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
-  Plug 'tpope/vim-unimpaired'            " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
-  Plug 'tpope/vim-commentary'            " gc to toggle comments
-  Plug 'tpope/vim-fugitive'              " git wrapper
-  Plug 'tpope/vim-sleuth'
+    call plug#begin('~/.vim/bundle')
+    " tpope
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-abolish'                             " crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
+    Plug 'tpope/vim-unimpaired'                        " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
+    Plug 'tpope/vim-commentary'                        " gc to toggle comments
+    Plug 'tpope/vim-fugitive'                            " git wrapper
+    " Plug 'tpope/vim-sleuth'                            " Tabbing
 
-  " files/git/searching
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
-  Plug 'junegunn/fzf.vim'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-  Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
-  Plug 'mhinz/vim-grepper'
+    " files/git/searching
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
+    Plug 'junegunn/fzf.vim'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+    Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+    Plug 'mhinz/vim-grepper', { 'on': ['Grepper', 'GrepperRg', '<plug>(GrepperOperator)'] }  " enables lazy-loading
 
-  " text editing/navigating
-  Plug 'tmsvg/pear-tree'                 " Auto-input closing paired characters
-  Plug 'nelstrom/vim-visual-star-search'
-  Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
-  Plug 'easymotion/vim-easymotion'
-  Plug 'tommcdo/vim-lion'                " Align text around a chosen character
-  Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
-  Plug 'wellle/targets.vim'
-  Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
-  Plug 'mbbill/undotree'                 " undo history visualizer
+    " text editing/navigating
+    Plug 'tmsvg/pear-tree'                                 " Auto-input closing paired characters
+    Plug 'nelstrom/vim-visual-star-search'
+    Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
+    Plug 'easymotion/vim-easymotion'
+    Plug 'tommcdo/vim-lion'                                " Align text around a chosen character
+    Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
+    Plug 'wellle/targets.vim'
+    Plug 'Konfekt/FastFold'                                " Fixes issue where syntax folding makes vim really slow in larger files
+    Plug 'mbbill/undotree'                                 " undo history visualizer
+    Plug 'zhimsel/vim-stay'                                " Keep editing session state while switching buffers
+    Plug 'SirVer/ultisnips'
 
-  " language/autocomplete/linting/fixing
-  Plug 'sheerun/vim-polyglot'
-  Plug 'natebosch/vim-lsc'
-  Plug 'ajh17/VimCompletesMe'
-  Plug 'dense-analysis/ale'
-  Plug 'davidhalter/jedi-vim' " python renaming/usages
+    " language/autocomplete/linting/fixing
+    Plug 'sheerun/vim-polyglot'
+    Plug 'natebosch/vim-lsc'
+    Plug 'ajh17/VimCompletesMe'
+    Plug 'dense-analysis/ale'
+    Plug 'davidhalter/jedi-vim' " python renaming/usages
 
-  " ui
-  " Plug 'bluz71/vim-moonfly-colors'
-  Plug 'morhetz/gruvbox'
-  Plug 'vim-airline/vim-airline'
-  Plug 'nathanaelkane/vim-indent-guides'
-  call plug#end()
+    " ui
+    " Plug 'bluz71/vim-moonfly-colors'
+    Plug 'morhetz/gruvbox'
+    Plug 'vim-airline/vim-airline'
+    Plug 'nathanaelkane/vim-indent-guides'
+    call plug#end()
 
 
 " === BASIC CONFIGS ===
-  colorscheme gruvbox
-  syntax enable
-  let mapleader=","
+    colorscheme gruvbox
+    syntax enable
+    let mapleader=","
 
 
 " === SET CONFIGS ===
-  set autoindent
-  set backspace=indent,eol,start
-  set breakindent       " Wrap long lines *with* indentation
-  set breakindentopt=shift:2
-  set completeopt=menu,menuone,noinsert,noselect
-  set cursorline
-  set foldopen+=quickfix,search,undo
-  set foldmethod=indent
-  set gdefault      " Always do global substitutes
-  set hidden        " Switch to another buffer without writing or abandoning changes
-  set history=200   " Keep 200 changes of undo history
-  set hlsearch
-  set lazyredraw
-  set ignorecase
-  set incsearch
-  set infercase     " Smart casing when completing
-  set nocompatible
-  set nofixendofline
-  set nojoinspaces  " No to double-spaces when joining lines
-  set noshowmatch   " No jumping cursors when matching pairs
-  set noswapfile    " No backup files
-  set pumheight=15
-  set re=1          " Somehow this makes syntax highlighting in vim 100x faster
-  set scrolloff=2
-  set showcmd
-  set showmatch
-  set showmode
-  set signcolumn=auto   " Only render sign column when needed
-  set showbreak=↳       " Use this to wrap long lines
-  set smartcase
-  set smarttab
-  set spell spelllang=en_us
-  set spellfile=$HOME/.vim/spell/en.utf-8.add  " zg to add to spellfile
-  set splitright
-  set tabstop=4 shiftwidth=4 expandtab
-  set termguicolors " Enable 24-bit color support for terminal Vim
-  set timeoutlen=1000
-  set ttimeoutlen=10
-  set ttyfast
-  set updatetime=150
+    set autoindent
+    set backspace=indent,eol,start
+    set breakindent                             " Wrap long lines *with* indentation
+    set breakindentopt=shift:2
+    set completeopt=menu,menuone,noinsert,noselect
+    set nocursorline
+    set foldopen+=search,undo,quickfix,jump
+    set foldmethod=indent
+    set gdefault                                " Always do global substitutes
+    set hidden                                  " Switch to another buffer without writing or abandoning changes
+    set history=200                             " Keep 200 changes of undo history
+    set hlsearch
+    set lazyredraw
+    set ignorecase
+    set incsearch
+    set infercase                               " Smart casing when completing
+    set nocompatible
+    set nofixendofline
+    set nojoinspaces                            " No to double-spaces when joining lines
+    set noshowcmd                               " Makes it a little faster
+    set noshowmatch                             " No jumping cursors when matching pairs
+    set noswapfile                              " No backup files
+    set pumheight=15
+    set regexpengine=1                          " Somehow this makes syntax highlighting in vim 100x faster
+    set scrolloff=2
+    set showcmd
+    set showmatch
+    set showmode
+    set signcolumn=auto                         " Only render sign column when needed
+    set showbreak=↳                             " Use this to wrap long lines
+    set smartcase
+    set smarttab
+    set spell spelllang=en_us
+    set spellfile=$HOME/.vim/spell/en.utf-8.add " zg to add to spellfile
+    set splitright
+    set synmaxcol=200
+    set tabstop=4 shiftwidth=4 expandtab
+    set termguicolors                           " Enable 24-bit color support for terminal Vim
+    set timeoutlen=1000
+    set ttimeoutlen=10
+    set ttyfast
+    set updatetime=150
 
 
 " === PERSONAL CONFIGS ===
-  " Set the persistent undo directory on temporary private fast storage.
-  let s:undoDir="/tmp/.undodir_" . $USER
-  if !isdirectory(s:undoDir)
-      call mkdir(s:undoDir, "", 0700)
-  endif
-  let &undodir=s:undoDir
-  set undofile          " Maintain undo history
+    " Set the persistent undo directory on temporary private fast storage.
+    let s:undoDir="/tmp/.undodir_" . $USER
+    if !isdirectory(s:undoDir)
+            call mkdir(s:undoDir, "", 0700)
+    endif
+    let &undodir=s:undoDir
+    set undofile                    " Maintain undo history
 
-  map <leader>/ :noh<CR>
+    map <leader>/ :noh<CR>
 
-  " Don't make the colors reversed
-  highlight Visual cterm=NONE
+    " Don't make the colors reversed
+    highlight Visual cterm=NONE
 
-  " Make timeout longer for leader
-  nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
-  autocmd CursorMoved * :set timeoutlen=1000
+    " Make timeout longer for leader
+    nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
+    autocmd CursorMoved * :set timeoutlen=1000
 
-  " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
-  nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-  nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+    " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
+    nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+    nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
-  nnoremap L Lzz
-  nnoremap H Hzz
+    nnoremap L Lzz
+    nnoremap H Hzz
 
-  nnoremap n nzz
-  nnoremap N Nzz
+    nnoremap n nzz
+    nnoremap N Nzz
 
-  imap jk <Esc>
-  imap kj <Esc>
+    imap jk <Esc>
+    imap kj <Esc>
 
-  " Y should behave like D and C
-  noremap Y y$
+    " Y should behave like D and C
+    noremap Y y$
 
-  " U feels like a more natural companion to u
-  nnoremap U <C-r>
+    " U feels like a more natural companion to u
+    nnoremap U <C-r>
 
-  nnoremap <C-h> <C-w>h
-  nnoremap <C-j> <C-w>j
-  nnoremap <C-k> <C-w>k
-  nnoremap <C-l> <C-w>l
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
 
-  " nmap ]t :tabn<CR>
-  " nmap [t :tabp<CR>
+    " nmap ]t :tabn<CR>
+    " nmap [t :tabp<CR>
 
-  " Visualize tabs and newlines
-  set listchars=tab:▸\ ,eol:¬
-  map <leader>L :set list!<CR>
+    " Visualize tabs and newlines
+    " set listchars=tab:▸\ ,eol:¬
+    " map <leader>L :set list!<CR>
 
-  " Relative numbering and toggle
-  set number relativenumber
-  map <leader>R :set rnu!<CR>
+    " Relative numbering and toggle
+    set number relativenumber
+    map <leader>R :set rnu!<CR>
 
-  " Auto remove trailing whitespace on save
-  fun! TrimWhitespace()
-      let l:save = winsaveview()
-      keeppatterns %s/\s\+$//e
-      call winrestview(l:save)
-  endfun
-  autocmd BufWritePre * :call TrimWhitespace()
+    " Auto remove trailing whitespace on save
+    fun! TrimWhitespace()
+            let l:save = winsaveview()
+            keeppatterns %s/\s\+$//e
+            call winrestview(l:save)
+    endfun
+    autocmd BufWritePre * :call TrimWhitespace()
 
-  " Close current buffer and move to the previous one
-  nmap <Leader>w :w\|bp <BAR> bd #<CR>
+    " Close current buffer and move to the previous one
+    nmap <Leader>w :w\|bp <BAR> bd #<CR>
 
-  " quick-toggle for zA fold
-  nnoremap <space> zAzz
+    " quick-toggle for zA fold
+    nnoremap <space> zAzz
 
-  " Apply the 'q' register macro to the visual selection
-  xnoremap Q :'<,'>:normal @q<CR>
+    " Apply the 'q' register macro to the visual selection
+    xnoremap Q :'<,'>:normal @q<CR>
 
-  " Source vimrc
-  nmap <silent> <leader>. :source $MYVIMRC<CR>
+    " Source vimrc
+    nmap <silent> <leader>. :source $MYVIMRC<CR>
 
+    nmap <Leader>p "0p
 
 " === PLUGIN CONFIG ===
-  " ALE
-  let g:ale_linters = {
-  \  'javascript': ['eslint'],
-  \  'python':     ['flake8'],
-  \  'css':        ['csslint'],
-  \  'scss':       ['sasslint'],
-  \  'json':       ['jsonlint'],
-  \  'yaml':       ['yamllint']
-  \}
-  let g:ale_fixers = {
-  \  'python':     ['yapf'],
-  \  'javascript': ['eslint'],
-  \  'css':        ['prettier'],
-  \  'scss':       ['prettier'],
-  \  'json':       ['prettier'],
-  \  'yml':        ['prettier']
-  \}
-  let g:ale_linters_explicit = 1
-  let g:ale_open_list = 0
-  " highlight ALEErrorSign ctermbg=NONE ctermfg=red
-  " highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
-  nmap <Leader>af <Plug>(ale_fix)
-  nmap <Leader>al <Plug>(ale_toggle)
-  let g:ale_type_map = {'flake8': {'ES': 'WS'}}
-  let g:ale_python_flake8_options="--ignore=E501,W391"
+    " ALE
+    let g:ale_linters = {
+    \    'javascript': ['eslint'],
+    \    'python':         ['flake8'],
+    \    'css':                ['csslint'],
+    \    'scss':             ['sasslint'],
+    \    'json':             ['jsonlint'],
+    \    'yaml':             ['yamllint']
+    \}
+    let g:ale_fixers = {
+    \    'python':         ['yapf'],
+    \    'javascript': ['eslint'],
+    \    'css':                ['prettier'],
+    \    'scss':             ['prettier'],
+    \    'json':             ['prettier'],
+    \    'yml':                ['prettier']
+    \}
+    let g:ale_linters_explicit = 1
+    let g:ale_open_list = 0
+    " highlight ALEErrorSign ctermbg=NONE ctermfg=red
+    " highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
+    nmap <Leader>af <Plug>(ale_fix)
+    nmap <Leader>al <Plug>(ale_toggle)
+    let g:ale_type_map = {'flake8': {'ES': 'WS'}}
+    let g:ale_python_flake8_options="--ignore=E501,W391"
 
-  " vim-grepper
-  let g:grepper = {}
-  let g:grepper.tools = ["rg"]
-  let g:grepper.searchreg = 0
-  let g:grepper.highlight = 0
-  runtime autoload/grepper.vim
-  " Customize regex
-  nnoremap <Leader>f :GrepperRg<Space>-i<Space>""<Left>
-  nnoremap gs :Grepper -cword -noprompt<CR>
-  xmap gs <Plug>(GrepperOperator)
+    " vim-grepper
+    let g:grepper = {}
+    let g:grepper.tools = ["rg"]
+    let g:grepper.searchreg = 0
+    let g:grepper.highlight = 0
+    runtime autoload/grepper.vim
+    " Customize regex
+    nnoremap <Leader>F :GrepperRg<Space>-i<Space>""<Left>
+    nnoremap gs :Grepper -cword -noprompt<CR>
+    xmap gs <Plug>(GrepperOperator)
 
-  " vim-lsc
-  " Use with jedi-vim for python since that has better rename and usage finding
-  " https://github.com/natebosch/vim-lsc/wiki/Language-Servers
-  let g:lsc_server_commands = {
-   \  'python': {
-   \    'command': 'pyls',
-   \    'log_level': -1,
-   \    'suppress_stderr': v:true,
-   \  },
-   \  'javascript': {
-   \    'command': 'typescript-language-server --stdio',
-   \    'log_level': -1,
-   \    'suppress_stderr': v:true,
-   \  }
-   \}
-  let g:lsc_auto_map = {
-   \  'GoToDefinition': 'gd',
-   \  'FindReferences': 'gr',
-   \  'NextReference': ']r',
-   \  'PreviousReference': '[r',
-   \  'Rename': 'gR',
-   \  'ShowHover': 'gh',
-   \  'FindCodeActions': 'ga',
-   \  'Completion': 'omnifunc',
-   \}
-  let g:lsc_enable_autocomplete  = v:true
-  let g:lsc_enable_diagnostics   = v:false
-  let g:lsc_reference_highlights = v:true
-  let g:lsc_trace_level          = 'off'
-  inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-  inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+    " vim-lsc
+    " Use with jedi-vim for python since that has better rename and usage finding
+    " https://github.com/natebosch/vim-lsc/wiki/Language-Servers
+    let g:lsc_server_commands = {
+     \    'python': {
+     \        'command': 'pyls',
+     \        'log_level': -1,
+     \        'suppress_stderr': v:true,
+     \    },
+     \    'javascript': {
+     \        'command': 'typescript-language-server --stdio',
+     \        'log_level': -1,
+     \        'suppress_stderr': v:true,
+     \    }
+     \}
+    let g:lsc_auto_map = {
+     \    'GoToDefinition': 'gd',
+     \    'FindReferences': 'gr',
+     \    'NextReference': ']r',
+     \    'PreviousReference': '[r',
+     \    'Rename': 'gR',
+     \    'ShowHover': 'gh',
+     \    'FindCodeActions': 'ga',
+     \    'Completion': 'omnifunc',
+     \}
+    let g:lsc_enable_autocomplete    = v:true
+    let g:lsc_enable_diagnostics     = v:false
+    let g:lsc_reference_highlights = v:true
+    let g:lsc_trace_level                    = 'off'
+    inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+    inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
-  " jedi-vim
-  " Everything else is handled by vim-lsc
-  let g:jedi#usages_command           = "gu"
-  let g:jedi#rename_command           = "R"
-  let g:jedi#goto_command             = ""
-  let g:jedi#goto_assignments_command = ""
-  let g:jedi#goto_stubs_command       = ""
-  let g:jedi#goto_definitions_command = ""
-  let g:jedi#documentation_command    = ""
-  let g:jedi#completions_command      = ""
-  let g:jedi#completions_enabled      = 0
+    " jedi-vim
+    " Everything else is handled by vim-lsc
+    let g:jedi#usages_command                     = "gu"
+    let g:jedi#rename_command                     = "R"
+    let g:jedi#goto_command                         = ""
+    let g:jedi#goto_assignments_command = ""
+    let g:jedi#goto_stubs_command             = ""
+    let g:jedi#goto_definitions_command = ""
+    let g:jedi#documentation_command        = ""
+    let g:jedi#completions_command            = ""
+    let g:jedi#completions_enabled            = 0
 
-  " NERDTree
-  let NERDTreeHijackNetrw           = 0
-  let g:NERDTreeDirArrowExpandable  = "▷"
-  let g:NERDTreeDirArrowCollapsible = "◢"
-  let g:NERDTreeUpdateOnWrite       = 1
-  noremap <silent> <Leader>t :NERDTreeToggle<CR> <C-w>=
-  noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
+    " NERDTree
+    let NERDTreeHijackNetrw                     = 0
+    let g:NERDTreeDirArrowExpandable    = "▷"
+    let g:NERDTreeDirArrowCollapsible = "◢"
+    let g:NERDTreeUpdateOnWrite             = 1
+    noremap <silent> <Leader>t :NERDTreeToggle<CR> <C-w>=
+    noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
 
-  " fzf
-  " Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
-  nnoremap <silent> <Leader>o :Files<CR>
-  nnoremap <silent> <Leader>F :Rg<Space>
-  nnoremap <silent> <Leader>b :Buffers<CR>
-  nnoremap <silent> <Leader>g :GFiles?<CR>
+    " fzf
+        " Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
+        let g:fzf_commits_log_options = '--graph --color=always
+            \ --format="%C(yellow)%h%C(red)%d%C(reset)
+            \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+        nnoremap <silent> <Leader>o :Files<CR>
+        nnoremap <silent> <Leader>f :RG<CR>
+        nnoremap <silent> <Leader>b :Buffers<CR>
+        nnoremap <silent> <Leader>g :GFiles?<CR>
+        nnoremap <silent> <Leader>C :BCommits<CR>
 
-  " vim-gitgutter
-  let g:gitgutter_grep                    = 'rg'
-  let g:gitgutter_map_keys                = 0
-  let g:gitgutter_sign_added              = '▎'
-  let g:gitgutter_sign_modified           = '▎'
-  let g:gitgutter_sign_modified_removed   = '▶'
-  let g:gitgutter_sign_removed            = '▶'
-  let g:gitgutter_sign_removed_first_line = '◥'
-  nmap [g <Plug>(GitGutterPrevHunk)
-  nmap ]g <Plug>(GitGutterNextHunk)
-  nmap <Leader>p <Plug>(GitGutterPreviewHunk)
-  nmap <Leader>+ <Plug>(GitGutterStageHunk)
-  nmap <Leader>- <Plug>(GitGutterUndoHunk)
+        " Insert mode completion
+        inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+        imap <c-x><c-f> <plug>(fzf-complete-path)
+        " Global line completion (not just open buffers. ripgrep required.)
+        inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
+                    \ 'prefix': '^.*$',
+                    \ 'source': 'rg -n ^ --color always',
+                    \ 'options': '--ansi --delimiter : --nth 3..',
+                    \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
-  " pear-tree
-  let g:pear_tree_repeatable_expand = 0
-  let g:pear_tree_smart_backspace   = 1
-  let g:pear_tree_smart_closers     = 1
-  let g:pear_tree_smart_openers     = 1
+        " This function makes ripgrepping behave like how finding in jetbrains works
+        function! RipgrepFzf(query, fullscreen)
+            let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+            let initial_command = printf(command_fmt, shellescape(a:query))
+            let reload_command = printf(command_fmt, '{q}')
+            let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+            call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+        endfunction
+        command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-  " Easymotion
-  let g:EasyMotion_smartcase = 1
-  nmap s <Plug>(easymotion-s2)
+    " vim-gitgutter
+    let g:gitgutter_grep                    = 'rg'
+    let g:gitgutter_map_keys                = 0
+    let g:gitgutter_sign_added              = '▎'
+    let g:gitgutter_sign_modified           = '▎'
+    let g:gitgutter_sign_modified_removed   = '▶'
+    let g:gitgutter_sign_removed            = '▶'
+    let g:gitgutter_sign_removed_first_line = '◥'
+    nmap [g <Plug>(GitGutterPrevHunk)
+    nmap ]g <Plug>(GitGutterNextHunk)
+    nmap <Leader>P <Plug>(GitGutterPreviewHunk)
+    nmap <Leader>+ <Plug>(GitGutterStageHunk)
+    nmap <Leader>- <Plug>(GitGutterUndoHunk)
 
-  " vim-lion
-  let g:lion_squeeze_spaces = 1
+    " pear-tree
+    let g:pear_tree_repeatable_expand = 0
+    let g:pear_tree_smart_backspace   = 1
+    let g:pear_tree_smart_closers     = 1
+    let g:pear_tree_smart_openers     = 1
 
-  " vim-toggle-quickfix
-  nnoremap <silent> <Leader>c :call togglequickfix#ToggleQuickfix()<CR>
-  nnoremap <silent> <Leader>l :call togglequickfix#ToggleLocation()<CR>
+    " Easymotion
+    let g:EasyMotion_smartcase = 1
+    nmap s <Plug>(easymotion-s2)
 
-  " vim-indent-guides
-  let g:indent_guides_enable_on_vim_startup = 1
-  let g:indent_guides_start_level           = 2
-  let g:indent_guides_guide_size            = 1
+    " vim-lion
+    let g:lion_squeeze_spaces = 1
 
-  " vim-airline
-  let g:airline#extensions#tabline#enabled = 1
+    " vim-toggle-quickfix
+    nnoremap <silent> <Leader>c :call togglequickfix#ToggleQuickfix()<CR>
+    nnoremap <silent> <Leader>l :call togglequickfix#ToggleLocation()<CR>
 
-  " FastFold
-  nmap zuz <Plug>(FastFoldUpdate)
-  let g:fastfold_savehook = 1
-  let g:fastfold_fold_command_suffixes =  ['a','A','o','O','c','C','M','R']
-  let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+    " vim-indent-guides
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:indent_guides_start_level           = 2
+    let g:indent_guides_guide_size            = 1
 
-  " undotree
-  let g:undotree_HighlightChangedWithSign = 0
-  let g:undotree_WindowLayout             = 4
-  nnoremap <Leader>u :UndotreeToggle<CR>
+    " vim-airline
+    let g:airline#extensions#tabline#enabled = 1 " Show buffers
+    let g:airline_detect_spelllang           = 0
+    let g:airline_detect_spell               = 0
 
-  " vim-fugitive
-  nnoremap <silent> <Leader>B :Gblame<CR>
-  nnoremap <silent> <Leader>C :Gclog %<CR>
-  nnoremap <silent> <Leader>D :Gdiffsplit<CR>
-  nnoremap <silent> <Leader>M :Git mergetool<CR>
-  nnoremap <silent> <Leader>G :Gstatus<CR>
+    " FastFold
+    nmap zuz <Plug>(FastFoldUpdate)
+    let g:fastfold_savehook               = 1
+    let g:fastfold_fold_command_suffixes  = ['a','A','o','O','c','C','M','R']
+    let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
-  " vim-wordmotion
-  " preserve whitespace
-  nmap cw ce
+    " undotree
+    let g:undotree_HighlightChangedWithSign = 0
+    let g:undotree_WindowLayout             = 4
+    nnoremap <Leader>u :UndotreeToggle<CR>
+
+    " vim-fugitive
+    nnoremap <silent> <Leader>B :Gblame<CR>
+    nnoremap <silent> <Leader>L :Gclog %<CR>
+    nnoremap <silent> <Leader>D :Gdiffsplit<CR>
+    nnoremap <silent> <Leader>M :Git mergetool<CR>
+    nnoremap <silent> <Leader>G :Gstatus<CR>
+
+    " vim-wordmotion
+    " preserve whitespace
+    nmap cw ce
+
+    " vim-stay
+    set viewoptions=cursor,folds,slash,unix
 
 
 " === CUSTOM MACROS ===
-  " Replace word with last yank (repeatable)
-  nnoremap <Leader>v ciw<C-r>0<Esc>
+    " Replace word with last yank (repeatable)
+    nnoremap <Leader>v ciw<C-r>0<Esc>
 
-  " The following commands will work for word under cursor or visual selection
-  " [s]ubstitute in current file
-  nnoremap <Leader>s :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s//<Left>
-  xnoremap <Leader>s "sy:%s/<C-r>s//<Left>
+    " The following commands will work for word under cursor or visual selection
+    " [s]ubstitute in current file
+    nnoremap <Leader>s :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s//<Left>
+    xnoremap <Leader>s "sy:%s/<C-r>s//<Left>
 
-  " [S]ubstitute in entire project
-  nnoremap <Leader>S
-    \ :let @s='\<'.expand('<cword>').'\>'<CR>
-    \ :Grepper -cword -noprompt<CR>
-    \ :cfdo %s/<C-r>s// \| update
-    \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-  xmap <Leader>S
-    \ "sy \|
-    \ :GrepperRg <C-r>s<CR>
-    \ :cfdo %s/<C-r>s// \| update
-    \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+    " [S]ubstitute in entire project
+    nnoremap <Leader>S
+        \ :let @s='\<'.expand('<cword>').'\>'<CR>
+        \ :Grepper -cword -noprompt<CR>
+        \ :cfdo %S/<C-r>s// \| update
+        \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+    xmap <Leader>S
+        \ "sy \|
+        \ :GrepperRg <C-r>s<CR>
+        \ :cfdo %s/<C-r>s// \| update
+        \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
-  " nearby find and [r]eplace
-  nnoremap <silent> <Leader>r :let @/='\<'.expand('<cword>').'\>'<CR>cgn
-  xnoremap <silent> <Leader>r "sy:let @/=@s<CR>cgn
-  nnoremap <Enter> gnzz
-  xmap <Enter> .<Esc>gnzz
-  xnoremap ! <Esc>ngnzz
-  autocmd! BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-  autocmd! CmdwinEnter *        nnoremap <buffer> <CR> <CR>
+    " nearby find and [r]eplace
+    nnoremap <silent> <Leader>r :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+    xnoremap <silent> <Leader>r "sy:let @/=@s<CR>cgn
+    nnoremap <Enter> gnzz
+    xmap <Enter> .<Esc>gnzz
+    xnoremap ! <Esc>ngnzz
+    autocmd! BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+    autocmd! CmdwinEnter *                nnoremap <buffer> <CR> <CR>
+
+    nnoremap <buffer> <F1> :exec '!python' shellescape(@%, 1)<cr>
 
 
 " === PERFORMANCE STUFF ===
-  augroup syntaxSyncMinLines
-      autocmd!
-      autocmd Syntax * syntax sync minlines=2000
-  augroup END
+    augroup syntaxSyncMinLines
+            autocmd!
+            autocmd Syntax * syntax sync minlines=2000
+    augroup END
 
 
-  set autoread
-  augroup autoRead
-      autocmd!
-      autocmd CursorHold * silent! checktime
-  augroup END
+    set autoread
+    augroup autoRead
+            autocmd!
+            autocmd CursorHold * silent! checktime
+    augroup END
 
 
 " TODO:
-  " - figure out what substitution/replace methods I want
-  " -- Global refactor/rename?
-  " - spell check?
-  " - python debugger
-  " - figure out optimal windowing/tabbing/buffers/splits
-  " - more formatting/organization/better grouping of this file
-  " - start using tmux
-  " - limit amount of autocomplete results
-  " - underline colors/style
-  " - master targets.vim
-  " - master fugitive (merging)
-  " - work on zshrc organization
-  " - python syntax highlighting
-  " - python yapf config (ale-fixing)
-  " - figure out how to hit enter to select and autocomplete
-  " - vim on the command line
+    " - figure out what substitution/replace methods I want
+    " -- Global refactor/rename?
+    " - python debugger
+    " - figure out optimal windowing/tabbing/buffers/splits
+    " - start using tmux
+    " - underline colors/style
+    " - master targets.vim
+    " - master fugitive (merging)
+    " - master/create UltiSnips
+    " - work on zshrc organization
+    " - python syntax highlighting
+    " - python yapf config (ale-fixing)
+    " - script to open visual selection in new buffer and add boilerplate python code
+    " - figure out how to hit <CR> to select an autocomplete
+    " - Start using ctags (with fzf)
+    " - html <> tag autocomplete
 
-  "===========================================================
-  " SETTINGS
-  "===========================================================
-
-  " Pre-Reqs:
-  " - vim version > 8
-  " - must have conceal feature (just install with brew to get all the features)
-  " - must have language servers installed
-  " - brew install fzf fd ripgrep
+" Pre-Reqs:
+    " - vim version > 8
+    " - must have conceal feature (just install with brew to get all the features)
+    " - must have language servers installed
+    " - brew install fzf fd ripgrep
+    " - pip install from .vim.requirements.txt
 
