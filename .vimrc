@@ -26,16 +26,16 @@ endif
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', 'GrepperRg', '<plug>(GrepperOperator)'] }  " enables lazy-loading
 
     " text editing/navigating
-    Plug 'tmsvg/pear-tree'                                 " Auto-input closing paired characters
+    Plug 'tmsvg/pear-tree'                      " Auto-input closing paired characters
     Plug 'nelstrom/vim-visual-star-search'
-    Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
+    Plug 'michaeljsmith/vim-indent-object'      " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'easymotion/vim-easymotion'
-    Plug 'tommcdo/vim-lion'                                " Align text around a chosen character
-    Plug 'drmingdrmer/vim-toggle-quickfix' " toggle quickfix and loclist
+    Plug 'tommcdo/vim-lion'                     " Align text around a chosen character
+    Plug 'drmingdrmer/vim-toggle-quickfix'      " toggle quickfix and loclist
     Plug 'wellle/targets.vim'
-    Plug 'Konfekt/FastFold'                                " Fixes issue where syntax folding makes vim really slow in larger files
-    Plug 'mbbill/undotree'                                 " undo history visualizer
-    Plug 'zhimsel/vim-stay'                                " Keep editing session state while switching buffers
+    Plug 'Konfekt/FastFold'                     " Fixes issue where syntax folding makes vim really slow in larger files
+    Plug 'mbbill/undotree'                      " undo history visualizer
+    Plug 'zhimsel/vim-stay'                     " Keep editing session state while switching buffers
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
 
@@ -44,13 +44,15 @@ endif
     Plug 'natebosch/vim-lsc'
     Plug 'ajh17/VimCompletesMe'
     Plug 'dense-analysis/ale'
-    Plug 'davidhalter/jedi-vim' " python renaming/usages
+    Plug 'davidhalter/jedi-vim'                 " python renaming/usages
+
+    " Running tests/code
+    Plug 'janko/vim-test'
 
     " ui
     " Plug 'bluz71/vim-moonfly-colors'
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
-    Plug 'vim-python/python-syntax'
     Plug 'pangloss/vim-javascript'
     Plug 'Yggdroot/indentLine'
     call plug#end()
@@ -173,7 +175,7 @@ endif
     nmap <Leader>w :w\|bp <BAR> bd #<CR>
 
     " quick-toggle for za fold
-    nnoremap <space> zazz
+    nnoremap <silent> <space> zazz
 
     " Apply the 'q' register macro to the visual selection
     xnoremap Q :'<,'>:normal @q<CR>
@@ -185,6 +187,16 @@ endif
 
     " Python stuff
     let g:python_highlight_all = 1
+
+    " terminal mappings (testing for example)
+        " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue
+        " put yank in terminal
+        tmap <C-p> <C-w>"0
+        " normal mode
+        tmap <C-n> <C-w>N
+        tmap <C-k> <C-w><C-k>
+        tmap <C-j> <C-w><C-j>
+
 
 " === PLUGIN CONFIG ===
     " ALE
@@ -328,6 +340,7 @@ endif
     let g:pear_tree_smart_backspace   = 1
     let g:pear_tree_smart_closers     = 1
     let g:pear_tree_smart_openers     = 1
+    let g:pear_tree_timeout = 60
 
     " Easymotion
     let g:EasyMotion_smartcase = 1
@@ -379,11 +392,23 @@ endif
     nnoremap <leader>es :UltiSnipsEdit<cr>
 
     " indentLine
-    let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+    let g:indentLine_char_list  = ['|', '¦', '┆', '┊']
+    let g:indentLine_faster     = 1
+    let g:indentLine_setConceal = 0
 
-    " vim-python
+    " vim-python (in polyglot)
     let g:python_highlight_indent_errors = 0
     let g:python_highlight_space_errors  = 0
+
+    " vim-test
+    nnoremap <silent> <Leader>tn :TestNearest<CR>
+    nnoremap <silent> <Leader>tf :TestFile<CR>
+    nnoremap <silent> <Leader>ts :TestSuite<CR>
+    nnoremap <silent> <Leader>tl :TestLast<CR>
+    nnoremap <silent> <Leader>tv :TestVisit<CR>
+    let test#strategy = "vimterminal"
+    let test#project_root = "~/dev/the-doc-man/api"
+
 
 " === CUSTOM MACROS ===
     " Replace word with last yank (repeatable)
@@ -430,16 +455,20 @@ endif
 " TIPS
     " - Toggle line wrapping: yow
     " - surround plugin does tags: dst, cst<div>, and lines: yss<div>
+    " - Git stuff:
+        " g? Show :Gstatus help.
+        " - Stage or unstage a file in :Gstatus.
+        " = Toggle inline diff in :Gstatus.
+        " dv Display a vdiff on the current file in :Gstatus.
+        " cc Commit the current staged files in :Gstatus.
 
 " TODO:
-    " - figure out what substitution/replace methods I want
     " - Global refactor/rename?
     " - python debugger
     " - figure out optimal windowing/tabbing/buffers/splits
     " - start using tmux
     " - underline colors/style
-    " - master targets.vim
-    " - master fugitive (merging)
+    " - master fugitive merging
     " - work on zshrc organization
     " - python yapf config (ale-fixing)
     " - script to open visual selection in new buffer and add boilerplate python code
@@ -451,6 +480,8 @@ endif
     " - macro to add debuggers (js and python)
     " - try using emmet-vim
     " - try asyncrun.vim for python output in quickfix
+    " - vim mode in terminal
+    " - terminal colors for py debugging
 
 " Pre-Reqs:
     " - vim version > 8
