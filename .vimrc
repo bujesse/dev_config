@@ -37,6 +37,7 @@ endif
     Plug 'mbbill/undotree'                                 " undo history visualizer
     Plug 'zhimsel/vim-stay'                                " Keep editing session state while switching buffers
     Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
 
     " language/autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
@@ -49,12 +50,15 @@ endif
     " Plug 'bluz71/vim-moonfly-colors'
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
-    Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'vim-python/python-syntax'
+    Plug 'pangloss/vim-javascript'
+    Plug 'Yggdroot/indentLine'
     call plug#end()
 
 
 " === BASIC CONFIGS ===
     colorscheme gruvbox
+    let g:gruvbox_contrast_dark = 'hard'
     syntax enable
     let mapleader=","
 
@@ -65,18 +69,18 @@ endif
     set breakindent                             " Wrap long lines *with* indentation
     set breakindentopt=shift:2
     set completeopt=menu,menuone,noinsert,noselect
-    set nocursorline
-    set foldopen+=search,undo,quickfix,jump
     set foldmethod=indent
+    set foldopen+=search,undo,quickfix,jump
     set gdefault                                " Always do global substitutes
     set hidden                                  " Switch to another buffer without writing or abandoning changes
     set history=200                             " Keep 200 changes of undo history
     set hlsearch
-    set lazyredraw
     set ignorecase
     set incsearch
     set infercase                               " Smart casing when completing
+    set lazyredraw
     set nocompatible
+    set nocursorline
     set nofixendofline
     set nojoinspaces                            " No to double-spaces when joining lines
     set noshowcmd                               " Makes it a little faster
@@ -85,11 +89,11 @@ endif
     set pumheight=15
     set regexpengine=1                          " Somehow this makes syntax highlighting in vim 100x faster
     set scrolloff=2
+    set showbreak=↳                             " Use this to wrap long lines
     set showcmd
     set showmatch
     set showmode
-    set signcolumn=auto                         " Only render sign column when needed
-    set showbreak=↳                             " Use this to wrap long lines
+    set signcolumn=yes                          " always render the sign column to prevent shifting
     set smartcase
     set smarttab
     set spell spelllang=en_us
@@ -97,6 +101,7 @@ endif
     set splitright
     set synmaxcol=200
     set tabstop=4 shiftwidth=4 expandtab
+    set textwidth=0 wrapmargin=0                " No auto-newline
     set termguicolors                           " Enable 24-bit color support for terminal Vim
     set timeoutlen=1000
     set ttimeoutlen=10
@@ -153,9 +158,8 @@ endif
     " set listchars=tab:▸\ ,eol:¬
     " map <leader>L :set list!<CR>
 
-    " Relative numbering and toggle
+    " Relative numbering (toggle with yor)
     set number relativenumber
-    map <leader>R :set rnu!<CR>
 
     " Auto remove trailing whitespace on save
     fun! TrimWhitespace()
@@ -168,8 +172,8 @@ endif
     " Close current buffer and move to the previous one
     nmap <Leader>w :w\|bp <BAR> bd #<CR>
 
-    " quick-toggle for zA fold
-    nnoremap <space> zAzz
+    " quick-toggle for za fold
+    nnoremap <space> zazz
 
     " Apply the 'q' register macro to the visual selection
     xnoremap Q :'<,'>:normal @q<CR>
@@ -178,6 +182,9 @@ endif
     nmap <silent> <leader>. :source $MYVIMRC<CR>
 
     nmap <Leader>p "0p
+
+    " Python stuff
+    let g:python_highlight_all = 1
 
 " === PLUGIN CONFIG ===
     " ALE
@@ -278,10 +285,12 @@ endif
         nnoremap <silent> <Leader>f :RG<CR>
         nnoremap <silent> <Leader>b :Buffers<CR>
         nnoremap <silent> <Leader>g :GFiles?<CR>
-        nnoremap <silent> <Leader>C :BCommits<CR>
+
+        " allows searching of snippet definitions
+        command! -bar -bang Snippets call fzf#vim#snippets({'options': '-n ..'}, <bang>0)
 
         " Insert mode completion
-        inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+        inoremap <expr> <c-x><c-w> fzf#vim#complete#word({'left': '15%'})
         imap <c-x><c-f> <plug>(fzf-complete-path)
         " Global line completion (not just open buffers. ripgrep required.)
         inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
@@ -331,11 +340,6 @@ endif
     nnoremap <silent> <Leader>c :call togglequickfix#ToggleQuickfix()<CR>
     nnoremap <silent> <Leader>l :call togglequickfix#ToggleLocation()<CR>
 
-    " vim-indent-guides
-    let g:indent_guides_enable_on_vim_startup = 1
-    let g:indent_guides_start_level           = 2
-    let g:indent_guides_guide_size            = 1
-
     " vim-airline
     let g:airline#extensions#tabline#enabled = 1 " Show buffers
     let g:airline_detect_spelllang           = 0
@@ -353,11 +357,11 @@ endif
     nnoremap <Leader>u :UndotreeToggle<CR>
 
     " vim-fugitive
+    " :G is shorthand for :Gstatus
     nnoremap <silent> <Leader>B :Gblame<CR>
     nnoremap <silent> <Leader>L :Gclog %<CR>
     nnoremap <silent> <Leader>D :Gdiffsplit<CR>
     nnoremap <silent> <Leader>M :Git mergetool<CR>
-    nnoremap <silent> <Leader>G :Gstatus<CR>
 
     " vim-wordmotion
     " preserve whitespace
@@ -366,71 +370,87 @@ endif
     " vim-stay
     set viewoptions=cursor,folds,slash,unix
 
+    " ultisnips
+    let g:UltiSnipsSnippetsDir         = '~/.vim/bundle/vim-snippets/UltiSnips'
+    let g:UltiSnipsExpandTrigger       = "<C-j>"
+    let g:UltiSnipsJumpForwardTrigger  = "<C-j>"
+    let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
+    let g:UltiSnipsListSnippets        = "<C-l>"
+    nnoremap <leader>es :UltiSnipsEdit<cr>
+
+    " indentLine
+    let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+    " vim-python
+    let g:python_highlight_indent_errors = 0
+    let g:python_highlight_space_errors  = 0
 
 " === CUSTOM MACROS ===
     " Replace word with last yank (repeatable)
     nnoremap <Leader>v ciw<C-r>0<Esc>
 
-    " The following commands will work for word under cursor or visual selection
+    " nearby find and [r]eplace
+    nnoremap <silent> <Leader>r :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+    xnoremap <silent> <Leader>r "sy:let @/=@s<CR>cgn
+
+    " Use "/c" at the end to choose
     " [s]ubstitute in current file
-    nnoremap <Leader>s :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s//<Left>
-    xnoremap <Leader>s "sy:%s/<C-r>s//<Left>
+    nnoremap <Leader>s :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s/
+    xnoremap <Leader>s "sy:%s/<C-r>s/
 
     " [S]ubstitute in entire project
     nnoremap <Leader>S
         \ :let @s='\<'.expand('<cword>').'\>'<CR>
         \ :Grepper -cword -noprompt<CR>
-        \ :cfdo %S/<C-r>s// \| update
-        \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+        \ :cfdo %S/<C-r>s/ \| update
+        \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
     xmap <Leader>S
         \ "sy \|
         \ :GrepperRg <C-r>s<CR>
-        \ :cfdo %s/<C-r>s// \| update
-        \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+        \ :cfdo %S/<C-r>s/ \| update
+        \ <Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
-    " nearby find and [r]eplace
-    nnoremap <silent> <Leader>r :let @/='\<'.expand('<cword>').'\>'<CR>cgn
-    xnoremap <silent> <Leader>r "sy:let @/=@s<CR>cgn
-    nnoremap <Enter> gnzz
-    xmap <Enter> .<Esc>gnzz
-    xnoremap ! <Esc>ngnzz
-    autocmd! BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-    autocmd! CmdwinEnter *                nnoremap <buffer> <CR> <CR>
-
+    " Run python on current buffer
     nnoremap <buffer> <F1> :exec '!python' shellescape(@%, 1)<cr>
 
 
 " === PERFORMANCE STUFF ===
     augroup syntaxSyncMinLines
-            autocmd!
-            autocmd Syntax * syntax sync minlines=2000
+        autocmd!
+        autocmd Syntax * syntax sync minlines=2000
     augroup END
 
 
     set autoread
     augroup autoRead
-            autocmd!
-            autocmd CursorHold * silent! checktime
+        autocmd!
+        autocmd CursorHold * silent! checktime
     augroup END
 
+" TIPS
+    " - Toggle line wrapping: yow
+    " - surround plugin does tags: dst, cst<div>, and lines: yss<div>
 
 " TODO:
     " - figure out what substitution/replace methods I want
-    " -- Global refactor/rename?
+    " - Global refactor/rename?
     " - python debugger
     " - figure out optimal windowing/tabbing/buffers/splits
     " - start using tmux
     " - underline colors/style
     " - master targets.vim
     " - master fugitive (merging)
-    " - master/create UltiSnips
     " - work on zshrc organization
-    " - python syntax highlighting
     " - python yapf config (ale-fixing)
     " - script to open visual selection in new buffer and add boilerplate python code
     " - figure out how to hit <CR> to select an autocomplete
     " - Start using ctags (with fzf)
     " - html <> tag autocomplete
+    " - figure out surround bug with <space>
+    " - figure out render lag
+    " - macro to add debuggers (js and python)
+    " - try using emmet-vim
+    " - try asyncrun.vim for python output in quickfix
 
 " Pre-Reqs:
     " - vim version > 8
