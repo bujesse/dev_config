@@ -174,8 +174,8 @@ endif
     " Close current buffer and move to the previous one
     nmap <Leader>w :w\|bp <BAR> bd #<CR>
 
-    " quick-toggle for za fold
-    nnoremap <silent> <space> zazz
+    " quick-toggle for zA fold
+    nnoremap <silent> <space> zAzz
 
     " Apply the 'q' register macro to the visual selection
     xnoremap Q :'<,'>:normal @q<CR>
@@ -261,30 +261,28 @@ endif
      \    'FindCodeActions': 'ga',
      \    'Completion': 'omnifunc',
      \}
-    let g:lsc_enable_autocomplete    = v:true
-    let g:lsc_enable_diagnostics     = v:false
+    let g:lsc_enable_autocomplete  = v:true
+    let g:lsc_enable_diagnostics   = v:false
     let g:lsc_reference_highlights = v:true
-    let g:lsc_trace_level                    = 'off'
-    inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-    inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+    let g:lsc_trace_level          = 'off'
 
     " jedi-vim
     " Everything else is handled by vim-lsc
-    let g:jedi#usages_command                     = "gu"
-    let g:jedi#rename_command                     = "R"
-    let g:jedi#goto_command                         = ""
+    let g:jedi#usages_command           = "gu"
+    let g:jedi#rename_command           = "R"
+    let g:jedi#goto_command             = ""
     let g:jedi#goto_assignments_command = ""
-    let g:jedi#goto_stubs_command             = ""
+    let g:jedi#goto_stubs_command       = ""
     let g:jedi#goto_definitions_command = ""
-    let g:jedi#documentation_command        = ""
-    let g:jedi#completions_command            = ""
-    let g:jedi#completions_enabled            = 0
+    let g:jedi#documentation_command    = ""
+    let g:jedi#completions_command      = ""
+    let g:jedi#completions_enabled      = 0
 
     " NERDTree
-    let NERDTreeHijackNetrw                     = 0
+    let NERDTreeHijackNetrw             = 0
     let g:NERDTreeDirArrowExpandable    = "▷"
-    let g:NERDTreeDirArrowCollapsible = "◢"
-    let g:NERDTreeUpdateOnWrite             = 1
+    let g:NERDTreeDirArrowCollapsible   = "◢"
+    let g:NERDTreeUpdateOnWrite         = 1
     noremap <silent> <Leader>t :NERDTreeToggle<CR> <C-w>=
     noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
 
