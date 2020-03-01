@@ -6,7 +6,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 
-" === Plugins ===
+" Section: PLUGINS
     call plug#begin('~/.vim/bundle')
     " tpope
     Plug 'tpope/vim-surround'
@@ -24,10 +24,10 @@ endif
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
     Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', 'GrepperRg', '<plug>(GrepperOperator)'] }  " enables lazy-loading
+    Plug 'nelstrom/vim-visual-star-search'
 
     " text editing/navigating
     Plug 'tmsvg/pear-tree'                      " Auto-input closing paired characters
-    Plug 'nelstrom/vim-visual-star-search'
     Plug 'michaeljsmith/vim-indent-object'      " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'easymotion/vim-easymotion'
     Plug 'tommcdo/vim-lion'                     " Align text around a chosen character
@@ -58,20 +58,23 @@ endif
     call plug#end()
 
 
-" === BASIC CONFIGS ===
+" Section: UI CONFIGS
     colorscheme gruvbox
     let g:gruvbox_contrast_dark = 'hard'
-    syntax enable
-    let mapleader=","
+    syntax on
 
 
-" === SET CONFIGS ===
+" Section: SET CONFIGS
     set autoindent
+    set autoread
     set backspace=indent,eol,start
     set breakindent                             " Wrap long lines *with* indentation
     set breakindentopt=shift:2
+    set belloff=all
     set completeopt=menu,menuone,noinsert,noselect
+    set foldlevelstart=20
     set foldmethod=indent
+    set foldnestmax=3
     set foldopen+=search,undo,quickfix,jump
     set gdefault                                " Always do global substitutes
     set hidden                                  " Switch to another buffer without writing or abandoning changes
@@ -80,7 +83,9 @@ endif
     set ignorecase
     set incsearch
     set infercase                               " Smart casing when completing
+    set laststatus=2                            " We want a statusline
     set lazyredraw
+    set mouse=a                                 " Mouse support in the terminal
     set nocompatible
     set nocursorline
     set nofixendofline
@@ -90,9 +95,9 @@ endif
     set noswapfile                              " No backup files
     set pumheight=15
     set regexpengine=1                          " Somehow this makes syntax highlighting in vim 100x faster
-    set scrolloff=2
+    set sidescroll=1
+    set scrolloff=8                             " Start scrolling when we're 8 lines away from margins
     set showbreak=↳                             " Use this to wrap long lines
-    set showcmd
     set showmatch
     set showmode
     set signcolumn=yes                          " always render the sign column to prevent shifting
@@ -102,16 +107,22 @@ endif
     set spellfile=$HOME/.vim/spell/en.utf-8.add " zg to add to spellfile
     set splitright
     set synmaxcol=200
-    set tabstop=4 shiftwidth=4 expandtab
+    set tabstop=4 shiftwidth=4 expandtab softtabstop=4
     set textwidth=0 wrapmargin=0                " No auto-newline
     set termguicolors                           " Enable 24-bit color support for terminal Vim
     set timeoutlen=1000
     set ttimeoutlen=10
     set ttyfast
     set updatetime=150
+    set wildcharm=<Tab>                         " Defines the trigger for 'wildmenu' in mappings
+    set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*,__pycache__
+    set wildmenu                                " Nice command completions
+    set wildmode=full                           " Complete the next full match
 
 
-" === PERSONAL CONFIGS ===
+" Section: PERSONAL CONFIGS
+    let mapleader=","
+
     " Set the persistent undo directory on temporary private fast storage.
     let s:undoDir="/tmp/.undodir_" . $USER
     if !isdirectory(s:undoDir)
@@ -122,12 +133,12 @@ endif
 
     map <leader>/ :noh<CR>
 
-    " Don't make the colors reversed
+    " Don't make the visual colors reversed
     highlight Visual cterm=NONE
 
     " Make timeout longer for leader
-    nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
-    autocmd CursorMoved * :set timeoutlen=1000
+    " nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
+    " autocmd CursorMoved * :set timeoutlen=1000
 
     " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
     nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
@@ -135,9 +146,6 @@ endif
 
     nnoremap L Lzz
     nnoremap H Hzz
-
-    nnoremap n nzz
-    nnoremap N Nzz
 
     imap jk <Esc>
     imap kj <Esc>
@@ -152,9 +160,10 @@ endif
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
+    nnoremap <C-v> <C-w><C-v>
 
-    " nmap ]t :tabn<CR>
-    " nmap [t :tabp<CR>
+    nmap ]t :tabn<CR>
+    nmap [t :tabp<CR>
 
     " Visualize tabs and newlines
     " set listchars=tab:▸\ ,eol:¬
@@ -171,11 +180,14 @@ endif
     endfun
     autocmd BufWritePre * :call TrimWhitespace()
 
-    " Close current buffer and move to the previous one
-    nmap <Leader>w :w\|bp <BAR> bd #<CR>
+    " Buffer stuff
+        " Close current buffer and move to the previous one
+        nmap <Leader>w :bp <BAR> bd #<CR>
+        let g:airline#extensions#tabline#buffer_nr_show = 1
 
-    " quick-toggle for zA fold
-    nnoremap <silent> <space> zAzz
+    " toggle a selected fold opened/closed.
+    nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+    vnoremap <Space> zf
 
     " Apply the 'q' register macro to the visual selection
     xnoremap Q :'<,'>:normal @q<CR>
@@ -183,10 +195,15 @@ endif
     " Source vimrc
     nmap <silent> <leader>. :source $MYVIMRC<CR>
 
-    nmap <Leader>p "0p
-
     " Python stuff
     let g:python_highlight_all = 1
+
+    " auto-indent pasted text
+    nnoremap p p=`]<C-o>
+    nnoremap P P=`]<C-o>
+
+    " paste from yank
+    nnoremap <C-p> "0p
 
     " terminal mappings (testing for example)
         " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue
@@ -196,25 +213,29 @@ endif
         tmap <C-n> <C-w>N
         tmap <C-k> <C-w><C-k>
         tmap <C-j> <C-w><C-j>
+        tmap <C-l> <C-w><C-l>
+        tmap <C-h> <C-w><C-h>
+        tmap <C-w>[t <C-w>:tabp<CR>
+        tmap <C-w>]t <C-w>:tabn<CR>
 
 
-" === PLUGIN CONFIG ===
+" Section: PLUGIN CONFIG
     " ALE
     let g:ale_linters = {
-    \    'javascript': ['eslint'],
-    \    'python':         ['flake8'],
-    \    'css':                ['csslint'],
-    \    'scss':             ['sasslint'],
-    \    'json':             ['jsonlint'],
-    \    'yaml':             ['yamllint']
+    \ 'javascript': ['eslint'],
+    \ 'python':     ['flake8'],
+    \ 'css':        ['csslint'],
+    \ 'scss':       ['sasslint'],
+    \ 'json':       ['jsonlint'],
+    \ 'yaml':       ['yamllint']
     \}
     let g:ale_fixers = {
-    \    'python':         ['yapf'],
-    \    'javascript': ['eslint'],
-    \    'css':                ['prettier'],
-    \    'scss':             ['prettier'],
-    \    'json':             ['prettier'],
-    \    'yml':                ['prettier']
+    \ 'python':     ['yapf'],
+    \ 'javascript': ['eslint'],
+    \ 'css':        ['prettier'],
+    \ 'scss':       ['prettier'],
+    \ 'json':       ['prettier'],
+    \ 'yml':        ['prettier']
     \}
     let g:ale_linters_explicit = 1
     let g:ale_open_list = 0
@@ -257,7 +278,7 @@ endif
      \    'NextReference': ']r',
      \    'PreviousReference': '[r',
      \    'Rename': 'gR',
-     \    'ShowHover': 'gh',
+     \    'ShowHover': 'K',
      \    'FindCodeActions': 'ga',
      \    'Completion': 'omnifunc',
      \}
@@ -279,15 +300,20 @@ endif
     let g:jedi#completions_enabled      = 0
 
     " NERDTree
-    let NERDTreeHijackNetrw             = 0
-    let g:NERDTreeDirArrowExpandable    = "▷"
-    let g:NERDTreeDirArrowCollapsible   = "◢"
-    let g:NERDTreeUpdateOnWrite         = 1
-    noremap <silent> <Leader>t :NERDTreeToggle<CR> <C-w>=
+    let NERDTreeHijackNetrw           = 0
+    let g:NERDTreeDirArrowExpandable  = "▷"
+    let g:NERDTreeDirArrowCollapsible = "◢"
+    let g:NERDTreeUpdateOnWrite       = 1
+    let NERDTreeRespectWildIgnore     = 1
     noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
+    " make sure vim does not open files and other buffers on NerdTree window
+        autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
+    " close vim if NerdTree is the last window
+        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
     " fzf
         " Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
+        " tab to select multiple, option-a to select all
         let g:fzf_commits_log_options = '--graph --color=always
             \ --format="%C(yellow)%h%C(red)%d%C(reset)
             \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
@@ -302,6 +328,7 @@ endif
         " Insert mode completion
         inoremap <expr> <c-x><c-w> fzf#vim#complete#word({'left': '15%'})
         imap <c-x><c-f> <plug>(fzf-complete-path)
+
         " Global line completion (not just open buffers. ripgrep required.)
         inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
                     \ 'prefix': '^.*$',
@@ -338,7 +365,7 @@ endif
     let g:pear_tree_smart_backspace   = 1
     let g:pear_tree_smart_closers     = 1
     let g:pear_tree_smart_openers     = 1
-    let g:pear_tree_timeout = 60
+    let g:pear_tree_timeout           = 60
 
     " Easymotion
     let g:EasyMotion_smartcase = 1
@@ -357,7 +384,6 @@ endif
     let g:airline_detect_spell               = 0
 
     " FastFold
-    nmap zuz <Plug>(FastFoldUpdate)
     let g:fastfold_savehook               = 1
     let g:fastfold_fold_command_suffixes  = ['a','A','o','O','c','C','M','R']
     let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
@@ -379,7 +405,7 @@ endif
     nmap cw ce
 
     " vim-stay
-    set viewoptions=cursor,folds,slash,unix
+    set viewoptions=cursor,slash,unix
 
     " ultisnips
     let g:UltiSnipsSnippetsDir         = '~/.vim/bundle/vim-snippets/UltiSnips'
@@ -408,7 +434,7 @@ endif
     let test#project_root = "~/dev/the-doc-man/api"
 
 
-" === CUSTOM MACROS ===
+" Section: CUSTOM MACROS
     " Replace word with last yank (repeatable)
     nnoremap <Leader>v ciw<C-r>0<Esc>
 
@@ -437,22 +463,29 @@ endif
     nnoremap <buffer> <F1> :exec '!python' shellescape(@%, 1)<cr>
 
 
-" === PERFORMANCE STUFF ===
+" Section: PERFORMANCE STUFF
+
+    " IMPORTANT: in ~/.vim/bundle/polyglot/indent/python.vim this makes newlines a lot faster
+    " Also add these:
+        " let s:paren_pairs = {'()': 25, '[]': 25, '{}': 25}
+        " let skip_special_chars = ''
+    let g:python_pep8_indent_searchpair_timeout = 10
+
     augroup syntaxSyncMinLines
         autocmd!
         autocmd Syntax * syntax sync minlines=2000
     augroup END
 
 
-    set autoread
     augroup autoRead
         autocmd!
         autocmd CursorHold * silent! checktime
     augroup END
 
-" TIPS
+" Section: TIPS
     " - Toggle line wrapping: yow
     " - surround plugin does tags: dst, cst<div>, and lines: yss<div>
+    " - insert mode <C-w> to delete word
     " - Git stuff:
         " g? Show :Gstatus help.
         " - Stage or unstage a file in :Gstatus.
@@ -460,7 +493,7 @@ endif
         " dv Display a vdiff on the current file in :Gstatus.
         " cc Commit the current staged files in :Gstatus.
 
-" TODO:
+" Section: TODO
     " - Global refactor/rename?
     " - python debugger
     " - figure out optimal windowing/tabbing/buffers/splits
@@ -481,7 +514,7 @@ endif
     " - vim mode in terminal
     " - terminal colors for py debugging
 
-" Pre-Reqs:
+" Section PRE REQUISITES
     " - vim version > 8
     " - must have conceal feature (just install with brew to get all the features)
     " - must have language servers installed
