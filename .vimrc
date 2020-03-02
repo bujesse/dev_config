@@ -510,9 +510,9 @@ endif
     " - figure out render lag
     " - macro to add debuggers (js and python)
     " - try using emmet-vim
-    " - try asyncrun.vim for python output in quickfix
     " - vim mode in terminal
     " - terminal colors for py debugging
+    " - analyze startup cost and optimize lazy loading
 
 " Section PRE REQUISITES
     " - vim version > 8

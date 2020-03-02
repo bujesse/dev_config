@@ -39,8 +39,8 @@ export MYVIMRC='~/.vimrc'
 alias python=python3
 alias pip=pip3
 # export PYTHONBREAKPOINT="pudb.set_trace"
-export PYTHONBREAKPOINT="ipdb.set_trace"
-# export PYTHONBREAKPOINT="pdb.set_trace"
+# export PYTHONBREAKPOINT="ipdb.set_trace"
+export PYTHONBREAKPOINT="pdb.set_trace"
 
 # Startup commands
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3

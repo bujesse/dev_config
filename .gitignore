@@ -8,6 +8,7 @@
 !.profile
 !.ideavimrc
 !.vim.requirements.txt
+!.pdbrc.py
 
 # ...even if they are in subdirectories
 */

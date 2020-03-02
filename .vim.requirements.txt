@@ -14,6 +14,7 @@ mccabe==0.6.1
 msgpack==1.0.0
 parso==0.5.2
 pathspec==0.7.0
+pdbpp
 pbr==5.4.4
 pluggy==0.13.1
 pycodestyle==2.5.0
