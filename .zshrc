@@ -51,7 +51,6 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
-alias p10k="vim ~/.p10k.zsh"
 
 function venv() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then

@@ -20,6 +20,7 @@ endif
     " files/git/searching
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
     Plug 'junegunn/fzf.vim'
+    Plug 'pbogut/fzf-mru.vim'
     Plug 'airblade/vim-gitgutter'
     Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
     Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
@@ -31,7 +32,7 @@ endif
     Plug 'michaeljsmith/vim-indent-object'      " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'easymotion/vim-easymotion'
     Plug 'tommcdo/vim-lion'                     " Align text around a chosen character
-    Plug 'drmingdrmer/vim-toggle-quickfix'      " toggle quickfix and loclist
+    Plug 'Valloric/ListToggle'                  " toggle quickfix and loclist
     Plug 'wellle/targets.vim'
     Plug 'Konfekt/FastFold'                     " Fixes issue where syntax folding makes vim really slow in larger files
     Plug 'mbbill/undotree'                      " undo history visualizer
@@ -45,16 +46,18 @@ endif
     Plug 'ajh17/VimCompletesMe'
     Plug 'dense-analysis/ale'
     Plug 'davidhalter/jedi-vim'                 " python renaming/usages
+    Plug 'alvan/vim-closetag'                   " auto-close html tags
 
-    " Running tests/code
+    " Running tests/code/misc
     Plug 'janko/vim-test'
+    Plug 'mtth/scratch.vim'
 
     " ui
-    " Plug 'bluz71/vim-moonfly-colors'
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
     Plug 'pangloss/vim-javascript'
     Plug 'Yggdroot/indentLine'
+    Plug 'ryanoasis/vim-devicons'
     call plug#end()
 
 
@@ -72,6 +75,7 @@ endif
     set breakindentopt=shift:2
     set belloff=all
     set completeopt=menu,menuone,noinsert,noselect
+    set encoding=UTF-8
     set foldlevelstart=20
     set foldmethod=indent
     set foldnestmax=3
@@ -148,7 +152,19 @@ endif
     nnoremap H Hzz
 
     imap jk <Esc>
+    imap Jk <Esc>
+    imap jK <Esc>
+    imap JK <Esc>
+
     imap kj <Esc>
+    imap Kj <Esc>
+    imap kJ <Esc>
+    imap KJ <Esc>
+
+    command WQ wq
+    command Wq wq
+    command W w
+    command Q q
 
     " Y should behave like D and C
     noremap Y y$
@@ -160,7 +176,6 @@ endif
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
-    nnoremap <C-v> <C-w><C-v>
 
     nmap ]t :tabn<CR>
     nmap [t :tabp<CR>
@@ -194,9 +209,6 @@ endif
 
     " Source vimrc
     nmap <silent> <leader>. :source $MYVIMRC<CR>
-
-    " Python stuff
-    let g:python_highlight_all = 1
 
     " auto-indent pasted text
     nnoremap p p=`]<C-o>
@@ -309,7 +321,7 @@ endif
     " make sure vim does not open files and other buffers on NerdTree window
         autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
     " close vim if NerdTree is the last window
-        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+        autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
     " fzf
         " Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
@@ -346,6 +358,15 @@ endif
         endfunction
         command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
+        " fzf-mru
+        nnoremap <silent> <leader>m :FZFMru<cr>
+        " Only list files within current directory.
+        let g:fzf_mru_relative = 1
+        " keep list sorted by recency
+        let g:fzf_mru_no_sort = 1
+
+        " I keep hitting :W
+
     " vim-gitgutter
     let g:gitgutter_grep                    = 'rg'
     let g:gitgutter_map_keys                = 0
@@ -374,10 +395,6 @@ endif
     " vim-lion
     let g:lion_squeeze_spaces = 1
 
-    " vim-toggle-quickfix
-    nnoremap <silent> <Leader>c :call togglequickfix#ToggleQuickfix()<CR>
-    nnoremap <silent> <Leader>l :call togglequickfix#ToggleLocation()<CR>
-
     " vim-airline
     let g:airline#extensions#tabline#enabled = 1 " Show buffers
     let g:airline_detect_spelllang           = 0
@@ -400,10 +417,6 @@ endif
     nnoremap <silent> <Leader>D :Gdiffsplit<CR>
     nnoremap <silent> <Leader>M :Git mergetool<CR>
 
-    " vim-wordmotion
-    " preserve whitespace
-    nmap cw ce
-
     " vim-stay
     set viewoptions=cursor,slash,unix
 
@@ -413,7 +426,7 @@ endif
     let g:UltiSnipsJumpForwardTrigger  = "<C-j>"
     let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
     let g:UltiSnipsListSnippets        = "<C-l>"
-    nnoremap <leader>es :UltiSnipsEdit<cr>
+    nnoremap <leader>eu :UltiSnipsEdit<cr>
 
     " indentLine
     let g:indentLine_char_list  = ['|', '¦', '┆', '┊']
@@ -421,6 +434,7 @@ endif
     let g:indentLine_setConceal = 0
 
     " vim-python (in polyglot)
+    let g:python_highlight_all = 1
     let g:python_highlight_indent_errors = 0
     let g:python_highlight_space_errors  = 0
 
@@ -432,6 +446,16 @@ endif
     nnoremap <silent> <Leader>tv :TestVisit<CR>
     let test#strategy = "vimterminal"
     let test#project_root = "~/dev/the-doc-man/api"
+
+    " vim-closetag
+    " Double-tap > when closing a tag to auto newline
+    let g:closetag_filenames = '*.html,*.js'
+
+    " scratch.vim
+    let g:scratch_no_mappings = 1
+    let g:scratch_insert_autohide = 0
+    nmap <leader>es <plug>(scratch-insert-reuse)
+    xmap <leader>es <plug>(scratch-selection-reuse)
 
 
 " Section: CUSTOM MACROS
@@ -486,6 +510,7 @@ endif
     " - Toggle line wrapping: yow
     " - surround plugin does tags: dst, cst<div>, and lines: yss<div>
     " - insert mode <C-w> to delete word
+    " - ':' mode <C-f> to search through ':' history
     " - Git stuff:
         " g? Show :Gstatus help.
         " - Stage or unstage a file in :Gstatus.
@@ -505,7 +530,6 @@ endif
     " - script to open visual selection in new buffer and add boilerplate python code
     " - figure out how to hit <CR> to select an autocomplete
     " - Start using ctags (with fzf)
-    " - html <> tag autocomplete
     " - figure out surround bug with <space>
     " - figure out render lag
     " - macro to add debuggers (js and python)
@@ -513,6 +537,9 @@ endif
     " - vim mode in terminal
     " - terminal colors for py debugging
     " - analyze startup cost and optimize lazy loading
+    " - try vim-peekaboo
+    " - try tabular and vim-easy-align for align (instead of vim-lion)
+    " - make Airline less noisy
 
 " Section PRE REQUISITES
     " - vim version > 8
@@ -520,4 +547,5 @@ endif
     " - must have language servers installed
     " - brew install fzf fd ripgrep
     " - pip install from .vim.requirements.txt
+    " - install a nerd-font from https://github.com/ryanoasis/nerd-fonts
 
