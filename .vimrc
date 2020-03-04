@@ -36,10 +36,10 @@ endif
     Plug 'Valloric/ListToggle'                  " toggle quickfix and loclist
     Plug 'wellle/targets.vim'
     Plug 'Konfekt/FastFold'                     " Fixes issue where syntax folding makes vim really slow in larger files
-    Plug 'mbbill/undotree'                      " undo history visualizer
     Plug 'zhimsel/vim-stay'                     " Keep editing session state while switching buffers
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
+    Plug 'rhysd/clever-f.vim'
 
     " language/autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
@@ -71,6 +71,7 @@ endif
 
 " Section: SET CONFIGS
     let mapleader=","
+    set number relativenumber " Relative numbering (toggle with yor)
     set autoindent
     set autoread
     set backspace=indent,eol,start
@@ -299,11 +300,6 @@ endif
     let g:fastfold_fold_command_suffixes  = ['a','A','o','O','c','C','M','R']
     let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
 
-    " undotree
-    let g:undotree_HighlightChangedWithSign = 0
-    let g:undotree_WindowLayout             = 4
-    nnoremap <Leader>u :UndotreeToggle<CR>
-
     " vim-fugitive
     " :G is shorthand for :Gstatus
     nnoremap <silent> <Leader>B :Gblame<CR>
@@ -364,6 +360,12 @@ endif
     map g* <Plug>(incsearch-nohl-g*)
     map g# <Plug>(incsearch-nohl-g#)
 
+    " clever-f.vim
+    map ; <Plug>(clever-f-repeat-forward)
+    let g:clever_f_across_no_line    = 1
+    let g:clever_f_fix_key_direction = 1
+    let g:clever_f_smart_case        = 1
+
 
 " Section: PERSONAL CONFIGS
     " Set the persistent undo directory on temporary private fast storage.
@@ -422,9 +424,6 @@ endif
     " Visualize tabs and newlines
     " set listchars=tab:▸\ ,eol:¬
     " map <leader>L :set list!<CR>
-
-    " Relative numbering (toggle with yor)
-    set number relativenumber
 
     " Auto remove trailing whitespace on save
     fun! TrimWhitespace()
