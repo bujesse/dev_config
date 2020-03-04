@@ -92,7 +92,7 @@ endif
     set infercase                               " Smart casing when completing
     set laststatus=2                            " We want a statusline
     set lazyredraw
-    set mouse=a                                 " Mouse support in the terminal
+    " set mouse=a                                 " Mouse support in the terminal
     set nocompatible
     set nocursorline
     set nofixendofline
@@ -212,7 +212,8 @@ endif
     let g:NERDTreeDirArrowCollapsible = "◢"
     let g:NERDTreeUpdateOnWrite       = 1
     let NERDTreeRespectWildIgnore     = 1
-    noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
+    noremap <silent> <Leader>nt :NERDTreeToggle<CR> <C-w>=
+    noremap <silent> <Leader>nf :NERDTreeFind<CR> <C-w>=
     " make sure vim does not open files and other buffers on NerdTree window
     autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
     " close vim if NerdTree is the last window
@@ -221,9 +222,10 @@ endif
     " fzf
         " Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
         " tab to select multiple, option-a to select all
+        let g:fzf_history_dir = "~/.fzf_history"
         let g:fzf_commits_log_options = '--graph --color=always
-                    \ --format="%C(yellow)%h%C(red)%d%C(reset)
-                    \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+            \ --format="%C(yellow)%h%C(red)%d%C(reset)
+            \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
         nnoremap <silent> <Leader>o :Files<CR>
         nnoremap <silent> <Leader>f :RG<CR>
         nnoremap <silent> <Leader>b :Buffers<CR>
@@ -233,15 +235,14 @@ endif
         command! -bar -bang Snippets call fzf#vim#snippets({'options': '-n ..'}, <bang>0)
 
         " Insert mode completion
-        inoremap <expr> <c-x><c-w> fzf#vim#complete#word({'left': '15%'})
         imap <c-x><c-f> <plug>(fzf-complete-path)
 
         " Global line completion (not just open buffers. ripgrep required.)
         inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
-                    \ 'prefix': '^.*$',
-                    \ 'source': 'rg -n ^ --color always',
-                    \ 'options': '--ansi --delimiter : --nth 3..',
-                    \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+            \ 'prefix': '^.*$',
+            \ 'source': 'rg -n ^ --color always',
+            \ 'options': '--ansi --delimiter : --nth 3..',
+            \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 
         " This function makes ripgrepping behave like how finding in jetbrains works
         function! RipgrepFzf(query, fullscreen)
@@ -254,7 +255,7 @@ endif
         command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
         " fzf-mru
-        nnoremap <silent> <leader>m :FZFMru<cr>
+        nnoremap <silent> <leader>m :FZFMru -m<cr>
         " Only list files within current directory.
         let g:fzf_mru_relative = 1
         " keep list sorted by recency
@@ -526,6 +527,8 @@ endif
     " - surround plugin does tags: dst, cst<div>, and lines: yss<div>
     " - insert mode <C-w> to delete word
     " - ':' mode <C-f> to search through ':' history
+    " - gi to insert mode at last insert mode, and gv to visual mode last visual mode
+    " - instead of visually selecting a long delete/yank, just ma and go to where you want to end, then do y'a or d'a
     " - Git stuff:
         " g? Show :Gstatus help.
         " - Stage or unstage a file in :Gstatus.
