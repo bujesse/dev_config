@@ -26,6 +26,7 @@ endif
     Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
     Plug 'mhinz/vim-grepper', { 'on': ['Grepper', 'GrepperRg', '<plug>(GrepperOperator)'] }  " enables lazy-loading
     Plug 'nelstrom/vim-visual-star-search'
+    Plug 'haya14busa/incsearch.vim'
 
     " text editing/navigating
     Plug 'tmsvg/pear-tree'                      " Auto-input closing paired characters
@@ -63,11 +64,13 @@ endif
 
 " Section: UI CONFIGS
     colorscheme gruvbox
-    let g:gruvbox_contrast_dark = 'hard'
+    set background=dark
+    let g:gruvbox_contrast_dark='hard'
     syntax on
 
 
 " Section: SET CONFIGS
+    let mapleader=","
     set autoindent
     set autoread
     set backspace=indent,eol,start
@@ -102,13 +105,12 @@ endif
     set sidescroll=1
     set scrolloff=8                             " Start scrolling when we're 8 lines away from margins
     set showbreak=↳                             " Use this to wrap long lines
-    set showmatch
-    set showmode
+    set noshowmode
     set signcolumn=yes                          " always render the sign column to prevent shifting
     set smartcase
     set smarttab
-    set spell spelllang=en_us
-    set spellfile=$HOME/.vim/spell/en.utf-8.add " zg to add to spellfile
+    " set spell spelllang=en_us
+    " set spellfile=$HOME/.vim/spell/en.utf-8.add " zg to add to spellfile
     set splitright
     set synmaxcol=200
     set tabstop=4 shiftwidth=4 expandtab softtabstop=4
@@ -124,131 +126,24 @@ endif
     set wildmode=full                           " Complete the next full match
 
 
-" Section: PERSONAL CONFIGS
-    let mapleader=","
-
-    " Set the persistent undo directory on temporary private fast storage.
-    let s:undoDir="/tmp/.undodir_" . $USER
-    if !isdirectory(s:undoDir)
-            call mkdir(s:undoDir, "", 0700)
-    endif
-    let &undodir=s:undoDir
-    set undofile                    " Maintain undo history
-
-    map <leader>/ :noh<CR>
-
-    " Don't make the visual colors reversed
-    highlight Visual cterm=NONE
-
-    " Make timeout longer for leader
-    " nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
-    " autocmd CursorMoved * :set timeoutlen=1000
-
-    " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
-    nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-    nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
-
-    nnoremap L Lzz
-    nnoremap H Hzz
-
-    imap jk <Esc>
-    imap Jk <Esc>
-    imap jK <Esc>
-    imap JK <Esc>
-
-    imap kj <Esc>
-    imap Kj <Esc>
-    imap kJ <Esc>
-    imap KJ <Esc>
-
-    command WQ wq
-    command Wq wq
-    command W w
-    command Q q
-
-    " Y should behave like D and C
-    noremap Y y$
-
-    " U feels like a more natural companion to u
-    nnoremap U <C-r>
-
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
-
-    nmap ]t :tabn<CR>
-    nmap [t :tabp<CR>
-
-    " Visualize tabs and newlines
-    " set listchars=tab:▸\ ,eol:¬
-    " map <leader>L :set list!<CR>
-
-    " Relative numbering (toggle with yor)
-    set number relativenumber
-
-    " Auto remove trailing whitespace on save
-    fun! TrimWhitespace()
-            let l:save = winsaveview()
-            keeppatterns %s/\s\+$//e
-            call winrestview(l:save)
-    endfun
-    autocmd BufWritePre * :call TrimWhitespace()
-
-    " Buffer stuff
-        " Close current buffer and move to the previous one
-        nmap <Leader>w :bp <BAR> bd #<CR>
-        let g:airline#extensions#tabline#buffer_nr_show = 1
-
-    " toggle a selected fold opened/closed.
-    nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-    vnoremap <Space> zf
-
-    " Apply the 'q' register macro to the visual selection
-    xnoremap Q :'<,'>:normal @q<CR>
-
-    " Source vimrc
-    nmap <silent> <leader>. :source $MYVIMRC<CR>
-
-    " auto-indent pasted text
-    nnoremap p p=`]<C-o>
-    nnoremap P P=`]<C-o>
-
-    " paste from yank
-    nnoremap <C-p> "0p
-
-    " terminal mappings (testing for example)
-        " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue
-        " put yank in terminal
-        tmap <C-p> <C-w>"0
-        " normal mode
-        tmap <C-n> <C-w>N
-        tmap <C-k> <C-w><C-k>
-        tmap <C-j> <C-w><C-j>
-        tmap <C-l> <C-w><C-l>
-        tmap <C-h> <C-w><C-h>
-        tmap <C-w>[t <C-w>:tabp<CR>
-        tmap <C-w>]t <C-w>:tabn<CR>
-
-
 " Section: PLUGIN CONFIG
     " ALE
     let g:ale_linters = {
-    \ 'javascript': ['eslint'],
-    \ 'python':     ['flake8'],
-    \ 'css':        ['csslint'],
-    \ 'scss':       ['sasslint'],
-    \ 'json':       ['jsonlint'],
-    \ 'yaml':       ['yamllint']
-    \}
+        \ 'javascript': ['eslint'],
+        \ 'python':     ['flake8'],
+        \ 'css':        ['csslint'],
+        \ 'scss':       ['sasslint'],
+        \ 'json':       ['jsonlint'],
+        \ 'yaml':       ['yamllint']
+        \}
     let g:ale_fixers = {
-    \ 'python':     ['yapf'],
-    \ 'javascript': ['eslint'],
-    \ 'css':        ['prettier'],
-    \ 'scss':       ['prettier'],
-    \ 'json':       ['prettier'],
-    \ 'yml':        ['prettier']
-    \}
+        \ 'python':     ['yapf'],
+        \ 'javascript': ['eslint'],
+        \ 'css':        ['prettier'],
+        \ 'scss':       ['prettier'],
+        \ 'json':       ['prettier'],
+        \ 'yml':        ['prettier']
+        \}
     let g:ale_linters_explicit = 1
     let g:ale_open_list = 0
     " highlight ALEErrorSign ctermbg=NONE ctermfg=red
@@ -273,27 +168,27 @@ endif
     " Use with jedi-vim for python since that has better rename and usage finding
     " https://github.com/natebosch/vim-lsc/wiki/Language-Servers
     let g:lsc_server_commands = {
-     \    'python': {
-     \        'command': 'pyls',
-     \        'log_level': -1,
-     \        'suppress_stderr': v:true,
-     \    },
-     \    'javascript': {
-     \        'command': 'typescript-language-server --stdio',
-     \        'log_level': -1,
-     \        'suppress_stderr': v:true,
-     \    }
-     \}
+        \    'python': {
+        \        'command': 'pyls',
+        \        'log_level': -1,
+        \        'suppress_stderr': v:true,
+        \    },
+        \    'javascript': {
+        \        'command': 'typescript-language-server --stdio',
+        \        'log_level': -1,
+        \        'suppress_stderr': v:true,
+        \    }
+        \}
     let g:lsc_auto_map = {
-     \    'GoToDefinition': 'gd',
-     \    'FindReferences': 'gr',
-     \    'NextReference': ']r',
-     \    'PreviousReference': '[r',
-     \    'Rename': 'gR',
-     \    'ShowHover': 'K',
-     \    'FindCodeActions': 'ga',
-     \    'Completion': 'omnifunc',
-     \}
+        \    'GoToDefinition': 'gd',
+        \    'FindReferences': 'gr',
+        \    'NextReference': ']r',
+        \    'PreviousReference': '[r',
+        \    'Rename': 'gR',
+        \    'ShowHover': 'K',
+        \    'FindCodeActions': 'ga',
+        \    'Completion': 'omnifunc',
+        \}
     let g:lsc_enable_autocomplete  = v:true
     let g:lsc_enable_diagnostics   = v:false
     let g:lsc_reference_highlights = v:true
@@ -319,16 +214,16 @@ endif
     let NERDTreeRespectWildIgnore     = 1
     noremap <silent> <Leader>n :NERDTreeFind<CR> <C-w>=
     " make sure vim does not open files and other buffers on NerdTree window
-        autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
+    autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
     " close vim if NerdTree is the last window
-        autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
     " fzf
         " Control-t (tab), use Control-x (horizontal split) or Control-v (verticle split)
         " tab to select multiple, option-a to select all
         let g:fzf_commits_log_options = '--graph --color=always
-            \ --format="%C(yellow)%h%C(red)%d%C(reset)
-            \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+                    \ --format="%C(yellow)%h%C(red)%d%C(reset)
+                    \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
         nnoremap <silent> <Leader>o :Files<CR>
         nnoremap <silent> <Leader>f :RG<CR>
         nnoremap <silent> <Leader>b :Buffers<CR>
@@ -364,8 +259,6 @@ endif
         let g:fzf_mru_relative = 1
         " keep list sorted by recency
         let g:fzf_mru_no_sort = 1
-
-        " I keep hitting :W
 
     " vim-gitgutter
     let g:gitgutter_grep                    = 'rg'
@@ -457,6 +350,129 @@ endif
     nmap <leader>es <plug>(scratch-insert-reuse)
     xmap <leader>es <plug>(scratch-selection-reuse)
 
+    " incsearch.vim
+    map /  <Plug>(incsearch-forward)
+    map ?  <Plug>(incsearch-backward)
+    map g/ <Plug>(incsearch-stay)
+    " noh when doing other movement
+    let g:incsearch#auto_nohlsearch = 1
+    map n  <Plug>(incsearch-nohl-n)
+    map N  <Plug>(incsearch-nohl-N)
+    map *  <Plug>(incsearch-nohl-*)
+    map #  <Plug>(incsearch-nohl-#)
+    map g* <Plug>(incsearch-nohl-g*)
+    map g# <Plug>(incsearch-nohl-g#)
+
+
+" Section: PERSONAL CONFIGS
+    " Set the persistent undo directory on temporary private fast storage.
+    let s:undoDir="/tmp/.undodir_" . $USER
+    if !isdirectory(s:undoDir)
+            call mkdir(s:undoDir, "", 0700)
+    endif
+    let &undodir=s:undoDir
+    set undofile                    " Maintain undo history
+
+    map <leader>/ :noh<CR>
+
+    " Don't make the visual colors reversed
+    highlight Visual cterm=NONE
+
+    " Make timeout longer for leader
+    " nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
+    " autocmd CursorMoved * :set timeoutlen=1000
+
+    " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
+    nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+    nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+
+    nnoremap L Lzz
+    nnoremap H Hzz
+
+    imap jk <Esc>
+    imap Jk <Esc>
+    imap jK <Esc>
+    imap JK <Esc>
+
+    imap kj <Esc>
+    imap Kj <Esc>
+    imap kJ <Esc>
+    imap KJ <Esc>
+
+    command WQ wq
+    command Wq wq
+    command W w
+    command Q q
+
+    " Y should behave like D and C
+    noremap Y y$
+
+    " U feels like a more natural companion to u
+    nnoremap U <C-r>
+
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+
+    nmap ]t :tabn<CR>
+    nmap [t :tabp<CR>
+
+    " Visualize tabs and newlines
+    " set listchars=tab:▸\ ,eol:¬
+    " map <leader>L :set list!<CR>
+
+    " Relative numbering (toggle with yor)
+    set number relativenumber
+
+    " Auto remove trailing whitespace on save
+    fun! TrimWhitespace()
+            let l:save = winsaveview()
+            keeppatterns %s/\s\+$//e
+            call winrestview(l:save)
+    endfun
+    autocmd BufWritePre * :call TrimWhitespace()
+
+    " Buffer stuff
+        " Close current buffer and move to the previous one
+        nmap <Leader>w :bp <BAR> bd! #<CR>
+        let g:airline#extensions#tabline#buffer_nr_show = 1
+
+    " toggle a selected fold opened/closed.
+    nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+    vnoremap <Space> zf
+
+    " Apply the 'q' register macro to the visual selection
+    xnoremap Q :'<,'>:normal @q<CR>
+
+    " Source vimrc
+    nmap <silent> <leader>. :source $MYVIMRC<CR>
+
+    " auto-indent pasted text
+    nnoremap p p=`]<C-o>
+    nnoremap P P=`]<C-o>
+
+    " paste from yank
+    nnoremap <C-p> "0p
+
+    " quick resize window size
+    nnoremap <silent> <Up>    :resize +5<CR>
+    nnoremap <silent> <Down>  :resize -5<CR>
+    nnoremap <silent> <Left>  :vertical resize -5<CR>
+    nnoremap <silent> <Right> :vertical resize +5<CR>
+
+    " terminal mappings (testing for example)
+        " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue
+        " put yank in terminal
+        tmap <C-p> <C-w>"0
+        " normal mode
+        tmap <C-n> <C-w>N
+        tmap <C-k> <C-w><C-k>
+        tmap <C-j> <C-w><C-j>
+        tmap <C-l> <C-w><C-l>
+        tmap <C-h> <C-w><C-h>
+        tnoremap <Esc> <C-\><C-n>
+
 
 " Section: CUSTOM MACROS
     " Replace word with last yank (repeatable)
@@ -488,11 +504,10 @@ endif
 
 
 " Section: PERFORMANCE STUFF
-
     " IMPORTANT: in ~/.vim/bundle/polyglot/indent/python.vim this makes newlines a lot faster
-    " Also add these:
-        " let s:paren_pairs = {'()': 25, '[]': 25, '{}': 25}
-        " let skip_special_chars = ''
+        " Also add these:
+            " let s:paren_pairs = {'()': 25, '[]': 25, '{}': 25}
+            " let skip_special_chars = ''
     let g:python_pep8_indent_searchpair_timeout = 10
 
     augroup syntaxSyncMinLines
@@ -540,6 +555,7 @@ endif
     " - try vim-peekaboo
     " - try tabular and vim-easy-align for align (instead of vim-lion)
     " - make Airline less noisy
+    " - make fold text better
 
 " Section PRE REQUISITES
     " - vim version > 8

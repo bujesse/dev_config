@@ -5,10 +5,12 @@
 !.gitignore
 !.vimrc
 !.zshrc
+!.zprofile
 !.profile
 !.ideavimrc
 !.vim.requirements.txt
 !.pdbrc.py
+!.gvimrc
 
 # ...even if they are in subdirectories
 */
