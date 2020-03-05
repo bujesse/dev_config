@@ -51,7 +51,7 @@ endif
 
     " Running tests/code/misc
     Plug 'janko/vim-test'
-    Plug 'mtth/scratch.vim'
+    Plug 'vimwiki/vimwiki'
 
     " ui
     Plug 'morhetz/gruvbox'
@@ -71,13 +71,17 @@ endif
 
 " Section: SET CONFIGS
     let mapleader=","
-    set number relativenumber " Relative numbering (toggle with yor)
+    " set mouse=a                                 " Mouse support in the terminal
+    " set spell spelllang=en_us
+    " set spellfile=$HOME/.vim/spell/en.utf-8.add " zg to add to spellfile
+
+    filetype plugin on
     set autoindent
     set autoread
     set backspace=indent,eol,start
+    set belloff=all
     set breakindent                             " Wrap long lines *with* indentation
     set breakindentopt=shift:2
-    set belloff=all
     set completeopt=menu,menuone,noinsert,noselect
     set encoding=UTF-8
     set foldlevelstart=20
@@ -93,30 +97,28 @@ endif
     set infercase                               " Smart casing when completing
     set laststatus=2                            " We want a statusline
     set lazyredraw
-    " set mouse=a                                 " Mouse support in the terminal
     set nocompatible
     set nocursorline
     set nofixendofline
     set nojoinspaces                            " No to double-spaces when joining lines
     set noshowcmd                               " Makes it a little faster
     set noshowmatch                             " No jumping cursors when matching pairs
+    set noshowmode
     set noswapfile                              " No backup files
+    set number relativenumber                   " Relative numbering (toggle with yor)
     set pumheight=15
     set regexpengine=1                          " Somehow this makes syntax highlighting in vim 100x faster
-    set sidescroll=1
     set scrolloff=8                             " Start scrolling when we're 8 lines away from margins
     set showbreak=↳                             " Use this to wrap long lines
-    set noshowmode
+    set sidescroll=1
     set signcolumn=yes                          " always render the sign column to prevent shifting
     set smartcase
     set smarttab
-    " set spell spelllang=en_us
-    " set spellfile=$HOME/.vim/spell/en.utf-8.add " zg to add to spellfile
     set splitright
     set synmaxcol=200
     set tabstop=4 shiftwidth=4 expandtab softtabstop=4
-    set textwidth=0 wrapmargin=0                " No auto-newline
     set termguicolors                           " Enable 24-bit color support for terminal Vim
+    set textwidth=0 wrapmargin=0                " No auto-newline
     set timeoutlen=1000
     set ttimeoutlen=10
     set ttyfast
@@ -213,8 +215,8 @@ endif
     let g:NERDTreeDirArrowCollapsible = "◢"
     let g:NERDTreeUpdateOnWrite       = 1
     let NERDTreeRespectWildIgnore     = 1
-    noremap <silent> <Leader>nt :NERDTreeToggle<CR> <C-w>=
-    noremap <silent> <Leader>nf :NERDTreeFind<CR> <C-w>=
+    noremap <silent> <Leader>N :NERDTreeToggle<CR>
+    noremap <silent> <Leader>n :NERDTreeFind<CR>
     " make sure vim does not open files and other buffers on NerdTree window
     autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
     " close vim if NerdTree is the last window
@@ -366,6 +368,11 @@ endif
     let g:clever_f_fix_key_direction = 1
     let g:clever_f_smart_case        = 1
 
+    " vimwiki
+    let g:vimwiki_list = [{'path': '~/Documents/notes', 'syntax': 'markdown', 'ext': '.md'}]
+    nmap _ <Plug>VimwikiAddHeaderLevel
+    autocmd FileType vimwiki set ft=markdown
+
 
 " Section: PERSONAL CONFIGS
     " Set the persistent undo directory on temporary private fast storage.
@@ -435,7 +442,7 @@ endif
 
     " Buffer stuff
         " Close current buffer and move to the previous one
-        nmap <Leader>w :bp <BAR> bd! #<CR>
+        nmap <Leader>d :bp <BAR> bd! #<CR>
         let g:airline#extensions#tabline#buffer_nr_show = 1
 
     " toggle a selected fold opened/closed.
@@ -520,44 +527,6 @@ endif
         autocmd!
         autocmd CursorHold * silent! checktime
     augroup END
-
-" Section: TIPS
-    " - Toggle line wrapping: yow
-    " - surround plugin does tags: dst, cst<div>, and lines: yss<div>
-    " - insert mode <C-w> to delete word
-    " - ':' mode <C-f> to search through ':' history
-    " - gi to insert mode at last insert mode, and gv to visual mode last visual mode
-    " - instead of visually selecting a long delete/yank, just ma and go to where you want to end, then do y'a or d'a
-    " - Git stuff:
-        " g? Show :Gstatus help.
-        " - Stage or unstage a file in :Gstatus.
-        " = Toggle inline diff in :Gstatus.
-        " dv Display a vdiff on the current file in :Gstatus.
-        " cc Commit the current staged files in :Gstatus.
-
-" Section: TODO
-    " - Global refactor/rename?
-    " - python debugger
-    " - figure out optimal windowing/tabbing/buffers/splits
-    " - start using tmux
-    " - underline colors/style
-    " - master fugitive merging
-    " - work on zshrc organization
-    " - python yapf config (ale-fixing)
-    " - script to open visual selection in new buffer and add boilerplate python code
-    " - figure out how to hit <CR> to select an autocomplete
-    " - Start using ctags (with fzf)
-    " - figure out surround bug with <space>
-    " - figure out render lag
-    " - macro to add debuggers (js and python)
-    " - try using emmet-vim
-    " - vim mode in terminal
-    " - terminal colors for py debugging
-    " - analyze startup cost and optimize lazy loading
-    " - try vim-peekaboo
-    " - try tabular and vim-easy-align for align (instead of vim-lion)
-    " - make Airline less noisy
-    " - make fold text better
 
 " Section PRE REQUISITES
     " - vim version > 8
