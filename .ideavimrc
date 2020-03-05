@@ -1,3 +1,104 @@
-source ~/.vimrc
 set surround
 set easymotion
+
+let g:EasyMotion_smartcase = 1
+nmap s <Plug>(easymotion-s2)
+
+" Section: SET CONFIGS
+    let mapleader=","
+
+    set autoindent
+    set autoread
+    set backspace=indent,eol,start
+    set belloff=all
+    set breakindent                             " Wrap long lines *with* indentation
+    set breakindentopt=shift:2
+    set completeopt=menu,menuone,noinsert,noselect
+    set encoding=UTF-8
+    set foldlevelstart=20
+    set foldmethod=indent
+    set foldopen+=search,undo,quickfix,jump
+    set gdefault                                " Always do global substitutes
+    set hidden                                  " Switch to another buffer without writing or abandoning changes
+    set history=200                             " Keep 200 changes of undo history
+    set hlsearch
+    set ignorecase
+    set incsearch
+    set infercase                               " Smart casing when completing
+    set nojoinspaces                            " No to double-spaces when joining lines
+    set number relativenumber                   " Relative numbering (toggle with yor)
+    set regexpengine=1                          " Somehow this makes syntax highlighting in vim 100x faster
+    set scrolloff=8                             " Start scrolling when we're 8 lines away from margins
+    set showbreak=↳                             " Use this to wrap long lines
+    set sidescroll=1
+    set smartcase
+    set smarttab
+    set tabstop=4 shiftwidth=4 expandtab softtabstop=4
+    set termguicolors                           " Enable 24-bit color support for terminal Vim
+    set textwidth=0 wrapmargin=0                " No auto-newline
+    set timeoutlen=1000
+    set ttimeoutlen=10
+    set ttyfast
+
+" Section: PERSONAL CONFIGS
+    " Set the persistent undo directory on temporary private fast storage.
+    let s:undoDir="/tmp/.undodir_" . $USER
+    if !isdirectory(s:undoDir)
+        call mkdir(s:undoDir, "", 0700)
+    endif
+    let &undodir=s:undoDir
+    set undofile                    " Maintain undo history
+
+    map <leader>/ :noh<CR>
+
+    " Don't make the visual colors reversed
+    highlight Visual cterm=NONE
+
+    " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
+    nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+    nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+
+    nnoremap L Lzz
+    nnoremap H Hzz
+
+    nnoremap F ,,;
+
+    imap jk <Esc>
+    imap Jk <Esc>
+    imap jK <Esc>
+    imap JK <Esc>
+
+    imap kj <Esc>
+    imap Kj <Esc>
+    imap kJ <Esc>
+    imap KJ <Esc>
+
+    command WQ wq
+    command Wq wq
+    command W w
+    command Q q
+
+    " Y should behave like D and C
+    noremap Y y$
+
+    " U feels like a more natural companion to u
+    nnoremap U <C-r>
+
+    " Buffer stuff
+    " Close current buffer and move to the previous one
+    nmap <Leader>d :bp <BAR> bd! #<CR>
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+
+    " toggle a selected fold opened/closed.
+    nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+    vnoremap <Space> zf
+
+    " Apply the 'q' register macro to the visual selection
+    xnoremap Q :'<,'>:normal @q<CR>
+
+    " Source vimrc
+    nmap <silent> <leader>. :source $MYVIMRC<CR>
+
+    " paste from yank
+    nnoremap <C-p> "0P
+

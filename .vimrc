@@ -12,8 +12,8 @@ endif
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-abolish'                             " crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
-    Plug 'tpope/vim-unimpaired'                        " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
-    Plug 'tpope/vim-commentary'                        " gc to toggle comments
+    Plug 'tpope/vim-unimpaired'                          " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
+    Plug 'tpope/vim-commentary'                          " gc to toggle comments
     Plug 'tpope/vim-fugitive'                            " git wrapper
     " Plug 'tpope/vim-sleuth'                            " Tabbing
 
@@ -29,7 +29,6 @@ endif
     Plug 'haya14busa/incsearch.vim'
 
     " text editing/navigating
-    Plug 'tmsvg/pear-tree'                      " Auto-input closing paired characters
     Plug 'michaeljsmith/vim-indent-object'      " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'easymotion/vim-easymotion'
     Plug 'tommcdo/vim-lion'                     " Align text around a chosen character
@@ -48,6 +47,7 @@ endif
     Plug 'dense-analysis/ale'
     Plug 'davidhalter/jedi-vim'                 " python renaming/usages
     Plug 'alvan/vim-closetag'                   " auto-close html tags
+    Plug 'tmsvg/pear-tree'                      " Auto-input closing paired characters
 
     " Running tests/code/misc
     Plug 'janko/vim-test'
@@ -56,7 +56,6 @@ endif
     " ui
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
-    Plug 'pangloss/vim-javascript'
     Plug 'Yggdroot/indentLine'
     Plug 'ryanoasis/vim-devicons'
     call plug#end()
@@ -86,7 +85,6 @@ endif
     set encoding=UTF-8
     set foldlevelstart=20
     set foldmethod=indent
-    set foldnestmax=3
     set foldopen+=search,undo,quickfix,jump
     set gdefault                                " Always do global substitutes
     set hidden                                  " Switch to another buffer without writing or abandoning changes
@@ -189,7 +187,6 @@ endif
         \    'PreviousReference': '[r',
         \    'Rename': 'gR',
         \    'ShowHover': 'K',
-        \    'FindCodeActions': 'ga',
         \    'Completion': 'omnifunc',
         \}
     let g:lsc_enable_autocomplete  = v:true
@@ -206,8 +203,8 @@ endif
     let g:jedi#goto_stubs_command       = ""
     let g:jedi#goto_definitions_command = ""
     let g:jedi#documentation_command    = ""
-    let g:jedi#completions_command      = ""
-    let g:jedi#completions_enabled      = 0
+    let g:jedi#completions_enabled      = 1
+    let g:jedi#show_call_signatures     = "0"
 
     " NERDTree
     let NERDTreeHijackNetrw           = 0
@@ -238,6 +235,8 @@ endif
         command! -bar -bang Snippets call fzf#vim#snippets({'options': '-n ..'}, <bang>0)
 
         " Insert mode completion
+        inoremap <expr> <c-x><c-w> fzf#vim#complete#word({'left': '15%'})
+        inoremap <c-x><c-w> fzf#vim#complete#word({'left': '15%'})
         imap <c-x><c-f> <plug>(fzf-complete-path)
 
         " Global line completion (not just open buffers. ripgrep required.)
@@ -369,7 +368,8 @@ endif
     let g:clever_f_smart_case        = 1
 
     " vimwiki
-    let g:vimwiki_list = [{'path': '~/Documents/notes', 'syntax': 'markdown', 'ext': '.md'}]
+    let g:vimwiki_list    = [{'path': '~/Documents/notes', 'syntax': 'markdown', 'ext': '.md'}]
+    let g:vimwiki_folding = 'list'
     nmap _ <Plug>VimwikiAddHeaderLevel
     autocmd FileType vimwiki set ft=markdown
 
@@ -378,7 +378,7 @@ endif
     " Set the persistent undo directory on temporary private fast storage.
     let s:undoDir="/tmp/.undodir_" . $USER
     if !isdirectory(s:undoDir)
-            call mkdir(s:undoDir, "", 0700)
+        call mkdir(s:undoDir, "", 0700)
     endif
     let &undodir=s:undoDir
     set undofile                    " Maintain undo history
@@ -440,11 +440,6 @@ endif
     endfun
     autocmd BufWritePre * :call TrimWhitespace()
 
-    " Buffer stuff
-        " Close current buffer and move to the previous one
-        nmap <Leader>d :bp <BAR> bd! #<CR>
-        let g:airline#extensions#tabline#buffer_nr_show = 1
-
     " toggle a selected fold opened/closed.
     nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
     vnoremap <Space> zf
@@ -460,7 +455,7 @@ endif
     nnoremap P P=`]<C-o>
 
     " paste from yank
-    nnoremap <C-p> "0p
+    nnoremap <C-p> "0P
 
     " quick resize window size
     nnoremap <silent> <Up>    :resize +5<CR>
@@ -480,6 +475,35 @@ endif
         tmap <C-h> <C-w><C-h>
         tnoremap <Esc> <C-\><C-n>
 
+    " Buffer stuff
+        " Skip quickfix buffer when cycling, and don't allow buffer cycling in the quickfix
+        function! BSkipQuickFix(command)
+            if &buftype ==# 'quickfix'
+                return
+            endif
+            let start_buffer = bufnr('%')
+            execute a:command
+            while &buftype ==# 'quickfix' && bufnr('%') != start_buffer
+                execute a:command
+            endwhile
+        endfunction
+        nnoremap ]b :call BSkipQuickFix(":bn")<CR>
+        nnoremap [b :call BSkipQuickFix(":bp")<CR>
+
+        " Close current buffer and move to the previous one
+        function! BCloseSkipQuickFix()
+            let start_buffer = bufnr('%')
+            execute ":bp"
+            while &buftype ==# 'quickfix' && bufnr('%') != start_buffer
+                execute ":bp"
+            endwhile
+            execute "bd! " . start_buffer
+        endfunction
+        nmap <Leader>d :call BCloseSkipQuickFix()<CR>
+        let g:airline#extensions#tabline#buffer_nr_show = 1
+
+        " quit if the last buffer is a quickfix
+        autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
 
 " Section: CUSTOM MACROS
     " Replace word with last yank (repeatable)
@@ -508,6 +532,9 @@ endif
 
     " Run python on current buffer
     nnoremap <buffer> <F1> :exec '!python' shellescape(@%, 1)<cr>
+
+    " Profiler
+    nnoremap <F2> :profile start profile.log<bar>profile file *<bar>profile func *<cr>
 
 
 " Section: PERFORMANCE STUFF
