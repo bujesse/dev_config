@@ -11,6 +11,7 @@
 !.vim.requirements.txt
 !.pdbrc.py
 !.gvimrc
+!.eslintrc.json
 
 # ...even if they are in subdirectories
 */

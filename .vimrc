@@ -95,7 +95,6 @@ endif
     set infercase                               " Smart casing when completing
     set laststatus=2                            " We want a statusline
     set lazyredraw
-    set nocompatible
     set nocursorline
     set nofixendofline
     set nojoinspaces                            " No to double-spaces when joining lines
@@ -342,12 +341,6 @@ endif
     " Double-tap > when closing a tag to auto newline
     let g:closetag_filenames = '*.html,*.js'
 
-    " scratch.vim
-    let g:scratch_no_mappings = 1
-    let g:scratch_insert_autohide = 0
-    nmap <leader>es <plug>(scratch-insert-reuse)
-    xmap <leader>es <plug>(scratch-selection-reuse)
-
     " incsearch.vim
     map /  <Plug>(incsearch-forward)
     map ?  <Plug>(incsearch-backward)
@@ -370,6 +363,7 @@ endif
     " vimwiki
     let g:vimwiki_list    = [{'path': '~/Documents/notes', 'syntax': 'markdown', 'ext': '.md'}]
     let g:vimwiki_folding = 'list'
+    let g:vimwiki_listsyms = ' ✗○◐●✓'
     nmap _ <Plug>VimwikiAddHeaderLevel
     autocmd FileType vimwiki set ft=markdown
 
@@ -535,6 +529,9 @@ endif
 
     " Profiler
     nnoremap <F2> :profile start profile.log<bar>profile file *<bar>profile func *<cr>
+
+    " insert current timestamp
+    nnoremap gts :pu=strftime('%c')<CR>
 
 
 " Section: PERFORMANCE STUFF
