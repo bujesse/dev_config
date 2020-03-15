@@ -79,7 +79,7 @@ endif
     set autoread
     set backspace=indent,eol,start
     set belloff=all
-    set breakindent                             " Wrap long lines *with* indentation
+    set breakindent                             " Wrap long lines with indentation
     set breakindentopt=shift:2
     set completeopt=menu,menuone,noinsert,noselect
     set encoding=UTF-8
@@ -291,9 +291,10 @@ endif
     let g:lion_squeeze_spaces = 1
 
     " vim-airline
-    let g:airline#extensions#tabline#enabled = 1 " Show buffers
-    let g:airline_detect_spelllang           = 0
-    let g:airline_detect_spell               = 0
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+    let g:airline#extensions#tabline#enabled        = 1 " Show buffers
+    let g:airline_detect_spelllang                  = 0
+    let g:airline_detect_spell                      = 0
 
     " FastFold
     let g:fastfold_savehook               = 1
@@ -321,7 +322,6 @@ endif
     " indentLine
     let g:indentLine_char_list  = ['|', '¦', '┆', '┊']
     let g:indentLine_faster     = 1
-    let g:indentLine_setConceal = 0
 
     " vim-python (in polyglot)
     let g:python_highlight_all = 1
@@ -382,16 +382,9 @@ endif
     " Don't make the visual colors reversed
     highlight Visual cterm=NONE
 
-    " Make timeout longer for leader
-    " nmap <silent> <Leader> :<C-U>set timeoutlen=9999<CR><Leader>
-    " autocmd CursorMoved * :set timeoutlen=1000
-
     " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
     nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
     nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
-
-    nnoremap L Lzz
-    nnoremap H Hzz
 
     imap jk <Esc>
     imap Jk <Esc>
@@ -422,12 +415,18 @@ endif
     nmap ]t :tabn<CR>
     nmap [t :tabp<CR>
 
+    " Make [ and ] movements work for non-first column braces. Good for js-like syntax: function foo {}
+    map [[ ?{<CR>w99[{
+    map ][ /}<CR>b99]}
+    map ]] j0[[%/{<CR>
+    map [] k$][%?}<CR>
+
     " Visualize tabs and newlines
     " set listchars=tab:▸\ ,eol:¬
     " map <leader>L :set list!<CR>
 
     " Auto remove trailing whitespace on save
-    fun! TrimWhitespace()
+    function! TrimWhitespace()
             let l:save = winsaveview()
             keeppatterns %s/\s\+$//e
             call winrestview(l:save)
@@ -435,14 +434,8 @@ endif
     autocmd BufWritePre * :call TrimWhitespace()
 
     " toggle a selected fold opened/closed.
-    nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+    nnoremap <silent> <Space> za
     vnoremap <Space> zf
-
-    " Apply the 'q' register macro to the visual selection
-    xnoremap Q :'<,'>:normal @q<CR>
-
-    " Source vimrc
-    nmap <silent> <leader>. :source $MYVIMRC<CR>
 
     " auto-indent pasted text
     nnoremap p p=`]<C-o>
@@ -494,7 +487,6 @@ endif
             execute "bd! " . start_buffer
         endfunction
         nmap <Leader>d :call BCloseSkipQuickFix()<CR>
-        let g:airline#extensions#tabline#buffer_nr_show = 1
 
         " quit if the last buffer is a quickfix
         autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
@@ -532,6 +524,12 @@ endif
 
     " insert current timestamp
     nnoremap gts :pu=strftime('%c')<CR>
+
+    " Apply the 'q' register macro to the visual selection
+    xnoremap Q :'<,'>:normal @q<CR>
+
+    " Source vimrc
+    nmap <silent> <leader>. :source $MYVIMRC<CR>
 
 
 " Section: PERFORMANCE STUFF
