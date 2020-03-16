@@ -45,11 +45,9 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
     }
 
 # === FZF ===
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-    [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
     export FZF_DEFAULT_COMMAND='fd --type f --color=never'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --hidden --no-ignore"
     export FZF_ALT_C_COMMAND='fd --type d . --color=never'
     function fzf_find_edit() {
         local file=$(
@@ -71,3 +69,5 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 source $ZSH/oh-my-zsh.sh
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh

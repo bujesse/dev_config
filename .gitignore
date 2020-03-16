@@ -1,21 +1,24 @@
 # Ignore everything
 *
 
-# But not these files...
-!.gitignore
-!.vimrc
-!.zshrc
-!.zprofile
-!.profile
-!.ideavimrc
-!.vim.requirements.txt
-!.pdbrc.py
-!.gvimrc
-!.eslintrc.json
-
 # ...even if they are in subdirectories
 */
 
-# if the files to be tracked are in subdirectories
-# !*/a/b/file1.txt
-# !*/a/b/c/*
+# But not these files...
+!.eslintrc.json
+!.gitignore
+!.gvimrc
+!.ideavimrc
+!.pdbrc.py
+!.profile
+!.vim.requirements.txt
+
+!.vim/
+!.vim/after/
+!.vim/after/*
+!.vim/after/syntax/
+!.vim/after/syntax/*
+
+!.vimrc
+!.zprofile
+!.zshrc
