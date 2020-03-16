@@ -202,7 +202,7 @@ endif
     let g:jedi#goto_stubs_command       = ""
     let g:jedi#goto_definitions_command = ""
     let g:jedi#documentation_command    = ""
-    let g:jedi#completions_enabled      = 1
+    let g:jedi#completions_enabled      = 0
     let g:jedi#show_call_signatures     = "0"
 
     " NERDTree
@@ -313,7 +313,7 @@ endif
 
     " ultisnips
     let g:UltiSnipsSnippetsDir         = '~/.vim/bundle/vim-snippets/UltiSnips'
-    let g:UltiSnipsExpandTrigger       = "<C-j>"
+    let g:UltiSnipsExpandTrigger       = "<C-u>"
     let g:UltiSnipsJumpForwardTrigger  = "<C-j>"
     let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
     let g:UltiSnipsListSnippets        = "<C-l>"
@@ -324,9 +324,10 @@ endif
     let g:indentLine_faster     = 1
 
     " vim-python (in polyglot)
-    let g:python_highlight_all = 1
+    let g:python_highlight_all           = 1
     let g:python_highlight_indent_errors = 0
     let g:python_highlight_space_errors  = 0
+    let g:python_highlight_operators     = 0
 
     " vim-test
     nnoremap <silent> <Leader>tn :TestNearest<CR>
@@ -379,8 +380,25 @@ endif
 
     map <leader>/ :noh<CR>
 
-    " Don't make the visual colors reversed
-    highlight Visual cterm=NONE
+    " Custom Theming
+        " Don't make the visual colors reversed
+        highlight Visual cterm=NONE
+        " Search highlight color
+        highlight Search guifg=#83a598
+
+        highlight link Function GruvboxPurple
+        highlight link Boolean GruvboxOrange
+        highlight link Constant GruvboxOrange
+        highlight link Character GruvboxOrange
+        highlight link Boolean GruvboxOrange
+        highlight link Number GruvboxOrange
+        highlight link Float GruvboxOrange
+
+        highlight link pythonBoolean GruvboxOrange
+
+        highlight link javaScriptNull GruvboxOrange
+        highlight link typeScriptNull GruvboxOrange
+        highlight link jsNull GruvboxOrange
 
     " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
     nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
@@ -449,6 +467,9 @@ endif
     nnoremap <silent> <Down>  :resize -5<CR>
     nnoremap <silent> <Left>  :vertical resize -5<CR>
     nnoremap <silent> <Right> :vertical resize +5<CR>
+
+    inoremap <C-j> <Down>
+    inoremap <C-k> <Up>
 
     " terminal mappings (testing for example)
         " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue

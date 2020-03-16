@@ -1,5 +1,6 @@
 set surround
 set easymotion
+set commentary
 
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
@@ -40,15 +41,13 @@ nmap s <Plug>(easymotion-s2)
     set ttimeoutlen=10
     set ttyfast
 
-" Section: PERSONAL CONFIGS
-    " Set the persistent undo directory on temporary private fast storage.
-    let s:undoDir="/tmp/.undodir_" . $USER
-    if !isdirectory(s:undoDir)
-        call mkdir(s:undoDir, "", 0700)
-    endif
-    let &undodir=s:undoDir
-    set undofile                    " Maintain undo history
 
+" Section: IDEAVIM actions
+    map ]r :action GotoNextElementUnderCaretUsage<CR>
+    map [r :action GotoPrevElementUnderCaretUsage<CR>
+
+
+" Section: CONFIGS FROM VIMRC
     map <leader>/ :noh<CR>
 
     " Don't make the visual colors reversed
@@ -58,10 +57,8 @@ nmap s <Plug>(easymotion-s2)
     nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
     nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
-    nnoremap L Lzz
-    nnoremap H Hzz
-
-    nnoremap F ,,;
+    " Clever-f backwards
+    nnoremap F ,<C-c>
 
     imap jk <Esc>
     imap Jk <Esc>
@@ -101,4 +98,3 @@ nmap s <Plug>(easymotion-s2)
 
     " paste from yank
     nnoremap <C-p> "0P
-
