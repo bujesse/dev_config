@@ -43,8 +43,63 @@ nmap s <Plug>(easymotion-s2)
 
 
 " Section: IDEAVIM actions
-    map ]r :action GotoNextElementUnderCaretUsage<CR>
-    map [r :action GotoPrevElementUnderCaretUsage<CR>
+    nnoremap ]m :action MethodDown<cr>
+    nnoremap [m :action MethodUp<cr>
+
+    " Hack to jump to top-level class for function
+    nnoremap [[ ?\(^class \\\|^def \)<cr>:noh<cr>
+    nnoremap ]] /\(^class \\\|^def \)<cr>:noh<cr>
+
+    nnoremap <Leader>x :action CloseContent<cr>
+    nnoremap gh :action ShowErrorDescription<cr>
+
+    " vim-unimpaired
+        nnoremap [<space> O<esc>j
+        nnoremap ]<space> o<esc>k
+        nnoremap ]b :action NextTab<cr>
+        nnoremap [b :action PreviousTab<cr>
+
+    " LSC
+        nnoremap ]r :action GotoNextElementUnderCaretUsage<CR>
+        nnoremap [r :action GotoPrevElementUnderCaretUsage<CR>
+
+    " Git-gutter
+        " Move to next/prev hunk. The extra actions are to not activate the change preview window
+        nnoremap [g :action VcsShowPrevChangeMarker<cr>:action EditorDown<cr>:action EditorUp<cr>
+        nnoremap ]g :action VcsShowNextChangeMarker<cr>:action EditorDown<cr>:action EditorUp<cr>
+        " This activates the change preview window
+        nnoremap <Leader>P :action VcsShowCurrentChangeMarker<cr>
+        " Rollback hunk at the cursor
+        nnoremap <Leader>- :action Vcs.RollbackChangedLines<cr>
+
+    " ALE refactoring
+        nnoremap <Leader>af :action ReformatCode<CR>
+
+    " Refactoring
+        nnoremap Rm :action RefactoringMenu<cr>
+        nnoremap Rr :action RenameElement<cr>
+
+    " Navigation
+        nnoremap <Leader>m :action RecentFiles<cr>
+        nnoremap <Leader>n :action ActivateProjectToolWindow<cr>
+        nnoremap <Leader>f :action FindInPath<cr>
+
+    " Debugging
+        nnoremap <Space><Space> :action DebugMainMenu<cr>
+        nnoremap <Space>dd :action Debug<cr>
+        nnoremap <Space>dn :action DebugClass<cr>
+        nnoremap <Space>dl :action Rerun<cr>
+
+        nnoremap <Space>b :action ToggleLineBreakpoint<cr>
+        nnoremap <Space>e :action EditBreakpoint<cr>
+        nnoremap <Space>w viw:action Debugger.AddToWatch<cr>
+        xnoremap <Space>w :action Debugger.AddToWatch<cr>
+
+        nnoremap <Space>i :action StepInto<cr>
+        nnoremap <Space>o :action StepOut<cr>
+        nnoremap <Space>n :action StepOver<cr>
+        nnoremap <Space>j :action RunToCursor<cr>
+        nnoremap <Space>c :action Resume<cr>
 
 
 " Section: CONFIGS FROM VIMRC
@@ -56,9 +111,6 @@ nmap s <Plug>(easymotion-s2)
     " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
     nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
     nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
-
-    " Clever-f backwards
-    nnoremap F ,<C-c>
 
     imap jk <Esc>
     imap Jk <Esc>
@@ -75,26 +127,20 @@ nmap s <Plug>(easymotion-s2)
     command W w
     command Q q
 
+    nnoremap <c-l> <c-w>l
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-k> <c-w>k
+
     " Y should behave like D and C
     noremap Y y$
 
     " U feels like a more natural companion to u
     nnoremap U <C-r>
 
-    " Buffer stuff
-    " Close current buffer and move to the previous one
-    nmap <Leader>d :bp <BAR> bd! #<CR>
-    let g:airline#extensions#tabline#buffer_nr_show = 1
+    " Quick source
+    nnoremap <Leader>. :source ~/.ideavimrc<cr>
 
-    " toggle a selected fold opened/closed.
-    nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-    vnoremap <Space> zf
-
-    " Apply the 'q' register macro to the visual selection
-    xnoremap Q :'<,'>:normal @q<CR>
-
-    " Source vimrc
-    nmap <silent> <leader>. :source $MYVIMRC<CR>
-
-    " paste from yank
-    nnoremap <C-p> "0P
+" Section: CUSTOM MACROS
+    nnoremap <Leader>v ciw<C-r>0<Esc>
+    xnoremap <Leader>v c<C-r>0<Esc>

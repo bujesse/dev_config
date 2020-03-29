@@ -39,6 +39,7 @@ endif
     Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
     Plug 'rhysd/clever-f.vim'
+    Plug 'machakann/vim-swap'
 
     " language/autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
@@ -95,7 +96,8 @@ endif
     set infercase                               " Smart casing when completing
     set laststatus=2                            " We want a statusline
     set lazyredraw
-    set nocursorline
+    set cursorline
+    " set cursorlineopt=number
     set nofixendofline
     set nojoinspaces                            " No to double-spaces when joining lines
     set noshowcmd                               " Makes it a little faster
@@ -116,7 +118,7 @@ endif
     set tabstop=4 shiftwidth=4 expandtab softtabstop=4
     set termguicolors                           " Enable 24-bit color support for terminal Vim
     set textwidth=0 wrapmargin=0                " No auto-newline
-    set timeoutlen=1000
+    set timeoutlen=1500
     set ttimeoutlen=10
     set ttyfast
     set updatetime=150
@@ -192,6 +194,7 @@ endif
     let g:lsc_enable_diagnostics   = v:false
     let g:lsc_reference_highlights = v:true
     let g:lsc_trace_level          = 'off'
+    nnoremap <silent> <leader>R :LSClientRestartServer<cr>
 
     " jedi-vim
     " Everything else is handled by vim-lsc
@@ -227,8 +230,10 @@ endif
             \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
         nnoremap <silent> <Leader>o :Files<CR>
         nnoremap <silent> <Leader>f :RG<CR>
-        nnoremap <silent> <Leader>b :Buffers<CR>
         nnoremap <silent> <Leader>g :GFiles?<CR>
+        nnoremap <silent> <Leader>hh :History<CR>
+        nnoremap <silent> <Leader>hc :History:<CR>
+        nnoremap <silent> <Leader>hs :History/<CR>
 
         " allows searching of snippet definitions
         command! -bar -bang Snippets call fzf#vim#snippets({'options': '-n ..'}, <bang>0)
@@ -362,11 +367,18 @@ endif
     let g:clever_f_smart_case        = 1
 
     " vimwiki
-    let g:vimwiki_list    = [{'path': '~/Documents/notes', 'syntax': 'markdown', 'ext': '.md'}]
-    let g:vimwiki_folding = 'list'
+    let g:vimwiki_list     = [{'path': '~/Documents/notes', 'syntax': 'markdown', 'ext': '.md'}]
+    let g:vimwiki_folding  = 'list'
     let g:vimwiki_listsyms = ' ✗○◐●✓'
     nmap _ <Plug>VimwikiAddHeaderLevel
     autocmd FileType vimwiki set ft=markdown
+
+    " vim-swap
+    let g:swap_no_default_key_mappings = 1
+    nmap gS <Plug>(swap-interactive)
+    xmap gS <Plug>(swap-interactive)
+    nmap g< <Plug>(swap-prev)
+    nmap g> <Plug>(swap-next)
 
 
 " Section: PERSONAL CONFIGS
@@ -451,10 +463,6 @@ endif
     endfun
     autocmd BufWritePre * :call TrimWhitespace()
 
-    " toggle a selected fold opened/closed.
-    nnoremap <silent> <Space> za
-    vnoremap <Space> zf
-
     " auto-indent pasted text
     nnoremap p p=`]<C-o>
     nnoremap P P=`]<C-o>
@@ -507,7 +515,7 @@ endif
             endwhile
             execute "bd! " . start_buffer
         endfunction
-        nmap <Leader>d :call BCloseSkipQuickFix()<CR>
+        nmap <Leader>x :call BCloseSkipQuickFix()<CR>
 
         " quit if the last buffer is a quickfix
         autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
@@ -515,6 +523,11 @@ endif
 " Section: CUSTOM MACROS
     " Replace word with last yank (repeatable)
     nnoremap <Leader>v ciw<C-r>0<Esc>
+    xnoremap <Leader>v c<C-r>0<Esc>
+
+    " Replace word with last cut (repeatable)
+    nnoremap <Leader>V "_ciw<C-r>-<Esc>
+    xnoremap <Leader>V "_c<C-r>-<Esc>
 
     " nearby find and [r]eplace
     nnoremap <silent> <Leader>r :let @/='\<'.expand('<cword>').'\>'<CR>cgn
@@ -551,6 +564,32 @@ endif
 
     " Source vimrc
     nmap <silent> <leader>. :source $MYVIMRC<CR>
+
+    " Call lazygit in a window
+        function! Flt_term_win(cmd, width, height, border_highlight) abort
+            let width = float2nr(&columns * a:width)
+            let height = float2nr(&lines * a:height)
+            let bufnr = term_start(a:cmd, {'hidden': 1, 'term_finish': 'close'})
+
+            let winid = popup_create(bufnr, {
+                    \ 'minwidth': width,
+                    \ 'maxwidth': width,
+                    \ 'minheight': height,
+                    \ 'maxheight': height,
+                    \ 'border': [],
+                    \ 'borderchars': ['─', '│', '─', '│', '┌', '┐', '┘', '└'],
+                    \ 'borderhighlight': [a:border_highlight],
+                    \ 'padding': [0,1,0,1],
+                    \ 'highlight': a:border_highlight
+                    \ })
+
+            " Optionally set the 'Normal' color for the terminal buffer
+            " call setwinvar(winid, '&wincolor', 'Special')
+
+            return winid
+        endfunction
+
+        nnoremap <silent> <leader>Z :call Flt_term_win('lazygit',0.9,0.6,'Todo')<CR>
 
 
 " Section: PERFORMANCE STUFF

@@ -27,6 +27,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
     alias zshrc="vim ~/.zshrc"
     alias vimrc="vim ~/.vimrc"
     alias ohmyzsh="vim ~/.oh-my-zsh"
+    alias lg="lazygit"
 
 # === PYTHON ===
     alias python=python3
