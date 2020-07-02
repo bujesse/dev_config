@@ -53,6 +53,9 @@ nmap s <Plug>(easymotion-s2)
     nnoremap <Leader>x :action CloseContent<cr>
     nnoremap gh :action ShowErrorDescription<cr>
 
+    " vim-visual-star-search
+        xnoremap * "zy/<C-R>z<CR>
+
     " vim-unimpaired
         nnoremap [<space> O<esc>j
         nnoremap ]<space> o<esc>k
@@ -71,6 +74,9 @@ nmap s <Plug>(easymotion-s2)
         nnoremap <Leader>P :action VcsShowCurrentChangeMarker<cr>
         " Rollback hunk at the cursor
         nnoremap <Leader>- :action Vcs.RollbackChangedLines<cr>
+
+    " vim-fugitive
+        nnoremap <silent> <Leader>B :action Annotate<CR>
 
     " ALE refactoring
         nnoremap <Leader>af :action ReformatCode<CR>
@@ -142,5 +148,10 @@ nmap s <Plug>(easymotion-s2)
     nnoremap <Leader>. :source ~/.ideavimrc<cr>
 
 " Section: CUSTOM MACROS
+    " replace with yank
     nnoremap <Leader>v ciw<C-r>0<Esc>
     xnoremap <Leader>v c<C-r>0<Esc>
+
+    " replace with cut
+    nnoremap <Leader>c "_ciw<C-r>-<Esc>
+    xnoremap <Leader>c "_c<C-r>-<Esc>

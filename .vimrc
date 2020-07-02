@@ -15,7 +15,6 @@ endif
     Plug 'tpope/vim-unimpaired'                          " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
     Plug 'tpope/vim-commentary'                          " gc to toggle comments
     Plug 'tpope/vim-fugitive'                            " git wrapper
-    " Plug 'tpope/vim-sleuth'                            " Tabbing
 
     " files/git/searching
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
@@ -463,10 +462,6 @@ endif
     endfun
     autocmd BufWritePre * :call TrimWhitespace()
 
-    " auto-indent pasted text
-    nnoremap p p=`]<C-o>
-    nnoremap P P=`]<C-o>
-
     " paste from yank
     nnoremap <C-p> "0P
 
@@ -526,8 +521,8 @@ endif
     xnoremap <Leader>v c<C-r>0<Esc>
 
     " Replace word with last cut (repeatable)
-    nnoremap <Leader>V "_ciw<C-r>-<Esc>
-    xnoremap <Leader>V "_c<C-r>-<Esc>
+    nnoremap <Leader>c "_ciw<C-r>-<Esc>
+    xnoremap <Leader>c "_c<C-r>-<Esc>
 
     " nearby find and [r]eplace
     nnoremap <silent> <Leader>r :let @/='\<'.expand('<cword>').'\>'<CR>cgn

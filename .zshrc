@@ -1,4 +1,11 @@
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -17,6 +24,8 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
         vscode
         docker
     )
+    setopt noincappendhistory
+    setopt nosharehistory
 
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
@@ -32,7 +41,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # === PYTHON ===
     alias python=python3
     alias pip=pip3
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
     export WORKON_HOME=~/python_envs
     export PYTHONBREAKPOINT="pdb.set_trace"
     source /usr/local/bin/virtualenvwrapper.sh
