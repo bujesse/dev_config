@@ -5,9 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
-=======
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/bin
+export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -37,7 +35,6 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH:/Library/Java/JavaV
     export ZSH="$HOME/.oh-my-zsh"
     export EDITOR='vim'
     export MYVIMRC='~/.vimrc'
-    export JAVA_HOME='/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home'
 
 # === ALIASES ===
     alias zshrc="vim ~/.zshrc"
@@ -53,7 +50,6 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH:/Library/Java/JavaV
 # === PYTHON ===
     alias python=python3
     alias pip=pip3
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/opt/python@3.8/bin/python3
     export WORKON_HOME=~/python_envs
     export PYTHONBREAKPOINT="pdb.set_trace"
     source /usr/local/bin/virtualenvwrapper.sh
