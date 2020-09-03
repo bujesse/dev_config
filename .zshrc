@@ -23,14 +23,19 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
         virtualenvwrapper
         vscode
         docker
+        zsh-vim-mode
     )
     setopt noincappendhistory
     setopt nosharehistory
+
+# === ZSH-VIM-MODE ===
+    VIM_MODE_VICMD_KEY='jk'
 
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
     export EDITOR='vim'
     export MYVIMRC='~/.vimrc'
+    export JAVA_HOME='/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home'
 
 # === ALIASES ===
     alias zshrc="vim ~/.zshrc"

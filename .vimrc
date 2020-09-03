@@ -39,6 +39,7 @@ endif
     Plug 'honza/vim-snippets'
     Plug 'rhysd/clever-f.vim'
     Plug 'machakann/vim-swap'
+    Plug 'tommcdo/vim-exchange'                 " swap 2 text objects
 
     " language/autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
@@ -168,6 +169,7 @@ endif
     " vim-lsc
     " Use with jedi-vim for python since that has better rename and usage finding
     " https://github.com/natebosch/vim-lsc/wiki/Language-Servers
+    " npm install -g typescript typescript-language-server
     let g:lsc_server_commands = {
         \    'python': {
         \        'command': 'pyls',
