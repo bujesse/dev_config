@@ -6,6 +6,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
+=======
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH:/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/bin
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -42,6 +44,11 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
     alias vimrc="vim ~/.vimrc"
     alias ohmyzsh="vim ~/.oh-my-zsh"
     alias lg="lazygit"
+
+# === GOLANG ===
+    export GOPATH=$HOME/go
+    export PATH=$PATH:$(go env GOPATH)/bin
+    export GO111MODULE=on
 
 # === PYTHON ===
     alias python=python3

@@ -41,14 +41,17 @@ endif
     Plug 'machakann/vim-swap'
     Plug 'tommcdo/vim-exchange'                 " swap 2 text objects
 
-    " language/autocomplete/linting/fixing
+    " autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
     Plug 'natebosch/vim-lsc'
     Plug 'ajh17/VimCompletesMe'
     Plug 'dense-analysis/ale'
-    Plug 'davidhalter/jedi-vim'                 " python renaming/usages
     Plug 'alvan/vim-closetag'                   " auto-close html tags
     Plug 'tmsvg/pear-tree'                      " Auto-input closing paired characters
+
+    " Language-specific
+    Plug 'davidhalter/jedi-vim'                 " python renaming/usages
+    Plug 'fatih/vim-go'                         " Go language support
 
     " Running tests/code/misc
     Plug 'janko/vim-test'
@@ -133,6 +136,7 @@ endif
     let g:ale_linters = {
         \ 'javascript': ['eslint'],
         \ 'python':     ['flake8'],
+        \ 'go':         ['gopls'],
         \ 'css':        ['csslint'],
         \ 'scss':       ['sasslint'],
         \ 'json':       ['jsonlint'],
@@ -208,6 +212,15 @@ endif
     let g:jedi#documentation_command    = ""
     let g:jedi#completions_enabled      = 0
     let g:jedi#show_call_signatures     = "0"
+
+    " vim-go
+    let g:go_def_mode='gopls'
+    let g:go_info_mode='gopls'
+    augroup goGroup
+        autocmd FileType go nmap K <Plug>(go-doc-browser)
+        autocmd FileType go nmap Rr <Plug>(go-rename)
+        autocmd FileType go nmap gr <Plug>(go-referrers)
+    augroup END
 
     " NERDTree
     let NERDTreeHijackNetrw           = 0
