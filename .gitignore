@@ -12,6 +12,7 @@
 !.pdbrc.py
 !.profile
 !.vim.requirements.txt
+!.condarc
 
 !.vim/
 !.vim/after/

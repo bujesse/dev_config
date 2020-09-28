@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:/usr/local/go/bin:$PATH
+export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -42,16 +42,12 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:/usr/local/go
     alias ohmyzsh="vim ~/.oh-my-zsh"
     alias lg="lazygit"
 
-# === GOLANG ===
-    export GOPATH=$HOME/go
-    export PATH=$PATH:$(go env GOPATH)/bin
-    export GO111MODULE=on
-
 # === PYTHON ===
     alias python=python3
     alias pip=pip3
     export WORKON_HOME=~/python_envs
     export PYTHONBREAKPOINT="pdb.set_trace"
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
     source /usr/local/bin/virtualenvwrapper.sh
     function venv() {
         if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
@@ -89,3 +85,19 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/buj/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/buj/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/buj/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/buj/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

@@ -35,7 +35,6 @@ endif
     Plug 'wellle/targets.vim'
     Plug 'Konfekt/FastFold'                     " Fixes issue where syntax folding makes vim really slow in larger files
     Plug 'zhimsel/vim-stay'                     " Keep editing session state while switching buffers
-    Plug 'SirVer/ultisnips'
     Plug 'honza/vim-snippets'
     Plug 'rhysd/clever-f.vim'
     Plug 'machakann/vim-swap'
@@ -51,7 +50,6 @@ endif
 
     " Language-specific
     Plug 'davidhalter/jedi-vim'                 " python renaming/usages
-    Plug 'fatih/vim-go'                         " Go language support
 
     " Running tests/code/misc
     Plug 'janko/vim-test'
@@ -329,14 +327,6 @@ endif
 
     " vim-stay
     set viewoptions=cursor,slash,unix
-
-    " ultisnips
-    let g:UltiSnipsSnippetsDir         = '~/.vim/bundle/vim-snippets/UltiSnips'
-    let g:UltiSnipsExpandTrigger       = "<C-u>"
-    let g:UltiSnipsJumpForwardTrigger  = "<C-j>"
-    let g:UltiSnipsJumpBackwardTrigger = "<C-k>"
-    let g:UltiSnipsListSnippets        = "<C-l>"
-    nnoremap <leader>eu :UltiSnipsEdit<cr>
 
     " indentLine
     let g:indentLine_char_list  = ['|', '¦', '┆', '┊']
