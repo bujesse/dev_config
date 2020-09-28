@@ -54,6 +54,12 @@ nmap s <Plug>(easymotion-s2)
     nnoremap <Leader>x :action CloseContent<cr>
     nnoremap gh :action ShowErrorDescription<cr>
 
+    " vim-abolish
+        nnoremap crs :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
+        nnoremap crc :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
+        xnoremap crs :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
+        xnoremap crc :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
+
     " vim-visual-star-search
         xnoremap * "zy/<C-R>z<CR>
 
