@@ -1,7 +1,14 @@
 set surround
 set easymotion
 set commentary
-set exchange
+set exchange  " cx/cxx/X/cxc
+set ReplaceWithRegister  " gr/grr
+set highlightedyank
+set virtualedit=onemore
+set ideajoin
+set ideamarks
+set idearefactormode=keep
+set ideavimsupport=dialog,singleline
 
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
@@ -44,21 +51,21 @@ nmap s <Plug>(easymotion-s2)
 
 
 " Section: IDEAVIM actions
-    nnoremap ]m :action MethodDown<cr>
-    nnoremap [m :action MethodUp<cr>
+    :map ]m <Action>(MethodDown)
+    :map [m <Action>(MethodUp)
 
     " Hack to jump to top-level class for function
     nnoremap [[ ?\(^class \\\|^def \)<cr>:noh<cr>
     nnoremap ]] /\(^class \\\|^def \)<cr>:noh<cr>
 
-    nnoremap <Leader>x :action CloseContent<cr>
-    nnoremap gh :action ShowErrorDescription<cr>
+    :map <Leader>x <Action>(CloseContent)
+    :map gh <Action>(ShowErrorDescription)
 
     " vim-abolish
-        nnoremap crs :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
-        nnoremap crc :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
-        xnoremap crs :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
-        xnoremap crc :action StringManipulation.ToSnakeCaseOrCamelCase<CR>
+        :map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        :map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        :map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        :map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
 
     " vim-visual-star-search
         xnoremap * "zy/<C-R>z<CR>
@@ -66,53 +73,58 @@ nmap s <Plug>(easymotion-s2)
     " vim-unimpaired
         nnoremap [<space> O<esc>j
         nnoremap ]<space> o<esc>k
-        nnoremap ]b :action NextTab<cr>
-        nnoremap [b :action PreviousTab<cr>
+        :map ]b <Action>(NextTab)
+        :map [b <Action>(PreviousTab)
 
     " LSC
-        nnoremap ]r :action GotoNextElementUnderCaretUsage<CR>
-        nnoremap [r :action GotoPrevElementUnderCaretUsage<CR>
+        :map ]r <Action>(GotoNextElementUnderCaretUsage)
+        :map [r <Action>(GotoPrevElementUnderCaretUsage)
 
     " Git-gutter
         " Move to next/prev hunk. The extra actions are to not activate the change preview window
-        nnoremap [g :action VcsShowPrevChangeMarker<cr>:action EditorDown<cr>:action EditorUp<cr>
-        nnoremap ]g :action VcsShowNextChangeMarker<cr>:action EditorDown<cr>:action EditorUp<cr>
+        :map [g <Action>(VcsShowPrevChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
+        :map ]g <Action>(VcsShowNextChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
         " This activates the change preview window
-        nnoremap <Leader>P :action VcsShowCurrentChangeMarker<cr>
+        :map <Leader>P <Action>(VcsShowCurrentChangeMarker)
         " Rollback hunk at the cursor
-        nnoremap <Leader>- :action Vcs.RollbackChangedLines<cr>
+        :map <Leader>- <Action>(Vcs.RollbackChangedLines)
 
     " vim-fugitive
-        nnoremap <silent> <Leader>B :action Annotate<CR>
+        :map <silent> <Leader>B <Action>(Annotate)
 
     " ALE refactoring
-        nnoremap <Leader>af :action ReformatCode<CR>
+        :map <Leader>af <Action>(ReformatCode)
 
     " Refactoring
-        nnoremap Rm :action RefactoringMenu<cr>
-        nnoremap Rr :action RenameElement<cr>
+        :map Rm <Action>(RefactoringMenu)
+        :map Rr <Action>(RenameElement)
 
     " Navigation
-        nnoremap <Leader>m :action RecentFiles<cr>
-        nnoremap <Leader>n :action ActivateProjectToolWindow<cr>
-        nnoremap <Leader>f :action FindInPath<cr>
+        :map <Leader>m <Action>(RecentFiles)
+        :map <Leader>n <Action>(ActivateProjectToolWindow)
+        :map <Leader>f <Action>(FindInPath)
 
     " Debugging
-        nnoremap <Space><Space> :action DebugMainMenu<cr>
-        nnoremap <Space>dd :action Debug<cr>
-        nnoremap <Space>dn :action DebugClass<cr>
-        nnoremap <Space>dl :action Rerun<cr>
+        :map <Space><Space> <Action>(DebugMainMenu)
+        :map <Space>dd <Action>(Debug)
+        :map <Space>dn <Action>(DebugClass)
+        :map <Space>dl <Action>(Rerun)
 
-        nnoremap <Space>b :action ToggleLineBreakpoint<cr>
-        nnoremap <Space>e :action EditBreakpoint<cr>
-        nnoremap <Space>w viw:action Debugger.AddToWatch<cr>
-        xnoremap <Space>w :action Debugger.AddToWatch<cr>
+        :map <Space>b <Action>(ToggleLineBreakpoint)
+        :map <Space>e <Action>(EditBreakpoint)
+        :map <Space>wiw viw<Action>(Debugger.AddToWatch)
+        :map <Space>ww V<Action>(Debugger.AddToWatch)
+        :map <Space>W v$<Action>(Debugger.AddToWatch)
+        :map <Space>wv <Action>(Debugger.AddToWatch)
 
-        nnoremap <Space>i :action StepInto<cr>
-        nnoremap <Space>o :action StepOut<cr>
-        nnoremap <Space>n :action StepOver<cr>
-        nnoremap <Space>j :action RunToCursor<cr>
-        nnoremap <Space>c :action Resume<cr>
+        :map <Space>i <Action>(StepInto)
+        :map <Space>o <Action>(StepOut)
+        :map <Space>n <Action>(StepOver)
+        :map <Space>j <Action>(RunToCursor)
+        :map <Space>c <Action>(Resume)
+
+    " Testing
+        :map gt <Action>(GotoTest)
 
 
 " Section: CONFIGS FROM VIMRC
@@ -156,9 +168,15 @@ nmap s <Plug>(easymotion-s2)
 
 " Section: CUSTOM MACROS
     " replace with yank
-    nnoremap <Leader>v ciw<C-r>0<Esc>
-    xnoremap <Leader>v c<C-r>0<Esc>
+    nmap <Leader>v griw
+    xmap <Leader>v gr
 
     " replace with cut
     nnoremap <Leader>c "_ciw<C-r>-<Esc>
     xnoremap <Leader>c "_c<C-r>-<Esc>
+
+    " python timer
+    nnoremap <Leader>gt yy<ESC>PCimport time; start = time.time()<ESC>joprint(time.time() - start)<ESC>
+
+    " format entire file
+    nnoremap <Leader>= gg=G<C-o>

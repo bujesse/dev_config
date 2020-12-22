@@ -23,6 +23,7 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
         virtualenvwrapper
         vscode
         docker
+        docker-compose
         zsh-vim-mode
     )
     setopt noincappendhistory
@@ -35,12 +36,15 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
     export ZSH="$HOME/.oh-my-zsh"
     export EDITOR='vim'
     export MYVIMRC='~/.vimrc'
+    export GOOGLE_APPLICATION_CREDENTIALS='/Users/buj/.gcp/Arboretum-9f362cbc30d0.json'
+    export FLASK_ENV=development
 
 # === ALIASES ===
     alias zshrc="vim ~/.zshrc"
     alias vimrc="vim ~/.vimrc"
     alias ohmyzsh="vim ~/.oh-my-zsh"
     alias lg="lazygit"
+    alias ,.="source ~/.zshrc"
 
 # === PYTHON ===
     alias python=python3
@@ -74,6 +78,10 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
     }
     alias ffe='fzf_find_edit'
 
+# === SHORTCUTS ===
+alias vsc='ssh -X vsc33810@login.hpc.kuleuven.be'
+
+
 # === MISC ===
     # key repeat
     # defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
@@ -101,3 +109,9 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/buj/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/buj/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/buj/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/buj/google-cloud-sdk/completion.zsh.inc'; fi
