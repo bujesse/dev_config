@@ -13,6 +13,7 @@
 !.profile
 !.vim.requirements.txt
 !.condarc
+!dev_init.sh
 
 !.vim/
 !.vim/after/
