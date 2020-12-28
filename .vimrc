@@ -40,6 +40,7 @@ endif
     Plug 'machakann/vim-swap'
     Plug 'tommcdo/vim-exchange'                 " swap 2 text objects
     Plug 'vim-scripts/ReplaceWithRegister'      " replace with register: [count][\"x]gr{motion}
+    Plug 'terryma/vim-multiple-cursors'         " <C-n> and <C-p> to use multiple cursors
 
     " autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
@@ -390,6 +391,9 @@ endif
 
     " vim-highlightedyank
     let g:highlightedyank_highlight_duration = 300
+
+    " vim-multiple-cursors
+    let g:multi_cursor_select_all_word_key = '<S-C-n>'
 
 
 " Section: PERSONAL CONFIGS

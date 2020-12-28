@@ -9,6 +9,7 @@ set ideajoin
 set ideamarks
 set idearefactormode=keep
 set ideavimsupport=dialog,singleline
+set multiple-cursors
 
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
@@ -62,11 +63,26 @@ nmap s <Plug>(easymotion-s2)
     map <Leader>x <Action>(CloseContent)
     map gh <Action>(ShowErrorDescription)
 
+    " vim-multiple-cursors
+        nmap <C-n> <Plug>NextWholeOccurrence
+        xmap <C-n> <Plug>NextWholeOccurrence
+        nmap g<C-n> <Plug>NextOccurrence
+        xmap g<C-n> <Plug>NextOccurrence
+        nmap <C-x> <Plug>SkipOccurrence
+        xmap <C-x> <Plug>SkipOccurrence
+        nmap <C-p> <Plug>RemoveOccurrence
+        xmap <C-p> <Plug>RemoveOccurrence
+
+        nmap <S-C-n> <Plug>AllWholeOccurrences
+        xmap <S-C-n> <Plug>AllWholeOccurrences
+        nmap g<S-C-n> <Plug>AllOccurrences
+        xmap g<S-C-n> <Plug>AllOccurrences
+
     " vim-abolish
-        map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
-        map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
-        map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
-        map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
+        map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
+        map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
+        map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
 
     " vim-visual-star-search
         xnoremap * "zy/<C-R>z<CR>
