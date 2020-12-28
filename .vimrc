@@ -39,6 +39,7 @@ endif
     Plug 'rhysd/clever-f.vim'
     Plug 'machakann/vim-swap'
     Plug 'tommcdo/vim-exchange'                 " swap 2 text objects
+    Plug 'vim-scripts/ReplaceWithRegister'      " replace with register: [count][\"x]gr{motion}
 
     " autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
@@ -60,6 +61,7 @@ endif
     Plug 'vim-airline/vim-airline'
     Plug 'Yggdroot/indentLine'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'machakann/vim-highlightedyank'
     call plug#end()
 
 
@@ -303,6 +305,7 @@ endif
     " Easymotion
     let g:EasyMotion_smartcase = 1
     nmap s <Plug>(easymotion-s2)
+    map <Leader>\ <Plug>(easymotion-prefix)
 
     " vim-lion
     let g:lion_squeeze_spaces = 1
@@ -366,6 +369,7 @@ endif
 
     " clever-f.vim
     map ; <Plug>(clever-f-repeat-forward)
+    map <Leader>, <Plug>(clever-f-repeat-back)
     let g:clever_f_across_no_line    = 1
     let g:clever_f_fix_key_direction = 1
     let g:clever_f_smart_case        = 1
@@ -383,6 +387,9 @@ endif
     xmap gS <Plug>(swap-interactive)
     nmap g< <Plug>(swap-prev)
     nmap g> <Plug>(swap-next)
+
+    " vim-highlightedyank
+    let g:highlightedyank_highlight_duration = 300
 
 
 " Section: PERSONAL CONFIGS
@@ -445,6 +452,8 @@ endif
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
+
+    noremap <space> :
 
     nmap ]t :tabn<CR>
     nmap [t :tabp<CR>

@@ -51,8 +51,16 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
     alias pip=pip3
     export WORKON_HOME=~/python_envs
     export PYTHONBREAKPOINT="pdb.set_trace"
+
     export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-    source /usr/local/bin/virtualenvwrapper.sh
+    if test -f "/usr/local/bin/virtualenvwrapper.sh"; then
+        source /usr/local/bin/virtualenvwrapper.sh
+    fi
+
+    if command -v pyenv 1>/dev/null 2>&1; then
+       eval "$(pyenv init -)"
+    fi
+
     function venv() {
         if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
             git pull origin "${*}"

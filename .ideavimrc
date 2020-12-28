@@ -15,6 +15,7 @@ nmap s <Plug>(easymotion-s2)
 
 " Section: SET CONFIGS
     let mapleader=","
+    noremap <leader>, ,
 
     set autoindent
     set autoread
@@ -51,21 +52,21 @@ nmap s <Plug>(easymotion-s2)
 
 
 " Section: IDEAVIM actions
-    :map ]m <Action>(MethodDown)
-    :map [m <Action>(MethodUp)
+    map ]m <Action>(MethodDown)
+    map [m <Action>(MethodUp)
 
     " Hack to jump to top-level class for function
     nnoremap [[ ?\(^class \\\|^def \)<cr>:noh<cr>
     nnoremap ]] /\(^class \\\|^def \)<cr>:noh<cr>
 
-    :map <Leader>x <Action>(CloseContent)
-    :map gh <Action>(ShowErrorDescription)
+    map <Leader>x <Action>(CloseContent)
+    map gh <Action>(ShowErrorDescription)
 
     " vim-abolish
-        :map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
-        :map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
-        :map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
-        :map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
+        map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)
 
     " vim-visual-star-search
         xnoremap * "zy/<C-R>z<CR>
@@ -73,58 +74,59 @@ nmap s <Plug>(easymotion-s2)
     " vim-unimpaired
         nnoremap [<space> O<esc>j
         nnoremap ]<space> o<esc>k
-        :map ]b <Action>(NextTab)
-        :map [b <Action>(PreviousTab)
+        map ]b <Action>(NextTab)
+        map [b <Action>(PreviousTab)
 
     " LSC
-        :map ]r <Action>(GotoNextElementUnderCaretUsage)
-        :map [r <Action>(GotoPrevElementUnderCaretUsage)
+        map ]r <Action>(GotoNextElementUnderCaretUsage)
+        map [r <Action>(GotoPrevElementUnderCaretUsage)
 
     " Git-gutter
         " Move to next/prev hunk. The extra actions are to not activate the change preview window
-        :map [g <Action>(VcsShowPrevChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
-        :map ]g <Action>(VcsShowNextChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
+        map [g <Action>(VcsShowPrevChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
+        map ]g <Action>(VcsShowNextChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
         " This activates the change preview window
-        :map <Leader>P <Action>(VcsShowCurrentChangeMarker)
+        map <Leader>P <Action>(VcsShowCurrentChangeMarker)
         " Rollback hunk at the cursor
-        :map <Leader>- <Action>(Vcs.RollbackChangedLines)
+        map <Leader>- <Action>(Vcs.RollbackChangedLines)
 
     " vim-fugitive
-        :map <silent> <Leader>B <Action>(Annotate)
+        map <silent> <Leader>B <Action>(Annotate)
 
     " ALE refactoring
-        :map <Leader>af <Action>(ReformatCode)
+        map <Leader>af <Action>(ReformatCode)
 
     " Refactoring
-        :map Rm <Action>(RefactoringMenu)
-        :map Rr <Action>(RenameElement)
+        map Rm <Action>(RefactoringMenu)
+        map Rr <Action>(RenameElement)
 
     " Navigation
-        :map <Leader>m <Action>(RecentFiles)
-        :map <Leader>n <Action>(ActivateProjectToolWindow)
-        :map <Leader>f <Action>(FindInPath)
+        map <Leader>m <Action>(RecentFiles)
+        map <Leader>n <Action>(ActivateProjectToolWindow)
+        map <Leader>f <Action>(FindInPath)
 
     " Debugging
-        :map <Space><Space> <Action>(DebugMainMenu)
-        :map <Space>dd <Action>(Debug)
-        :map <Space>dn <Action>(DebugClass)
-        :map <Space>dl <Action>(Rerun)
+        map <Space>w :w
+        map <Space><Space> <Action>(DebugMainMenu)
+        map <Space>dd <Action>(Debug)
+        map <Space>dn <Action>(DebugClass)
+        map <Space>dl <Action>(Rerun)
 
-        :map <Space>b <Action>(ToggleLineBreakpoint)
-        :map <Space>e <Action>(EditBreakpoint)
-        :map <Space>wiw viw<Action>(Debugger.AddToWatch)
-        :map <Space>ww V<Action>(Debugger.AddToWatch)
-        :map <Space>W v$<Action>(Debugger.AddToWatch)
-        :map <Space>wv <Action>(Debugger.AddToWatch)
+        map <Space>b <Action>(ToggleLineBreakpoint)
+        map <Space>e <Action>(EditBreakpoint)
+        map <Space>aiw viw<Action>(Debugger.AddToWatch)
+        map <Space>aa V<Action>(Debugger.AddToWatch)
+        map <Space>A v$<Action>(Debugger.AddToWatch)
+        map <Space>av <Action>(Debugger.AddToWatch)
 
-        :map <Space>i <Action>(StepInto)
-        :map <Space>o <Action>(StepOut)
-        :map <Space>n <Action>(StepOver)
-        :map <Space>j <Action>(RunToCursor)
-        :map <Space>c <Action>(Resume)
+        map <Space>i <Action>(StepInto)
+        map <Space>o <Action>(StepOut)
+        map <Space>n <Action>(StepOver)
+        map <Space>j <Action>(RunToCursor)
+        map <Space>c <Action>(Resume)
 
     " Testing
-        :map gt <Action>(GotoTest)
+        map gt <Action>(GotoTest)
 
 
 " Section: CONFIGS FROM VIMRC
