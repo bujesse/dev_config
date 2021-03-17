@@ -1,9 +1,6 @@
 # Ignore everything
 *
 
-# ...even if they are in subdirectories
-*/
-
 # But not these files...
 !.eslintrc.json
 !.gitignore
@@ -14,6 +11,11 @@
 !.vim.requirements.txt
 !.condarc
 !dev_init.sh
+!keyboards/
+!keyboards/*/
+!keyboards/*/keymaps/
+!keyboards/*/keymaps/via/
+!keyboards/*/keymaps/via/*
 
 !.vim/
 !.vim/after/

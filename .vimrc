@@ -305,7 +305,7 @@ endif
 
     " Easymotion
     let g:EasyMotion_smartcase = 1
-    nmap s <Plug>(easymotion-s2)
+    nmap s <Plug>(easymotion-sn)
     map <Leader>\ <Plug>(easymotion-prefix)
 
     " vim-lion
@@ -393,7 +393,9 @@ endif
     let g:highlightedyank_highlight_duration = 300
 
     " vim-multiple-cursors
-    let g:multi_cursor_select_all_word_key = '<S-C-n>'
+    " This is just to keep same as ideavim which can't use <c-x>
+    " let g:multi_cursor_skip_key              = '<C-s>'
+    " let g:multi_cursor_select_all_word_key = '<C-S-n>'
 
 
 " Section: PERSONAL CONFIGS
@@ -482,6 +484,12 @@ endif
 
     " paste from yank
     nnoremap <C-p> "0P
+
+    " yank to clipboard register
+    xmap <C-y> "*y
+
+    " Duplicate line without saving to register
+    nnoremap <Leader>d "zyy"zp"0pyyddk
 
     " quick resize window size
     nnoremap <silent> <Up>    :resize +5<CR>
@@ -577,6 +585,10 @@ endif
 
     " Source vimrc
     nmap <silent> <leader>. :source $MYVIMRC<CR>
+    nmap <silent> <leader>ev :e $MYVIMRC<CR>
+
+    " format entire file
+    nnoremap + gg=G<C-o><C-o>zz
 
     " Call lazygit in a window
         function! Flt_term_win(cmd, width, height, border_highlight) abort

@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$HOME/scripts:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -18,7 +18,7 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
         git
         git-extras
         common-aliases
-        z
+        autojump
         virtualenv
         virtualenvwrapper
         vscode
@@ -31,6 +31,7 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
 
 # === ZSH-VIM-MODE ===
     VIM_MODE_VICMD_KEY='jk'
+    bindkey -s 'kj' 'jk'
 
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
@@ -42,6 +43,7 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
 # === ALIASES ===
     alias zshrc="vim ~/.zshrc"
     alias vimrc="vim ~/.vimrc"
+    alias karabiner="vim ~/.config/karabiner/karabiner.json"
     alias ohmyzsh="vim ~/.oh-my-zsh"
     alias lg="lazygit"
     alias ,.="source ~/.zshrc"
@@ -61,14 +63,7 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
        eval "$(pyenv init -)"
     fi
 
-    function venv() {
-        if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
-            git pull origin "${*}"
-        else
-            [[ "$#" == 0 ]] && local b="$(git_current_branch)"
-            git pull origin "${b:=$1}"
-        fi
-    }
+    alias venv='workon .'
 
 # === FZF ===
     export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
@@ -84,7 +79,7 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$PATH
             $EDITOR "$file"
         fi
     }
-    alias ffe='fzf_find_edit'
+    bindkey -s '^o' 'fzf_find_edit^M'
 
 # === SHORTCUTS ===
 alias vsc='ssh -X vsc33810@login.hpc.kuleuven.be'

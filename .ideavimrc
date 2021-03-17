@@ -1,3 +1,5 @@
+let mapleader=","
+
 set surround
 set easymotion
 set commentary
@@ -10,12 +12,12 @@ set ideamarks
 set idearefactormode=keep
 set ideavimsupport=dialog,singleline
 set multiple-cursors
+set NERDTree
 
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
 
 " Section: SET CONFIGS
-    let mapleader=","
     noremap <leader>, ,
 
     set autoindent
@@ -50,11 +52,18 @@ nmap s <Plug>(easymotion-s2)
     set timeoutlen=1000
     set ttimeoutlen=10
     set ttyfast
+    set visualbell
 
 
 " Section: IDEAVIM actions
     map ]m <Action>(MethodDown)
     map [m <Action>(MethodUp)
+
+    map ]e <Action>(GotoNextError)
+    map [e <Action>(GotoPreviousError)
+
+    " NERDTree
+    map <leader>n :NERDTreeFind<CR>
 
     " Hack to jump to top-level class for function
     nnoremap [[ ?\(^class \\\|^def \)<cr>:noh<cr>
@@ -63,13 +72,18 @@ nmap s <Plug>(easymotion-s2)
     map <Leader>x <Action>(CloseContent)
     map gh <Action>(ShowErrorDescription)
 
+    " StringManipulation
+        map gm <Action>(osmedile.intellij.stringmanip.PopupChoiceAction)
+        map g. <action>(osmedile.intellij.stringmanip.RepeatAction)
+
+
     " vim-multiple-cursors
         nmap <C-n> <Plug>NextWholeOccurrence
         xmap <C-n> <Plug>NextWholeOccurrence
         nmap g<C-n> <Plug>NextOccurrence
         xmap g<C-n> <Plug>NextOccurrence
-        nmap <C-x> <Plug>SkipOccurrence
-        xmap <C-x> <Plug>SkipOccurrence
+        nmap <C-s> <Plug>SkipOccurrence
+        xmap <C-s> <Plug>SkipOccurrence
         nmap <C-p> <Plug>RemoveOccurrence
         xmap <C-p> <Plug>RemoveOccurrence
 
@@ -88,6 +102,8 @@ nmap s <Plug>(easymotion-s2)
         xnoremap * "zy/<C-R>z<CR>
 
     " vim-unimpaired
+        nnoremap [p O<esc>p
+        nnoremap ]p o<esc>p
         nnoremap [<space> O<esc>j
         nnoremap ]<space> o<esc>k
         map ]b <Action>(NextTab)
@@ -118,8 +134,9 @@ nmap s <Plug>(easymotion-s2)
 
     " Navigation
         map <Leader>m <Action>(RecentFiles)
-        map <Leader>n <Action>(ActivateProjectToolWindow)
+        map <Leader>g <Action>(RecentChangedFiles)
         map <Leader>f <Action>(FindInPath)
+        map <Leader>o <Action>(GotoFile)
 
     " Debugging
         map <Space>w :w
@@ -130,10 +147,11 @@ nmap s <Plug>(easymotion-s2)
 
         map <Space>b <Action>(ToggleLineBreakpoint)
         map <Space>e <Action>(EditBreakpoint)
+        map gw viw<Action>(Debugger.AddToWatch)
         map <Space>aiw viw<Action>(Debugger.AddToWatch)
         map <Space>aa V<Action>(Debugger.AddToWatch)
         map <Space>A v$<Action>(Debugger.AddToWatch)
-        map <Space>av <Action>(Debugger.AddToWatch)
+        map <Space>an <Action>(Debugger.AddToWatch)
 
         map <Space>i <Action>(StepInto)
         map <Space>o <Action>(StepOut)
@@ -152,8 +170,8 @@ nmap s <Plug>(easymotion-s2)
     highlight Visual cterm=NONE
 
     " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
-    nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-    nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
+    " nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
+    " nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
 
     imap jk <Esc>
     imap Jk <Esc>
@@ -175,26 +193,49 @@ nmap s <Plug>(easymotion-s2)
     nnoremap <c-h> <c-w>h
     nnoremap <c-k> <c-w>k
 
+    map <s-c-l> <Action>(com.mnw.tabmover.actions.MoveTabToNextSplitter)
+    map <s-c-h> <Action>(com.mnw.tabmover.actions.MoveTabToPreviousSplitter)
+
+    " Duplicate line without saving to register
+    nnoremap <Leader>d "zyy"zp"0pyyddk
+
     " Y should behave like D and C
     noremap Y y$
+
+    " yank to clipboard register
+    xmap <C-y> "*y
 
     " U feels like a more natural companion to u
     nnoremap U <C-r>
 
     " Quick source
     nnoremap <Leader>. :source ~/.ideavimrc<cr>
+    nnoremap <leader>ev :e ~/.ideavimrc<CR>
+
+    " Get back , functionality
+    noremap ,, ,
 
 " Section: CUSTOM MACROS
     " replace with yank
     nmap <Leader>v griw
     xmap <Leader>v gr
 
-    " replace with cut
-    nnoremap <Leader>c "_ciw<C-r>-<Esc>
-    xnoremap <Leader>c "_c<C-r>-<Esc>
-
     " python timer
-    nnoremap <Leader>gt yy<ESC>PCimport time; start = time.time()<ESC>joprint(time.time() - start)<ESC>
+    nnoremap <Leader>tt yy<ESC>PCimport time; start = time.time()<ESC>joprint(time.time() - start)<ESC>
+
+    " Python Insert sleep
+    nnoremap <Leader>ts Oimport time; time.sleep()<ESC>i
+
+    " JS Insert debugger
+    nnoremap <Leader>td Odebugger<ESC>
+
+    " Insert TODO
+    map <Leader>to OTODO<Action>(CommentByLineComment)<ESC>kA<Space>
+
+    " python change foo['bar'] to foo.get('bar')
+    nnoremap <Leader>tg hf[cl.get(<ESC>f]r)
+    " ...and the reverse
+    nnoremap <Leader>t[ h/.get<CR>cf([<ESC>f)r]
 
     " format entire file
-    nnoremap <Leader>= gg=G<C-o>
+    nnoremap + gg=G<C-o>zz
