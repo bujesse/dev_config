@@ -1,0 +1,16 @@
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+brew "autojump"
+brew "bat"
+brew "croc"
+brew "fd"
+brew "krb5"
+brew "libpq", link: true
+brew "node"
+brew "python@3.8", link: true
+brew "r"
+brew "ripgrep"
+brew "wget"
+cask "keycastr"
