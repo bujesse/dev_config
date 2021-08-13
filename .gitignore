@@ -1,5 +1,6 @@
 # Ignore everything
 *
+!dev/
 
 # But not these files...
 !Brewfile

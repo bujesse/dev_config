@@ -41,6 +41,7 @@ endif
     Plug 'tommcdo/vim-exchange'                 " swap 2 text objects
     Plug 'vim-scripts/ReplaceWithRegister'      " replace with register: [count][\"x]gr{motion}
     Plug 'terryma/vim-multiple-cursors'         " <C-n> and <C-p> to use multiple cursors
+    Plug 'dbakker/vim-paragraph-motion'         " {} commands matche whitespace-only lines as well as empty lines
 
     " autocomplete/linting/fixing
     Plug 'sheerun/vim-polyglot'
@@ -429,20 +430,6 @@ endif
         highlight link typeScriptNull GruvboxOrange
         highlight link jsNull GruvboxOrange
 
-    " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
-    nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-    nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
-
-    imap jk <Esc>
-    imap Jk <Esc>
-    imap jK <Esc>
-    imap JK <Esc>
-
-    imap kj <Esc>
-    imap Kj <Esc>
-    imap kJ <Esc>
-    imap KJ <Esc>
-
     command WQ wq
     command Wq wq
     command W w
@@ -454,12 +441,8 @@ endif
     " U feels like a more natural companion to u
     nnoremap U <C-r>
 
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
-
     noremap <space> :
+    noremap <space><space> :w<CR>
 
     nmap ]t :tabn<CR>
     nmap [t :tabp<CR>
@@ -583,9 +566,34 @@ endif
     " Apply the 'q' register macro to the visual selection
     xnoremap Q :'<,'>:normal @q<CR>
 
+    " this resets any alternate layout settings
+    noremap j j
+    noremap J J
+
+    noremap k k
+    noremap K K
+
+    noremap n n
+    noremap N N
+
+    noremap e e
+    noremap E E
+
+    noremap l l
+    noremap L L
+
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+
     " Source vimrc
-    nmap <silent> <leader>. :source $MYVIMRC<CR>
+    nmap <silent> <leader>.. :source $MYVIMRC<CR>
     nmap <silent> <leader>ev :e $MYVIMRC<CR>
+
+    " Source alternate layouts
+    " execute ":so $HOME/.colemakvimrc"
+    nmap <Leader>.z :so $HOME/.colemakvimrc<CR>
 
     " format entire file
     nnoremap + gg=G<C-o><C-o>zz

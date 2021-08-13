@@ -5,15 +5,15 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$HOME/scripts:$PATH
+export PATH=/usr/local/opt/python@3.9/bin:$HOME/bin:/usr/local/bin:$HOME/scripts:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
-    POWERLEVEL9K_MODE="awesome-patched"
     ENABLE_CORRECTION="true"
     COMPLETION_WAITING_DOTS="true"
     DISABLE_UNTRACKED_FILES_DIRTY="true"
     ZSH_DISABLE_COMPFIX="true"
+    KEYTIMEOUT=1
     plugins=(
         git
         git-extras
@@ -21,17 +21,23 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
         autojump
         virtualenv
         virtualenvwrapper
-        vscode
         docker
         docker-compose
+
+        alias-tips
+        zsh-autosuggestions
+        fzf-tab
+        # zsh-completions
+
         zsh-vim-mode
     )
     setopt noincappendhistory
     setopt nosharehistory
+    autoload -U compinit && compinit -i
 
-# === ZSH-VIM-MODE ===
-    VIM_MODE_VICMD_KEY='jk'
-    bindkey -s 'kj' 'jk'
+# === PLUGIN CONFIG ===
+    # VIM_MODE_VICMD_KEY='jk'
+    # bindkey -s 'kj' 'jk'
 
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
@@ -44,9 +50,10 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
     alias zshrc="vim ~/.zshrc"
     alias vimrc="vim ~/.vimrc"
     alias karabiner="vim ~/.config/karabiner/karabiner.json"
-    alias ohmyzsh="vim ~/.oh-my-zsh"
+    alias ohmyzsh="cd ~/.oh-my-zsh"
     alias lg="lazygit"
     alias ,.="source ~/.zshrc"
+    alias vsc='ssh -X vsc33810@login.hpc.kuleuven.be'
 
 # === PYTHON ===
     alias python=python3
@@ -66,10 +73,18 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
     alias venv='workon .'
 
 # === FZF ===
-    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
-    export FZF_DEFAULT_COMMAND='fd --type f --color=never'
-    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND --hidden --no-ignore"
-    export FZF_ALT_C_COMMAND='fd --type d . --color=never'
+    FD_OPTIONS="--follow --exclude .git --exclude node_modules --exclude __pycache__"
+    export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy),ctrl-p:toggle-preview'"
+    export FZF_DEFAULT_COMMAND="fd --type f $FD_OPTIONS"
+    export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS --no-ignore"
+    export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS --no-ignore"
+    export FZF_COMPLETION_TRIGGER='**'
+    _fzf_compgen_path() {
+        fd --hidden --follow --exclude ".git" . "$1"
+    }
+    _fzf_compgen_dir() {
+        fd --type d --hidden --follow --exclude ".git" . "$1"
+    }
     function fzf_find_edit() {
         local file=$(
         fzf --query="$1" --no-multi --select-1 --exit-0 \
@@ -80,16 +95,10 @@ export PATH=/usr/local/opt/python@3.8/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
         fi
     }
     bindkey -s '^o' 'fzf_find_edit^M'
+    bindkey '^j' fzf-cd-widget
+    bindkey '^l' toggle-fzf-tab
 
-# === SHORTCUTS ===
-alias vsc='ssh -X vsc33810@login.hpc.kuleuven.be'
-
-
-# === MISC ===
-    # key repeat
-    # defaults write -g InitialKeyRepeat -int 10 # normal minimum is 15 (225 ms)
-    # defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-
+# === SOURCE ===
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 source $ZSH/oh-my-zsh.sh

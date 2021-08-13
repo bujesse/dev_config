@@ -13,6 +13,11 @@ set idearefactormode=keep
 set ideavimsupport=dialog,singleline
 set multiple-cursors
 set NERDTree
+set vim-paragraph-motion
+set textobj-indent
+
+sethandler <C-j> n-v:ide
+sethandler <C-k> n-v:ide
 
 let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s2)
@@ -95,8 +100,6 @@ nmap s <Plug>(easymotion-s2)
     " vim-abolish
         map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
         map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
-        map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
-        map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
 
     " vim-visual-star-search
         xnoremap * "zy/<C-R>z<CR>
@@ -139,11 +142,11 @@ nmap s <Plug>(easymotion-s2)
         map <Leader>o <Action>(GotoFile)
 
     " Debugging
-        map <Space>w :w
-        map <Space><Space> <Action>(DebugMainMenu)
+        map <Space>ds <Action>(RunConfiguration)
         map <Space>dd <Action>(Debug)
         map <Space>dn <Action>(DebugClass)
         map <Space>dl <Action>(Rerun)
+        map <Space>dr <Action>(Run)
 
         map <Space>b <Action>(ToggleLineBreakpoint)
         map <Space>e <Action>(EditBreakpoint)
@@ -169,29 +172,15 @@ nmap s <Plug>(easymotion-s2)
     " Don't make the visual colors reversed
     highlight Visual cterm=NONE
 
-    " display line movements unless preceded by a count. Also only add to jumplist if movement greater than 5
-    " nnoremap <expr> j v:count ? (v:count > 5 ? "m'" . v:count : '') . 'j' : 'gj'
-    " nnoremap <expr> k v:count ? (v:count > 5 ? "m'" . v:count : '') . 'k' : 'gk'
-
-    imap jk <Esc>
-    imap Jk <Esc>
-    imap jK <Esc>
-    imap JK <Esc>
-
-    imap kj <Esc>
-    imap Kj <Esc>
-    imap kJ <Esc>
-    imap KJ <Esc>
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
 
     command WQ wq
     command Wq wq
     command W w
     command Q q
-
-    nnoremap <c-l> <c-w>l
-    nnoremap <c-j> <c-w>j
-    nnoremap <c-h> <c-w>h
-    nnoremap <c-k> <c-w>k
 
     map <s-c-l> <Action>(com.mnw.tabmover.actions.MoveTabToNextSplitter)
     map <s-c-h> <Action>(com.mnw.tabmover.actions.MoveTabToPreviousSplitter)
@@ -208,9 +197,41 @@ nmap s <Plug>(easymotion-s2)
     " U feels like a more natural companion to u
     nnoremap U <C-r>
 
+    noremap <space><space> :w<CR>
+    " this resets any alternate layout settings
+    noremap j j
+    noremap J J
+
+    noremap k k
+    noremap K K
+
+    noremap n n
+    noremap N N
+
+    noremap e e
+    noremap E E
+
+    noremap l l
+    noremap L L
+
+    noremap h h
+    noremap H H
+
+    noremap m m
+    noremap M M
+
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+
     " Quick source
-    nnoremap <Leader>. :source ~/.ideavimrc<cr>
+    nnoremap <Leader>.. :source ~/.ideavimrc<cr>
     nnoremap <leader>ev :e ~/.ideavimrc<CR>
+
+    " Toggle default colemak layout by (un)commenting this line
+    " source "$HOME/.colemakvimrc"
+    nmap <Leader>.z :source ~/.colemakvimrc<CR>
 
     " Get back , functionality
     noremap ,, ,
@@ -239,3 +260,10 @@ nmap s <Plug>(easymotion-s2)
 
     " format entire file
     nnoremap + gg=G<C-o>zz
+    
+    " wrap current line with try except
+    nnoremap <Leader>te >>Otry:<ESC>joexcept:<ESC>ha<Space>
+
+    " jump to next/prev html tag
+    map ]t <Action>(EditorCodeBlockEnd)
+    map [t <Action>(EditorCodeBlockStart)
