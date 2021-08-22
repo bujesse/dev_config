@@ -87,6 +87,7 @@ endif
     set belloff=all
     set breakindent                             " Wrap long lines with indentation
     set breakindentopt=shift:2
+    set clipboard+=unnamedplus
     set completeopt=menu,menuone,noinsert,noselect
     set encoding=UTF-8
     set foldlevelstart=20
@@ -471,29 +472,38 @@ endif
     " yank to clipboard register
     xmap <C-y> "*y
 
+    " WSL yank support
+    let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+    if executable(s:clip)
+        augroup WSLYank
+            autocmd!
+            autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+        augroup END
+    endif
+
     " Duplicate line without saving to register
     nnoremap <Leader>d "zyy"zp"0pyyddk
 
     " quick resize window size
-    nnoremap <silent> <Up>    :resize +5<CR>
-    nnoremap <silent> <Down>  :resize -5<CR>
-    nnoremap <silent> <Left>  :vertical resize -5<CR>
-    nnoremap <silent> <Right> :vertical resize +5<CR>
+    " nnoremap <silent> <Up>    :resize +5<CR>
+    " nnoremap <silent> <Down>  :resize -5<CR>
+    " nnoremap <silent> <Left>  :vertical resize -5<CR>
+    " nnoremap <silent> <Right> :vertical resize +5<CR>
 
     inoremap <C-j> <Down>
     inoremap <C-k> <Up>
 
     " terminal mappings (testing for example)
-        " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue
-        " put yank in terminal
-        tmap <C-p> <C-w>"0
-        " normal mode
-        tmap <C-n> <C-w>N
-        tmap <C-k> <C-w><C-k>
-        tmap <C-j> <C-w><C-j>
-        tmap <C-l> <C-w><C-l>
-        tmap <C-h> <C-w><C-h>
-        tnoremap <Esc> <C-\><C-n>
+        " " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue
+        " " put yank in terminal
+        " tmap <C-p> <C-w>"0
+        " " normal mode
+        " tmap <C-n> <C-w>N
+        " tmap <C-k> <C-w><C-k>
+        " tmap <C-j> <C-w><C-j>
+        " tmap <C-l> <C-w><C-l>
+        " tmap <C-h> <C-w><C-h>
+        " tnoremap <Esc> <C-\><C-n>
 
     " Buffer stuff
         " Skip quickfix buffer when cycling, and don't allow buffer cycling in the quickfix
@@ -523,6 +533,15 @@ endif
 
         " quit if the last buffer is a quickfix
         autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
+
+    " WSL yank support
+        " let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
+        " if executable(s:clip)
+        "     augroup WSLYank
+        "         autocmd!
+        "         autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+        "     augroup END
+        " endif
 
 " Section: CUSTOM MACROS
     " Replace word with last yank (repeatable)

@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=/usr/local/opt/python@3.9/bin:$HOME/bin:/usr/local/bin:$HOME/scripts:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windows:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -24,15 +24,20 @@ export PATH=/usr/local/opt/python@3.9/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
         docker
         docker-compose
 
+        safe-paste # Preventing any code from actually running while pasting
+
         alias-tips
         zsh-autosuggestions
-        fzf-tab
-        # zsh-completions
 
         zsh-vim-mode
     )
     setopt noincappendhistory
     setopt nosharehistory
+
+    bindkey '^[[A' up-line-or-search
+    bindkey '^[[B' down-line-or-search
+
+    [[ -s /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh ]] && source /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh
     autoload -U compinit && compinit -i
 
 # === PLUGIN CONFIG ===
@@ -43,17 +48,14 @@ export PATH=/usr/local/opt/python@3.9/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
     export ZSH="$HOME/.oh-my-zsh"
     export EDITOR='vim'
     export MYVIMRC='~/.vimrc'
-    export GOOGLE_APPLICATION_CREDENTIALS='/Users/buj/.gcp/Arboretum-9f362cbc30d0.json'
     export FLASK_ENV=development
 
 # === ALIASES ===
     alias zshrc="vim ~/.zshrc"
     alias vimrc="vim ~/.vimrc"
-    alias karabiner="vim ~/.config/karabiner/karabiner.json"
     alias ohmyzsh="cd ~/.oh-my-zsh"
-    alias lg="lazygit"
     alias ,.="source ~/.zshrc"
-    alias vsc='ssh -X vsc33810@login.hpc.kuleuven.be'
+    alias open="explorer.exe"
 
 # === PYTHON ===
     alias python=python3
@@ -61,7 +63,7 @@ export PATH=/usr/local/opt/python@3.9/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
     export WORKON_HOME=~/python_envs
     export PYTHONBREAKPOINT="pdb.set_trace"
 
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
     if test -f "/usr/local/bin/virtualenvwrapper.sh"; then
         source /usr/local/bin/virtualenvwrapper.sh
     fi
@@ -96,7 +98,6 @@ export PATH=/usr/local/opt/python@3.9/bin:$HOME/bin:/usr/local/bin:$HOME/scripts
     }
     bindkey -s '^o' 'fzf_find_edit^M'
     bindkey '^j' fzf-cd-widget
-    bindkey '^l' toggle-fzf-tab
 
 # === SOURCE ===
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -106,24 +107,5 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/buj/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/buj/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/buj/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/buj/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/buj/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/buj/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/buj/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/buj/google-cloud-sdk/completion.zsh.inc'; fi
+# Remove highlighting on wsl2
+export LS_COLORS=$LS_COLORS:'ow=1;34:';
