@@ -27,15 +27,13 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windo
         safe-paste # Preventing any code from actually running while pasting
 
         alias-tips
-        zsh-autosuggestions
-
         zsh-vim-mode
+
+        zsh-autosuggestions
     )
     setopt noincappendhistory
     setopt nosharehistory
 
-    bindkey '^[[A' up-line-or-search
-    bindkey '^[[B' down-line-or-search
 
     [[ -s /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh ]] && source /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh
     autoload -U compinit && compinit -i
@@ -106,6 +104,9 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
+
+[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
+[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
 
 # Remove highlighting on wsl2
 export LS_COLORS=$LS_COLORS:'ow=1;34:';
