@@ -34,7 +34,6 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windo
     setopt noincappendhistory
     setopt nosharehistory
 
-
     [[ -s /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh ]] && source /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh
     autoload -U compinit && compinit -i
 
@@ -54,6 +53,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windo
     alias ohmyzsh="cd ~/.oh-my-zsh"
     alias ,.="source ~/.zshrc"
     alias open="explorer.exe"
+    alias c="clear"
 
 # === PYTHON ===
     alias python=python3
@@ -105,8 +105,27 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
 
-[[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
-[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
+
+# === EXTRA BINDKEYS ===
+    # These have to be set after sourcing oh-my-zsh.sh to override plugins
+
+    # get back this functionality from zsh-autosuggestions
+    [[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
+    [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
+
+    # control+right right
+    bindkey "^[[1;5C" forward-word
+
+    # Exa bindings
+        # general use
+        alias ls='exa'                                               # ls
+        alias l='exa -lbF --git'                                     # list, size, type, git
+        alias lt='exa -lbF --git --tree --level=2'                   # all list
+        alias ll='exa -lbGF --git'                                   # long list
+        alias la='exa -lbhgma --git --color-scale'                   # all list
+        alias lat='exa -lbhgma --git --color-scale --tree --level=2' # all list
+        alias lx='exa -lbhgma@ --git --color-scale'                  # all + extended list
+        alias lS='exa -1'                                            # one column, just names
 
 # Remove highlighting on wsl2
 export LS_COLORS=$LS_COLORS:'ow=1;34:';

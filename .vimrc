@@ -61,7 +61,7 @@ endif
     " ui
     Plug 'morhetz/gruvbox'
     Plug 'vim-airline/vim-airline'
-    Plug 'Yggdroot/indentLine'
+    Plug 'thaerkh/vim-indentguides'
     Plug 'ryanoasis/vim-devicons'
     Plug 'machakann/vim-highlightedyank'
     call plug#end()
@@ -333,10 +333,6 @@ endif
 
     " vim-stay
     set viewoptions=cursor,slash,unix
-
-    " indentLine
-    let g:indentLine_char_list  = ['|', '¦', '┆', '┊']
-    let g:indentLine_faster     = 1
 
     " vim-python (in polyglot)
     let g:python_highlight_all           = 1
