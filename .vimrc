@@ -44,8 +44,6 @@ endif
     Plug 'dbakker/vim-paragraph-motion'         " {} commands matche whitespace-only lines as well as empty lines
 
     " autocomplete/linting/fixing
-    Plug 'sheerun/vim-polyglot'
-    Plug 'natebosch/vim-lsc'
     Plug 'ajh17/VimCompletesMe'
     Plug 'dense-analysis/ale'
     Plug 'alvan/vim-closetag'                   " auto-close html tags
@@ -172,37 +170,6 @@ endif
     nnoremap <Leader>F :GrepperRg<Space>-i<Space>""<Left>
     nnoremap gs :Grepper -cword -noprompt<CR>
     xmap gs <Plug>(GrepperOperator)
-
-    " vim-lsc
-    " Use with jedi-vim for python since that has better rename and usage finding
-    " https://github.com/natebosch/vim-lsc/wiki/Language-Servers
-    " npm install -g typescript typescript-language-server
-    let g:lsc_server_commands = {
-        \    'python': {
-        \        'command': 'pyls',
-        \        'log_level': -1,
-        \        'suppress_stderr': v:true,
-        \    },
-        \    'javascript': {
-        \        'command': 'typescript-language-server --stdio',
-        \        'log_level': -1,
-        \        'suppress_stderr': v:true,
-        \    }
-        \}
-    let g:lsc_auto_map = {
-        \    'GoToDefinition': 'gd',
-        \    'FindReferences': 'gr',
-        \    'NextReference': ']r',
-        \    'PreviousReference': '[r',
-        \    'Rename': 'gR',
-        \    'ShowHover': 'K',
-        \    'Completion': 'omnifunc',
-        \}
-    let g:lsc_enable_autocomplete  = v:true
-    let g:lsc_enable_diagnostics   = v:false
-    let g:lsc_reference_highlights = v:true
-    let g:lsc_trace_level          = 'off'
-    nnoremap <silent> <leader>R :LSClientRestartServer<cr>
 
     " jedi-vim
     " Everything else is handled by vim-lsc
@@ -432,11 +399,19 @@ endif
     command W w
     command Q q
 
+    " Continuous visual shifting (does not exit Visual mode)
+    xnoremap < <gv
+    xnoremap > >gv
+
     " Y should behave like D and C
     noremap Y y$
 
     " U feels like a more natural companion to u
     nnoremap U <C-r>
+
+    " Center after search
+    nnoremap n nzzzv
+    nnoremap N Nzzzv
 
     noremap <space> :
     noremap <space><space> :w<CR>
@@ -489,18 +464,6 @@ endif
     inoremap <C-j> <Down>
     inoremap <C-k> <Up>
 
-    " terminal mappings (testing for example)
-        " " hi Terminal ctermbg=lightgrey ctermfg=blue guibg=lightgrey guifg=blue
-        " " put yank in terminal
-        " tmap <C-p> <C-w>"0
-        " " normal mode
-        " tmap <C-n> <C-w>N
-        " tmap <C-k> <C-w><C-k>
-        " tmap <C-j> <C-w><C-j>
-        " tmap <C-l> <C-w><C-l>
-        " tmap <C-h> <C-w><C-h>
-        " tnoremap <Esc> <C-\><C-n>
-
     " Buffer stuff
         " Skip quickfix buffer when cycling, and don't allow buffer cycling in the quickfix
         function! BSkipQuickFix(command)
@@ -529,15 +492,6 @@ endif
 
         " quit if the last buffer is a quickfix
         autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
-
-    " WSL yank support
-        " let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-        " if executable(s:clip)
-        "     augroup WSLYank
-        "         autocmd!
-        "         autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-        "     augroup END
-        " endif
 
 " Section: CUSTOM MACROS
     " Replace word with last yank (repeatable)
@@ -581,70 +535,36 @@ endif
     " Apply the 'q' register macro to the visual selection
     xnoremap Q :'<,'>:normal @q<CR>
 
-    " this resets any alternate layout settings
-    noremap j j
-    noremap J J
-
-    noremap k k
-    noremap K K
-
-    noremap n n
-    noremap N N
-
-    noremap e e
-    noremap E E
-
-    noremap l l
-    noremap L L
-
     nnoremap <C-h> <C-w>h
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
 
     " Source vimrc
-    nmap <silent> <leader>.. :source $MYVIMRC<CR>
-    nmap <silent> <leader>ev :e $MYVIMRC<CR>
-
-    " Source alternate layouts
-    " execute ":so $HOME/.colemakvimrc"
-    nmap <Leader>.z :so $HOME/.colemakvimrc<CR>
+    nmap <silent> <leader>. :source $MYVIMRC<CR>
 
     " format entire file
     nnoremap + gg=G<C-o><C-o>zz
 
-    " Call lazygit in a window
-        function! Flt_term_win(cmd, width, height, border_highlight) abort
-            let width = float2nr(&columns * a:width)
-            let height = float2nr(&lines * a:height)
-            let bufnr = term_start(a:cmd, {'hidden': 1, 'term_finish': 'close'})
+    " Call this to create a header for a section
+    function! Comment(...)
 
-            let winid = popup_create(bufnr, {
-                    \ 'minwidth': width,
-                    \ 'maxwidth': width,
-                    \ 'minheight': height,
-                    \ 'maxheight': height,
-                    \ 'border': [],
-                    \ 'borderchars': ['─', '│', '─', '│', '┌', '┐', '┘', '└'],
-                    \ 'borderhighlight': [a:border_highlight],
-                    \ 'padding': [0,1,0,1],
-                    \ 'highlight': a:border_highlight
-                    \ })
+        " get the arguments properly
+        let commentText = get(a:000, 0, '')
+        let commentChar = get(a:000, 1, '-')[0]
 
-            " Optionally set the 'Normal' color for the terminal buffer
-            " call setwinvar(winid, '&wincolor', 'Special')
+        " Get the number of char to add on left
+        let len   = (80 - len(commentText) - len(printf(&commentstring, '')))
+        let left  = len / 2
+        let right = len - left
 
-            return winid
-        endfunction
+        " force the title with repeat() function and insert it in the buffer
+        put=printf(&commentstring, repeat(commentChar, left) . commentText . repeat(commentChar, right))
 
-        nnoremap <silent> <leader>Z :call Flt_term_win('lazygit',0.9,0.6,'Todo')<CR>
+    endfunction
 
 
 " Section: PERFORMANCE STUFF
-    " IMPORTANT: in ~/.vim/bundle/polyglot/indent/python.vim this makes newlines a lot faster
-        " Also add these:
-            " let s:paren_pairs = {'()': 25, '[]': 25, '{}': 25}
-            " let skip_special_chars = ''
     let g:python_pep8_indent_searchpair_timeout = 10
 
     augroup syntaxSyncMinLines
@@ -658,6 +578,18 @@ endif
         autocmd CursorHold * silent! checktime
     augroup END
 
+    let g:clipboard = {
+    \ 'name': 'win32yank',
+    \ 'copy': {
+    \    '+': 'win32yank.exe -i --crlf',
+    \    '*': 'win32yank.exe -i --crlf',
+    \  },
+    \ 'paste': {
+    \ '+': 'win32yank.exe -o --lf',
+    \ '*': 'win32yank.exe -o --lf',
+    \ },
+    \ 'cache_enabled': 0,
+    \ }
 " Section PRE REQUISITES
     " - vim version > 8
     " - must have conceal feature (just install with brew to get all the features)

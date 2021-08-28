@@ -43,13 +43,14 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windo
 
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
-    export EDITOR='vim'
+    export EDITOR='nvim'
     export MYVIMRC='~/.vimrc'
     export FLASK_ENV=development
 
 # === ALIASES ===
-    alias zshrc="vim ~/.zshrc"
-    alias vimrc="vim ~/.vimrc"
+    alias zshrc="nvim ~/.zshrc"
+    alias nvimrc="nvim ~/.config/nvim/init.vim"
+    alias vimrc="nvim ~/.vimrc"
     alias ohmyzsh="cd ~/.oh-my-zsh"
     alias ,.="source ~/.zshrc"
     alias open="explorer.exe"

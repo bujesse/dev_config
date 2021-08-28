@@ -88,3 +88,6 @@ $!Down::Send !{Down}
 $!Up::Send !{Up}
 $!Right::Send !{Right}
 $!Left::Send !{Left}
+$!c::Send ^+c
+$!v::Send ^+v
+$!f::Send ^+f
