@@ -23,8 +23,9 @@ autocmd BufWritePre * :call TrimWhitespace()
             execute a:command
         endwhile
     endfunction
-    nnoremap ]b :call BSkipQuickFix(":bn")<CR>
-    nnoremap [b :call BSkipQuickFix(":bp")<CR>
+    " Using bufferline to do this
+    " nnoremap ]b :call BSkipQuickFix(':bn')<CR>
+    " nnoremap [b :call BSkipQuickFix(':bp')<CR>
 
     " Close current buffer and move to the previous one
     function! BCloseSkipQuickFix()
@@ -40,12 +41,3 @@ autocmd BufWritePre * :call TrimWhitespace()
     " quit if the last buffer is a quickfix
     autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
 
-
-" WSL yank support
-let s:clip = '/mnt/c/Windows/System32/clip.exe'  " change this path according to your mount point
-if executable(s:clip)
-    augroup WSLYank
-        autocmd!
-        autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
-    augroup END
-endif

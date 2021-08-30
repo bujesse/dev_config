@@ -1,3 +1,4 @@
 .oh-my-zsh/
 .vim
 .config/nvim/plugged
+.config/wslu/

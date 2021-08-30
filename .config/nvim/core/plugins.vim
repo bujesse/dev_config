@@ -19,10 +19,10 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
     Plug 'junegunn/fzf.vim'
     Plug 'pbogut/fzf-mru.vim'
-    Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-    Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
-    Plug 'airblade/vim-gitgutter'
+    Plug 'kyazdani42/nvim-tree.lua'
     Plug 'nelstrom/vim-visual-star-search'
+    Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'lewis6991/gitsigns.nvim'
 
     " text editing/navigating
     Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
@@ -30,7 +30,6 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'vim-scripts/ReplaceWithRegister' " replace with register: [count][\"x]gr{motion}
     Plug 'rhysd/clever-f.vim'
     Plug 'tmsvg/pear-tree'                 " Auto-input closing paired characters
-    Plug 'wellle/targets.vim'
     Plug 'easymotion/vim-easymotion'
     Plug 'tommcdo/vim-exchange'            " swap 2 text objects
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
@@ -41,13 +40,28 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Intellisense
     Plug 'neovim/nvim-lspconfig'
-    Plug 'hrsh7th/nvim-compe'
+    Plug 'kabouzeid/nvim-lspinstall'       " Install language servers with :LspInstall <language>
+    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+
+    " Completion
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'f3fora/cmp-spell'
+    Plug 'hrsh7th/cmp-nvim-lsp'
 
     " ui
     Plug 'morhetz/gruvbox'
-    Plug 'vim-airline/vim-airline'
-    Plug 'ryanoasis/vim-devicons'
+    Plug 'glepnir/lspsaga.nvim'
+    Plug 'akinsho/bufferline.nvim'
+    Plug 'hoob3rt/lualine.nvim'
+    Plug 'kyazdani42/nvim-web-devicons'
     Plug 'thaerkh/vim-indentguides'
     Plug 'mhinz/vim-startify'
+    Plug 'karb94/neoscroll.nvim'
+
+    " Misc
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'romgrk/fzy-lua-native'
 
 call plug#end()

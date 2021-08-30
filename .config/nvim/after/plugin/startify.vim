@@ -1,5 +1,6 @@
 let g:startify_bookmarks = [
-            \ {'i': '~/.config/nvim/init.vim'},
+            \ {'n': '~/.config/nvim/init.vim'},
+            \ {'i': '~/.ideavimrc'},
             \ {'z': '~/.zshrc'},
             \ ]
 

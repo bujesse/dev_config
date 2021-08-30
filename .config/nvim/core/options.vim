@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-filetype plugin on
+filetype plugin indent on
 set autoindent
 set autoread
 set backspace=indent,eol,start
@@ -9,7 +9,7 @@ set belloff=all
 " Wrap long lines with indentation
 set breakindent
 set breakindentopt=shift:2
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
 set completeopt=menu,menuone,noinsert,noselect
 
 " Ask for confirmation when handling unsaved or read-only files
@@ -39,6 +39,7 @@ set iskeyword-=#
 " We want a statusline
 set laststatus=2
 set lazyredraw
+set mouse=n
 
 " Hide the line terminating character
 set nolist
@@ -68,6 +69,9 @@ set regexpengine=1
 
 " Start scrolling when we're 8 lines away from margins
 set scrolloff=8
+
+" Using this to persist buffer locations https://github.com/akinsho/bufferline.nvim#configuration
+set sessionoptions+=globals
 
 " Use this to wrap long lines
 set showbreak=↳

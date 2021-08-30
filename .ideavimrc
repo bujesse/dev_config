@@ -97,6 +97,11 @@ nmap s <Plug>(easymotion-s2)
         nmap g<S-C-n> <Plug>AllOccurrences
         xmap g<S-C-n> <Plug>AllOccurrences
 
+    " ReplaceWithRegister
+        nmap R <Plug>ReplaceWithRegisterOperator
+        nmap RR <Plug>ReplaceWithRegisterLine
+        xmap R <Plug>ReplaceWithRegisterVisual
+
     " vim-abolish
         map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
         map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
@@ -260,7 +265,7 @@ nmap s <Plug>(easymotion-s2)
 
     " format entire file
     nnoremap + gg=G<C-o>zz
-    
+
     " wrap current line with try except
     nnoremap <Leader>te >>Otry:<ESC>joexcept:<ESC>ha<Space>
 

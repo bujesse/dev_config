@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windows:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windows/:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -55,6 +55,8 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windo
     alias ,.="source ~/.zshrc"
     alias open="explorer.exe"
     alias c="clear"
+    alias n="nvim"
+    alias pbcopy="clip.exe"  # Windows version of pbcopy
 
 # === PYTHON ===
     alias python=python3
@@ -75,7 +77,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windo
 
 # === FZF ===
     FD_OPTIONS="--follow --exclude .git --exclude node_modules --exclude __pycache__"
-    export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy),ctrl-p:toggle-preview'"
+    export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
     export FZF_DEFAULT_COMMAND="fd --type f $FD_OPTIONS"
     export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS --no-ignore"
     export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS --no-ignore"

@@ -21,10 +21,12 @@ nnoremap ^ g^
 nnoremap 0 g0
 
 " paste from yank
-nnoremap <C-p> "0P
+" nnoremap <C-p> "0P
 
 " U feels like a more natural companion to u
 nnoremap U <C-r>
+
+map <C-y> "*y
 
 " Center after search
 nnoremap n nzzzv
@@ -32,6 +34,10 @@ nnoremap N Nzzzv
 
 noremap <space> :
 noremap <space><space> :w<CR>
+
+" Save and load sessions
+noremap <F5> :mksession! ~/vim_session<CR>
+noremap <F8> :source ~/vim_session<CR>
 
 nmap ]t :tabn<CR>
 nmap [t :tabp<CR>
@@ -61,7 +67,7 @@ nnoremap <Leader>c "_ciw<C-r>-<Esc>
 xnoremap <Leader>c "_c<C-r>-<Esc>
 
 " Profiler
-nnoremap <F2> :profile start profile.log<bar>profile file *<bar>profile func *<cr>
+" nnoremap <F2> :profile start profile.log<bar>profile file *<bar>profile func *<cr>
 
 " insert current timestamp
 nnoremap gts :pu=strftime('%c')<CR>

@@ -10,6 +10,10 @@
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Source before/plugin
+" Useful for setting mappings before the plugins are sourced
+source ~/.config/nvim/before/plugins/ReplaceWithRegister.vim
+
 " General Settings
 source ~/.config/nvim/core/plugins.vim
 source ~/.config/nvim/core/options.vim
@@ -18,16 +22,18 @@ source ~/.config/nvim/core/mappings.vim
 source ~/.config/nvim/core/autocommands.vim
 source ~/.config/nvim/core/ui.vim
 
-" Plugin Configuration
-source ~/.config/nvim/plug-config/nerdtree.vim
-source ~/.config/nvim/plug-config/fzf.vim
-source ~/.config/nvim/plug-config/vim-gitgutter.vim
-source ~/.config/nvim/plug-config/pear-tree.vim
-source ~/.config/nvim/plug-config/easymotion.vim
-source ~/.config/nvim/plug-config/vim-lion.vim
-source ~/.config/nvim/plug-config/vim-airline.vim
-source ~/.config/nvim/plug-config/fastfold.vim
-source ~/.config/nvim/plug-config/vim-fugitive.vim
-source ~/.config/nvim/plug-config/vim-stay.vim
-source ~/.config/nvim/plug-config/clever-f.vim
-source ~/.config/nvim/plug-config/startify.vim
+" Lua Plugin Configuration (.vim plugins are in after/plugin)
+luafile ~/.config/nvim/lua/plugins/nvim-lspconfig.lua
+luafile ~/.config/nvim/lua/plugins/nvim-cmp.lua
+luafile ~/.config/nvim/lua/plugins/nvim-treesitter.lua
+luafile ~/.config/nvim/lua/plugins/nvim-web-devicons.lua
+luafile ~/.config/nvim/lua/plugins/lualine.lua
+luafile ~/.config/nvim/lua/plugins/bufferline.lua
+luafile ~/.config/nvim/lua/plugins/lspsaga.lua
+luafile ~/.config/nvim/lua/plugins/neoscroll.lua
+luafile ~/.config/nvim/lua/plugins/gitsigns.lua
+
+" LSP files
+" Manually installed lsp's will have to go here
+" luafile ~/.config/nvim/lua/lsp/python-ls.lua
+
