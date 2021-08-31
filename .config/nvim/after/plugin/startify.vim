@@ -2,6 +2,7 @@ let g:startify_bookmarks = [
             \ {'n': '~/.config/nvim/init.vim'},
             \ {'i': '~/.ideavimrc'},
             \ {'z': '~/.zshrc'},
+            \ {'a': '~/'},
             \ ]
 
 let g:startify_change_to_vcs_root = 1

@@ -32,7 +32,19 @@ cmp.setup {
 
   formatting = {
     format = function(entry, vim_item)
+      -- fancy icons from lspkind
       vim_item.kind = lspkind.presets.default[vim_item.kind] .. " " .. vim_item.kind
+
+      -- vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
+
+      -- set a name for each source
+      vim_item.menu = ({
+        nvim_lsp = "[LSP]",
+        buffer = "[Buffer]",
+        path = "[Path]",
+        luasnip = "[LuaSnip]",
+        spell = "[Spell]",
+      })[entry.source.name]
       return vim_item
     end
   }
