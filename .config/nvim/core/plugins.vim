@@ -38,6 +38,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'terryma/vim-multiple-cursors'    " <C-n> and <C-p> to use multiple cursors
     Plug 'dbakker/vim-paragraph-motion'    " {} commands matche whitespace-only lines as well as empty lines
     Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
+    Plug 'svermeulen/vim-yoink'            " keep yank history and cycle through
 
     " Intellisense
     Plug 'neovim/nvim-lspconfig'
@@ -63,6 +64,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'thaerkh/vim-indentguides'
     Plug 'mhinz/vim-startify'
     Plug 'karb94/neoscroll.nvim'
+    Plug 'onsails/lspkind-nvim'
 
     " Misc
     Plug 'nvim-lua/plenary.nvim'

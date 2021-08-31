@@ -21,9 +21,9 @@ let g:ascii = [
 let g:startify_custom_header = 'startify#pad(g:ascii + startify#fortune#boxed())'
 
 let g:startify_lists = [
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
         \ { 'type': 'files',     'header': ['   MRU']            },
         \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
         \ { 'type': 'bookmarks',  'header': ['   Bookmarks']       },
         \ ]
 

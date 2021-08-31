@@ -58,6 +58,8 @@ xnoremap > >gv
 nnoremap <Leader>v ciw<C-r>0<Esc>
 xnoremap <Leader>v c<C-r>0<Esc>
 
+nmap <Leader>V yy[y<leader>v]y]yPj
+
 " Replace word with last cut (repeatable)
 nnoremap <Leader>c "_ciw<C-r>-<Esc>
 xnoremap <Leader>c "_c<C-r>-<Esc>

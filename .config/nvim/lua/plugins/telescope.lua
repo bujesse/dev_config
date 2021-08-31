@@ -1,10 +1,3 @@
--- nnoremap <silent> <Leader>o :Files<CR>
--- nnoremap <silent> <Leader>f :RG<CR>
--- nnoremap <silent> <Leader>g :GFiles?<CR>
--- nnoremap <silent> <Leader>hh :History<CR>
--- nnoremap <silent> <Leader>hc :History:<CR>
--- nnoremap <silent> <Leader>hs :History/<CR>
-
 local actions = require('telescope.actions')
 
 require('telescope').setup{
