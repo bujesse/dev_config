@@ -1,4 +1,4 @@
-colorscheme gruvbox
-set background=dark
 let g:gruvbox_contrast_dark='hard'
-syntax on
+set background=dark
+colorscheme gruvbox
+" syntax on

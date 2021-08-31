@@ -10,6 +10,8 @@
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+let mapleader=","
+
 " Source before/plugin
 " Useful for setting mappings before the plugins are sourced
 source ~/.config/nvim/before/plugins/ReplaceWithRegister.vim
@@ -18,7 +20,6 @@ source ~/.config/nvim/before/plugins/ReplaceWithRegister.vim
 source ~/.config/nvim/core/plugins.vim
 source ~/.config/nvim/core/options.vim
 source ~/.config/nvim/core/globals.vim
-source ~/.config/nvim/core/mappings.vim
 source ~/.config/nvim/core/autocommands.vim
 source ~/.config/nvim/core/ui.vim
 
@@ -32,8 +33,11 @@ luafile ~/.config/nvim/lua/plugins/bufferline.lua
 luafile ~/.config/nvim/lua/plugins/lspsaga.lua
 luafile ~/.config/nvim/lua/plugins/neoscroll.lua
 luafile ~/.config/nvim/lua/plugins/gitsigns.lua
+luafile ~/.config/nvim/lua/plugins/telescope.lua
+luafile ~/.config/nvim/lua/plugins/luasnip.lua
+luafile ~/.config/nvim/lua/plugins/nvim-autopairs.lua
 
-" LSP files
-" Manually installed lsp's will have to go here
-" luafile ~/.config/nvim/lua/lsp/python-ls.lua
+source ~/.config/nvim/core/mappings.vim
+
+" LSP configs
 

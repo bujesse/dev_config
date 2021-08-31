@@ -19,3 +19,16 @@ let g:ascii = [
 \ ]
 
 let g:startify_custom_header = 'startify#pad(g:ascii + startify#fortune#boxed())'
+
+let g:startify_lists = [
+        \ { 'type': 'files',     'header': ['   MRU']            },
+        \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'bookmarks',  'header': ['   Bookmarks']       },
+        \ ]
+
+let g:startify_session_persistence = 1
+
+" Save and load sessions
+noremap <F5> :SSave!<CR>
+noremap <F8> :SLoad<CR>

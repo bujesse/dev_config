@@ -45,12 +45,12 @@ local opts = {
   silent=true,
 }
 
-vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require"lspsaga.provider".lsp_finder()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'K', '<cmd>lua require"lspsaga.hover".render_hover_doc()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require"lspsaga.action".smart_scroll_with_saga(1)<CR>', opts)
-vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua require"lspsaga.action".smart_scroll_with_saga(-1)<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require"lspsaga.codeaction".code_action()<CR>', opts)
-vim.api.nvim_set_keymap('v', 'gr', ':<C-U>lua require"lspsaga.codeaction".range_code_action()', opts)
 vim.api.nvim_set_keymap('i', '<C-p>', '<cmd>lua require"lspsaga.signaturehelp".signature_help()<CR>', opts)
+-- vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require"lspsaga.provider".lsp_finder()<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require"lspsaga.action".smart_scroll_with_saga(1)<CR>', opts)
+-- vim.api.nvim_set_keymap('n', '<C-b>', '<cmd>lua require"lspsaga.action".smart_scroll_with_saga(-1)<CR>', opts)
+-- vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require"lspsaga.codeaction".code_action()<CR>', opts)
+-- vim.api.nvim_set_keymap('v', 'gr', ':<C-U>lua require"lspsaga.codeaction".range_code_action()', opts)
 -- vim.api.nvim_set_keymap('n', 'gR', '<cmd>lua require"lspsaga.rename".rename()<CR>', opts)
 

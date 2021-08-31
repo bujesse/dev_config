@@ -1,4 +1,3 @@
-let mapleader=","
 map <leader>/ :noh<CR>
 
 " Don't make the visual colors reversed
@@ -25,6 +24,7 @@ nnoremap 0 g0
 
 " U feels like a more natural companion to u
 nnoremap U <C-r>
+nnoremap <C-z> u
 
 map <C-y> "*y
 
@@ -34,10 +34,6 @@ nnoremap N Nzzzv
 
 noremap <space> :
 noremap <space><space> :w<CR>
-
-" Save and load sessions
-noremap <F5> :mksession! ~/vim_session<CR>
-noremap <F8> :source ~/vim_session<CR>
 
 nmap ]t :tabn<CR>
 nmap [t :tabp<CR>
@@ -51,7 +47,7 @@ nnoremap <C-l> <C-w>l
 nmap <silent> <leader>. :source ~/.config/nvim/init.vim<CR>
 
 " format entire file
-nnoremap + gg=G<C-o><C-o>zz
+nnoremap + gg=G<C-o>zz
 
 " Continuous visual shifting (does not exit Visual mode)
 xnoremap < <gv

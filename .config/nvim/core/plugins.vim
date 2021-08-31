@@ -16,20 +16,21 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-unimpaired' " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
 
     " files/git/searching
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
-    Plug 'junegunn/fzf.vim'
-    Plug 'pbogut/fzf-mru.vim'
+    " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
+    " Plug 'junegunn/fzf.vim'
+    " Plug 'pbogut/fzf-mru.vim'
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'nelstrom/vim-visual-star-search'
     Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'lewis6991/gitsigns.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 
     " text editing/navigating
     Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
     Plug 'Valloric/ListToggle'             " toggle quickfix and loclist
     Plug 'vim-scripts/ReplaceWithRegister' " replace with register: [count][\"x]gr{motion}
     Plug 'rhysd/clever-f.vim'
-    Plug 'tmsvg/pear-tree'                 " Auto-input closing paired characters
+    Plug 'windwp/nvim-autopairs'           " Auto-input closing paired characters
     Plug 'easymotion/vim-easymotion'
     Plug 'tommcdo/vim-exchange'            " swap 2 text objects
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
@@ -42,13 +43,16 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'neovim/nvim-lspconfig'
     Plug 'kabouzeid/nvim-lspinstall'       " Install language servers with :LspInstall <language>
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+    Plug 'rrethy/vim-illuminate'
 
-    " Completion
+    " Completion/Snippets
+    Plug 'L3MON4D3/LuaSnip'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'f3fora/cmp-spell'
     Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'saadparwaiz1/cmp_luasnip'
 
     " ui
     Plug 'morhetz/gruvbox'
