@@ -1,5 +1,13 @@
 local actions = require('telescope.actions')
 
+-- gets the --type-list from 'rg' and filters it based on input string
+vim.api.nvim_command [[
+fun GetRgTypeList(ArgLead, CmdLine, CursorPos)
+    let opts = system('rg --type-list')
+    return filter(split(opts, '\n'), {idx, val -> val =~ a:ArgLead})
+endfun
+]]
+
 require('telescope').setup{
   defaults = {
     mappings = {
@@ -18,6 +26,28 @@ require('telescope').setup{
       },
     },
   },
+  pickers = {
+    live_grep = {
+      additional_args = function(opts)
+        if opts.opt == 'filetype_mask' then
+          -- Filetype mask
+          local filetype = vim.fn.input("Filetype Mask: ", "", "customlist,GetRgTypeList")
+          if filetype == '' then
+            return {}
+          end
+          colon_idx = string.find(filetype, ':', 1, true)
+          if colon_idx ~= nil then
+            filetype = string.sub(filetype, 1, colon_idx - 1)
+          end
+          filetype = '-t' .. filetype
+          vim.api.nvim_command('redraw')
+          print('Using rg additional arg: ' .. filetype)
+          return {filetype}
+        end
+        return {}
+      end
+    }
+  }
 }
 
 local opts = {
@@ -31,4 +61,6 @@ vim.api.nvim_set_keymap('n', '<Leader>s', '<cmd>lua require("telescope.builtin")
 vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
+
+vim.api.nvim_set_keymap('n', '<Leader>F', '<cmd>lua require("telescope.builtin").live_grep({opt = "filetype_mask"})<CR>', opts)
 

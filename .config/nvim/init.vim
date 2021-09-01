@@ -36,8 +36,7 @@ luafile ~/.config/nvim/lua/plugins/gitsigns.lua
 luafile ~/.config/nvim/lua/plugins/telescope.lua
 luafile ~/.config/nvim/lua/plugins/luasnip.lua
 luafile ~/.config/nvim/lua/plugins/nvim-autopairs.lua
+luafile ~/.config/nvim/lua/plugins/indent-blankline.lua
 
 source ~/.config/nvim/core/mappings.vim
-
-" LSP configs
 

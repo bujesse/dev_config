@@ -29,9 +29,10 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
     Plug 'Valloric/ListToggle'             " toggle quickfix and loclist
     Plug 'vim-scripts/ReplaceWithRegister' " replace with register: [count][\"x]gr{motion}
-    Plug 'rhysd/clever-f.vim'
     Plug 'windwp/nvim-autopairs'           " Auto-input closing paired characters
-    Plug 'easymotion/vim-easymotion'
+    " Plug 'rhysd/clever-f.vim'
+    " Plug 'easymotion/vim-easymotion'
+    Plug 'ggandor/lightspeed.nvim'
     Plug 'tommcdo/vim-exchange'            " swap 2 text objects
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'tommcdo/vim-lion'                " Align text around a chosen character
@@ -61,7 +62,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'akinsho/bufferline.nvim'
     Plug 'hoob3rt/lualine.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
-    Plug 'thaerkh/vim-indentguides'
+    Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'mhinz/vim-startify'
     Plug 'karb94/neoscroll.nvim'
     Plug 'onsails/lspkind-nvim'

@@ -2,10 +2,14 @@ let g:startify_bookmarks = [
             \ {'n': '~/.config/nvim/init.vim'},
             \ {'i': '~/.ideavimrc'},
             \ {'z': '~/.zshrc'},
-            \ {'a': '~/'},
+            \ {'a': '/mnt/c/Users/Jesse/AppData/Roaming/alacritty/alacritty.yml'},
             \ ]
 
 let g:startify_change_to_vcs_root = 1
+let g:startify_session_dir = '~/.config/nvim/session'
+" let g:startify_session_before_save = [ 'silent! bw! NvimTree' ]
+" This prevents NvimTree from freaking out when loading a session
+let g:startify_session_savecmds = [ 'silent! bw! NvimTree' ]
 
 let g:ascii = [
 \ '________   _______   ________  ___      ___ ___  _____ ______',

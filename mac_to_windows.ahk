@@ -91,3 +91,14 @@ $!Left::Send !{Left}
 $!c::Send ^+c
 $!v::Send ^+v
 $!f::Send ^+f
+
+#IfWinActive ahk_exe alacritty.exe
+$!w::Send ^+w
+$!t::Send ^+t
+$!Down::Send !{Down}
+$!Up::Send !{Up}
+$!Right::Send !{Right}
+$!Left::Send !{Left}
+$!c::Send ^+c
+$!v::Send ^+v
+$!f::Send ^+f

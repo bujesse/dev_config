@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windows/:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windows/System32:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
