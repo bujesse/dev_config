@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windows/System32:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windows:/mnt/c/Windows/System32:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -46,17 +46,6 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:/mnt/c/Windo
     export EDITOR='nvim'
     export MYVIMRC='~/.vimrc'
     export FLASK_ENV=development
-
-# === ALIASES ===
-    alias zshrc="nvim ~/.zshrc"
-    alias nvimrc="nvim ~/.config/nvim/init.vim"
-    alias vimrc="nvim ~/.vimrc"
-    alias ohmyzsh="cd ~/.oh-my-zsh"
-    alias ,.="source ~/.zshrc"
-    alias open="explorer.exe"
-    alias c="clear"
-    alias n="nvim"
-    alias pbcopy="clip.exe"  # Windows version of pbcopy
 
 # === PYTHON ===
     alias python=python3
@@ -108,10 +97,20 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
 
+# === ALIASES ===
+    # These have to be set after sourcing oh-my-zsh.sh to override plugins
+    alias zshrc="nvim ~/.zshrc"
+    alias nvimrc="nvim ~/.config/nvim/init.vim"
+    alias vimrc="nvim ~/.vimrc"
+    alias ohmyzsh="cd ~/.oh-my-zsh"
+    alias ,.="source ~/.zshrc"
+    alias open="explorer.exe"
+    alias c="clear"
+    alias n="nvim"
+    alias pbcopy="clip.exe"  # Windows version of pbcopy
+    alias rm="rm -I"  # only prompts when deleting >3 files
 
 # === EXTRA BINDKEYS ===
-    # These have to be set after sourcing oh-my-zsh.sh to override plugins
-
     # get back this functionality from zsh-autosuggestions
     [[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
     [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history

@@ -25,6 +25,7 @@ require('telescope').setup{
         mirror = true,
       },
     },
+    file_ignore_patterns = {'.git/', 'node_modules/', 'package-lock.json'},
   },
   pickers = {
     live_grep = {
@@ -62,5 +63,6 @@ vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_re
 vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
 
+vim.api.nvim_set_keymap('n', '<Leader>O', ':Telescope find_files find_command=rg,--ignore,--hidden,--files<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>F', '<cmd>lua require("telescope.builtin").live_grep({opt = "filetype_mask"})<CR>', opts)
 

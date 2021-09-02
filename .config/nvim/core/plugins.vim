@@ -40,6 +40,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'dbakker/vim-paragraph-motion'    " {} commands matche whitespace-only lines as well as empty lines
     Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
     Plug 'svermeulen/vim-yoink'            " keep yank history and cycle through
+    Plug 'AckslD/nvim-revJ.lua'            " expand one-liner multi-line
+    Plug 'kana/vim-textobj-user'           " Create your own text objects
+    Plug 'sgur/vim-textobj-parameter'      " Required for nvim-revJ.lua
 
     " Intellisense
     Plug 'neovim/nvim-lspconfig'
@@ -57,7 +60,10 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'saadparwaiz1/cmp_luasnip'
 
     " ui
-    Plug 'morhetz/gruvbox'
+    " Plug 'morhetz/gruvbox'
+    " Plug 'folke/tokyonight.nvim'
+    " Plug 'bluz71/vim-moonfly-colors'
+    Plug 'sainnhe/gruvbox-material'
     Plug 'glepnir/lspsaga.nvim'
     Plug 'akinsho/bufferline.nvim'
     Plug 'hoob3rt/lualine.nvim'
@@ -70,5 +76,7 @@ call plug#begin('~/.config/nvim/plugged')
     " Misc
     Plug 'nvim-lua/plenary.nvim'
     Plug 'romgrk/fzy-lua-native'
+    Plug 'folke/which-key.nvim'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 call plug#end()

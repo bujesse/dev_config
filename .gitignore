@@ -1,4 +1,7 @@
 .oh-my-zsh/
 .vim
 .config/nvim/plugged
+.config/nvim/session
 .config/wslu/
+
+fonts/

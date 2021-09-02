@@ -37,6 +37,8 @@ luafile ~/.config/nvim/lua/plugins/telescope.lua
 luafile ~/.config/nvim/lua/plugins/luasnip.lua
 luafile ~/.config/nvim/lua/plugins/nvim-autopairs.lua
 luafile ~/.config/nvim/lua/plugins/indent-blankline.lua
+luafile ~/.config/nvim/lua/plugins/lightspeed.lua
+luafile ~/.config/nvim/lua/plugins/revj.lua
 
 source ~/.config/nvim/core/mappings.vim
 
