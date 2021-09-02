@@ -39,6 +39,7 @@ luafile ~/.config/nvim/lua/plugins/nvim-autopairs.lua
 luafile ~/.config/nvim/lua/plugins/indent-blankline.lua
 luafile ~/.config/nvim/lua/plugins/lightspeed.lua
 luafile ~/.config/nvim/lua/plugins/revj.lua
+" luafile ~/.config/nvim/lua/plugins/which-key.lua
 
 source ~/.config/nvim/core/mappings.vim
 

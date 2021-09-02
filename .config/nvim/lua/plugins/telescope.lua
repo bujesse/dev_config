@@ -28,6 +28,14 @@ require('telescope').setup{
     file_ignore_patterns = {'.git/', 'node_modules/', 'package-lock.json'},
   },
   pickers = {
+    lsp_references = {
+      layout_config = {
+        vertical = {
+          width = 0.6,
+          height = 0.6,
+        }
+      }
+    },
     live_grep = {
       additional_args = function(opts)
         if opts.opt == 'filetype_mask' then

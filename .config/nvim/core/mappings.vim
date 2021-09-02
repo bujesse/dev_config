@@ -13,9 +13,21 @@ command Q q
 " Y should behave like D and C
 noremap Y y$
 
-" Move the cursor based on physical lines, not the actual lines.
-nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
-nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+nnoremap j <cmd>call bu#jump_direction('j')<CR>
+nnoremap k <cmd>call bu#jump_direction('k')<CR>
+
+nnoremap <silent> gj <cmd>call bu#float_up('j')<CR>
+nnoremap <silent> gk <cmd>call bu#float_up('k')<CR>
+
+" Run the last command
+nnoremap <leader>; :<up>
+
+" Sizing window
+nnoremap <Left> <C-W>5<
+nnoremap <Right> <C-W>5>
+nnoremap <Up> <C-W>5+
+nnoremap <Down> <C-W>5-
+
 nnoremap ^ g^
 nnoremap 0 g0
 

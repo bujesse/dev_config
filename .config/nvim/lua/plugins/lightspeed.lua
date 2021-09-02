@@ -19,6 +19,7 @@ require'lightspeed'.setup {
   cycle_group_bwd_key = nil,
 }
 
+-- Get back ; and , functionality to restart an f/t motion
 function repeat_ft(reverse)
   local ls = require'lightspeed'
   ls.ft['instant-repeat?'] = true
@@ -28,3 +29,9 @@ vim.api.nvim_set_keymap('n', ';', '<cmd>lua repeat_ft(false)<cr>', {noremap = tr
 vim.api.nvim_set_keymap('x', ';', '<cmd>lua repeat_ft(false)<cr>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>,', '<cmd>lua repeat_ft(true)<cr>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('x', '<Leader>,', '<cmd>lua repeat_ft(true)<cr>', {noremap = true, silent = true})
+
+-- Don't execute Lightspeed f/t when recording macros
+vim.api.nvim_set_keymap('n', 'f', 'reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_f" : "f"', {expr = true})
+vim.api.nvim_set_keymap('n', 'F', 'reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_F" : "F"', {expr = true})
+vim.api.nvim_set_keymap('n', 't', 'reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_t" : "t"', {expr = true})
+vim.api.nvim_set_keymap('n', 'T', 'reg_recording() . reg_executing() == "" ? "<Plug>Lightspeed_T" : "T"', {expr = true})
