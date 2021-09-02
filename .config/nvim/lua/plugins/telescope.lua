@@ -44,7 +44,7 @@ require('telescope').setup{
           if filetype == '' then
             return {}
           end
-          colon_idx = string.find(filetype, ':', 1, true)
+          local colon_idx = string.find(filetype, ':', 1, true)
           if colon_idx ~= nil then
             filetype = string.sub(filetype, 1, colon_idx - 1)
           end
