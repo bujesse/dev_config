@@ -52,6 +52,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " Completion/Snippets
     Plug 'L3MON4D3/LuaSnip'
+    Plug 'rafamadriz/friendly-snippets'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
@@ -59,7 +60,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'saadparwaiz1/cmp_luasnip'
 
-    " ui
+    " UI
     " Plug 'morhetz/gruvbox'
     " Plug 'folke/tokyonight.nvim'
     " Plug 'bluz71/vim-moonfly-colors'
@@ -72,6 +73,11 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'mhinz/vim-startify'
     Plug 'karb94/neoscroll.nvim'
     Plug 'onsails/lspkind-nvim'
+
+    " Debugging
+    Plug 'mfussenegger/nvim-dap'
+    Plug 'rcarriga/nvim-dap-ui'
+    Plug 'mfussenegger/nvim-dap-python'
 
     " Misc
     Plug 'nvim-lua/plenary.nvim'

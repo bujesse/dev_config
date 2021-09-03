@@ -10,6 +10,15 @@
 "                                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" TODO:
+" * better diagnostic for gruvbox
+" * Find better Search highlighting for gruvbox
+" * Better yank highlighting for gruvbox
+
+" LEARN:
+" * Use <C-f> in command mode to edit commands with normal mode and run prev
+" * Use dw to delete until non-whitespace (getting rid of excess indent)
+
 let mapleader=","
 
 " Source before/plugin
@@ -40,6 +49,8 @@ luafile ~/.config/nvim/lua/plugins/indent-blankline.lua
 luafile ~/.config/nvim/lua/plugins/lightspeed.lua
 luafile ~/.config/nvim/lua/plugins/revj.lua
 luafile ~/.config/nvim/lua/plugins/which-key.lua
+luafile ~/.config/nvim/lua/plugins/nvim-dap.lua
+luafile ~/.config/nvim/lua/plugins/nvim-dap-ui.lua
 
 source ~/.config/nvim/core/mappings.vim
 
