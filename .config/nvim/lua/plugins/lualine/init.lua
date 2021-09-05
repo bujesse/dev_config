@@ -1,3 +1,5 @@
+local components = require'plugins.lualine.components'
+
 require'lualine'.setup {
   options = {
     icons_enabled = true,
@@ -17,16 +19,16 @@ require'lualine'.setup {
       },
     },
     lualine_x = {
-      {
-        'diagnostics',
-        sources = {'nvim_lsp'},
-        symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '}
-      },
-      'encoding',
+      components.diagnostics,
       'filetype'
     },
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
+    lualine_y = {
+      'progress',
+    },
+    lualine_z = {
+      components.lsp,
+      components.python_env,
+    }
   },
   inactive_sections = {
     lualine_a = {},

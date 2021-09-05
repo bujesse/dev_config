@@ -15,8 +15,8 @@ require'lightspeed'.setup {
   -- By default, the values of these will be decided at runtime,
   -- based on `jump_to_first_match`.
   labels = {"f", "j", "d", "k", "s", "l", "a", ";", "e", "i", "w", "o", "g", "h", "v", "n", "c", "m", "z", "."},
-  cycle_group_fwd_key = nil,
-  cycle_group_bwd_key = nil,
+  cycle_group_fwd_key = '<Tab>',
+  cycle_group_bwd_key = '<S-Tab>',
 }
 
 -- Get back ; and , functionality to restart an f/t motion

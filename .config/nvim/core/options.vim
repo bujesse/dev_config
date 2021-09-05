@@ -90,7 +90,7 @@ set termguicolors
 
 " No auto-newline
 set textwidth=0 wrapmargin=0
-set timeoutlen=1500
+set timeoutlen=500
 set ttimeoutlen=10
 set ttyfast
 

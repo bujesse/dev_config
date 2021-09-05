@@ -15,3 +15,6 @@ vim.api.nvim_set_keymap('n', '<Space>i', ':lua require"dap".step_into()<CR>', op
 vim.api.nvim_set_keymap('n', '<Space>o', ':lua require"dap".step_out()<CR>', opts)
 -- vim.api.nvim_set_keymap('n', '<Space>', ':lua require"dap".repl.open()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Space>dl', ':lua require"dap".run_last()<CR>', opts)
+
+
+require('dap-python').setup('~/python_envs/nvim/bin/python')

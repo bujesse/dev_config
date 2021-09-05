@@ -7,12 +7,12 @@ let g:gruvbox_material_statusline_style = s:target_palette
 let g:gruvbox_material_palette = s:target_palette
 let g:gruvbox_material_enable_bold = 1
 let g:gruvbox_material_enable_italic = 1
-let g:gruvbox_material_visual = 'blue background'
+let g:gruvbox_material_visual = 'green background'
 let g:gruvbox_material_diagnostic_virtual_text = 'colored'
 
 function! s:gruvbox_material_custom() abort
   " Link a highlight group to a predefined highlight group.
-  " See `colors/gruvbox-material.vim` for all predefined highlight groups.
+  " See `https://github.com/sainnhe/gruvbox-material/blob/master/colors/gruvbox-material.vim` for all predefined highlight groups.
   " highlight! link groupC groupD
   " highlight! link groupA groupB
 
@@ -37,5 +37,19 @@ augroup GruvboxMaterialCustom
   autocmd!
   autocmd ColorScheme gruvbox-material call s:gruvbox_material_custom()
 augroup END
+
+lua << EOF
+function _G.get_palette()
+    local filepath = '%f'
+    local align_section = '%='
+    local percentage_through_file = '%p%%'
+    return string.format(
+        '%s%s%s',
+        filepath,
+        align_section,
+        percentage_through_file
+    )
+end
+EOF
 
 colorscheme gruvbox-material
