@@ -25,7 +25,13 @@ require('telescope').setup{
         mirror = true,
       },
     },
-    file_ignore_patterns = {'.git/', 'node_modules/', 'package-lock.json'},
+    file_ignore_patterns = {
+      '.git/',
+      'node_modules/',
+      'package-lock.json',
+      'plug.vim',
+      'plug.vim.old',
+    },
     cache_picker = {
       num_pickers = 5,
     },
@@ -71,7 +77,7 @@ local opts = {
 vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'ga', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
 
 -- Custom
@@ -90,6 +96,7 @@ require("which-key").register({
   o = {'<cmd>lua require("telescope.builtin").oldfiles()<CR>', 'Old Files'},
   s = {'<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)'},
   k = {'<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps'},
+  b = {'<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers'},
   g = {
     name = "+git",
     c = {'<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Git Commits'},

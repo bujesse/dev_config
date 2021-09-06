@@ -24,8 +24,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', 'gq', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<Leader>af', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('n', ']r', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-  buf_set_keymap('n', '[r', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+  buf_set_keymap('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
+  buf_set_keymap('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
   -- See `:help vim.lsp.*` for documentation on functions
 
   -- Diagnostics
@@ -62,43 +62,44 @@ local on_attach = function(client, bufnr)
   toggle_diagnostics(false)
   buf_set_keymap('n', 'yod', ':call v:lua.toggle_diagnostics(1)<CR>', opts)
 
+  require("plugins.lsp.null-ls").setup(vim.bo.filetype)
 end
 
-  -- config that activates keymaps and enables snippet support
-  local function make_config(server)
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    return {
-      -- enable snippet support
-      capabilities = capabilities,
-      -- map buffer local keybindings when the language server attaches
-      on_attach = on_attach,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { 'vim' }
-          }
+-- config that activates keymaps and enables snippet support
+local function make_config(server)
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  return {
+    -- enable snippet support
+    capabilities = capabilities,
+    -- map buffer local keybindings when the language server attaches
+    on_attach = on_attach,
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' }
         }
       }
     }
+  }
+end
+
+-- lsp-install
+local function setup_servers()
+  require'lspinstall'.setup()
+
+  -- get all installed servers
+  local servers = require'lspinstall'.installed_servers()
+  for _, server in pairs(servers) do
+    local config = make_config(server)
+    require'lspconfig'[server].setup(config)
   end
+end
 
-  -- lsp-install
-  local function setup_servers()
-    require'lspinstall'.setup()
+setup_servers()
 
-    -- get all installed servers
-    local servers = require'lspinstall'.installed_servers()
-    for _, server in pairs(servers) do
-      local config = make_config(server)
-      require'lspconfig'[server].setup(config)
-    end
-  end
-
-  setup_servers()
-
-  -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-  require'lspinstall'.post_install_hook = function ()
-    setup_servers() -- reload installed servers
-    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-  end
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require'lspinstall'.post_install_hook = function ()
+  setup_servers() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+end

@@ -40,3 +40,5 @@ let g:startify_session_persistence = 1
 " Save and load sessions
 noremap <F5> :SSave!<CR>
 noremap <F8> :SLoad<CR>
+
+nnoremap <Leader>s :Startify<CR>

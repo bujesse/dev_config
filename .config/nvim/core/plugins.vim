@@ -49,6 +49,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'kabouzeid/nvim-lspinstall'       " Install language servers with :LspInstall <language>
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
     Plug 'rrethy/vim-illuminate'
+    Plug 'jose-elias-alvarez/null-ls.nvim'
 
     " Completion/Snippets
     Plug 'L3MON4D3/LuaSnip'

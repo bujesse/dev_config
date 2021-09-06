@@ -48,7 +48,7 @@ local opts = {
 vim.api.nvim_set_keymap('n', 'K', '<cmd>lua require"lspsaga.hover".render_hover_doc()<CR>', opts)
 vim.api.nvim_set_keymap('i', '<C-_>', '<cmd>lua require"lspsaga.signaturehelp".signature_help()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<C-_>', '<cmd>lua require"lspsaga.signaturehelp".signature_help()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'ge', '<cmd>lua require"lspsaga.diagnostic".show_line_diagnostics()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require"lspsaga.diagnostic".show_line_diagnostics()<CR>', opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua require"lspsaga.diagnostic".lsp_jump_diagnostic_next()<CR>', opts)
 -- vim.api.nvim_set_keymap('n', 'gh', '<cmd>lua require"lspsaga.provider".lsp_finder()<CR>', opts)
