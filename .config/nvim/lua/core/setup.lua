@@ -1,9 +1,12 @@
 -- TODO: put everything in the M convention and call config() or somerhing
-require('core.globals')
+require('core.config')
 
 require('plugins.lsp.nvim-lspconfig')
 require('plugins.lsp.lspsaga')
 require('plugins.lsp.null-ls.init').config()
+
+local autocmds = require('core.autocommands')
+autocmds.define_augroups(autocmds.autocommands)
 
 require('plugins.nvim-cmp')
 require('plugins.nvim-treesitter')
@@ -23,4 +26,3 @@ require('plugins.abolish')
 
 require('plugins.dap.nvim-dap')
 require('plugins.dap.nvim-dap-ui')
-

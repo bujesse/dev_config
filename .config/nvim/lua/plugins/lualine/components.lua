@@ -69,7 +69,6 @@ return {
     condition = conditions.hide_in_width,
   },
   lsp = {
-    -- TODO: Show Active formatters and linters
     function(msg)
       msg = msg or "年"
       local buf_clients = vim.lsp.buf_get_clients()
@@ -77,26 +76,29 @@ return {
         return msg
       end
 
-      -- local buf_client_names = {}
+      local buf_client_names = {}
 
       -- add client
       for _, client in pairs(buf_clients) do
         if client.name ~= "null-ls" then
-          return "力"
+          -- TODO: get the name of the language-server here
+          table.insert(buf_client_names,  "力")
         end
       end
 
+      local buf_ft = vim.bo.filetype
+
       -- add formatter
-      -- local formatters = require "lsp.null-ls.formatters"
-      -- local supported_formatters = formatters.list_supported_names(buf_ft)
-      -- vim.list_extend(buf_client_names, supported_formatters)
+      local formatters = require "plugins.lsp.null-ls.formatters"
+      local supported_formatters = formatters.list_supported_names(buf_ft)
+      vim.list_extend(buf_client_names, supported_formatters)
 
       -- -- add linter
-      -- local linters = require "lsp.null-ls.linters"
-      -- local supported_linters = linters.list_supported_names(buf_ft)
-      -- vim.list_extend(buf_client_names, supported_linters)
+      local linters = require "plugins.lsp.null-ls.linters"
+      local supported_linters = linters.list_supported_names(buf_ft)
+      vim.list_extend(buf_client_names, supported_linters)
 
-      -- return table.concat(buf_client_names, ", ")
+      return table.concat(buf_client_names, "  ")
     end,
     -- color = { gui = "bold" },
     condition = conditions.hide_in_width,

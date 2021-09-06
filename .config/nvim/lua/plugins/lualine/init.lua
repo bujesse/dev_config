@@ -26,8 +26,8 @@ require'lualine'.setup {
       'progress',
     },
     lualine_z = {
-      components.lsp,
       components.python_env,
+      components.lsp,
     }
   },
   inactive_sections = {

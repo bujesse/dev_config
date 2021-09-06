@@ -1,21 +1,21 @@
 local M = {}
 
 local function find_ts_root()
-  local util = require "lspconfig/util"
-  local lsp_utils = require "lsp.utils"
+  local util = require("lspconfig/util")
+  local lsp_utils = require("lsp.utils")
 
-  local status_ok, ts_client = lsp_utils.is_client_active "typescript"
+  local status_ok, ts_client = lsp_utils.is_client_active("typescript")
   if status_ok then
     return ts_client.config.root_dir
   end
-  local dirname = vim.fn.expand "%:p:h"
-  return util.root_pattern "package.json"(dirname)
+  local dirname = vim.fn.expand("%:p:h")
+  return util.root_pattern("package.json")(dirname)
 end
 
 -- Local Providers: Use these to specify where an executable lives
 
 function M.from_nvim_venv(command)
-  return PYTHON_NVIM_VENV ..'/'.. command
+  return PYTHON_NVIM_VENV .. "/" .. command
 end
 
 function M.from_node_modules(command)

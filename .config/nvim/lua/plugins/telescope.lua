@@ -101,7 +101,7 @@ require("which-key").register({
     name = "+git",
     c = {'<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Git Commits'},
     b = {'<cmd>lua require("telescope.builtin").git_bcommits()<CR>', 'Git Buffer Commits'},
-    r = {'<cmd>lua require("telescope.builtin").git_bcommits()<CR>', 'Git Branches'},
-    s = {'<cmd>lua require("telescope.builtin").git_bcommits()<CR>', 'Git Status'},
+    r = {'<cmd>lua require("telescope.builtin").git_branches()<CR>', 'Git Branches'},
+    s = {'<cmd>lua require("telescope.builtin").git_status()<CR>', 'Git Status'},
   },
 }, { prefix = "<Leader>t" })
