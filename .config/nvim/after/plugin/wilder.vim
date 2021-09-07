@@ -1,11 +1,20 @@
 call wilder#setup({
             \ 'modes': [':', '/', '?'],
-            \ 'next_key': '<C-j>',
-            \ 'previous_key': '<C-k>',
+            \ 'next_key': '<Tab>',
+            \ 'previous_key': '<S-Tab>',
+            \ 'accept_key': '<Down>',
+            \ 'reject_key': '<Up>',
             \ })
 
 call wilder#set_option('pipeline', [
             \   wilder#branch(
+            \     [
+            \       wilder#check({_, x -> empty(x)}),
+            \       wilder#history(),
+            \       wilder#result({
+            \         'draw': [{_, x -> ' ' . x}],
+            \       }),
+            \     ],
             \     wilder#python_file_finder_pipeline({
             \       'file_command': {_, arg -> stridx(arg, '.') != -1 ? ['fd', '-tf', '-H'] : ['fd', '-tf']},
             \       'dir_command': ['fd', '-td'],

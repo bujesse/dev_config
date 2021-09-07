@@ -8,9 +8,6 @@ let g:startify_bookmarks = [
 let g:startify_change_to_vcs_root = 1
 let g:startify_session_dir = '~/.config/nvim/session'
 
-" Sometimes the wilder buffers don't close before a ZZ
-let g:startify_session_before_save = [ 'silent! bw! [Wilder Float 0]', 'silent! bw! [Wilder Float 1]' ]
-
 " This prevents NvimTree from freaking out when loading a session
 let g:startify_session_savecmds = [ 'silent! bw! NvimTree' ]
 

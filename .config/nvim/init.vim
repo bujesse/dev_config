@@ -34,7 +34,11 @@ source ~/.config/nvim/core/plugins.vim
 source ~/.config/nvim/core/options.vim
 source ~/.config/nvim/core/globals.vim
 source ~/.config/nvim/core/autocommands.vim
-source ~/.config/nvim/core/ui.vim
+
+" Theme
+source ~/.config/nvim/core/themes/gruvbox-material.vim
+" lualine: ~/.config/nvim/lua/plugins/lualine/init.lua
+" enable plugin: ~/.config/nvim/core/plugins.vim
 
 " Lua Plugin Configuration (.vim plugins are in after/plugin)
 luafile ~/.config/nvim/lua/core/setup.lua

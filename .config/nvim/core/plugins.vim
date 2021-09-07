@@ -37,8 +37,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tommcdo/vim-exchange'            " swap 2 text objects
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'tommcdo/vim-lion'                " Align text around a chosen character
-    Plug 'mg979/vim-visual-multi'
-    Plug 'dbakker/vim-paragraph-motion'    " {} commands matche whitespace-only lines as well as empty lines
+    Plug 'mg979/vim-visual-multi'          " Multiple cursors
+    Plug 'dbakker/vim-paragraph-motion'    " {} commands match whitespace-only lines as well as empty lines
     Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
     Plug 'svermeulen/vim-yoink'            " keep yank history and cycle through
     Plug 'AckslD/nvim-revJ.lua'            " expand one-liner multi-line
@@ -63,10 +63,11 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'saadparwaiz1/cmp_luasnip'
 
     " UI
-    " Plug 'morhetz/gruvbox'
-    " Plug 'folke/tokyonight.nvim'
     " Plug 'bluz71/vim-moonfly-colors'
+    " Plug 'folke/tokyonight.nvim'
+    " Plug 'sainnhe/sonokai'
     Plug 'sainnhe/gruvbox-material'
+    " Plug 'navarasu/onedark.nvim'
     Plug 'glepnir/lspsaga.nvim'
     Plug 'akinsho/bufferline.nvim'
     Plug 'hoob3rt/lualine.nvim'

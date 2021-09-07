@@ -67,9 +67,6 @@ require('telescope').setup({
         return {}
       end,
     },
-    grep_string = {
-      default_text = selected_text,
-    },
   },
 })
 
