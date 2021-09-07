@@ -36,7 +36,7 @@ nnoremap 0 g0
 
 " U feels like a more natural companion to u
 nnoremap U <C-r>
-nnoremap <C-z> u
+imap <C-z> u
 
 map <C-y> "*y
 

@@ -36,7 +36,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'ggandor/lightspeed.nvim'
     Plug 'tommcdo/vim-exchange'            " swap 2 text objects
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
-    Plug 'tommcdo/vim-lion'                " Align text around a chosen character
+    " Plug 'tommcdo/vim-lion'              " Align text around a chosen character
+    Plug 'junegunn/vim-easy-align'         " Align text around a chosen character
     Plug 'mg979/vim-visual-multi'          " Multiple cursors
     Plug 'dbakker/vim-paragraph-motion'    " {} commands match whitespace-only lines as well as empty lines
     Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
@@ -69,7 +70,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'sainnhe/gruvbox-material'
     " Plug 'navarasu/onedark.nvim'
     Plug 'glepnir/lspsaga.nvim'
-    Plug 'akinsho/bufferline.nvim'
+    " Plug 'akinsho/bufferline.nvim'
+    Plug 'romgrk/barbar.nvim'
     Plug 'hoob3rt/lualine.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'lukas-reineke/indent-blankline.nvim'
@@ -81,6 +83,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'mfussenegger/nvim-dap'
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'mfussenegger/nvim-dap-python'
+
+    " Performance
+    Plug 'antoinemadec/FixCursorHold.nvim' " Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
 
     " Misc
     Plug 'nvim-lua/plenary.nvim'

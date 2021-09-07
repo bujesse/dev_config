@@ -21,7 +21,7 @@ require('telescope').setup({
       },
     },
     layout_strategy = 'vertical',
-    sorting_strategy = 'ascending',
+    sorting_strategy = 'descending',
     layout_config = {
       vertical = {
         mirror = true,
@@ -63,6 +63,8 @@ require('telescope').setup({
           vim.api.nvim_command('redraw')
           print('Using rg additional arg: ' .. filetype)
           return { filetype }
+        elseif opts.mode == 'ignore' then
+          return { '--no-ignore', '--hidden' }
         end
         return {}
       end,
@@ -111,14 +113,15 @@ require('which-key').register({
   name = '+telescope',
   r = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume' },
   p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
-  f = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
+  i = { '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>', 'Grep (include ignore and hidden)' },
+  u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
   c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
   h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
   v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
   o = { '<cmd>lua require("telescope.builtin").oldfiles()<CR>', 'Old Files' },
   s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
   k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
-  a = { '<cmd>lua require("telescope.builtin").()<CR>', 'Old Files' },
+  a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Old Files' },
   g = {
     name = '+git',
     c = { '<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Git Commits' },
