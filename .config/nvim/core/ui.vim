@@ -38,18 +38,4 @@ augroup GruvboxMaterialCustom
   autocmd ColorScheme gruvbox-material call s:gruvbox_material_custom()
 augroup END
 
-lua << EOF
-function _G.get_palette()
-    local filepath = '%f'
-    local align_section = '%='
-    local percentage_through_file = '%p%%'
-    return string.format(
-        '%s%s%s',
-        filepath,
-        align_section,
-        percentage_through_file
-    )
-end
-EOF
-
 colorscheme gruvbox-material

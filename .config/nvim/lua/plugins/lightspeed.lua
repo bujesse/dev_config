@@ -11,7 +11,7 @@ require'lightspeed'.setup {
   -- For instant-repeat, pressing the trigger key again (f/F/t/T)
   -- always works, but here you can specify additional keys too.
   instant_repeat_fwd_key = ';',
-  instant_repeat_bwd_key = ',',
+  instant_repeat_bwd_key = ',,',
   -- By default, the values of these will be decided at runtime,
   -- based on `jump_to_first_match`.
   labels = {"f", "j", "d", "k", "s", "l", "a", ";", "e", "i", "w", "o", "g", "h", "v", "n", "c", "m", "z", "."},

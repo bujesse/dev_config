@@ -20,13 +20,14 @@ call plug#begin('~/.config/nvim/plugged')
     " Plug 'junegunn/fzf.vim'
     " Plug 'pbogut/fzf-mru.vim'
     Plug 'kyazdani42/nvim-tree.lua'
-    Plug 'nelstrom/vim-visual-star-search'
+    " Plug 'nelstrom/vim-visual-star-search'
+    Plug 'haya14busa/vim-asterisk'
     Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'lewis6991/gitsigns.nvim'
     Plug 'nvim-telescope/telescope.nvim'
 
     " text editing/navigating
-    Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
+    " Plug 'Konfekt/FastFold'                " Fixes issue where syntax folding makes vim really slow in larger files
     Plug 'Valloric/ListToggle'             " toggle quickfix and loclist
     Plug 'vim-scripts/ReplaceWithRegister' " replace with register: [count][\"x]gr{motion}
     Plug 'windwp/nvim-autopairs'           " Auto-input closing paired characters
@@ -36,7 +37,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tommcdo/vim-exchange'            " swap 2 text objects
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'tommcdo/vim-lion'                " Align text around a chosen character
-    Plug 'terryma/vim-multiple-cursors'    " <C-n> and <C-p> to use multiple cursors
+    Plug 'mg979/vim-visual-multi'
     Plug 'dbakker/vim-paragraph-motion'    " {} commands matche whitespace-only lines as well as empty lines
     Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
     Plug 'svermeulen/vim-yoink'            " keep yank history and cycle through
