@@ -1,7 +1,7 @@
 call wilder#setup({
             \ 'modes': [':', '/', '?'],
-            \ 'next_key': '<Tab>',
-            \ 'previous_key': '<S-Tab>',
+            \ 'next_key': '<C-j>',
+            \ 'previous_key': '<C-k>',
             \ 'accept_key': '<Down>',
             \ 'reject_key': '<Up>',
             \ })
@@ -11,9 +11,6 @@ call wilder#set_option('pipeline', [
             \     [
             \       wilder#check({_, x -> empty(x)}),
             \       wilder#history(),
-            \       wilder#result({
-            \         'draw': [{_, x -> ' ' . x}],
-            \       }),
             \     ],
             \     wilder#python_file_finder_pipeline({
             \       'file_command': {_, arg -> stridx(arg, '.') != -1 ? ['fd', '-tf', '-H'] : ['fd', '-tf']},
@@ -29,7 +26,7 @@ call wilder#set_option('pipeline', [
             \     }),
             \     wilder#cmdline_pipeline({
             \       'fuzzy': 1,
-            \       'fuzzy_filter': has('nvim') ? wilder#lua_fzy_filter() : wilder#vim_fuzzy_filter(),
+            \       'fuzzy_filter': wilder#lua_fzy_filter(),
             \     }),
             \     wilder#python_search_pipeline({
             \       'pattern': wilder#python_fuzzy_pattern({
@@ -39,13 +36,8 @@ call wilder#set_option('pipeline', [
             \   ),
             \ ])
 
-let s:highlighters = [
-            \ wilder#pcre2_highlighter(),
-            \ has('nvim') ? wilder#lua_fzy_highlighter() : wilder#cpsm_highlighter(),
-            \ ]
-
 let s:popupmenu_renderer = wilder#popupmenu_renderer({
-            \ 'highlighter': s:highlighters,
+            \ 'highlighter': wilder#lua_fzy_highlighter(),
             \ 'left': [
                 \   wilder#popupmenu_devicons(),
                 \   wilder#popupmenu_buffer_flags(),
@@ -57,7 +49,7 @@ let s:popupmenu_renderer = wilder#popupmenu_renderer({
             \ })
 
 let s:wildmenu_renderer = wilder#wildmenu_renderer({
-            \ 'highlighter': s:highlighters,
+            \ 'highlighter': wilder#lua_fzy_highlighter(),
             \ 'apply_incsearch_fix': 0,
             \ 'separator': ' · ',
             \ 'left': [' ', wilder#wildmenu_spinner(), ' '],

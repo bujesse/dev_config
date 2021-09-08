@@ -30,7 +30,7 @@ function M.config()
   -- Set barbar's options
   vim.g.bufferline = {
     -- Enable/disable animations
-    animation = true,
+    animation = false,
 
     -- Enable/disable auto-hiding the tab bar when there is a single buffer
     auto_hide = true,

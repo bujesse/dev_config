@@ -1,6 +1,21 @@
 M = {}
 
 function M.config()
+  vim.g.ascii = {
+    '⠀⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀',
+    '⠀⠀⠀⣴⠿⠏⠀⠀⠀⠀⠀⠀⢳⡀⠀⡏⠀⠀⠀⠀⠀⢷',
+    '⠀⠀⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀⠀⠀ ⡇',
+    '⠀⠀⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿⠀⣸⠀ nv  ⡇',
+    '⠀⠀⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀⣿⠀⢹⠀⠀⠀⠀⠀ ⡇',
+    '⠀⠀⠙⢿⣯⠄⠀⠀⠀⢀⡀⠀⠀⡿⠀⠀⡇⠀⠀⠀⠀⡼',
+    '⠀⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀⠀⠘⠤⣄⣠⠞⠀',
+    '⠀⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+    '⠀⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀',
+    '⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀',
+    '⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀⠀⣄⢸⠀⠀⠀⠀⠀⠀',
+    '⣿⣿⣧⣀⣿………⣀⣰⣏⣘⣆⣀⠀⠀',
+  }
+
   vim.g.startify_bookmarks = {
     { n = '~/.config/nvim/init.vim' },
     { i = '~/.ideavimrc' },
@@ -16,6 +31,10 @@ function M.config()
     { m = { '  MRU', 'Telescope frecency' } },
     { f = { '  Find Files', 'Telescope find_files' } },
     { w = { '  Find Word', 'Telescope live_grep' } },
+    { up = { '  Update Plugins', 'PlugUpdate' } },
+    { ug = { '  Upgrade Plugin Manager', 'PlugUpgrade' } },
+    { ts = { '  Update Treesitter', 'TSUpdate' } },
+    { ch = { '  Check Health', 'checkhealth' } },
   }
 
   vim.g.startify_lists = {
@@ -40,21 +59,6 @@ function M.config()
   vim.g.startify_session_savecmds = {
     'silent! bw! NvimTree',
     'unlet SessionLoad',
-  }
-
-  vim.g.ascii = {
-    '⠀⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀',
-    '⠀⠀⠀⣴⠿⠏⠀⠀⠀⠀⠀⠀⢳⡀⠀⡏⠀⠀⠀⠀⠀⢷',
-    '⠀⠀⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀⠀⠀ ⡇',
-    '⠀⠀⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿⠀⣸⠀ nv  ⡇',
-    '⠀⠀⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀⣿⠀⢹⠀⠀⠀⠀⠀ ⡇',
-    '⠀⠀⠙⢿⣯⠄⠀⠀⠀⢀⡀⠀⠀⡿⠀⠀⡇⠀⠀⠀⠀⡼',
-    '⠀⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀⠀⠘⠤⣄⣠⠞⠀',
-    '⠀⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀⠀',
-    '⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀',
-    '⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀⠀⣄⢸⠀⠀⠀⠀⠀⠀',
-    '⣿⣿⣧⣀⣿………⣀⣰⣏⣘⣆⣀⠀⠀',
   }
 
   vim.g.startify_custom_header = 'startify#pad(g:ascii + startify#fortune#boxed())'
