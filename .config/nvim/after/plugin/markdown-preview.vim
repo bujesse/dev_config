@@ -3,4 +3,4 @@ let g:mkdp_auto_close = 1
 
 " nmap <C-s> <Plug>MarkdownPreview
 " nmap <M-s> <Plug>MarkdownPreviewStop
-nmap <Leader>mp <Plug>MarkdownPreviewToggle
+nmap gm <Plug>MarkdownPreviewToggle

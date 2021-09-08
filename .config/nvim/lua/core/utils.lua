@@ -20,4 +20,9 @@ function M.map(tbl, f)
   return t
 end
 
+function P(obj)
+  print(vim.inspect(obj))
+  return obj
+end
+
 return M

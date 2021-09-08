@@ -12,7 +12,6 @@ function M.is_client_active(name)
 end
 
 -- Diagnostics Visibility
-M.diagnostics_visible = not GLOBAL_CONFIG.diagnostics_visible
 function M.toggle_diagnostics(should_log)
   M.diagnostics_visible = not M.diagnostics_visible
 
@@ -42,7 +41,6 @@ end
 
 -- Autoformat
 
-M.autoformat_is_on = not GLOBAL_CONFIG.format_on_save
 function M.toggle_autoformat(should_log)
   if M.autoformat_is_on then
     vim.cmd([[
@@ -70,6 +68,9 @@ function M.toggle_autoformat(should_log)
 end
 
 function M.setup(buf_set_keymap)
+  M.diagnostics_visible = not GLOBAL_CONFIG.diagnostics_visible
+  M.autoformat_is_on = not GLOBAL_CONFIG.format_on_save
+
   M.toggle_autoformat(false)
   buf_set_keymap(
     'n',

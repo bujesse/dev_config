@@ -1,16 +1,16 @@
-local components = require'plugins.lualine.components'
+local components = require('plugins.lualine.components')
 
-require'lualine'.setup {
+require('lualine').setup({
   options = {
     icons_enabled = true,
     theme = 'gruvbox_material',
-    component_separators = {'', ''},
-    section_separators = {'', ''},
-    disabled_filetypes = {}
+    component_separators = { '', '' },
+    section_separators = { '', '' },
+    disabled_filetypes = {},
   },
   sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff'},
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff' },
     lualine_c = {
       {
         'filename',
@@ -20,7 +20,7 @@ require'lualine'.setup {
     },
     lualine_x = {
       components.diagnostics,
-      'filetype'
+      'filetype',
     },
     lualine_y = {
       'progress',
@@ -29,14 +29,19 @@ require'lualine'.setup {
       components.treesitter,
       components.lsp,
       components.python_env,
-    }
+    },
   },
   inactive_sections = {
     lualine_a = {},
     lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
+    lualine_c = { 'filename' },
+    lualine_x = { 'location' },
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = {},
   },
-}
+  tabline = {},
+  extensions = {
+    'nvim-tree',
+    'quickfix',
+  },
+})

@@ -17,7 +17,7 @@ call wilder#set_option('pipeline', [
             \     ],
             \     wilder#python_file_finder_pipeline({
             \       'file_command': {_, arg -> stridx(arg, '.') != -1 ? ['fd', '-tf', '-H'] : ['fd', '-tf']},
-            \       'dir_command': ['fd', '-td'],
+            \       'dir_command': {_, arg -> stridx(arg, '.') != -1 ? ['fd', '-td', '-H'] : ['fd', '-td']}
             \     }),
             \     wilder#substitute_pipeline({
             \       'pipeline': wilder#python_search_pipeline({

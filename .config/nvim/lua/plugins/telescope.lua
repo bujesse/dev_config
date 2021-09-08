@@ -70,7 +70,28 @@ require('telescope').setup({
       end,
     },
   },
+  extensions = {
+    frecency = {
+      db_root = DATA_PATH,
+      show_scores = true,
+      show_unindexed = true,
+      ignore_patterns = { '*.git/*', '*/tmp/*', '*.cache/*', '*plugged/*' },
+      disable_devicons = false,
+      workspaces = {
+        ['conf'] = CONFIG_PATH,
+      },
+    },
+    fzf = {
+      fuzzy = true, -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true, -- override the file sorter
+      case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+    },
+  },
 })
+
+require('telescope').load_extension('frecency')
+require('telescope').load_extension('fzf')
 
 local opts = {
   noremap = true,
@@ -80,6 +101,7 @@ local opts = {
 -- Essential
 vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>m', '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'ga', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
@@ -118,10 +140,9 @@ require('which-key').register({
   c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
   h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
   v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
-  o = { '<cmd>lua require("telescope.builtin").oldfiles()<CR>', 'Old Files' },
   s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
   k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
-  a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Old Files' },
+  a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
   g = {
     name = '+git',
     c = { '<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Git Commits' },

@@ -72,6 +72,7 @@ set scrolloff=8
 
 " Using this to persist buffer locations https://github.com/akinsho/bufferline.nvim#configuration
 set sessionoptions+=globals
+" set sessionoptions=blank,curdir,tabpages,winpos,globals
 
 " Use this to wrap long lines
 set showbreak=↳
