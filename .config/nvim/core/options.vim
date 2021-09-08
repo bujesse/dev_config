@@ -15,8 +15,11 @@ set completeopt=menu,menuone,noinsert,noselect
 " Ask for confirmation when handling unsaved or read-only files
 set confirm
 set encoding=UTF-8
-set foldlevelstart=20
-set foldmethod=indent
+
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevelstart=99 " Start with no folds
+set foldnestmax=10
 set foldopen+=search,undo,quickfix,jump
 
 " Always do global substitutes

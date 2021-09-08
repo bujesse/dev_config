@@ -50,10 +50,15 @@ noremap <space><space> :w<CR>
 nmap ]t :tabn<CR>
 nmap [t :tabp<CR>
 
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
+nmap <C-h> <Plug>WinMoveLeft
+nmap <C-j> <Plug>WinMoveDown
+nmap <C-k> <Plug>WinMoveUp
+nmap <C-l> <Plug>WinMoveRight
+nmap <C-z> <Plug>Zoom
 nnoremap <C-q> <C-w>q
 
 " Source init.vim
