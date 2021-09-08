@@ -21,7 +21,7 @@
 " * :on (or <c-w>o) to close all windows except the current one
 " * Use the "Last inserted text" register (".) with <C-r>
 " * reopen accidentally closed buffer with <C-o>
-" * Lightspeed is actually always a 2-char motion. cycle groups with <tab>
+" * Use <C-w>o to close all windows except for the current one
 
 let mapleader=","
 

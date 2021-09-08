@@ -22,7 +22,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'haya14busa/vim-asterisk'
     Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'lewis6991/gitsigns.nvim', {'commit': 'daa233aabb4dbc7c870ea7300bcfeef96d49c2a3'}
+    Plug 'lewis6991/gitsigns.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-frecency.nvim'
     Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -32,9 +32,10 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'Valloric/ListToggle'             " toggle quickfix and loclist
     Plug 'vim-scripts/ReplaceWithRegister' " replace with register: [count][\"x]gr{motion}
     Plug 'windwp/nvim-autopairs'           " Auto-input closing paired characters
-    " Plug 'rhysd/clever-f.vim'
     " Plug 'easymotion/vim-easymotion'
-    Plug 'ggandor/lightspeed.nvim'
+    " Plug 'ggandor/lightspeed.nvim'
+    Plug 'rhysd/clever-f.vim'
+    Plug 'phaazon/hop.nvim'
     Plug 'tommcdo/vim-exchange'            " swap 2 text objects
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
     " Plug 'tommcdo/vim-lion'              " Align text around a chosen character
@@ -43,7 +44,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'dbakker/vim-paragraph-motion'    " {} commands match whitespace-only lines as well as empty lines
     Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
     Plug 'svermeulen/vim-yoink'            " keep yank history and cycle through
-    Plug 'AckslD/nvim-revJ.lua'            " expand one-liner multi-line
+    " Plug 'AckslD/nvim-revJ.lua'          " expand one-liner multi-line
+    Plug 'AndrewRadev/splitjoin.vim'       " expand one-liner multi-line
     Plug 'kana/vim-textobj-user'           " Create your own text objects
     Plug 'sgur/vim-textobj-parameter'      " Required for nvim-revJ.lua
 

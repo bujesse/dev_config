@@ -30,6 +30,9 @@ function M.config()
   vim.g.startify_session_persistence = 1
   vim.g.startify_session_dir = CACHE_PATH .. '/sessions'
 
+  -- Help texts should not be added to the session
+  vim.g.startify_session_before_save = { 'silent! helpclose' }
+
   -- This prevents NvimTree from freaking out when loading a session
   -- Also, barbar doesn't load immediately because it
   -- ignores the autocommands while SessionLoad is set

@@ -17,15 +17,19 @@ M.autocommands = {
     { 'FileType', 'markdown', 'setlocal wrap' },
     { 'FileType', 'markdown', 'setlocal spell' },
   },
-  -- _buffer_bindings = {
-  --   { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
-  -- },
+  _buffer_bindings = {
+    { 'FileType', 'floaterm', 'nnoremap <silent> <buffer> q :q<CR>' },
+  },
   _auto_resize = {
     -- will cause split windows to be resized evenly if main window is resized
     { 'VimResized', '*', 'wincmd =' },
   },
   _general_lsp = {
     { 'FileType', 'lspinfo', 'nnoremap <silent> <buffer> q :q<CR>' },
+  },
+  _help = {
+    -- Open split vertically on the right
+    { 'BufEnter', '*.txt', "if &buftype == 'help' | wincmd L | endif" },
   },
   custom_groups = {},
 }
