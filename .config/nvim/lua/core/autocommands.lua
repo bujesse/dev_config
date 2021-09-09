@@ -2,6 +2,12 @@ local M = {}
 
 M.autocommands = {
   _general_settings = {
+    -- {
+    --   -- Load lua files in ftplugin
+    --   'Filetype',
+    --   '*',
+    --   'lua require(\'core.ft\').do_filetype(vim.fn.expand("<amatch>"))',
+    -- },
     {
       'TextYankPost',
       '*',

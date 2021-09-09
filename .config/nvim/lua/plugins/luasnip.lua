@@ -52,5 +52,8 @@ vim.api.nvim_set_keymap('s', '<C-E>', '<Plug>luasnip-next-choice', {})
 -- require("luasnip/loaders/from_vscode").load({ paths = { "./my-snippets" } }) -- Load snippets from my-snippets folder
 
 -- Lazy load only required snippets
+require('luasnip.loaders.from_vscode').load({ paths = { CONFIG_PATH .. '/snippets' } })
+
 -- This loads snippets from friendly-snippets plugin
-require('luasnip/loaders/from_vscode').lazy_load()
+require('luasnip.loaders.from_vscode').lazy_load()
+

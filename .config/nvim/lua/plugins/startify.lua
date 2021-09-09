@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 function M.config()
   vim.g.ascii = {

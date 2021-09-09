@@ -1,8 +1,9 @@
 require('lspconfig')
+local Log = require('core.log')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local common_on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -13,12 +14,6 @@ local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Enable vim-illuminate
-  require('illuminate').on_attach(client)
-  vim.api.nvim_command([[ hi def link LspReferenceText CursorLine ]])
-  vim.api.nvim_command([[ hi def link LspReferenceWrite CursorLine ]])
-  vim.api.nvim_command([[ hi def link LspReferenceRead CursorLine ]])
-
   -- Mappings.
   local opts = {
     noremap = true,
@@ -28,31 +23,87 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', 'gq', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<Leader>af', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-  buf_set_keymap('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gh', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   -- See `:help vim.lsp.*` for documentation on functions
 
+  -- Enable vim-illuminate
+  require('illuminate').on_attach(client)
+  vim.api.nvim_command([[ hi def link LspReferenceText CursorLine ]])
+  vim.api.nvim_command([[ hi def link LspReferenceWrite CursorLine ]])
+  vim.api.nvim_command([[ hi def link LspReferenceRead CursorLine ]])
+  buf_set_keymap('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
+  buf_set_keymap('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+
+  -- Setup lsp toggles
   require('plugins.lsp.utils').setup(buf_set_keymap)
+
+  -- Setup formatters and linters
   require('plugins.lsp.null-ls').setup(vim.bo.filetype)
+
+  -- Setup UI configuration
+  require('plugins.lsp.ui').setup()
 end
 
--- config that activates keymaps and enables snippet support
-local function make_config(server)
+local function common_on_init(client, bufnr)
+  local formatters = require('plugins.lsp.language-configs.' .. vim.bo.filetype).formatters
+  if not vim.tbl_isempty(formatters) and formatters[1]['exe'] ~= nil and formatters[1].exe ~= '' then
+    client.resolved_capabilities.document_formatting = false
+    Log:debug(
+      string.format('Overriding language server [%s] with format provider [%s]', client.name, formatters[1].exe)
+    )
+  end
+end
+
+local function common_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
-  return {
-    -- enable snippet support
-    capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
-    on_attach = on_attach,
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { 'vim' },
-        },
-      },
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = {
+      'documentation',
+      'detail',
+      'additionalTextEdits',
     },
   }
+
+  local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+  if not status_ok then
+    return capabilities
+  end
+  capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  return capabilities
+end
+
+local function make_config(server)
+  local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. server)
+  if ok and config.lsp and config.lsp.setup then
+    config = config.lsp.setup
+  else
+    config = {}
+  end
+
+  config.on_attach = function(client, bufnr)
+    if config.before_on_attach then
+      config.before_on_attach(client, bufnr)
+    end
+    common_on_attach(client, bufnr)
+    if config.after_on_attach then
+      config.after_on_attach(client, bufnr)
+    end
+  end
+
+  if not config.on_init then
+    config.on_init = common_on_init
+  end
+  if not config.capabilities then
+    config.capabilities = common_capabilities()
+  end
+
+  return config
 end
 
 -- lsp-install

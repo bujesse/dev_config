@@ -1,9 +1,9 @@
 local M = {}
 local formatters_by_ft = {}
 
-local null_ls = require 'null-ls'
-local services = require 'plugins.lsp.null-ls.services'
-local Log = require 'core.log'
+local null_ls = require('null-ls')
+local services = require('plugins.lsp.null-ls.services')
+local Log = require('core.log')
 
 local function list_names(formatters, options)
   options = options or {}
@@ -54,11 +54,11 @@ function M.list_configured(formatter_configs)
         errors[fmt_config.exe] = {} -- Add data here when necessary
       else
         Log:debug('Using formatter: ' .. formatter_cmd)
-        formatters[fmt_config.exe] = formatter.with {
+        formatters[fmt_config.exe] = formatter.with({
           command = formatter_cmd,
           extra_args = fmt_config.args,
-          diagnostics_format = fmt_config.diagnostics_format or "[#{s}] #{m} (#{c})"
-        }
+          diagnostics_format = fmt_config.diagnostics_format or '[#{s}] #{m} (#{c})',
+        })
       end
     end
   end
@@ -67,13 +67,13 @@ function M.list_configured(formatter_configs)
 end
 
 function M.setup(filetype, options)
-  local ok, config = pcall(require, 'plugins.lsp.language-configs.'..filetype)
+  local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. filetype)
   if not ok or not config.formatters then
     return
   end
 
   formatters_by_ft[filetype] = M.list_configured(config.formatters)
-  null_ls.register {sources = formatters_by_ft[filetype].supported }
+  null_ls.register({ sources = formatters_by_ft[filetype].supported })
 end
 
 return M

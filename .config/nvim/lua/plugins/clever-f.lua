@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 function M.config()
   vim.api.nvim_set_keymap('n', ';', '<Plug>(clever-f-repeat-forward)', { noremap = false, silent = false })
@@ -6,7 +6,7 @@ function M.config()
   vim.g.clever_f_across_no_line = 0
   -- vim.g.clever_f_fix_key_direction = 1
   vim.g.clever_f_smart_case = 1
-  vim.g.clever_f_mark_direct = 1
+  vim.g.clever_f_mark_direct = 0
 
   -- Instant timeout allows for quickly chaining different targets
   vim.g.clever_f_timeout_ms = 1

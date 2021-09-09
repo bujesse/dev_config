@@ -2,7 +2,7 @@
 require('core.config')
 
 require('plugins.lsp.nvim-lspconfig')
-require('plugins.lsp.lspsaga')
+-- require('plugins.lsp.lspsaga')
 require('plugins.lsp.null-ls.init').config()
 
 local autocmds = require('core.autocommands')

@@ -20,6 +20,7 @@ function M.toggle_diagnostics(should_log)
     signs = true,
     underline = true,
     update_in_insert = false,
+    severity_sort = true,
   }
 
   -- toggle the diagnostic settings
@@ -40,24 +41,38 @@ function M.toggle_diagnostics(should_log)
 end
 
 -- Autoformat
+function M.turn_off_autoformat()
+  vim.cmd([[
+  if exists('#autoformat#BufWritePre')
+    :autocmd! autoformat
+    endif
+    ]])
+  -- print('OFF')
+end
+
+function M.turn_on_autoformat()
+  require('core.autocommands').define_augroups({
+    autoformat = {
+      {
+        'BufWritePre',
+        '*',
+        ':silent lua vim.lsp.buf.formatting_sync()',
+      },
+    },
+  })
+  -- print('ON')
+end
+
+function M.temp_off()
+  M.turn_off_autoformat()
+  M.autoformat_is_on = not M.autoformat_is_on
+end
 
 function M.toggle_autoformat(should_log)
   if M.autoformat_is_on then
-    vim.cmd([[
-      if exists('#autoformat#BufWritePre')
-        :autocmd! autoformat
-      endif
-    ]])
+    M.turn_off_autoformat()
   else
-    require('core.autocommands').define_augroups({
-      autoformat = {
-        {
-          'BufWritePre',
-          '*',
-          ':silent lua vim.lsp.buf.formatting_sync()',
-        },
-      },
-    })
+    M.turn_on_autoformat()
   end
 
   M.autoformat_is_on = not M.autoformat_is_on

@@ -72,7 +72,7 @@ call plug#begin('~/.config/nvim/plugged')
     " Plug 'sainnhe/sonokai'
     " Plug 'navarasu/onedark.nvim'
     Plug 'sainnhe/gruvbox-material'
-    Plug 'glepnir/lspsaga.nvim'
+    " Plug 'glepnir/lspsaga.nvim'
     Plug 'hoob3rt/lualine.nvim'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'lukas-reineke/indent-blankline.nvim'

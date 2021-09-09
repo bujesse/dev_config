@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 function M.selected_text()
   -- Get visually selected text
   vim.cmd('noau normal! "vy"')

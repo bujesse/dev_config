@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 function M.config()
   local map = vim.api.nvim_set_keymap
@@ -7,6 +7,7 @@ function M.config()
   -- Move to previous/next
   map('n', '[b', ':BufferPrevious<CR>', opts)
   map('n', ']b', ':BufferNext<CR>', opts)
+  map('n', 'gb', ':BufferPick<CR>', opts)
   -- Re-order to previous/next
   map('n', '<C-Left>', ':BufferMovePrevious<CR>', opts)
   map('n', '<C-Right>', ' :BufferMoveNext<CR>', opts)
@@ -16,7 +17,6 @@ function M.config()
 
   require('which-key').register({
     name = '+barbar',
-    b = { ':BufferPick<CR>', 'Pick Buffer' },
     p = { ':BufferPin<CR>', 'Pin Buffer' },
     n = { ':BufferOrderByBufferNumber<CR>', 'Sort buffers by Buffer Number' },
     d = { ':BufferOrderByDirectory<CR>', 'Sort buffers by Directory' },

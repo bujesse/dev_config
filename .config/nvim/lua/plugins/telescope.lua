@@ -47,6 +47,14 @@ require('telescope').setup({
         },
       },
     },
+    lsp_code_actions = {
+      layout_config = {
+        vertical = {
+          width = 0.5,
+          height = 0.5,
+        },
+      },
+    },
     live_grep = {
       additional_args = function(opts)
         if opts.mode == 'filetype_mask' then
@@ -101,11 +109,10 @@ local opts = {
 -- Essential
 vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>m', '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>m', '<cmd>lua require("telescope.builtin").oldfiles({include_current_session = true})<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'ga', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gb', '<cmd>lua require("telescope.builtin").buffers()<CR>', opts)
 
 -- Custom
 vim.api.nvim_set_keymap(
@@ -121,7 +128,7 @@ vim.api.nvim_set_keymap(
   opts
 )
 
-M = {}
+local M = {}
 function M.grep_string_visual()
   local visual_selection = require('core.utils').selected_text()
   print('Search string: ' .. visual_selection)
@@ -133,7 +140,9 @@ vim.api.nvim_set_keymap('x', '<Leader>f', '<cmd>lua require("plugins.telescope")
 -- which-key mappings (used less often, so put behind a 3-char input)
 require('which-key').register({
   name = '+telescope',
+  f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
   r = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume' },
+  b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
   p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
   i = { '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>', 'Grep (include ignore and hidden)' },
   u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },

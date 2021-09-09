@@ -44,7 +44,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
     export EDITOR='nvim'
-    export MYVIMRC='~/.vimrc'
+    export MYVIMRC='~/.config/nvim/init.vim'
     export FLASK_ENV=development
 
 # === PYTHON ===
