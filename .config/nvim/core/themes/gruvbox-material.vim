@@ -34,7 +34,8 @@ function! s:gruvbox_material_custom() abort
   " See `autoload/gruvbox_material.vim` for the format of `l:palette`.
   " call gruvbox_material#highlight('groupE', l:palette.red, l:palette.none, 'undercurl', l:palette.red)
   call gruvbox_material#highlight('CurrentWord', l:palette.none, l:palette.bg_visual_red)
-  call gruvbox_material#highlight('Search', l:palette.bg0, l:palette.bg5)
+  " call gruvbox_material#highlight('Search', l:palette.bg0, l:palette.bg5)
+  call gruvbox_material#highlight('Search', l:palette.bg0, l:palette.grey1)
 endfunction
 
 augroup GruvboxMaterialCustom
