@@ -26,7 +26,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'folke/which-key.nvim'
 
     " navigating
-    Plug 'Valloric/ListToggle'             " toggle quickfix and loclist
+    " Plug 'Valloric/ListToggle'             " toggle quickfix and loclist
     Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
 
     " text editing
@@ -46,15 +46,16 @@ call plug#begin('~/.config/nvim/plugged')
     " text objexts
     Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
     Plug 'dbakker/vim-paragraph-motion'    " {} commands match whitespace-only lines as well as empty lines
-    Plug 'kana/vim-textobj-user'           " Create your own text objects
-    Plug 'sgur/vim-textobj-parameter'      " Required for nvim-revJ.lua
+    " Plug 'kana/vim-textobj-user'           " Create your own text objects
+    " Plug 'sgur/vim-textobj-parameter'      " Required for nvim-revJ.lua
 
     " Intellisense
     Plug 'neovim/nvim-lspconfig'
     Plug 'kabouzeid/nvim-lspinstall'       " Install language servers with :LspInstall <language>
-    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
     Plug 'rrethy/vim-illuminate'
     Plug 'jose-elias-alvarez/null-ls.nvim'
+    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
     " Completion/Snippets
     Plug 'L3MON4D3/LuaSnip'

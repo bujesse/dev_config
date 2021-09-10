@@ -19,5 +19,5 @@ autocmd BufWritePre * :call TrimWhitespace()
     " nmap <Leader>x :call BCloseSkipQuickFix()<CR>
 
     " quit if the last buffer is a quickfix
-    autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
+    " autocmd BufEnter * if (winnr("$") == 1 && &buftype ==# 'quickfix') | q | endif
 

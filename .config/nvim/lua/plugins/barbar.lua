@@ -5,8 +5,8 @@ function M.config()
   local opts = { noremap = true, silent = true }
 
   -- Move to previous/next
-  map('n', '[b', ':BufferPrevious<CR>', opts)
-  map('n', ']b', ':BufferNext<CR>', opts)
+  map('n', 'H', ':BufferPrevious<CR>', opts)
+  map('n', 'L', ':BufferNext<CR>', opts)
   map('n', 'gb', ':BufferPick<CR>', opts)
   -- Re-order to previous/next
   map('n', '<C-Left>', ':BufferMovePrevious<CR>', opts)
@@ -17,12 +17,12 @@ function M.config()
 
   require('which-key').register({
     name = '+barbar',
-    p = { ':BufferPin<CR>', 'Pin Buffer' },
-    n = { ':BufferOrderByBufferNumber<CR>', 'Sort buffers by Buffer Number' },
-    d = { ':BufferOrderByDirectory<CR>', 'Sort buffers by Directory' },
-    t = { ':BufferOrderByLanguage<CR>', 'Sort buffers by Type' },
-    h = { ':BufferCloseBuffersLeft<CR>', 'Close Bufferes Left' },
-    l = { ':BufferCloseBuffersRight<CR>', 'Close Bufferes Right' },
+    p = { '<cmd>BufferPin<CR>', 'Pin Buffer' },
+    n = { '<cmd>BufferOrderByBufferNumber<CR>', 'Sort buffers by Buffer Number' },
+    d = { '<cmd>BufferOrderByDirectory<CR>', 'Sort buffers by Directory' },
+    t = { '<cmd>BufferOrderByLanguage<CR>', 'Sort buffers by Type' },
+    h = { '<cmd>BufferCloseBuffersLeft<CR>', 'Close Bufferes Left' },
+    l = { '<cmd>BufferCloseBuffersRight<CR>', 'Close Bufferes Right' },
   }, {
     prefix = '<Leader>b',
   })

@@ -3,5 +3,7 @@
 .config/nvim/plugged
 .config/nvim/session
 .config/wslu/
+.config/lvim/
+.config/lvim.bak
 
 fonts/

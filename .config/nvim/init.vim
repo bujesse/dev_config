@@ -43,5 +43,5 @@ source ~/.config/nvim/core/themes/gruvbox-material.vim
 " Lua Plugin Configuration (.vim plugins are in after/plugin)
 luafile ~/.config/nvim/lua/core/setup.lua
 
-source ~/.config/nvim/core/mappings.vim
+" source ~/.config/nvim/core/mappings.vim
 

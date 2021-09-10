@@ -12,5 +12,5 @@ require('indent_blankline').setup({
 })
 
 vim.cmd([[
-  let g:indent_blankline_filetype_exclude = ['help', 'startify', 'dashboard', 'lspinfo']
+let g:indent_blankline_filetype_exclude = ['help', 'startify', 'dashboard', 'lspinfo', 'NvimTree', 'floaterm', 'floats']
 ]])

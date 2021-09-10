@@ -12,6 +12,9 @@ set breakindentopt=shift:2
 " set clipboard+=unnamedplus
 set completeopt=menu,menuone,noinsert,noselect
 
+" more space in the neovim command line for displaying messages
+set cmdheight=2
+
 " Ask for confirmation when handling unsaved or read-only files
 set confirm
 set encoding=UTF-8
@@ -42,13 +45,15 @@ set iskeyword-=#
 " We want a statusline
 set laststatus=2
 set lazyredraw
-set mouse=n
+set mouse=a
 
 " Hide the line terminating character
 set nolist
 set cursorline
 " set cursorlineopt=number
-set nofixendofline
+
+" FUCK THIS SETTING. DUPES LINES ON FORMAT
+" set nofixendofline
 
 " No to double-spaces when joining lines
 set nojoinspaces
@@ -66,6 +71,8 @@ set noswapfile
 " Relative numbering (toggle with yor)
 set number relativenumber
 set pumheight=15
+
+" we don't need to see things like -- INSERT -- anymore
 
 " Somehow this makes syntax highlighting in vim 100x faster
 set regexpengine=1
@@ -86,6 +93,8 @@ set signcolumn=yes
 set smartcase
 set smarttab
 set splitright
+set splitbelow
+set colorcolumn=99999
 set synmaxcol=200
 set tabstop=4 shiftwidth=4 expandtab softtabstop=4
 

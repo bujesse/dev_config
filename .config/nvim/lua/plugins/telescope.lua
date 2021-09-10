@@ -20,13 +20,7 @@ require('telescope').setup({
         ['<esc>'] = actions.close,
       },
     },
-    layout_strategy = 'vertical',
-    sorting_strategy = 'descending',
-    layout_config = {
-      vertical = {
-        mirror = true,
-      },
-    },
+    layout_strategy = 'horizontal',
     file_ignore_patterns = {
       '.git/',
       'node_modules/',
@@ -109,7 +103,12 @@ local opts = {
 -- Essential
 vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>m', '<cmd>lua require("telescope.builtin").oldfiles({include_current_session = true})<CR>', opts)
+vim.api.nvim_set_keymap(
+  'n',
+  '<Leader>m',
+  '<cmd>lua require("telescope.builtin").oldfiles({include_current_session = true})<CR>',
+  opts
+)
 vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'ga', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)

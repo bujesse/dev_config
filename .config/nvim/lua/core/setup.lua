@@ -1,5 +1,6 @@
 -- TODO: put everything in the M convention and call config() or somerhing
 require('core.config')
+require('core.commands').config()
 
 require('plugins.lsp.nvim-lspconfig')
 -- require('plugins.lsp.lspsaga')
@@ -29,6 +30,9 @@ require('plugins.splitjoin').config()
 require('plugins.which-key')
 require('plugins.abolish')
 require('plugins.gitsigns')
+require('plugins.nvim-tree').setup()
 
 require('plugins.dap.nvim-dap')
 require('plugins.dap.nvim-dap-ui')
+
+require('core.keymappings').setup()

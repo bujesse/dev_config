@@ -10,6 +10,10 @@ let g:gruvbox_material_enable_italic = 1
 let g:gruvbox_material_visual = 'green background'
 let g:gruvbox_material_diagnostic_virtual_text = 'colored'
 
+let g:gruvbox_material_sign_column_background='none'
+" Don't show end of buffer tilde
+let g:gruvbox_material_show_eob= 0
+
 function! s:gruvbox_material_custom() abort
   " Link a highlight group to a predefined highlight group.
   " See `https://github.com/sainnhe/gruvbox-material/blob/master/colors/gruvbox-material.vim` for all predefined highlight groups.
@@ -37,5 +41,11 @@ augroup GruvboxMaterialCustom
   autocmd!
   autocmd ColorScheme gruvbox-material call s:gruvbox_material_custom()
 augroup END
+
+" Get rid of line between splits
+" hi VertSplit guibg=bg guifg=bg
+
+" Get rid of end of buffer tilde
+" hi EndOfBuffer guifg=bg
 
 colorscheme gruvbox-material
