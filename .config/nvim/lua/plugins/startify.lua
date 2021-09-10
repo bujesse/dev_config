@@ -60,7 +60,7 @@ function M.config()
   -- ignores the autocommands while SessionLoad is set
   vim.g.startify_session_remove_lines = { 'unlet SessionLoad' }
   vim.g.startify_session_savecmds = {
-    'silent! bw! NvimTree',
+    'silent! bd! NvimTree',
     'unlet SessionLoad',
   }
 

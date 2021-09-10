@@ -43,19 +43,17 @@ call plug#begin('~/.config/nvim/plugged')
     " Plug 'AckslD/nvim-revJ.lua'          " expand one-liner multi-line
     " Plug 'ggandor/lightspeed.nvim'
 
-    " text objexts
-    Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
-    Plug 'dbakker/vim-paragraph-motion'    " {} commands match whitespace-only lines as well as empty lines
-    " Plug 'kana/vim-textobj-user'           " Create your own text objects
-    " Plug 'sgur/vim-textobj-parameter'      " Required for nvim-revJ.lua
-
     " Intellisense
     Plug 'neovim/nvim-lspconfig'
     Plug 'kabouzeid/nvim-lspinstall'       " Install language servers with :LspInstall <language>
     Plug 'rrethy/vim-illuminate'
     Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-    " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
+    " text objexts
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'michaeljsmith/vim-indent-object' " vii - visually select inside code block using current indentation; viI - include trailing line
+    Plug 'dbakker/vim-paragraph-motion'    " {} commands match whitespace-only lines as well as empty lines
 
     " Completion/Snippets
     Plug 'L3MON4D3/LuaSnip'
@@ -63,8 +61,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
-    Plug 'f3fora/cmp-spell'
+    Plug 'hrsh7th/cmp-nvim-lua'
     Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'ray-x/cmp-treesitter'
     Plug 'saadparwaiz1/cmp_luasnip'
 
     " UI

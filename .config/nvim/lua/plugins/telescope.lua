@@ -22,11 +22,15 @@ require('telescope').setup({
     },
     layout_strategy = 'horizontal',
     file_ignore_patterns = {
-      '.git/',
+      '*.git/*',
+      '*/tmp/*',
+      '*.cache/*',
+      '*plugged/*',
       'node_modules/',
       'package-lock.json',
       'plug.vim',
       'plug.vim.old',
+      'Wilder*',
     },
     cache_picker = {
       num_pickers = 5,
@@ -77,7 +81,6 @@ require('telescope').setup({
       db_root = DATA_PATH,
       show_scores = true,
       show_unindexed = true,
-      ignore_patterns = { '*.git/*', '*/tmp/*', '*.cache/*', '*plugged/*' },
       disable_devicons = false,
       workspaces = {
         ['conf'] = CONFIG_PATH,

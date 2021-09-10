@@ -24,10 +24,11 @@ cmp.setup({
   -- You should specify your *installed* sources.
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'buffer' },
     { name = 'path' },
     { name = 'luasnip' },
-    { name = 'spell' },
+    { name = 'nvim_lua' },
+    { name = 'treesitter' },
+    { name = 'buffer' },
   },
 
   formatting = {
@@ -43,8 +44,14 @@ cmp.setup({
         buffer = '[Buffer]',
         path = '[Path]',
         luasnip = '[LuaSnip]',
-        spell = '[Spell]',
+        treesitter = '[TS]',
+        nvim_lua = '[NvimLua]',
       })[entry.source.name]
+      vim_item.dup = ({
+        buffer = 1,
+        path = 1,
+        nvim_lsp = 0,
+      })[entry.source.name] or 0
       return vim_item
     end,
   },

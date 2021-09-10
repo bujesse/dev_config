@@ -97,7 +97,7 @@ function M.config_keys()
       ['<Leader>/'] = ':noh<CR>',
 
       -- Y should behave like D and C
-      ['Y'] = 'noremap Y y$',
+      ['Y'] = 'y$',
 
       ['^'] = 'g^',
       ['0'] = 'g0',
@@ -105,9 +105,21 @@ function M.config_keys()
       -- U feels like a more natural companion to u
       ['U'] = '<C-r>',
 
+      -- TODO: this is prime real esate
+      ['Q'] = '',
+
       -- Center after search
       ['n'] = 'nzzzv',
       ['N'] = 'Nzzzv',
+
+      [']p'] = { '<Plug>unimpairedPutBelow', { noremap = false } },
+      ['[p'] = { '<Plug>unimpairedPutAbove', { noremap = false } },
+
+      [']<Space>'] = { '<Plug>unimpairedBlankDown', { noremap = false } },
+      ['[<Space>'] = { '<Plug>unimpairedBlankUp', { noremap = false } },
+
+      [']e'] = { '<Plug>unimpairedMoveDown', { noremap = false } },
+      ['[e'] = { '<Plug>unimpairedMoveUp', { noremap = false } },
 
       -- Resize with arrows
       ['<Up>'] = '<C-W>5+',
@@ -197,8 +209,8 @@ function M.config_keys()
     ---@usage change or add keymappings for visual block mode
     visual_block_mode = {
       -- Move selected line / block of text in visual mode
-      -- ['K'] = ":move '<-2<CR>gv-gv",
-      -- ['J'] = ":move '>+1<CR>gv-gv",
+      [']e'] = { '<Plug>unimpairedMoveSelectionDown', { noremap = false } },
+      ['[e'] = { '<Plug>unimpairedMoveSelectionUp', { noremap = false } },
     },
 
     ---@usage change or add keymappings for command mode
