@@ -91,7 +91,7 @@ function M.config()
 
     -- Sets the name of unnamed buffers. By default format is "[Buffer X]"
     -- where X is the buffer number. But only a static string is accepted here.
-    no_name_title = nil,
+    -- no_name_title = nil,
   }
 end
 
