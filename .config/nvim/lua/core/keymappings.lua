@@ -110,13 +110,13 @@ function M.config_keys()
       ['N'] = 'Nzzzv',
 
       -- Resize with arrows
-      ['<C-Up>'] = '<C-W>5+',
-      ['<C-Down>'] = '<C-W>5-',
-      ['<C-Left>'] = '<C-W>5<',
-      ['<C-Right>'] = '<C-W>5>',
+      ['<Up>'] = '<C-W>5+',
+      ['<Down>'] = '<C-W>5-',
+      ['<Left>'] = '<C-W>5<',
+      ['<Right>'] = '<C-W>5>',
 
       -- Run the last command
-      ['<Leader>;'] = ':<up>',
+      ['<Leader>;'] = { ':<Up>', { silent = false } },
 
       -- Move to or create split
       ['<C-h>'] = { '<Plug>WinMoveLeft', { noremap = false } },

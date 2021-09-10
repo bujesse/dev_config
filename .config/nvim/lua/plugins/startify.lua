@@ -50,7 +50,10 @@ function M.config()
   vim.g.startify_session_dir = CACHE_PATH .. '/sessions'
 
   -- Help texts should not be added to the session
-  vim.g.startify_session_before_save = { 'silent! helpclose' }
+  vim.g.startify_session_before_save = {
+    'silent! helpclose',
+    'silent! NvimTreeClose',
+  }
 
   -- This prevents NvimTree from freaking out when loading a session
   -- Also, barbar doesn't load immediately because it
@@ -67,6 +70,22 @@ function M.config()
   vim.api.nvim_set_keymap('n', '<F5>', ':SSave!<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<F8>', ':SLoad<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>s', ':Startify<CR>', { noremap = true, silent = true })
+
+  -- require('core.autocommands').define_augroups({
+  --   _startify = {
+  --     -- seems to be nobuflisted that makes my stuff disappear will do more testing
+  --     {
+  --       'FileType',
+  --       'startify',
+  --       'setlocal nocursorline noswapfile synmaxcol& signcolumn=no norelativenumber nocursorcolumn nospell  nolist  nonumber bufhidden=wipe colorcolumn= foldcolumn=0 matchpairs= ',
+  --     },
+  --     {
+  --       'FileType',
+  --       'startify',
+  --       'set showtabline=0 | autocmd BufLeave <buffer> set showtabline=' .. vim.opt.showtabline._value,
+  --     },
+  --   },
+  -- })
 end
 
 return M

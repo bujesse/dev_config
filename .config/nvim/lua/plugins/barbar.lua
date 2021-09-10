@@ -7,13 +7,13 @@ function M.config()
   -- Move to previous/next
   map('n', 'H', ':BufferPrevious<CR>', opts)
   map('n', 'L', ':BufferNext<CR>', opts)
+  map('n', 'X', ':BufferClose<CR>', opts)
   map('n', 'gb', ':BufferPick<CR>', opts)
   -- Re-order to previous/next
   map('n', '<C-Left>', ':BufferMovePrevious<CR>', opts)
   map('n', '<C-Right>', ' :BufferMoveNext<CR>', opts)
   -- Close buffer
-  map('n', '<Leader>x', ':BufferClose<CR>', opts)
-  map('n', '<Leader>X', ':BufferCloseAllButCurrent<CR>', opts)
+  map('n', '<Leader>x', ':BufferCloseAllButCurrent<CR>', opts)
 
   require('which-key').register({
     name = '+barbar',

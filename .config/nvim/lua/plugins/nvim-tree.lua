@@ -1,15 +1,17 @@
 local M = {}
 local Log = require('core.log')
 
+M.tree_width = 35
+
 M.config = {
   side = 'left',
-  width = 30,
+  width = M.tree_width,
   show_icons = {
     git = 1,
     folders = 1,
     files = 1,
     folder_arrows = 1,
-    tree_width = 30,
+    tree_width = M.tree_width,
   },
   ignore = { '.git', 'node_modules', '.cache' },
   auto_open = 0,
@@ -90,7 +92,7 @@ end
 
 function M.on_open()
   if package.loaded['bufferline.state'] then
-    require('bufferline.state').set_offset(30 + 1, '')
+    require('bufferline.state').set_offset(M.tree_width + 1, 'Explorer')
   end
 end
 

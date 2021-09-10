@@ -13,7 +13,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'tpope/vim-fugitive'   " git wrapper
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-unimpaired' " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
+    " Plug 'tpope/vim-unimpaired' " navigation through [q]uickfix, [l]ocationlist, [b]ufferlist, linewise [p]aste
 
     " files/git/searching
     " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --no-bash' }
@@ -27,7 +27,7 @@ call plug#begin('~/.config/nvim/plugged')
 
     " navigating
     " Plug 'Valloric/ListToggle'             " toggle quickfix and loclist
-    Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
+    " Plug 'zhimsel/vim-stay'                " Keep editing session state while switching buffers
 
     " text editing
     Plug 'vim-scripts/ReplaceWithRegister' " replace with register: [count][\"x]gr{motion}
@@ -55,7 +55,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'rrethy/vim-illuminate'
     Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
     " Completion/Snippets
     Plug 'L3MON4D3/LuaSnip'

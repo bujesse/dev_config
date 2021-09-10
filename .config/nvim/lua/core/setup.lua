@@ -2,12 +2,14 @@
 require('core.config')
 require('core.commands').config()
 
+local autocmds = require('core.autocommands')
+autocmds.define_augroups(autocmds.autocommands)
+
+require('plugins.barbar').config()
+
 require('plugins.lsp.nvim-lspconfig')
 -- require('plugins.lsp.lspsaga')
 require('plugins.lsp.null-ls.init').config()
-
-local autocmds = require('core.autocommands')
-autocmds.define_augroups(autocmds.autocommands)
 
 require('plugins.nvim-cmp')
 require('plugins.nvim-treesitter')
@@ -16,7 +18,6 @@ require('plugins.lualine.init')
 require('plugins.startify').config()
 -- require('plugins.bufferline')
 -- require('plugins.dashboard').config()
-require('plugins.barbar').config()
 require('plugins.neoscroll')
 require('plugins.telescope')
 require('plugins.luasnip')

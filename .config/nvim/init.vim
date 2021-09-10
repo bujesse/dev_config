@@ -33,7 +33,6 @@ source ~/.config/nvim/before/plugins/ReplaceWithRegister.vim
 source ~/.config/nvim/core/plugins.vim
 source ~/.config/nvim/core/options.vim
 source ~/.config/nvim/core/globals.vim
-source ~/.config/nvim/core/autocommands.vim
 
 " Theme
 source ~/.config/nvim/core/themes/gruvbox-material.vim
@@ -42,6 +41,3 @@ source ~/.config/nvim/core/themes/gruvbox-material.vim
 
 " Lua Plugin Configuration (.vim plugins are in after/plugin)
 luafile ~/.config/nvim/lua/core/setup.lua
-
-" source ~/.config/nvim/core/mappings.vim
-

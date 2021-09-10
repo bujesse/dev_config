@@ -18,6 +18,12 @@ M.autocommands = {
       'qf',
       'set nobuflisted',
     },
+    {
+      'BufWritePre',
+      '*',
+      ':call TrimWhitespace()',
+    },
+    -- { "BufWritePost", config.path, "lua require('utils').reload_lv_config()" },
   },
   _markdown = {
     { 'FileType', 'markdown', 'setlocal wrap' },
