@@ -1,20 +1,30 @@
-require('dap')
-vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+local M = {}
 
-local opts = {
-  noremap=true,
-  silent=true,
-}
+M.config = function()
+  require('dap')
+  vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })
 
-vim.api.nvim_set_keymap('n', '<Space>b', ":lua require'dap'.toggle_breakpoint()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<Space>B', ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
-vim.api.nvim_set_keymap('n', '<Space>c', ':lua require"dap".continue()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Space>j', ':lua require"dap".run_to_cursor()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Space>n', ':lua require"dap".step_over()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Space>i', ':lua require"dap".step_into()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Space>o', ':lua require"dap".step_out()<CR>', opts)
--- vim.api.nvim_set_keymap('n', '<Space>', ':lua require"dap".repl.open()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Space>dl', ':lua require"dap".run_last()<CR>', opts)
+  local opts = {
+    noremap = true,
+    silent = true,
+  }
 
+  vim.api.nvim_set_keymap('n', '<Space>b', ":lua require'dap'.toggle_breakpoint()<CR>", opts)
+  vim.api.nvim_set_keymap(
+    'n',
+    '<Space>B',
+    ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>",
+    opts
+  )
+  vim.api.nvim_set_keymap('n', '<Space>c', ':lua require"dap".continue()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>j', ':lua require"dap".run_to_cursor()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>n', ':lua require"dap".step_over()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>i', ':lua require"dap".step_into()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>o', ':lua require"dap".step_out()<CR>', opts)
+  -- vim.api.nvim_set_keymap('n', '<Space>', ':lua require"dap".repl.open()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>dl', ':lua require"dap".run_last()<CR>', opts)
 
-require('dap-python').setup('~/python_envs/nvim/bin/python')
+  require('dap-python').setup(vim.g.python3_host_prog)
+end
+
+return M

@@ -25,6 +25,11 @@ M.autocommands = {
     },
     -- { "BufWritePost", config.path, "lua require('utils').reload_lv_config()" },
   },
+  -- _packer_user_config = {
+  --   'BufWritePost',
+  --   'packer-plugins.lua',
+  --   'source <afile> | PackerCompile',
+  -- },
   _markdown = {
     { 'FileType', 'markdown', 'setlocal wrap' },
     { 'FileType', 'markdown', 'setlocal spell' },

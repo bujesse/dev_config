@@ -102,6 +102,9 @@ function M.config_keys()
       ['^'] = 'g^',
       ['0'] = 'g0',
 
+      -- Better prev buffer switching
+      ['<Backspace>'] = '<C-^>',
+
       -- U feels like a more natural companion to u
       ['U'] = '<C-r>',
 

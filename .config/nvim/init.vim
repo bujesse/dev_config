@@ -27,15 +27,15 @@ let mapleader=","
 
 " Source before/plugin
 " Useful for setting mappings before the plugins are sourced
-source ~/.config/nvim/before/plugins/ReplaceWithRegister.vim
+" source ~/.config/nvim/before/plugins/ReplaceWithRegister.vim
 
 " General Settings
-source ~/.config/nvim/core/plugins.vim
+" source ~/.config/nvim/core/plugins.vim
 source ~/.config/nvim/core/options.vim
 source ~/.config/nvim/core/globals.vim
 
 " Theme
-source ~/.config/nvim/core/themes/gruvbox-material.vim
+" source ~/.config/nvim/core/themes/gruvbox-material.vim
 " lualine: ~/.config/nvim/lua/plugins/lualine/init.lua
 " enable plugin: ~/.config/nvim/core/plugins.vim
 
