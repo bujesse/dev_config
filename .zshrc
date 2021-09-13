@@ -53,7 +53,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
     export WORKON_HOME=~/python_envs
     export PYTHONBREAKPOINT="pdb.set_trace"
 
-    export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
     if test -f "/usr/local/bin/virtualenvwrapper.sh"; then
         source /usr/local/bin/virtualenvwrapper.sh
     fi

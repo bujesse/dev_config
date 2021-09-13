@@ -17,7 +17,7 @@ function M.config()
   }
 
   vim.g.startify_bookmarks = {
-    { n = '~/.config/nvim/init.vim' },
+    { n = '~/dev_config/.config/nvim/init.vim' },
     { i = '~/.ideavimrc' },
     { z = '~/.zshrc' },
     { h = '~/dev_config/mac_to_windows.ahk' },

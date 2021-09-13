@@ -96,6 +96,9 @@ function M.config_keys()
       -- turn of search highlight
       ['<Leader>/'] = ':noh<CR>',
 
+      -- Easier switching between files
+      ['<Backspace>'] = '<C-^>',
+
       -- Y should behave like D and C
       ['Y'] = 'y$',
 
