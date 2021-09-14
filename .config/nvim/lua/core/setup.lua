@@ -26,6 +26,7 @@ require('plugins.which-key')
 require('plugins.abolish')
 require('plugins.nvim-tree').setup()
 require('plugins.barbar').config()
+-- require('plugins.bufferline').config()
 require('plugins.gitsigns')
 
 require('plugins.dap.nvim-dap')

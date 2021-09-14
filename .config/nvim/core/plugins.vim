@@ -79,9 +79,8 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'karb94/neoscroll.nvim'
     Plug 'onsails/lspkind-nvim'
     Plug 'romgrk/barbar.nvim'
-    Plug 'mhinz/vim-startify'
-    " Plug 'glepnir/dashboard-nvim'
     " Plug 'akinsho/bufferline.nvim'
+    Plug 'mhinz/vim-startify'
 
     " Debugging
     Plug 'mfussenegger/nvim-dap'

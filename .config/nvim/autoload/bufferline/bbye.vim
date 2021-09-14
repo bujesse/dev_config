@@ -24,10 +24,78 @@
 " http://www.gnu.org/licenses.
 
 
-"  THIS IS A MODIFICATION OF THE ORIGINAL FILE WHICH barbar.nvim USES TO CLOSE
-"  FILES; SPECIFICALLY TO THE LEFT AND RIGHT. THIS MODIFICATION ENSURES THAT
-"  IT DOESN'T CALL THE doautocmd BufWinEnter WHICH BREAKS THOSE FUNCTIONS.
-"  In this file, it's line 73
+"  NOTE: Change close_buffers_right() in ~/.config/nvim/plugged/barbar.nvim/lua/bufferline/state.lua
+"  to: vim.fn['bufferline#bbye#nobufwinenter']('bdelete', '', bufname(m.buffers[i]))
+
+function! bufferline#bbye#nobufwinenter(action, bang, buffer_name)
+  "  THIS IS A MODIFICATION OF THE ORIGINAL FUNCTION WHICH barbar.nvim USES TO CLOSE
+  "  FILES; SPECIFICALLY TO THE RIGHT. THIS MODIFICATION ENSURES THAT
+  "  IT DOESN'T CALL THE doautocmd BufWinEnter.
+
+  let buffer = s:str2bufnr(a:buffer_name)
+
+  if buffer < 0
+    return s:error("E516: No buffers were deleted. No match for ".a:buffer_name)
+  endif
+
+  let is_modified = nvim_buf_get_option(buffer, 'modified')
+  let has_confirm = nvim_get_option('confirm')
+
+  if is_modified && empty(a:bang) && !has_confirm
+    let error = "E89: No write since last change for buffer "
+    return s:error(error . buffer . " (add ! to override)")
+  endif
+
+  let w:bbye_back = 1
+
+  " If the buffer is set to delete and it contains changes, we can't switch
+  " away from it. Hide it before eventual deleting:
+  if is_modified && !empty(a:bang)
+    call setbufvar(buffer, "&bufhidden", "hide")
+  endif
+
+  " For cases where adding buffers causes new windows to appear or hiding some
+  " causes windows to disappear and thereby decrement, loop backwards.
+  for window in reverse(range(1, winnr("$")))
+    " For invalid window numbers, winbufnr returns -1.
+    if winbufnr(window) != buffer | continue | endif
+    execute window . "wincmd w"
+
+    " Bprevious also wraps around the buffer list, if necessary:
+    try | exe bufnr("#") > 0 && buflisted(bufnr("#")) ? "buffer #" : "bprevious"
+    catch /^Vim([^)]*):E85:/ " E85: There is no listed buffer
+    endtry
+
+    " If found a new buffer for this window, mission accomplished:
+    if bufnr("%") != buffer | continue | endif
+
+    call s:new(a:bang)
+
+    doautocmd BufWinEnter
+    " call bufferline#update()
+  endfor
+
+  " Because tabbars and other appearing/disappearing windows change
+  " the window numbers, find where we were manually:
+  let back = filter(range(1, winnr("$")), "getwinvar(v:val, 'bbye_back')")[0]
+  if back | exe back . "wincmd w" | unlet w:bbye_back | endif
+
+  " If it hasn't been already deleted by &bufhidden, end its pains now.
+  " Unless it previously was an unnamed buffer and :enew returned it again.
+  "
+  " Using buflisted() over bufexists() because bufhidden=delete causes the
+  " buffer to still _exist_ even though it won't be :bdelete-able.
+  if buflisted(buffer) && buffer != bufnr("%")
+    try
+      exe a:action . a:bang . " " . buffer
+    catch /^Vim([^)]*):E516:/ " E516: No buffers were deleted
+      " Canceled by `set confirm`
+      exe buffer . 'b'
+    endtry
+  endif
+
+  " doautocmd BufWinEnter
+endfunction
 
 
 function! bufferline#bbye#delete(action, bang, buffer_name)
@@ -70,7 +138,8 @@ function! bufferline#bbye#delete(action, bang, buffer_name)
 
     call s:new(a:bang)
 
-    " doautocmd BufWinEnter
+    doautocmd BufWinEnter
+    call bufferline#update()
   endfor
 
   " Because tabbars and other appearing/disappearing windows change
@@ -92,7 +161,7 @@ function! bufferline#bbye#delete(action, bang, buffer_name)
     endtry
   endif
 
-  " doautocmd BufWinEnter
+  doautocmd BufWinEnter
 endfunction
 
 function! s:str2bufnr(buffer)
