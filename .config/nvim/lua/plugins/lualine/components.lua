@@ -1,6 +1,6 @@
 local conditions = require('plugins.lualine.conditions')
 local utils = require('core.utils')
--- https://github.com/LunarVim/LunarVim/blob/rolling/lua/core/lualine/components.lua
+local colors = require('core.colors')
 
 local function env_cleanup(venv)
   if string.find(venv, '/') then
@@ -13,26 +13,47 @@ local function env_cleanup(venv)
   return venv
 end
 
+local function diff_source()
+  local gitsigns = vim.b.gitsigns_status_dict
+  if gitsigns then
+    return {
+      added = gitsigns.added,
+      modified = gitsigns.changed,
+      removed = gitsigns.removed,
+    }
+  end
+end
+
 return {
   mode = {
     function()
       return ' '
     end,
-    left_padding = 0,
-    right_padding = 0,
+    padding = { left = 0, right = 0 },
     -- color = {},
-    condition = nil,
+    cond = nil,
   },
   branch = {
     'b:gitsigns_head',
     icon = ' ',
     -- color = { gui = "bold" },
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
+  },
+  diff = {
+    'diff',
+    source = diff_source,
+    symbols = { added = '  ', modified = '柳', removed = ' ' },
+    diff_color = {
+      added = { fg = colors.green },
+      modified = { fg = colors.yellow },
+      removed = { fg = colors.red },
+    },
+    color = {},
+    condition = nil,
   },
   filename = {
     'filename',
-    -- color = {},
-    condition = nil,
+    cond = nil,
   },
   python_env = {
     function()
@@ -49,15 +70,15 @@ return {
       end
       return ''
     end,
-    -- color = { fg = colors.green },
-    condition = conditions.hide_in_width,
+    color = { fg = colors.green },
+    cond = conditions.hide_in_width,
   },
   diagnostics = {
     'diagnostics',
     sources = { 'nvim_lsp' },
     symbols = { error = '', warn = '', info = '', hint = '' },
     -- color = {},
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   treesitter = {
     function()
@@ -67,7 +88,7 @@ return {
       return ''
     end,
     -- color = { fg = colors.green },
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   lsp = {
     function(msg)
@@ -106,16 +127,16 @@ return {
       return table.concat(buf_client_names, '  ')
     end,
     -- color = { gui = "bold" },
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   location = {
     'location',
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     color = {},
   },
   progress = {
     'progress',
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     color = {},
   },
   spaces = {
@@ -126,18 +147,18 @@ return {
       end
       return label .. vim.api.nvim_buf_get_option(0, 'shiftwidth') .. ' '
     end,
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     -- color = {},
   },
   encoding = {
     'o:encoding',
     upper = true,
     -- color = {},
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   filetype = {
     'filetype',
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     color = {},
   },
   scrollbar = {
@@ -149,9 +170,8 @@ return {
       local index = math.ceil(line_ratio * #chars)
       return chars[index]
     end,
-    left_padding = 0,
-    right_padding = 0,
-    -- color = { fg = colors.yellow, bg = colors.bg },
-    condition = nil,
+    padding = { left = 0, right = 0 },
+    color = { fg = colors.yellow, bg = colors.bg },
+    cond = nil,
   },
 }
