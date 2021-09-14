@@ -21,18 +21,18 @@ return {
     left_padding = 0,
     right_padding = 0,
     -- color = {},
-    condition = nil,
+    cond = nil,
   },
   branch = {
     'b:gitsigns_head',
     icon = ' ',
     -- color = { gui = "bold" },
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   filename = {
     'filename',
     -- color = {},
-    condition = nil,
+    cond = nil,
   },
   python_env = {
     function()
@@ -50,14 +50,14 @@ return {
       return ''
     end,
     -- color = { fg = colors.green },
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   diagnostics = {
     'diagnostics',
     sources = { 'nvim_lsp' },
     symbols = { error = '', warn = '', info = '', hint = '' },
     -- color = {},
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   treesitter = {
     function()
@@ -67,7 +67,7 @@ return {
       return ''
     end,
     -- color = { fg = colors.green },
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   lsp = {
     function(msg)
@@ -106,16 +106,16 @@ return {
       return table.concat(buf_client_names, '  ')
     end,
     -- color = { gui = "bold" },
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   location = {
     'location',
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     color = {},
   },
   progress = {
     'progress',
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     color = {},
   },
   spaces = {
@@ -126,18 +126,18 @@ return {
       end
       return label .. vim.api.nvim_buf_get_option(0, 'shiftwidth') .. ' '
     end,
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     -- color = {},
   },
   encoding = {
     'o:encoding',
     upper = true,
     -- color = {},
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
   },
   filetype = {
     'filetype',
-    condition = conditions.hide_in_width,
+    cond = conditions.hide_in_width,
     color = {},
   },
   scrollbar = {
@@ -152,6 +152,6 @@ return {
     left_padding = 0,
     right_padding = 0,
     -- color = { fg = colors.yellow, bg = colors.bg },
-    condition = nil,
+    cond = nil,
   },
 }

@@ -10,7 +10,7 @@ M.config = function()
   }
 
   vim.api.nvim_set_keymap('n', 'p', '<Plug>(YoinkPaste_p)', opts)
-  vim.api.nvim_set_keymap('n', 'P', '<Plug>(YoinkPaste_p)', opts)
+  vim.api.nvim_set_keymap('n', 'P', '<Plug>(YoinkPaste_P)', opts)
   vim.api.nvim_set_keymap('n', '[y', '<Plug>(YoinkRotateBack)', opts)
   vim.api.nvim_set_keymap('n', ']y', '<Plug>(YoinkRotateForward)', opts)
 end

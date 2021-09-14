@@ -6,9 +6,9 @@ M.config = function()
   require('lualine').setup({
     options = {
       icons_enabled = true,
-      theme = 'gruvbox_material',
-      component_separators = { '', '' },
-      section_separators = { '', '' },
+      theme = 'gruvbox-material',
+      component_separators = { left = '', right = '' },
+      section_separators = { left = '', right = '' },
       disabled_filetypes = {},
     },
     sections = {

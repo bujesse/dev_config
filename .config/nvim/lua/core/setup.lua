@@ -10,7 +10,7 @@ local plugins = require('packer-plugins')
 local plugin_loader = require('plugin-loader').init()
 plugin_loader:load({plugins})
 
--- require('core.keymappings').setup()
+require('core.keymappings').setup()
 
 -- require('plugins.lsp.nvim-lspconfig').config()
 -- require('plugins.lsp.null-ls.init').config()

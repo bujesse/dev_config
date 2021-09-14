@@ -3,10 +3,15 @@ return {
   { 'wbthomason/packer.nvim' },
   {
     'folke/which-key.nvim',
-    config = require('plugins.which-key').config,
+    config = function()
+      require('plugins.which-key').config()
+    end,
     event = 'BufWinEnter',
   },
-  { 'neovim/nvim-lspconfig' },
+  {
+    'neovim/nvim-lspconfig',
+    event = 'BufReadPre',
+  },
   { 'rrethy/vim-illuminate' },
   { 'tamago324/nlsp-settings.nvim' },
   { 'jose-elias-alvarez/null-ls.nvim' },
@@ -14,29 +19,32 @@ return {
   {
     'kabouzeid/nvim-lspinstall',
     event = 'VimEnter',
-    config = require('plugins.lsp.nvim-lspconfig').config,
+    config = function()
+      require('plugins.lsp.nvim-lspconfig').config()
+    end,
   },
 
   {
     'nvim-treesitter/nvim-treesitter',
-    branch = '0.5-compat',
-    config = require('plugins.nvim-treesitter').config,
+    config = function()
+      require('plugins.nvim-treesitter').config()
+    end,
     run = ':TSUpdate',
     after = {
       'which-key.nvim',
     },
   },
-  {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    branch = '0.5-compat',
-    after = 'nvim-treesitter',
-  },
+  -- {
+  --   'nvim-treesitter/nvim-treesitter-textobjects',
+  -- },
 
   { 'nvim-lua/plenary.nvim' },
   {
     'nvim-telescope/telescope.nvim',
-    config = require('plugins.telescope').config,
-    after = 'which-key.nvim',
+    config = function()
+      require('plugins.telescope').config()
+    end,
+    after = {'which-key.nvim'},
     requires = {
       {
         'nvim-telescope/telescope-frecency.nvim',
@@ -47,7 +55,9 @@ return {
   },
   {
     'hrsh7th/nvim-cmp',
-    config = require('plugins.nvim-cmp').config,
+    config = function()
+      require('plugins.nvim-cmp').config()
+    end,
     requires = {
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
@@ -66,19 +76,25 @@ return {
     'windwp/nvim-autopairs',
     -- event = "InsertEnter",
     after = 'nvim-cmp',
-    config = require('plugins.nvim-autopairs').config,
+    config = function()
+      require('plugins.nvim-autopairs').config()
+    end,
   },
 
   {
     'kyazdani42/nvim-tree.lua',
     -- event = "BufWinOpen",
     -- cmd = "NvimTreeToggle",
-    config = require('plugins.nvim-tree').config,
+    config = function()
+      require('plugins.nvim-tree').config()
+    end,
   },
 
   {
     'lewis6991/gitsigns.nvim',
-    config = require('plugins.gitsigns').config,
+    config = function()
+      require('plugins.gitsigns').config()
+    end,
     event = 'BufRead',
   },
 
@@ -86,15 +102,19 @@ return {
   -- crs and crc to change between cases; text replacement (e.g. facilities -> buildings)
   {
     'tpope/vim-abolish',
-    config = require('plugins.abolish').config,
-    after = 'which-key.nvim',
+    config = function()
+      require('plugins.abolish').config()
+    end,
+    after = {'which-key.nvim'},
   },
   -- gc to toggle comments
   { 'tpope/vim-commentary' },
   -- git wrapper
   {
     'tpope/vim-fugitive',
-    config = require('plugins.vim-fugitive').config,
+    config = function()
+      require('plugins.vim-fugitive').config()
+    end,
   },
   { 'tpope/vim-repeat' },
   { 'tpope/vim-surround' },
@@ -109,19 +129,27 @@ return {
   {
     -- replace with register: [count][\"x]R{motion}
     'vim-scripts/ReplaceWithRegister',
-    config = require('plugins.replace-with-register').config,
+    config = function()
+      require('plugins.replace-with-register').config()
+    end,
   },
   {
     'rhysd/clever-f.vim',
-    config = require('plugins.clever-f').config,
+    config = function()
+      require('plugins.clever-f').config()
+    end,
   },
   {
     'phaazon/hop.nvim',
-    config = require('plugins.hop').config,
+    config = function()
+      require('plugins.hop').config()
+    end,
   },
   {
     'haya14busa/vim-asterisk',
-    config = require('plugins.vim-asterisk').config,
+    config = function()
+      require('plugins.vim-asterisk').config()
+    end,
   },
   {
     -- swap 2 text objects
@@ -130,7 +158,9 @@ return {
   {
     -- Align text around a chosen character
     'junegunn/vim-easy-align',
-    config = require('plugins.vim-easy-align').config,
+    config = function()
+      require('plugins.vim-easy-align').config()
+    end,
   },
   {
     -- Multiple cursors
@@ -139,12 +169,16 @@ return {
   {
     -- keep yank history and cycle through
     'svermeulen/vim-yoink',
-    config = require('plugins.vim-yoink').config,
+    config = function()
+      require('plugins.vim-yoink').config()
+    end,
   },
   {
     -- expand one-liner multi-line
     'AndrewRadev/splitjoin.vim',
-    config = require('plugins.splitjoin').config,
+    config = function()
+      require('plugins.splitjoin').config()
+    end,
   },
 
   -- Text Objexts
@@ -168,24 +202,32 @@ return {
   {
     -- "hoob3rt/lualine.nvim",
     'shadmansaleh/lualine.nvim',
-    config = require('plugins.lualine').config,
-    after = 'gruvbox-material',
+    config = function()
+      require('plugins.lualine').config()
+    end,
+    after = {'gruvbox-material'},
   },
 
   {
     'lukas-reineke/indent-blankline.nvim',
-    config = require('plugins.indent-blankline').config,
+    config = function()
+      require('plugins.indent-blankline').config()
+    end,
   },
   {
     'karb94/neoscroll.nvim',
-    config = require('plugins.neoscroll').config,
+    config = function()
+      require('plugins.neoscroll').config()
+    end,
   },
 
   { 'onsails/lspkind-nvim' },
 
   {
     'mhinz/vim-startify',
-    config = require('plugins.startify').config,
+    config = function()
+      require('plugins.startify').config()
+    end,
   },
 
   {
@@ -197,9 +239,11 @@ return {
 
   {
     'romgrk/barbar.nvim',
-    config = require('plugins.barbar').config,
-    after = 'which-key.nvim',
-    event = 'BufWinEnter',
+    config = function()
+      require('plugins.barbar').config()
+    end,
+    after = {'which-key.nvim'},
+    -- event = 'BufWinEnter',
   },
 
   -- Debugging
@@ -207,11 +251,15 @@ return {
   {
     'mfussenegger/nvim-dap',
     -- event = "BufWinEnter",
-    config = require('plugins.dap.nvim-dap').config,
+    config = function()
+      require('plugins.dap.nvim-dap').config()
+    end,
     requires = {
       {
         'rcarriga/nvim-dap-ui',
-        config = require('plugins.dap.nvim-dap-ui').config,
+        config = function()
+          require('plugins.dap.nvim-dap-ui').config()
+        end,
       },
       'mfussenegger/nvim-dap-python',
     },
@@ -238,8 +286,10 @@ return {
   --
   {
     'iamcco/markdown-preview.nvim',
-    config = require('plugins.markdown-preview').config,
-    cmd = 'MarkdownPreviewToggle',
+    config = function()
+      require('plugins.markdown-preview').config()
+    end,
+    ft = 'md',
     run = 'cd app && yarn install',
   },
 }

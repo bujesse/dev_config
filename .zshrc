@@ -109,11 +109,15 @@ source $ZSH/oh-my-zsh.sh
     alias vimrc="nvim ~/.vimrc"
     alias ohmyzsh="cd ~/.oh-my-zsh"
     alias ,.="source ~/.zshrc"
-    alias open="explorer.exe"
-    alias c="clear"
+
+    if [[ "$OSTYPE" != "darwin"* ]]; then
+        alias open="explorer.exe"
+        alias pbcopy="clip.exe"  # Windows version of pbcopy
+        alias rm="rm -I"  # only prompts when deleting >3 files
+    fi
+
     alias n="nvim"
-    alias pbcopy="clip.exe"  # Windows version of pbcopy
-    alias rm="rm -I"  # only prompts when deleting >3 files
+    alias c="clear"
 
 # === EXTRA BINDKEYS ===
     # get back this functionality from zsh-autosuggestions

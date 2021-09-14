@@ -13,15 +13,14 @@ M.config = function()
    }
 
    -- TODO: WhichKey-ify
-   vim.api.nvim_set_keymap('n', 'K', '<cmd>lua require"lspsaga.hover".render_hover_doc()<CR>', opts)
-   vim.api.nvim_set_keymap('n', '*' ,  '<Plug>(asterisk-*', opts)
-   vim.api.nvim_set_keymap('n', '#' ,  '<Plug>(asterisk-#', opts)
-   vim.api.nvim_set_keymap('n', 'g*' , '<Plug>(asterisk-g*', opts)
-   vim.api.nvim_set_keymap('n', 'g#' , '<Plug>(asterisk-g#', opts)
-   vim.api.nvim_set_keymap('n', 'z*' , '<Plug>(asterisk-z*', opts)
-   vim.api.nvim_set_keymap('n', 'gz*', '<Plug>(asterisk-gz*', opts)
-   vim.api.nvim_set_keymap('n', 'z#' , '<Plug>(asterisk-z#', opts)
-   vim.api.nvim_set_keymap('n', 'gz#', '<Plug>(asterisk-gz#', opts)
+   vim.api.nvim_set_keymap('n', '*' ,  '<Plug>(asterisk-*)', opts)
+   vim.api.nvim_set_keymap('n', '#' ,  '<Plug>(asterisk-#)', opts)
+   vim.api.nvim_set_keymap('n', 'g*' , '<Plug>(asterisk-g*)', opts)
+   vim.api.nvim_set_keymap('n', 'g#' , '<Plug>(asterisk-g#)', opts)
+   vim.api.nvim_set_keymap('n', 'z*' , '<Plug>(asterisk-z*)', opts)
+   vim.api.nvim_set_keymap('n', 'gz*', '<Plug>(asterisk-gz*)', opts)
+   vim.api.nvim_set_keymap('n', 'z#' , '<Plug>(asterisk-z#)', opts)
+   vim.api.nvim_set_keymap('n', 'gz#', '<Plug>(asterisk-gz#)', opts)
 
    -- map *  <Plug>(asterisk-z*)
    -- map #  <Plug>(asterisk-z#)
