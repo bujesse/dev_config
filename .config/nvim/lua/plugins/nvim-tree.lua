@@ -3,7 +3,7 @@ local Log = require('core.log')
 
 M.tree_width = 35
 
-M.config = {
+M.settings = {
   side = 'left',
   width = M.tree_width,
   show_icons = {
@@ -49,7 +49,7 @@ M.config = {
   },
 }
 
-function M.setup()
+function M.config()
   local status_ok, nvim_tree_config = pcall(require, 'nvim-tree.config')
   if not status_ok then
     Log:error('Failed to load nvim-tree.config')
@@ -57,7 +57,7 @@ function M.setup()
   end
 
   local g = vim.g
-  for opt, val in pairs(M.config) do
+  for opt, val in pairs(M.settings) do
     g['nvim_tree_' .. opt] = val
   end
 

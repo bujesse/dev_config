@@ -1,58 +1,62 @@
-local cmp = require('cmp')
-local lspkind = require('lspkind')
+local M = {}
 
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    -- ['<C-k>'] = cmp.mapping.select_prev_item(),
-    -- ['<C-j>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-u>'] = cmp.mapping.scroll_docs(4),
-    ['<C-c>'] = cmp.mapping.close(),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    }),
-  },
+M.config = function()
+  local cmp = require('cmp')
+  local lspkind = require('lspkind')
 
-  -- You should specify your *installed* sources.
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'path' },
-    { name = 'luasnip' },
-    { name = 'nvim_lua' },
-    { name = 'treesitter' },
-    { name = 'buffer' },
-  },
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body)
+      end,
+    },
+    mapping = {
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-u>'] = cmp.mapping.scroll_docs(4),
+      ['<C-c>'] = cmp.mapping.close(),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      }),
+    },
 
-  formatting = {
-    format = function(entry, vim_item)
-      -- fancy icons from lspkind
-      vim_item.kind = lspkind.presets.default[vim_item.kind] .. ' ' .. vim_item.kind
+    -- You should specify your *installed* sources.
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'path' },
+      { name = 'luasnip' },
+      { name = 'nvim_lua' },
+      { name = 'treesitter' },
+      { name = 'buffer' },
+    },
 
-      -- vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
+    formatting = {
+      format = function(entry, vim_item)
+        -- fancy icons from lspkind
+        vim_item.kind = lspkind.presets.default[vim_item.kind] .. ' ' .. vim_item.kind
 
-      -- set a name for each source
-      vim_item.menu = ({
-        nvim_lsp = '[LSP]',
-        buffer = '[Buffer]',
-        path = '[Path]',
-        luasnip = '[LuaSnip]',
-        treesitter = '[TS]',
-        nvim_lua = '[NvimLua]',
-      })[entry.source.name]
-      vim_item.dup = ({
-        buffer = 1,
-        path = 1,
-        nvim_lsp = 0,
-      })[entry.source.name] or 0
-      return vim_item
-    end,
-  },
-})
+        -- vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
+
+        -- set a name for each source
+        vim_item.menu = ({
+          nvim_lsp = '[LSP]',
+          buffer = '[Buffer]',
+          path = '[Path]',
+          luasnip = '[LuaSnip]',
+          treesitter = '[TS]',
+          nvim_lua = '[NvimLua]',
+        })[entry.source.name]
+        vim_item.dup = ({
+          buffer = 1,
+          path = 1,
+          nvim_lsp = 0,
+        })[entry.source.name] or 0
+        return vim_item
+      end,
+    },
+  })
+end
+
+return M

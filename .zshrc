@@ -63,11 +63,11 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
         source /usr/local/bin/virtualenvwrapper.sh
     fi
 
-    if command -v pyenv 1>/dev/null 2>&1; then
-       eval "$(pyenv init -)"
-    fi
-
     alias venv='workon .'
+
+# === PYTHON ===
+    alias bench_nvim_plugins="python <(curl -sSL https://raw.githubusercontent.com/hyiltiz/vim-plugins-profile/master/vim-plugins-profile.py) nvim"
+
 
 # === FZF ===
     FD_OPTIONS="--follow --exclude .git --exclude node_modules --exclude __pycache__"
@@ -109,11 +109,13 @@ source $ZSH/oh-my-zsh.sh
     alias vimrc="nvim ~/.vimrc"
     alias ohmyzsh="cd ~/.oh-my-zsh"
     alias ,.="source ~/.zshrc"
-    alias open="explorer.exe"
     alias c="clear"
     alias n="nvim"
-    alias pbcopy="clip.exe"  # Windows version of pbcopy
-    alias rm="rm -I"  # only prompts when deleting >3 files
+    if [[ "$OSTYPE" != "darwin"* ]]; then
+        alias open="explorer.exe"
+        alias pbcopy="clip.exe"  # Windows version of pbcopy
+        alias rm="rm -I"  # only prompts when deleting >3 files
+    fi
 
 # === EXTRA BINDKEYS ===
     # get back this functionality from zsh-autosuggestions

@@ -72,10 +72,8 @@ set noswapfile
 set number relativenumber
 set pumheight=15
 
-" we don't need to see things like -- INSERT -- anymore
-
 " Somehow this makes syntax highlighting in vim 100x faster
-set regexpengine=1
+" set regexpengine=1
 
 " Start scrolling when we're 8 lines away from margins
 set scrolloff=8
@@ -105,7 +103,6 @@ set termguicolors
 set textwidth=0 wrapmargin=0
 set timeoutlen=500
 set ttimeoutlen=10
-set ttyfast
 
 " Set the persistent undo directory on temporary private fast storage.
 set undofile

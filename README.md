@@ -1,6 +1,6 @@
 # How to setup dev_config
 
-1. Install:
+1. Install Dependencies:
     - nerd font (operator mono)
     - Install zsh, omzsh, p10k
     - Install python, pip, virtualenv, virtualenvwrapper
@@ -11,6 +11,7 @@
     - ripgrep `sudo apt-get install ripgrep`
     - bat
     - python env called python_envs/nvim. `pip install -r nvim_requirements.txt`
+    - neovim node deps `npm i -g neovim`
     - rust `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
         - `cargo install stylua`
     - exa

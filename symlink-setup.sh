@@ -128,7 +128,8 @@ print_success() {
 
 
 # finds all .dotfiles in this folder
-declare -a FILES_TO_SYMLINK=$(find . -type f -maxdepth 1 -name ".*" -not -name .DS_Store -not -name .git -not -name .macos | sed -e 's|//|/|' | sed -e 's|./.|.|' | sort)
+FILES_TO_IGNORE="! -name .DS_Store ! -name .git ! -name .macos ! -name .gitignore"
+declare -a FILES_TO_SYMLINK=$(find . -type f -maxdepth 1 -name ".*" $FILES_TO_IGNORE | sed -e 's|//|/|' | sed -e 's|./.|.|' | sort)
 FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim .oh-my-zsh bin .config" # add in extras
 
 

@@ -1,10 +1,13 @@
 {
     "M": {
-        "prefix": "M",
+        "prefix": [
+            "M",
+            "local M = {}"
+        ],
         "body": [
             "local M = {}\n",
-            "M.${1:new} = function()",
-            "\t${2: --code}\n",
+            "M.$1 = function()",
+            "\t$2",
             "end\n",
             "return M"
         ],

@@ -131,7 +131,7 @@ function M.config_keys()
       ['<Right>'] = '<C-W>5>',
 
       -- Run the last command
-      ['<Leader>;'] = { ':<Up>', { silent = false } },
+      ['<Leader>;'] = { 'q:k', { silent = false } },
 
       -- Move to or create split
       ['<C-h>'] = { '<Plug>WinMoveLeft', { noremap = false } },

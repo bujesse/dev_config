@@ -1,9 +1,10 @@
-require('lspconfig')
 local Log = require('core.log')
+
+M = {}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local common_on_attach = function(client, bufnr)
+M.common_on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -36,6 +37,8 @@ local common_on_attach = function(client, bufnr)
   vim.api.nvim_command([[ hi def link LspReferenceText CursorLine ]])
   vim.api.nvim_command([[ hi def link LspReferenceWrite CursorLine ]])
   vim.api.nvim_command([[ hi def link LspReferenceRead CursorLine ]])
+  buf_set_keymap('x', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
+  buf_set_keymap('x', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
   buf_set_keymap('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
   buf_set_keymap('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
 
@@ -49,7 +52,7 @@ local common_on_attach = function(client, bufnr)
   require('plugins.lsp.ui').setup()
 end
 
-local function common_on_init(client, bufnr)
+M.common_on_init = function(client, bufnr)
   local formatters = require('plugins.lsp.language-configs.' .. vim.bo.filetype).formatters
   if not vim.tbl_isempty(formatters) and formatters[1]['exe'] ~= nil and formatters[1].exe ~= '' then
     client.resolved_capabilities.document_formatting = false
@@ -59,7 +62,7 @@ local function common_on_init(client, bufnr)
   end
 end
 
-local function common_capabilities()
+M.common_capabilities = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -78,7 +81,7 @@ local function common_capabilities()
   return capabilities
 end
 
-local function make_config(server)
+M.make_config = function(server)
   local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. server)
   if ok and config.lsp and config.lsp.setup then
     config = config.lsp.setup
@@ -90,38 +93,43 @@ local function make_config(server)
     if config.before_on_attach then
       config.before_on_attach(client, bufnr)
     end
-    common_on_attach(client, bufnr)
+    M.common_on_attach(client, bufnr)
     if config.after_on_attach then
       config.after_on_attach(client, bufnr)
     end
   end
 
   if not config.on_init then
-    config.on_init = common_on_init
+    config.on_init = M.common_on_init
   end
   if not config.capabilities then
-    config.capabilities = common_capabilities()
+    config.capabilities = M.common_capabilities()
   end
 
   return config
 end
 
 -- lsp-install
-local function setup_servers()
+M.setup_servers = function()
   require('lspinstall').setup()
 
   -- get all installed servers
   local servers = require('lspinstall').installed_servers()
   for _, server in pairs(servers) do
-    local config = make_config(server)
+    local config = M.make_config(server)
     require('lspconfig')[server].setup(config)
   end
 end
 
-setup_servers()
+M.config = function()
+  require('lspconfig')
+  M.setup_servers()
 
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require('lspinstall').post_install_hook = function()
-  setup_servers() -- reload installed servers
-  vim.cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
+  -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+  require('lspinstall').post_install_hook = function()
+    M.setup_servers() -- reload installed servers
+    vim.cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
+  end
 end
+
+return M
