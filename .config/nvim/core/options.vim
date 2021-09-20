@@ -71,6 +71,7 @@ set noswapfile
 " Relative numbering (toggle with yor)
 set number relativenumber
 set pumheight=15
+set pumblend=15
 
 " Somehow this makes syntax highlighting in vim 100x faster
 " set regexpengine=1

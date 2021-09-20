@@ -14,9 +14,7 @@ M.config = function()
     -- },
   })
 
-  vim.cmd([[
-     let g:indent_blankline_filetype_exclude = ['help', 'startify', 'dashboard', 'lspinfo', 'NvimTree', 'floaterm', 'floats']
-     ]])
+  vim.g.indent_blankline_filetype_exclude = {'help', 'startify', 'dashboard', 'lspinfo', 'NvimTree', 'floaterm', 'floats'}
 end
 
 return M

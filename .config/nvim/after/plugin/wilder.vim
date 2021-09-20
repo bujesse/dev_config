@@ -65,4 +65,4 @@ call wilder#set_option('renderer', wilder#renderer_mux({
 endfunction
 
 " Set up an autocmd to defer initialisation to the first CmdlineEnter
-autocmd CmdlineEnter * ++once call s:wilder_init() | call s:wilder#main#start()
+" autocmd CmdlineEnter * ++once call s:wilder_init() | call s:wilder#main#start()

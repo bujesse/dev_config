@@ -31,8 +31,7 @@ function M.config()
     { m = { '  MRU', 'Telescope frecency' } },
     { f = { '  Find Files', 'Telescope find_files' } },
     { w = { '  Find Word', 'Telescope live_grep' } },
-    { up = { '  Update Plugins', 'PlugUpdate' } },
-    { ug = { '  Upgrade Plugin Manager', 'PlugUpgrade' } },
+    { up = { '  Update Plugins', 'PackerSync' } },
     { ts = { '  Update Treesitter', 'TSUpdate' } },
     { ch = { '  Check Health', 'checkhealth' } },
   }

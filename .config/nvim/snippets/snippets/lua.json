@@ -1,8 +1,7 @@
 {
     "M": {
         "prefix": [
-            "M",
-            "local M = {}"
+            "M ="
         ],
         "body": [
             "local M = {}\n",
