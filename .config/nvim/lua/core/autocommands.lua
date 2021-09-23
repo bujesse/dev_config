@@ -2,12 +2,12 @@ local M = {}
 
 M.autocommands = {
   _general_settings = {
-    -- {
-    --   -- Load lua files in ftplugin
-    --   'Filetype',
-    --   '*',
-    --   'lua require(\'core.ft\').do_filetype(vim.fn.expand("<amatch>"))',
-    -- },
+    {
+      -- Load lua files in ftplugin
+      'Filetype',
+      '*',
+      'lua require(\'core.ft\').do_filetype(vim.fn.expand("<amatch>"))',
+    },
     {
       'TextYankPost',
       '*',
@@ -71,6 +71,10 @@ function M.define_augroups(definitions) -- {{{1
 
     vim.cmd('augroup END')
   end
+end
+
+M.config = function()
+  M.define_augroups(M.autocommands)
 end
 
 return M
