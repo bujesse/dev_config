@@ -128,7 +128,17 @@ return packer.startup(function()
     requires = {
       'kabouzeid/nvim-lspinstall',
       'rrethy/vim-illuminate',
-      'jose-elias-alvarez/null-ls.nvim',
+    },
+  })
+
+  use({
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function()
+      require('plugins.lsp.null-ls').config()
+    end,
+    after = {
+      'plenary.nvim',
+      'nvim-lspconfig',
     },
   })
 

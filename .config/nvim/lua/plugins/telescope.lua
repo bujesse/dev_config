@@ -29,6 +29,7 @@ M.config = function()
         },
       },
       layout_strategy = 'horizontal',
+      winblend = 15,
       file_ignore_patterns = {
         '*.git/*',
         '*/tmp/*',
@@ -148,6 +149,7 @@ M.config = function()
     name = '+telescope',
     f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
     r = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume' },
+    j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
     b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
     p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
     i = { '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>', 'Grep (include ignore and hidden)' },

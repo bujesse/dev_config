@@ -24,16 +24,7 @@ function M.toggle_diagnostics(should_log)
   }
 
   -- toggle the diagnostic settings
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, conf)
-
-  -- toggle the actual display of the diagnostics
-  local clients = vim.lsp.get_active_clients()
-  for client_id, _ in pairs(clients) do
-    local buffers = vim.lsp.get_buffers_by_client_id(client_id)
-    for _, buffer_id in ipairs(buffers) do
-      vim.lsp.diagnostic.display(nil, buffer_id, client_id, conf)
-    end
-  end
+  vim.diagnostic.config(conf)
 
   if should_log then
     print('Diagnostics are ' .. (M.diagnostics_visible and 'ON' or 'OFF'))
@@ -47,7 +38,6 @@ function M.turn_off_autoformat()
     :autocmd! autoformat
     endif
     ]])
-  -- print('OFF')
 end
 
 function M.turn_on_autoformat()
@@ -60,7 +50,6 @@ function M.turn_on_autoformat()
       },
     },
   })
-  -- print('ON')
 end
 
 function M.temp_off()

@@ -29,12 +29,10 @@ if not present then
   end
 end
 
-local util = require "packer.util"
-
 packer.init({
   display = {
     open_fn = function()
-      return util.float { border = "rounded" }
+      return require("packer.util").float { border = "rounded" }
     end,
   },
   git = {
