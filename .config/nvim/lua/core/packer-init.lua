@@ -32,9 +32,10 @@ end
 packer.init({
   display = {
     open_fn = function()
-      return require("packer.util").float { border = "rounded" }
+      return require('packer.util').float({ border = 'rounded' })
     end,
   },
+  compile_path = CONFIG_PATH .. '/lua/packer_compiled.lua',
   git = {
     clone_timeout = 600, -- Timeout, in seconds, for git clones
   },

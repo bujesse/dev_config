@@ -243,9 +243,8 @@ function M.print(mode)
   end
 end
 
-function M.setup()
+function M.config()
   M.config_keys()
-  -- vim.g.mapleader = ',' This is in init.vim for now
   M.load(M.keys)
 end
 

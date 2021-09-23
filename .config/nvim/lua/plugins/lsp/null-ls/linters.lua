@@ -1,9 +1,9 @@
 local M = {}
 local linters_by_ft = {}
 
-local null_ls = require 'null-ls'
-local services = require 'plugins.lsp.null-ls.services'
-local Log = require 'core.log'
+local null_ls = require('null-ls')
+local services = require('plugins.lsp.null-ls.services')
+local Log = require('core.log')
 
 local function list_names(linters, options)
   options = options or {}
@@ -54,11 +54,11 @@ function M.list_configured(linter_configs)
         errors[lnt_config.exe] = {} -- Add data here when necessary
       else
         Log:debug('Using linter: ' .. linter_cmd)
-        linters[lnt_config.exe] = linter.with {
+        linters[lnt_config.exe] = linter.with({
           command = linter_cmd,
           extra_args = lnt_config.args,
-          diagnostics_format = lnt_config.diagnostics_format or "[#{s}] #{m} (#{c})"
-        }
+          diagnostics_format = lnt_config.diagnostics_format or '[#{s}] #{m} (#{c})',
+        })
       end
     end
   end
@@ -67,13 +67,13 @@ function M.list_configured(linter_configs)
 end
 
 function M.setup(filetype, options)
-  local ok, config = pcall(require, 'plugins.lsp.language-configs.'..filetype)
+  local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. filetype)
   if not ok or not config.linters then
     return
   end
 
   linters_by_ft[filetype] = M.list_configured(config.linters)
-  null_ls.register { sources = linters_by_ft[filetype].supported }
+  null_ls.register({ sources = linters_by_ft[filetype].supported })
 end
 
 return M
