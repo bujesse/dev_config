@@ -50,7 +50,7 @@ M.config = function()
   -- Smart casing when completing
   opt.infercase = true
 
-  cmd([[set iskeyword-=#]])
+  opt.iskeyword:append('#')
 
   -- We want a statusline
   opt.laststatus = 2
@@ -89,8 +89,8 @@ M.config = function()
   opt.scrolloff = 8
 
   -- Using this to persist buffer locations https://github.com/akinsho/bufferline.nvim#configuration
-  cmd([[set sessionoptions+=globals]])
-  -- opt.sessionoptions=blank,curdir,tabpages,winpos,globals
+  -- cmd([[set sessionoptions+=globals]])
+  opt.sessionoptions:append('globals')
 
   -- Use this to wrap long lines
   opt.showbreak = '↳'

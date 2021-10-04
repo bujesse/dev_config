@@ -7,6 +7,7 @@ M.config = function()
 
   require('indent_blankline').setup({
     buftype_exclude = { 'dashboard', 'terminal' },
+    show_current_context = true, -- Uses Treesitter to show current indent
     char_list = { '│', '¦' },
     -- char_highlight_list = {
     --   'IndentBlanklineIndent1',
@@ -14,7 +15,15 @@ M.config = function()
     -- },
   })
 
-  vim.g.indent_blankline_filetype_exclude = {'help', 'startify', 'dashboard', 'lspinfo', 'NvimTree', 'floaterm', 'floats'}
+  vim.g.indent_blankline_filetype_exclude = {
+    'help',
+    'startify',
+    'dashboard',
+    'lspinfo',
+    'NvimTree',
+    'floaterm',
+    'floats',
+  }
 end
 
 return M

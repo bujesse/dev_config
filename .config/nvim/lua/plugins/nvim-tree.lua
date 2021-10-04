@@ -4,8 +4,6 @@ local Log = require('core.log')
 M.tree_width = 35
 
 M.settings = {
-  side = 'left',
-  width = M.tree_width,
   show_icons = {
     git = 1,
     folders = 1,
@@ -14,18 +12,15 @@ M.settings = {
     tree_width = M.tree_width,
   },
   ignore = { '.git', 'node_modules', '.cache' },
-  auto_open = 0,
-  auto_close = 1,
   quit_on_open = 1,
-  follow = 1,
+  respect_buf_cwd = 1,
+  netrw_banner = 0,
   hide_dotfiles = 1,
   add_trailing = 1,
   group_empty = 1,
   git_hl = 1,
   root_folder_modifier = ':t',
-  tab_open = 0,
   allow_resize = 1,
-  lsp_diagnostics = 0,
   auto_ignore_ft = { 'startify', 'dashboard' },
   icons = {
     default = '',
@@ -50,32 +45,40 @@ M.settings = {
 }
 
 function M.config()
-  local status_ok, nvim_tree_config = pcall(require, 'nvim-tree.config')
-  if not status_ok then
-    Log:error('Failed to load nvim-tree.config')
-    return
-  end
-
   local g = vim.g
   for opt, val in pairs(M.settings) do
     g['nvim_tree_' .. opt] = val
   end
 
-  vim.g.nvim_tree_update_cwd = 1
-  vim.g.nvim_tree_respect_buf_cwd = 1
-  vim.g.nvim_tree_disable_netrw = 0
-  vim.g.nvim_tree_hijack_netrw = 0
-  vim.g.netrw_banner = 0
-
-  local tree_cb = nvim_tree_config.nvim_tree_callback
-
-  if not g.nvim_tree_bindings then
-    g.nvim_tree_bindings = {
-      { key = { '<CR>', 'o' }, cb = tree_cb('edit') },
-      { key = 'h', cb = tree_cb('close_node') },
-      { key = 'v', cb = tree_cb('vsplit') },
-    }
-  end
+  require('nvim-tree').setup({
+    disable_netrw = false,
+    hijack_netrw = false,
+    auto_close = false,
+    hijack_cursor = true,
+    update_cwd = true,
+    lsp_diagnostics = false,
+    open_on_tab = 0,
+    -- follow = 1,
+    view = {
+      side = 'left',
+      width = M.tree_width,
+      mappings = {
+        custom_only = false,
+        list = {
+          { key = 'v', cb = 'vsplit' },
+        },
+      },
+    },
+    update_to_buf_dir = {
+      enable = true,
+      auto_open = false,
+    },
+    update_focused_file = {
+      enable = true,
+      update_cwd = true,
+      ignore_list = { 'startify' },
+    },
+  })
 
   local tree_view = require('nvim-tree.view')
 
