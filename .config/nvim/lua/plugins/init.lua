@@ -64,6 +64,14 @@ M.config = function()
     })
 
     use({
+      'akinsho/bufferline.nvim',
+      requires = 'kyazdani42/nvim-web-devicons',
+      config = function()
+        require('plugins.bufferline').config()
+      end,
+      disable = true,
+    })
+    use({
       'romgrk/barbar.nvim',
       after = 'nvim-web-devicons',
       config = function()
@@ -103,9 +111,9 @@ M.config = function()
         require('plugins.gitsigns').config()
       end,
       requires = { 'plenary.nvim' },
-      setup = function()
-        require('core.utils').packer_lazy_load('gitsigns.nvim')
-      end,
+      -- setup = function()
+      --   require('core.utils').packer_lazy_load('gitsigns.nvim')
+      -- end,
     })
 
     -- smooth scroll

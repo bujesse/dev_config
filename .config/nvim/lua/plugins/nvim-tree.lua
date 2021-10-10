@@ -97,7 +97,7 @@ end
 
 function M.on_open()
   if package.loaded['bufferline.state'] then
-    require('bufferline.state').set_offset(M.tree_width + 1, 'Explorer')
+    require('bufferline.state').set_offset(M.tree_width + 1, 'File Explorer')
   end
 end
 
