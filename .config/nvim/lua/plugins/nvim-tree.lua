@@ -56,7 +56,6 @@ function M.config()
     auto_close = false,
     hijack_cursor = true,
     update_cwd = true,
-    lsp_diagnostics = false,
     open_on_tab = 0,
     -- follow = 1,
     view = {
@@ -68,6 +67,10 @@ function M.config()
           { key = 'v', cb = 'vsplit' },
         },
       },
+    },
+    diagnostics = {
+      enable = false,
+      icons = { hint = '', info = '', warning = '', error = '' },
     },
     update_to_buf_dir = {
       enable = true,

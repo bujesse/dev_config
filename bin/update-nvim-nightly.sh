@@ -23,8 +23,8 @@ if ! [ -x "$(command -v xmllint)" ]; then
   exit
 fi
 
-if ! [ -x "$(command -v dateutils.ddiff)" ]; then
-  printf "\n${RED}dateutils not found in path. Please install it to continue!${NC}\n"
+if ! [ -x "$(command -v datediff)" ]; then
+    printf "\n${RED}dateutils not found in path. Please install it to continue! (https://github.com/hroptatyr/dateutils)${NC}\n"
   exit
 fi
 
@@ -37,7 +37,7 @@ CURR_NVIM_VER=$(nvim --version | head -n 1)
 NEW_NVIM_VER=$(xmllint --html --xpath "//a[@href='/neovim/neovim/releases/tag/nightly']/node()" /tmp/nvim28dce75c-4317-4006-a103-8069d573e2b2 2>/dev/null)
 CURR_DATETIME_ISO=$(date --iso-8601=ns)
 NEW_NVIM_VER_RELEASE_DATETIME_ISO=$(xmllint --html --xpath "string(//relative-time/@datetime)" /tmp/nvim28dce75c-4317-4006-a103-8069d573e2b2 2>/dev/null)
-LAST_RELEASE_DATETIME_DIFF=$(dateutils.ddiff ${NEW_NVIM_VER_RELEASE_DATETIME_ISO} ${CURR_DATETIME_ISO} -f "%H hours %M minutes ago")
+LAST_RELEASE_DATETIME_DIFF=$(datediff ${NEW_NVIM_VER_RELEASE_DATETIME_ISO} ${CURR_DATETIME_ISO} -f "%H hours %M minutes ago")
 
 # Check if Neovim Nightly exists in repo
 if [[ "$NEW_NVIM_VER" == "" ]]; then
