@@ -8,8 +8,7 @@ M.config = function()
   vim.g.python_pep8_indent_searchpair_timeout = 10
 
   -- Lua globals
-  local home_dir = vim.loop.os_homedir()
-  CONFIG_PATH = home_dir .. '/.config/nvim'
+  CONFIG_PATH = vim.fn.stdpath('config')
   DATA_PATH = vim.fn.stdpath('data')
   CACHE_PATH = vim.fn.stdpath('cache')
   TERMINAL = vim.fn.expand('$TERMINAL')

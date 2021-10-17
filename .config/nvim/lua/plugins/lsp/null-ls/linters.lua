@@ -26,18 +26,6 @@ function M.list_unsupported_names(filetype)
   return list_names(linters_by_ft[filetype], { filter = 'unsupported' })
 end
 
-function M.list_available(filetype)
-  local linters = {}
-  for _, provider in pairs(null_ls.builtins.diagnostics) do
-    -- TODO: Add support for wildcard filetypes
-    if vim.tbl_contains(provider.filetypes or {}, filetype) then
-      table.insert(linters, provider.name)
-    end
-  end
-
-  return linters
-end
-
 function M.list_configured(linter_configs)
   local linters, errors = {}, {}
 
@@ -66,8 +54,8 @@ function M.list_configured(linter_configs)
   return { supported = linters, unsupported = errors }
 end
 
-function M.setup(filetype, options)
-  local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. filetype)
+function M.setup(client, filetype, options)
+  local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. client.name)
   if not ok or not config.linters then
     return
   end

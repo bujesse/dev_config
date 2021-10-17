@@ -142,7 +142,7 @@ M.config = function()
         require('plugins.lsp.nvim-lspconfig').config()
       end,
       requires = {
-        'kabouzeid/nvim-lspinstall',
+        'williamboman/nvim-lsp-installer',
         'rrethy/vim-illuminate',
       },
     })

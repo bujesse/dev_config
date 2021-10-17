@@ -46,14 +46,14 @@ M.common_on_attach = function(client, bufnr)
   require('plugins.lsp.utils').setup(buf_set_keymap)
 
   -- Setup formatters and linters
-  require('plugins.lsp.null-ls').setup(vim.bo.filetype)
+  require('plugins.lsp.null-ls').setup(client, vim.bo.filetype)
 
   -- Setup UI configuration
   require('plugins.lsp.ui').setup()
 end
 
 M.common_on_init = function(client, bufnr)
-  local formatters = require('plugins.lsp.language-configs.' .. vim.bo.filetype).formatters
+  local formatters = require('plugins.lsp.language-configs.' .. client.name).formatters
   if not vim.tbl_isempty(formatters) and formatters[1]['exe'] ~= nil and formatters[1].exe ~= '' then
     client.resolved_capabilities.document_formatting = false
     Log:debug(
@@ -82,11 +82,20 @@ M.common_capabilities = function()
 end
 
 M.make_config = function(server)
-  local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. server)
+  local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. server.name)
   if ok and config.lsp and config.lsp.setup then
     config = config.lsp.setup
+    if not config.cmd then
+      config.cmd = server._default_options.cmd
+    end
+    if not config.on_init then
+      config.on_init = M.common_on_init
+    end
+    if not config.capabilities then
+      config.capabilities = M.common_capabilities()
+    end
   else
-    config = {}
+    config = server._default_options
   end
 
   config.on_attach = function(client, bufnr)
@@ -99,37 +108,21 @@ M.make_config = function(server)
     end
   end
 
-  if not config.on_init then
-    config.on_init = M.common_on_init
-  end
-  if not config.capabilities then
-    config.capabilities = M.common_capabilities()
-  end
-
   return config
 end
 
 -- lsp-install
 M.setup_servers = function()
-  require('lspinstall').setup()
-
-  -- get all installed servers
-  local servers = require('lspinstall').installed_servers()
-  for _, server in pairs(servers) do
+  require('nvim-lsp-installer').on_server_ready(function(server)
     local config = M.make_config(server)
-    require('lspconfig')[server].setup(config)
-  end
+    server:setup(config)
+    vim.cmd([[ do User LspAttachBuffers ]])
+  end)
 end
 
 M.config = function()
   require('lspconfig')
   M.setup_servers()
-
-  -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-  require('lspinstall').post_install_hook = function()
-    M.setup_servers() -- reload installed servers
-    vim.cmd('bufdo e') -- this triggers the FileType autocmd that starts the server
-  end
 end
 
 return M

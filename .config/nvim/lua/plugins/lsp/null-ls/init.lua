@@ -33,7 +33,7 @@ function M.list_unsupported_provider_names(filetype)
 end
 
 -- TODO: for linters and formatters with spaces and '-' replace with '_'
-function M.setup(filetype, options)
+function M.setup(client, filetype, options)
   options = options or {
     diagnostics_format = "[#{s}] #{m} (#{s})",
     debounce = 250,
@@ -49,8 +49,8 @@ function M.setup(filetype, options)
   local formatters = require "plugins.lsp.null-ls.formatters"
   local linters = require "plugins.lsp.null-ls.linters"
 
-  formatters.setup(filetype, options)
-  linters.setup(filetype, options)
+  formatters.setup(client, filetype, options)
+  linters.setup(client, filetype, options)
 end
 
 return M

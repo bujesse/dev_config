@@ -26,18 +26,6 @@ function M.list_unsupported_names(filetype)
   return list_names(formatters_by_ft[filetype], { filter = 'unsupported' })
 end
 
-function M.list_available(filetype)
-  local formatters = {}
-  for _, provider in pairs(null_ls.builtins.formatting) do
-    -- TODO: Add support for wildcard filetypes
-    if vim.tbl_contains(provider.filetypes or {}, filetype) then
-      table.insert(formatters, provider.name)
-    end
-  end
-
-  return formatters
-end
-
 function M.list_configured(formatter_configs)
   local formatters, errors = {}, {}
 
@@ -66,8 +54,8 @@ function M.list_configured(formatter_configs)
   return { supported = formatters, unsupported = errors }
 end
 
-function M.setup(filetype, options)
-  local ok, config = pcall(require, 'plugins.lsp.language-configs.' .. filetype)
+function M.setup(client, filetype, options)
+  local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. client.name)
   if not ok or not config.formatters then
     return
   end

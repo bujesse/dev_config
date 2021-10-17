@@ -19,11 +19,6 @@ local M = {
   lsp = {
     provider = 'sumneko_lua',
     setup = {
-      cmd = {
-        DATA_PATH .. '/lspinstall/lua/sumneko-lua-language-server',
-        '-E',
-        DATA_PATH .. '/lspinstall/lua/sumneko-lua-language-server/sumneko-lua/extension/server/main.lua',
-      },
       settings = {
         Lua = {
           runtime = {
