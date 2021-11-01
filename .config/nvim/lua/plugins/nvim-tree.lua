@@ -1,5 +1,4 @@
 local M = {}
-local Log = require('core.log')
 
 M.tree_width = 35
 
@@ -11,17 +10,14 @@ M.settings = {
     folder_arrows = 1,
     tree_width = M.tree_width,
   },
-  ignore = { '.git', 'node_modules', '.cache' },
   quit_on_open = 1,
   respect_buf_cwd = 1,
   netrw_banner = 0,
-  hide_dotfiles = 1,
   add_trailing = 1,
   group_empty = 1,
   git_hl = 1,
   root_folder_modifier = ':t',
   allow_resize = 1,
-  auto_ignore_ft = { 'startify', 'dashboard' },
   icons = {
     default = '',
     symlink = '',
@@ -57,6 +53,7 @@ function M.config()
     hijack_cursor = true,
     update_cwd = true,
     open_on_tab = 0,
+    ignore_ft_on_setup = { 'startify', 'dashboard' },
     -- follow = 1,
     view = {
       side = 'left',
@@ -80,6 +77,9 @@ function M.config()
       enable = true,
       update_cwd = true,
       ignore_list = { 'startify' },
+    },
+    filters = {
+      custom = { '.git', 'node_modules', '.cache' },
     },
   })
 

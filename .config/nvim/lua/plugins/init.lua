@@ -53,9 +53,12 @@ M.config = function()
     })
 
     use({
-      'shadmansaleh/lualine.nvim',
+      'nvim-lualine/lualine.nvim',
+      requires = {
+        'kyazdani42/nvim-web-devicons',
+        opt = true,
+      },
       after = {
-        'nvim-web-devicons',
         'gruvbox-material',
       },
       config = function()
