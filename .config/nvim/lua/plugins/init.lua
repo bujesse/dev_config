@@ -302,10 +302,12 @@ M.config = function()
         {
           'nvim-telescope/telescope-fzf-native.nvim',
           run = 'make',
+          disabled = true,
         },
         {
           'nvim-telescope/telescope-frecency.nvim',
           requires = { 'tami5/sqlite.lua' },
+          disabled = true,
         },
       },
       config = function()

@@ -89,26 +89,26 @@ M.config = function()
       },
     },
     extensions = {
-      frecency = {
-        db_root = DATA_PATH,
-        show_scores = true,
-        show_unindexed = true,
-        disable_devicons = false,
-        workspaces = {
-          ['conf'] = CONFIG_PATH,
-        },
-      },
-      fzf = {
-        fuzzy = true, -- false will only do exact matching
-        override_generic_sorter = false, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
-        case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
-      },
+      -- frecency = {
+      --   db_root = DATA_PATH,
+      --   show_scores = true,
+      --   show_unindexed = true,
+      --   disable_devicons = false,
+      --   workspaces = {
+      --     ['conf'] = CONFIG_PATH,
+      --   },
+      -- },
+      -- fzf = {
+      --   fuzzy = true, -- false will only do exact matching
+      --   override_generic_sorter = false, -- override the generic sorter
+      --   override_file_sorter = true, -- override the file sorter
+      --   case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+      -- },
     },
   })
 
-  require('telescope').load_extension('frecency')
-  require('telescope').load_extension('fzf')
+  -- require('telescope').load_extension('frecency')
+  -- require('telescope').load_extension('fzf')
 
   local opts = {
     noremap = true,
@@ -147,12 +147,15 @@ M.config = function()
   -- which-key mappings (used less often, so put behind a 3-char input)
   require('which-key').register({
     name = '+telescope',
-    f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
+    -- f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
     r = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume' },
     j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
     b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
     p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
-    i = { '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>', 'Grep (include ignore and hidden)' },
+    i = {
+      '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>',
+      'Grep (include ignore and hidden)',
+    },
     u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
     c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
     h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
