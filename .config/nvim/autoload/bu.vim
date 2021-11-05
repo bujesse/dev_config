@@ -8,7 +8,7 @@ function! bu#jump_direction(letter)
     return
   endif
 
-  if jump_count > 5
+  if jump_count > 1
     call execute("normal! m'")
   endif
 
