@@ -389,6 +389,7 @@ M.config = function()
         require('plugins.vim-easy-align').config()
       end,
     })
+    use({ 'nelstrom/vim-visual-star-search' })
     use({ 'mg979/vim-visual-multi' })
     use({
       'svermeulen/vim-yoink',

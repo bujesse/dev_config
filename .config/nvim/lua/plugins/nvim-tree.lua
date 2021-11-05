@@ -70,7 +70,7 @@ function M.config()
       icons = { hint = '', info = '', warning = '', error = '' },
     },
     update_to_buf_dir = {
-      enable = true,
+      enable = false,
       auto_open = false,
     },
     update_focused_file = {

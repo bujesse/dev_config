@@ -60,4 +60,17 @@ M.packer_lazy_load = function(plugin, timer)
   end
 end
 
+M.sep = (function()
+  if jit then
+    local os = string.lower(jit.os)
+    if os == "linux" or os == "osx" or os == "bsd" then
+      return "/"
+    else
+      return "\\"
+    end
+  else
+    return package.config:sub(1, 1)
+  end
+end)()
+
 return M
