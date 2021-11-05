@@ -6,10 +6,84 @@ function M.grep_string_visual()
   require('telescope.builtin').grep_string({ search = visual_selection })
 end
 
+function M.path_display(opts, file)
+  -- Format path as "file.txt (path\to\file)"
+  local Path = require('plenary.path')
+  local tele_utils = require('telescope.utils')
+  local sep = require('core.utils').sep
+  local tail = tele_utils.path_tail(file)
+  local path = tele_utils.path_smart(file)
+  -- path = Path:new(path):shorten(3) -- how many chars to shorten to
+  path = vim.split(path, sep)
+  table.remove(path)
+  path = table.concat(path, sep)
+  return string.format('%s (%s)', tail, path)
+end
+
+function M.entry_maker(entry)
+  local entry_display = require('telescope.pickers.entry_display')
+
+  local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
+
+  local displayer = entry_display.create({
+    separator = ' ',
+    items = {
+      { width = 4 },
+      { remaining = true },
+    },
+  })
+
+  local make_display = function(e)
+    return displayer({
+      e.lnum,
+      M.path_display(nil, e.filename),
+    })
+  end
+
+  return {
+    valid = true,
+
+    value = entry,
+    ordinal = filename .. ' ' .. entry.text,
+    display = make_display,
+
+    bufnr = entry.bufnr,
+    filename = filename,
+    lnum = entry.lnum,
+    col = entry.col,
+    text = entry.text,
+    start = entry.start,
+    finish = entry.finish,
+  }
+end
+
+local opts_cursor = {
+  sorting_strategy = 'ascending',
+  layout_strategy = 'cursor',
+  results_title = false,
+  layout_config = {
+    width = 0.6,
+    height = 0.5,
+  },
+}
+
+local opts_vertical = {
+  sorting_strategy = 'ascending',
+  layout_strategy = 'vertical',
+  results_title = false,
+  layout_config = {
+    width = 0.4,
+    height = 0.6,
+    prompt_position = 'top',
+    mirror = true,
+  },
+}
+
 M.config = function()
   local actions = require('telescope.actions')
   require('telescope').setup({
     defaults = {
+      path_display = { 'smart' },
       vimgrep_arguments = {
         'rg',
         '--color=never',
@@ -49,22 +123,18 @@ M.config = function()
       },
     },
     pickers = {
-      lsp_references = {
-        layout_config = {
-          vertical = {
-            width = 0.6,
-            height = 0.6,
-          },
-        },
+      buffers = {
+        sort_mru = true,
+        preview_title = false,
       },
-      lsp_code_actions = {
-        layout_config = {
-          vertical = {
-            width = 0.5,
-            height = 0.5,
-          },
-        },
-      },
+      lsp_code_actions = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_range_code_actions = vim.tbl_deep_extend('force', opts_vertical, {}),
+      lsp_document_diagnostics = vim.tbl_deep_extend('force', opts_vertical, {}),
+      lsp_implementations = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_definitions = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_references = vim.tbl_deep_extend('force', opts_cursor, {
+        entry_maker = M.entry_maker,
+      }),
       live_grep = {
         additional_args = function(opts)
           if opts.mode == 'filetype_mask' then

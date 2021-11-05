@@ -8,5 +8,7 @@
 .config/karabiner/automatic_backups/
 .config/nvim/plugin/packer_compiled.lua
 .config/nvim/lua/packer_compiled.lua
+.config/configstore
+.config/yarn
 
 fonts/
