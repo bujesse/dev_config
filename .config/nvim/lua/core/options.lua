@@ -27,8 +27,8 @@ M.config = function()
   opt.encoding = 'UTF-8'
 
   -- Sexy folds
-  cmd([[set foldmethod=expr]])
-  cmd([[set foldexpr=nvim_treesitter#foldexpr()]])
+  vim.o.foldmethod='expr'
+  vim.o.foldexpr='nvim_treesitter#foldexpr()'
   opt.foldtext =
     [[ substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)' ]]
   -- opt.fillchars = 'fold: '
