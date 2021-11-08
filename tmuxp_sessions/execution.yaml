@@ -1,0 +1,17 @@
+session_name: execution
+windows:
+  - window_name: nvim
+    layout: tiled
+    shell_command_before:
+      - cd /projects/execution
+    panes:
+      - shell_command:
+          - source venv/bin/activate
+          - n -S ~/.cache/nvim/sessions/execution
+  - window_name: git
+    layout: tiled
+    shell_command_before:
+      - cd /projects/execution
+    panes:
+      - shell_command:
+        - gst
