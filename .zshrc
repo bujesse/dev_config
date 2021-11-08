@@ -112,6 +112,7 @@ source $ZSH/oh-my-zsh.sh
     alias c="clear"
     alias nvim="~/bin/squashfs-root/usr/bin/nvim"
     alias n="nvim"
+    alias tmux="tmux -2"
     alias bat="/usr/local/bat/bat"
     if [[ "$OSTYPE" != "darwin"* ]]; then
         alias open="explorer.exe"
