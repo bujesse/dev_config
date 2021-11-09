@@ -18,7 +18,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
         git
         git-extras
         common-aliases
-#        autojump
+        autojump
         virtualenv
         virtualenvwrapper
         docker
@@ -34,7 +34,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
     setopt noincappendhistory
     setopt nosharehistory
 
-#    [[ -s /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh ]] && source /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh
+    [[ -s /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh ]] && source /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh
     autoload -U compinit && compinit -i
 
 # === PLUGIN CONFIG ===
@@ -56,7 +56,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
     if [[ "$OSTYPE" == "darwin"* ]]; then
         export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
     else
-        export VIRTUALENVWRAPPER_PYTHON=/opt/rh/rh-python38/root/usr/bin/python3
+        export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
     fi
 
     if test -f "/usr/local/bin/virtualenvwrapper.sh"; then
@@ -110,10 +110,8 @@ source $ZSH/oh-my-zsh.sh
     alias ohmyzsh="cd ~/.oh-my-zsh"
     alias ,.="source ~/.zshrc"
     alias c="clear"
-    alias nvim="~/bin/squashfs-root/usr/bin/nvim"
     alias n="nvim"
     alias tmux="tmux -2"
-    alias bat="/usr/local/bat/bat"
     if [[ "$OSTYPE" != "darwin"* ]]; then
         alias open="explorer.exe"
         alias pbcopy="clip.exe"  # Windows version of pbcopy
@@ -123,11 +121,11 @@ source $ZSH/oh-my-zsh.sh
 # === EXTRA BINDKEYS ===
     # get back this functionality from zsh-autosuggestions
     # Ubuntu:
-    # [[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
-    # [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
+    [[ -n "${key[Up]}" ]] && bindkey "${key[Up]}" up-line-or-history
+    [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-history
     # CentOS:
-    bindkey "${terminfo[kcuu1]}" up-line-or-history
-    bindkey "${terminfo[kcud1]}" down-line-or-history
+    # bindkey "${terminfo[kcuu1]}" up-line-or-history
+    # bindkey "${terminfo[kcud1]}" down-line-or-history
 
 
     # control+right right
@@ -135,14 +133,14 @@ source $ZSH/oh-my-zsh.sh
 
     # Exa bindings
         # general use
-        #alias ls='exa'                                               # ls
-        #alias l='exa -lbF --git'                                     # list, size, type, git
-        #alias lt='exa -lbF --git --tree --level=2'                   # all list
-        #alias ll='exa -lbGF --git'                                   # long list
-        #alias la='exa -lbhgma --git --color-scale'                   # all list
-        #alias lat='exa -lbhgma --git --color-scale --tree --level=2' # all list
-        #alias lx='exa -lbhgma@ --git --color-scale'                  # all + extended list
-        #alias lS='exa -1'                                            # one column, just names
+        alias ls='exa'                                               # ls
+        alias l='exa -lbF --git'                                     # list, size, type, git
+        alias lt='exa -lbF --git --tree --level=2'                   # all list
+        alias ll='exa -lbGF --git'                                   # long list
+        alias la='exa -lbhgma --git --color-scale'                   # all list
+        alias lat='exa -lbhgma --git --color-scale --tree --level=2' # all list
+        alias lx='exa -lbhgma@ --git --color-scale'                  # all + extended list
+        alias lS='exa -1'                                            # one column, just names
 
 # Remove highlighting on wsl2
 export LS_COLORS=$LS_COLORS:'ow=1;34:';
