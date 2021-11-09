@@ -3,11 +3,17 @@ local null_ls_service = require('plugins.lsp.null-ls.services')
 local M = {
   formatters = {
     {
-      exe = 'black',
+      exe = 'darker',
       args = { '--line-length', '120', '--skip-string-normalization' },
       local_provider = null_ls_service.from_nvim_venv,
-      diagnostics_format = '[black] #{m} (#{c})',
+      diagnostics_format = '[darker] #{m} (#{c})',
     },
+    -- {
+    --   exe = 'black',
+    --   args = { '--line-length', '120', '--skip-string-normalization' },
+    --   local_provider = null_ls_service.from_nvim_venv,
+    --   diagnostics_format = '[black] #{m} (#{c})',
+    -- },
     -- {
     --   exe = 'autopep8',
     --   args = { '--aggressive', '--aggressive' },

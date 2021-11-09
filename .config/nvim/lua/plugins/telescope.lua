@@ -79,6 +79,25 @@ local opts_vertical = {
   },
 }
 
+M.changed_on_branch = function()
+  local previewers = require('telescope.previewers')
+  local pickers = require('telescope.pickers')
+  local sorters = require('telescope.sorters')
+  local finders = require('telescope.finders')
+  local script = CONFIG_PATH .. '/scripts/git-branch-modified.sh'
+
+  pickers.new({
+    results_title = 'Modified on current branch',
+    finder = finders.new_oneshot_job({ script, 'list' }),
+    sorter = sorters.get_fuzzy_file(),
+    previewer = previewers.new_termopen_previewer({
+      get_command = function(entry)
+        return { script, 'diff', entry.value }
+      end,
+    }),
+  }):find()
+end
+
 M.config = function()
   local actions = require('telescope.actions')
   require('telescope').setup({
@@ -188,6 +207,7 @@ M.config = function()
   -- Essential
   vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
     '<Leader>m',
@@ -233,6 +253,7 @@ M.config = function()
     s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
     k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
     a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
+    t = { '<cmd>lua require("telescope.builtin").treesitter()<CR>', 'Treesitter' },
     g = {
       name = '+git',
       c = { '<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Git Commits' },
