@@ -1,6 +1,6 @@
 require('lightspeed').setup({
-  jump_to_first_match = false,
-  jump_on_partial_input_safety_timeout = 400,
+  jump_to_first_match = true,
+  jump_on_partial_input_safety_timeout = 1000,
   -- This can get _really_ slow if the window has a lot of content,
   -- turn it on only if your machine can always cope with it.
   highlight_unique_chars = false,
@@ -20,12 +20,7 @@ require('lightspeed').setup({
 })
 
 -- Get back ; and , functionality to restart an f/t motion
-function repeat_ft(reverse)
-  local ls = require('lightspeed')
-  ls.ft['instant-repeat?'] = true
-  ls.ft:to(reverse, ls.ft['prev-t-like?'])
-end
-vim.api.nvim_set_keymap('n', ';', '<cmd>lua repeat_ft(false)<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', ';', '<cmd>lua repeat_ft(false)<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>,', '<cmd>lua repeat_ft(true)<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('x', '<Leader>,', '<cmd>lua repeat_ft(true)<cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ';', '<Plug>Lightspeed_repeat_ft', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('x', ';', '<Plug>Lightspeed_repeat_ft', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>,', '<Plug>Lightspeed_reverse_repeat_ft', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('x', '<Leader>,', '<Plug>Lightspeed_reverse_repeat_ft', { noremap = false, silent = true })

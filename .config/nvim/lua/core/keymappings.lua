@@ -176,6 +176,9 @@ function M.config_keys()
       -- [']q'] = ':cnext<CR>',
       -- ['[q'] = ':cprev<CR>',
       ['<Leader>q'] = ':call QuickFixToggle()<CR>',
+
+      ['<RightMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.hover({border = "single"})<CR>',
+      ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
     },
 
     ---@usage change or add keymappings for terminal mode
