@@ -25,7 +25,33 @@ M.config = function()
         },
       },
       persist_buffer_sort = true,
-    },
+      groups = {
+        options = {
+          toggle_hidden_on_enter = true -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
+        },
+        items = {
+          require('bufferline.groups').builtin.ungrouped, -- ungrouped comes before groups
+          {
+            name = "Tests",
+            -- highlight = {gui = "underline", },
+            priority = 1,
+            icon = "", -- Optional
+            matcher = function(buf)
+              return buf.filename:match('%_test') or buf.filename:match('%_spec')
+            end,
+          },
+          {
+            name = "Docs",
+            -- highlight = {gui = "undercurl", },
+            auto_close = false,  -- whether or not close this group if it doesn't contain the current buffer
+            priority = 2,
+            matcher = function(buf)
+              return buf.filename:match('%.md') or buf.filename:match('%.txt')
+            end,
+          },
+        },
+      },
+    }
   })
 
   vim.api.nvim_set_keymap('n', 'L', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })

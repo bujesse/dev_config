@@ -67,16 +67,30 @@ M.config = function()
     })
 
     use({
+      'datwaft/bubbly.nvim',
+      disable = true,
+      requires = {
+        'kyazdani42/nvim-web-devicons',
+      },
+      after = {
+        'gruvbox-material',
+      },
+      config = function()
+        require('plugins.bubbly').config()
+      end,
+    })
+
+    use({
       'akinsho/bufferline.nvim',
       requires = 'kyazdani42/nvim-web-devicons',
       config = function()
         require('plugins.bufferline').config()
       end,
-      disable = true,
     })
     use({
       'romgrk/barbar.nvim',
       after = 'nvim-web-devicons',
+      disable = true,
       config = function()
         require('plugins.barbar').config()
       end,
@@ -161,6 +175,13 @@ M.config = function()
       },
     })
 
+    use({
+      'ldelossa/calltree.nvim',
+      config = function()
+        require('plugins.calltree').config()
+      end,
+    })
+
     -- use({
     --   'ray-x/lsp_signature.nvim',
     --   disable = not plugin_status.lspsignature,
@@ -198,13 +219,9 @@ M.config = function()
     })
 
     use({
-      'rafamadriz/friendly-snippets',
-      event = 'InsertEnter',
-    })
-
-    use({
       'hrsh7th/nvim-cmp',
-      after = { 'friendly-snippets', 'lspkind-nvim' },
+      after = { 'lspkind-nvim' },
+      requires = { 'LuaSnip' },
       config = function()
         require('plugins.nvim-cmp').config()
       end,
@@ -212,8 +229,7 @@ M.config = function()
 
     use({
       'L3MON4D3/LuaSnip',
-      wants = 'friendly-snippets',
-      after = 'nvim-cmp',
+      requires = { 'rafamadriz/friendly-snippets', },
       config = function()
         require('plugins.luasnip').config()
       end,
@@ -360,6 +376,13 @@ M.config = function()
       -- Before load because the plugin checks if a mapping exists
       setup = function()
         require('plugins.replace-with-register').config()
+      end,
+    })
+    use({
+      'ggandor/lightspeed.nvim',
+      disable = true,
+      config = function()
+        require('plugins.clever-f').config()
       end,
     })
     use({
