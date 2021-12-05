@@ -15,16 +15,14 @@ set multiple-cursors
 set NERDTree
 set vim-paragraph-motion
 set textobj-indent
+set matchit
 
-sethandler <C-j> n-v:ide
-sethandler <C-k> n-v:ide
+" sethandler <C-j> a:vim
+" sethandler <C-k> a:vim
 
-let g:EasyMotion_smartcase = 1
-nmap s <Plug>(easymotion-s2)
+let g:NERDTreeMapPreview = '<Tab>'
 
 " Section: SET CONFIGS
-    noremap <leader>, ,
-
     set autoindent
     set autoread
     set backspace=indent,eol,start
@@ -64,11 +62,13 @@ nmap s <Plug>(easymotion-s2)
     map ]m <Action>(MethodDown)
     map [m <Action>(MethodUp)
 
-    map ]e <Action>(GotoNextError)
-    map [e <Action>(GotoPreviousError)
+    " Use idea jumplist
+    " nnoremap <C-o> <Action>(Back)
+    " nnoremap <C-i> <Action>(Forward)
 
     " NERDTree
-    map <leader>n :NERDTreeFind<CR>
+    map <leader>n :NERDTreeFocus<CR>
+    map <leader>N :NERDTreeFind<CR>
 
     " Hack to jump to top-level class for function
     nnoremap [[ ?\(^class \\\|^def \)<cr>:noh<cr>
@@ -77,10 +77,10 @@ nmap s <Plug>(easymotion-s2)
     map <Leader>x <Action>(CloseContent)
     map gh <Action>(ShowErrorDescription)
 
-    " StringManipulation
-        map gm <Action>(osmedile.intellij.stringmanip.PopupChoiceAction)
-        map g. <action>(osmedile.intellij.stringmanip.RepeatAction)
-
+    " EasyMotion
+    let g:EasyMotion_smartcase = 1
+    " let g:EasyMotion_do_mapping = 0
+    nmap s <Plug>(easymotion-s2)
 
     " vim-multiple-cursors
         nmap <C-n> <Plug>NextWholeOccurrence
@@ -89,8 +89,8 @@ nmap s <Plug>(easymotion-s2)
         xmap g<C-n> <Plug>NextOccurrence
         nmap <C-s> <Plug>SkipOccurrence
         xmap <C-s> <Plug>SkipOccurrence
-        nmap <C-p> <Plug>RemoveOccurrence
-        xmap <C-p> <Plug>RemoveOccurrence
+        nmap <C-x> <Plug>RemoveOccurrence
+        xmap <C-x> <Plug>RemoveOccurrence
 
         nmap <S-C-n> <Plug>AllWholeOccurrences
         xmap <S-C-n> <Plug>AllWholeOccurrences
@@ -105,26 +105,39 @@ nmap s <Plug>(easymotion-s2)
     " vim-abolish
         map crs <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
         map crc <Action>(StringManipulation.ToSnakeCaseOrCamelCase)<Esc>
+        map crm <Action>(osmedile.intellij.stringmanip.PopupChoiceAction)<Esc>
+        map cr. <action>(osmedile.intellij.stringmanip.RepeatAction)
 
     " vim-visual-star-search
         xnoremap * "zy/<C-R>z<CR>
 
     " vim-unimpaired
-        nnoremap [p O<esc>p
-        nnoremap ]p o<esc>p
+        nnoremap [p O<C-r>"
+        nnoremap ]p o<C-r>"
         nnoremap [<space> O<esc>j
         nnoremap ]<space> o<esc>k
-        map ]b <Action>(NextTab)
-        map [b <Action>(PreviousTab)
+
+    " Tab stuff
+    map L <Action>(NextTab)
+    map H <Action>(PreviousTab)
+    map X <Action>(CloseContent)
+    map <Leader>bl <Action>(CloseAllToTheRight)
+    map <Leader>bh <Action>(CloseAllToTheLeft)
+    map <C-Right> <Action>(com.mnw.tabmover.actions.MoveTabDownAction)
+    map <C-Left> <Action>(com.mnw.tabmover.actions.MoveTabUpAction)
 
     " LSC
         map ]r <Action>(GotoNextElementUnderCaretUsage)
         map [r <Action>(GotoPrevElementUnderCaretUsage)
+        map ]d <Action>(GotoNextError)
+        map [d <Action>(GotoPreviousError)
+
 
     " Git-gutter
         " Move to next/prev hunk. The extra actions are to not activate the change preview window
-        map [g <Action>(VcsShowPrevChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
-        map ]g <Action>(VcsShowNextChangeMarker) <Action>(EditorDown) <Action>(EditorUp)
+        map [g <Action>(VcsShowPrevChangeMarker) <Action>(EditorDown)<Action>(EditorUp)
+        map ]g <Action>(VcsShowNextChangeMarker) <Action>(EditorDown)<Action>(EditorUp)
+
         " This activates the change preview window
         map <Leader>P <Action>(VcsShowCurrentChangeMarker)
         " Rollback hunk at the cursor
@@ -134,11 +147,11 @@ nmap s <Plug>(easymotion-s2)
         map <silent> <Leader>B <Action>(Annotate)
 
     " ALE refactoring
-        map <Leader>af <Action>(ReformatCode)
+        map <Leader>af <Action>(Tool_External Tools_darker)
 
     " Refactoring
-        map Rm <Action>(RefactoringMenu)
-        map Rr <Action>(RenameElement)
+        map gm <Action>(RefactoringMenu)
+        map gR <Action>(RenameElement)
 
     " Navigation
         map <Leader>m <Action>(RecentFiles)
@@ -149,14 +162,13 @@ nmap s <Plug>(easymotion-s2)
     " Debugging
         map <Space>ds <Action>(RunConfiguration)
         map <Space>dd <Action>(Debug)
-        map <Space>dn <Action>(DebugClass)
         map <Space>dl <Action>(Rerun)
+        map <Space>dn <Action>(DebugClass)
         map <Space>dr <Action>(Run)
 
         map <Space>b <Action>(ToggleLineBreakpoint)
         map <Space>e <Action>(EditBreakpoint)
         map gw viw<Action>(Debugger.AddToWatch)
-        map <Space>aiw viw<Action>(Debugger.AddToWatch)
         map <Space>aa V<Action>(Debugger.AddToWatch)
         map <Space>A v$<Action>(Debugger.AddToWatch)
         map <Space>an <Action>(Debugger.AddToWatch)
@@ -204,26 +216,6 @@ nmap s <Plug>(easymotion-s2)
 
     noremap <space><space> :w<CR>
     " this resets any alternate layout settings
-    noremap j j
-    noremap J J
-
-    noremap k k
-    noremap K K
-
-    noremap n n
-    noremap N N
-
-    noremap e e
-    noremap E E
-
-    noremap l l
-    noremap L L
-
-    noremap h h
-    noremap H H
-
-    noremap m m
-    noremap M M
 
     nnoremap <C-h> <C-w>h
     nnoremap <C-j> <C-w>j
@@ -231,26 +223,41 @@ nmap s <Plug>(easymotion-s2)
     nnoremap <C-l> <C-w>l
 
     " Quick source
-    nnoremap <Leader>.. :source ~/.ideavimrc<cr>
-    nnoremap <leader>ev :e ~/.ideavimrc<CR>
-
-    " Toggle default colemak layout by (un)commenting this line
-    " source "$HOME/.colemakvimrc"
-    nmap <Leader>.z :source ~/.colemakvimrc<CR>
+    nnoremap <Leader>. :action IdeaVim.ReloadVimRc.reload<CR>
+    nnoremap <leader>ev :e C:/Users/jesse.bu/.ideavimrc<CR>
 
     " Get back , functionality
-    noremap ,, ,
+    nnoremap <Leader>, ,
+
+    vnoremap < <gv
+    vnoremap > >gv
+
+" Section: CUSTOM FUNCTION
+" function! JkJumps(key)
+"     exec "normal! ".v:count1.a:key
+"     if v:count1 >= 5
+"         let target = line('.')
+"         let bkey = 'k'
+"         if (a:key == 'k')
+"             let bkey = 'j'
+"         endif
+"         exec "normal! ".v:count1.bkey
+"         exec "normal! ".target."G"
+"     endif
+" endfunction
+
+" nnoremap <silent> j :<C-U>call JkJumps('j')<CR>
+" nnoremap <silent> k :<C-U>call JkJumps('k')<CR>
 
 " Section: CUSTOM MACROS
     " replace with yank
-    nmap <Leader>v griw
-    xmap <Leader>v gr
+    nmap <Leader>v Riw
 
-    " python timer
+    " Python Insert timer arund current line
     nnoremap <Leader>tt yy<ESC>PCimport time; start = time.time()<ESC>joprint(time.time() - start)<ESC>
 
-    " Python Insert sleep
-    nnoremap <Leader>ts Oimport time; time.sleep()<ESC>i
+    " Python Insert try/except arund current line
+    nnoremap <Leader>te Otry:<ESC>j>>oexcept :<Left>
 
     " JS Insert debugger
     nnoremap <Leader>td Odebugger<ESC>
