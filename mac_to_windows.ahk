@@ -14,6 +14,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; You need to disable "Between input languages" shotcut from Control Panel\Clock, Language, and Region\Language\Advanced settings > Change lanugage bar hot keys
 
+; UK Specific
+SC056::LShift
+
+
 ; === Universal shotcuts ===
 
 $!x::Send ^x
@@ -61,10 +65,10 @@ $!Right::Send {End}
 $!Up::Send {Lctrl down}{Home}{Lctrl up}
 $!Down::Send {Lctrl down}{End}{Lctrl up}
 
-$#Left::Send {ctrl down}{Left}{ctrl up}
-$#Right::Send {ctrl down}{Right}{ctrl up}
-$#+Left::Send {ctrl down}{shift down}{Left}{shift up}{ctrl up}
-$#+Right::Send {ctrl down}{shift down}{Right}{shift up}{ctrl up}
+;$#Left::Send {ctrl down}{Left}{ctrl up}
+;$#Right::Send {ctrl down}{Right}{ctrl up}
+;$#+Left::Send {ctrl down}{shift down}{Left}{shift up}{ctrl up}
+;$#+Right::Send {ctrl down}{shift down}{Right}{shift up}{ctrl up}
 
 $!+Left::Send {shift down}{Home}{shift up}
 $!+Right::Send {shift down}{End}{shift up}
@@ -72,7 +76,7 @@ $!+Up::Send {Ctrl Down}{shift down}{Home}{shift up}{Ctrl Up}
 $!+Down::Send {Ctrl Down}{shift down}{End}{shift up}{Ctrl Up}
 
 !BS::Send {LShift down}{Home}{LShift Up}{Del}
-#BS::Send {LCtrl down}{BS}{LCtrl up}
+;#BS::Send {LCtrl down}{BS}{LCtrl up}
 
 $#Space::Send {Ctrl Down}{LWin Down}{Space}{LWin Up}{Ctrl Up}
 
@@ -111,3 +115,61 @@ $!Left::Send !{Left}
 $!c::Send ^+c
 $!v::Send ^+v
 $!f::Send ^+f
+
+#IfWinActive ahk_exe Update.exe
+$!Up::Send !{Up}
+$!Right::Send !{Right}
+
+; Reset settings for pycharm
+#IfWinActive ahk_exe pycharm64.exe
+$!w::Send !w
+$!t::Send !t
+$!Down::Send !{Down}
+$!Up::Send !{Up}
+$!Right::Send !{Right}
+$!Left::Send !{Left}
+$!r::Send !r
+$!c::Send !c
+$!v::Send !v
+$!f::Send !f
+$!n::Send !n
+$!+z::Send !+z
+$!+]::Send !+]
+$!+[::Send !+[
+$!1::Send !1
+$!2::Send !2
+$!3::Send !3
+$!4::Send !4
+$!5::Send !5
+$!6::Send !6
+$!7::Send !7
+$!8::Send !8
+$!9::Send !9
+$!0::Send !0
+
+#IfWinActive ahk_exe phpstorm64.exe
+$!w::Send !w
+$!t::Send !t
+$!Down::Send !{Down}
+$!Up::Send !{Up}
+$!Right::Send !{Right}
+$!Left::Send !{Left}
+$!r::Send !r
+$!c::Send !c
+$!v::Send !v
+$!f::Send !f
+$!n::Send !n
+$!+z::Send !+z
+$!+]::Send !+]
+$!+[::Send !+[
+$!1::Send !1
+$!2::Send !2
+$!3::Send !3
+$!4::Send !4
+$!5::Send !5
+$!6::Send !6
+$!7::Send !7
+$!8::Send !8
+$!9::Send !9
+$!0::Send !0
+
