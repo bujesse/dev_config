@@ -237,7 +237,7 @@ M.config = function()
 
     use({
       'saadparwaiz1/cmp_luasnip',
-      after = 'LuaSnip',
+      after = 'nvim-cmp',
     })
 
     use({

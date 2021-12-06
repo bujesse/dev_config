@@ -6,12 +6,36 @@ function M.grep_string_visual()
   require('telescope.builtin').grep_string({ search = visual_selection })
 end
 
+M.opts_cursor = {
+  sorting_strategy = 'ascending',
+  layout_strategy = 'cursor',
+  results_title = false,
+  layout_config = {
+    width = 0.5,
+    height = 0.4,
+  },
+}
+
+M.opts_vertical = {
+  sorting_strategy = 'ascending',
+  layout_strategy = 'vertical',
+  results_title = false,
+  layout_config = {
+    width = 0.3,
+    height = 0.5,
+    prompt_position = 'top',
+    mirror = true,
+  },
+}
+
 M.config = function()
   local actions = require('telescope.actions')
   require('telescope').setup({
     defaults = {
       vimgrep_arguments = {
         'rg',
+        '--ignore',
+        '--hidden',
         '--color=never',
         '--no-heading',
         '--with-filename',
@@ -49,21 +73,38 @@ M.config = function()
       },
     },
     pickers = {
-      lsp_references = {
-        layout_config = {
-          vertical = {
-            width = 0.6,
-            height = 0.6,
+      buffers = {
+        mappings = {
+          i = {
+            ['<C-x>'] = actions.delete_buffer,
           },
         },
+        sort_mru = true,
+        preview_title = false,
       },
-      lsp_code_actions = {
-        layout_config = {
-          vertical = {
-            width = 0.5,
-            height = 0.5,
-          },
-        },
+      lsp_code_actions = vim.tbl_deep_extend('force', M.opts_cursor, {
+        prompt_title = 'Code Actions',
+      }),
+      lsp_range_code_actions = vim.tbl_deep_extend('force', M.opts_vertical, {
+        prompt_title = 'Code Actions',
+      }),
+      lsp_document_diagnostics = vim.tbl_deep_extend('force', M.opts_vertical, {
+        prompt_title = 'Document Diagnostics',
+      }),
+      lsp_implementations = vim.tbl_deep_extend('force', M.opts_cursor, {
+        prompt_title = 'Implementations',
+      }),
+      lsp_definitions = vim.tbl_deep_extend('force', M.opts_cursor, {
+        prompt_title = 'Definitions',
+      }),
+      lsp_references = vim.tbl_deep_extend('force', M.opts_cursor, {
+        prompt_title = 'References',
+      }),
+      find_files = {
+        hidden = true,
+      },
+      git_files = {
+        hidden = true,
       },
       live_grep = {
         additional_args = function(opts)
@@ -117,6 +158,7 @@ M.config = function()
 
   -- Essential
   vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("telescope.builtin").git_files()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',

@@ -83,19 +83,19 @@ function M.config()
     },
   })
 
-  local tree_view = require('nvim-tree.view')
+  -- local tree_view = require('nvim-tree.view')
 
-  -- Add nvim_tree open callback
-  local open = tree_view.open
-  tree_view.open = function()
-    M.on_open()
-    open()
-  end
+  -- -- Add nvim_tree open callback
+  -- local open = tree_view.open
+  -- tree_view.open = function()
+  --   M.on_open()
+  --   open()
+  -- end
 
   vim.api.nvim_set_keymap('n', '<Leader>n', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>N', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
-  vim.cmd("au WinClosed * lua require('plugins.nvim-tree').on_close()")
+  -- vim.cmd("au WinClosed * lua require('plugins.nvim-tree').on_close()")
 end
 
 function M.on_open()
