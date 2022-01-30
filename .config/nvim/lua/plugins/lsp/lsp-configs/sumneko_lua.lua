@@ -3,19 +3,6 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 local M = {
-  formatters = {
-    {
-      exe = 'stylua',
-      args = {
-        '--indent-type',
-        'Spaces',
-        '--indent-width',
-        '2',
-        '--quote-style',
-        'AutoPreferSingle',
-      },
-    },
-  },
   lsp = {
     provider = 'sumneko_lua',
     setup = {

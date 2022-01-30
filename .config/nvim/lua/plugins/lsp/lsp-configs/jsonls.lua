@@ -5,21 +5,6 @@ if status_ok then
 end
 
 local config = {
-  formatters = {
-    -- {
-    --   exe = "json_tool",
-    --   args = {},
-    -- },
-    -- {
-    --   exe = "prettier",
-    --   args = {},
-    -- },
-    -- {
-    --   exe = "prettierd",
-    --   args = {},
-    -- },
-  },
-  linters = {},
   lsp = {
     provider = 'jsonls',
     setup = {

@@ -46,20 +46,30 @@ M.common_on_attach = function(client, bufnr)
   require('plugins.lsp.utils').setup(buf_set_keymap)
 
   -- Setup formatters and linters
-  require('plugins.lsp.null-ls').setup(client, vim.bo.filetype)
+  require('plugins.lsp.null-ls').setup()
 
   -- Setup UI configuration
   require('plugins.lsp.ui').setup()
 end
 
-M.common_on_init = function(client, bufnr)
-  local formatters = require('plugins.lsp.language-configs.' .. client.name).formatters
-  if not vim.tbl_isempty(formatters) and formatters[1]['exe'] ~= nil and formatters[1].exe ~= '' then
-    client.resolved_capabilities.document_formatting = false
-    Log:debug(
-      string.format('Overriding language server [%s] with format provider [%s]', client.name, formatters[1].exe)
-    )
+local function select_default_formater(client)
+  if client.name == 'null-ls' or not client.resolved_capabilities.document_formatting then
+    return
   end
+  Log:debug('Checking for formatter overriding for ' .. client.name)
+  local formatters = require('plugins.lsp.null-ls.formatters')
+  local client_filetypes = client.config.filetypes or {}
+  for _, filetype in ipairs(client_filetypes) do
+    if #vim.tbl_keys(formatters.list_registered(filetype)) > 0 then
+      Log:debug('Formatter overriding detected. Disabling formatting capabilities for ' .. client.name)
+      client.resolved_capabilities.document_formatting = false
+      client.resolved_capabilities.document_range_formatting = false
+    end
+  end
+end
+
+M.common_on_init = function(client, bufnr)
+  select_default_formater(client)
 end
 
 M.common_capabilities = function()
@@ -79,6 +89,15 @@ M.common_capabilities = function()
   end
   capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
   return capabilities
+end
+
+function M.get_common_opts()
+  return {
+    on_attach = M.common_on_attach,
+    on_init = M.common_on_init,
+    -- on_exit = M.common_on_exit,
+    capabilities = M.common_capabilities(),
+  }
 end
 
 M.make_config = function(server)
@@ -122,6 +141,7 @@ end
 
 M.config = function()
   require('lspconfig')
+  require('plugins.lsp.null-ls').config()
   M.setup_servers()
 end
 
