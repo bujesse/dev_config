@@ -111,6 +111,7 @@ source $ZSH/oh-my-zsh.sh
     alias ,.="source ~/.zshrc"
     alias c="clear"
     alias n="nvim"
+    alias lg="lazygit"
     alias tmux="tmux -2"
     if [[ "$OSTYPE" != "darwin"* ]]; then
         alias open="explorer.exe"
