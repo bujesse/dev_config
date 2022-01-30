@@ -58,13 +58,26 @@ let g:NERDTreeMapPreview = '<Tab>'
     set visualbell
 
 
+    imap jk <ESC>
+    imap Jk <ESC>
+    imap jK <ESC>
+    imap JK <ESC>
+    imap kj <ESC>
+    imap Kj <ESC>
+    imap kJ <ESC>
+    imap KJ <ESC>
+
+
 " Section: IDEAVIM actions
     map ]m <Action>(MethodDown)
     map [m <Action>(MethodUp)
 
+    nmap g; <Action>(JumpToLastChange)
+    nmap g, <Action>(JumpToNextChange)
+
     " Use idea jumplist
-    " nnoremap <C-o> <Action>(Back)
-    " nnoremap <C-i> <Action>(Forward)
+    nmap <C-o> <Action>(Back)
+    nmap <C-i> <Action>(Forward)
 
     " NERDTree
     map <leader>n :NERDTreeFocus<CR>

@@ -6,36 +6,101 @@ function M.grep_string_visual()
   require('telescope.builtin').grep_string({ search = visual_selection })
 end
 
-M.opts_cursor = {
+function M.path_display(opts, file)
+  -- Format path as "file.txt (path\to\file)"
+  -- local Path = require('plenary.path')
+  local tele_utils = require('telescope.utils')
+  local sep = require('core.utils').sep
+  local tail = tele_utils.path_tail(file)
+  local path = tele_utils.path_smart(file)
+  -- path = Path:new(path):shorten(3) -- how many chars to shorten to
+  path = vim.split(path, sep)
+  table.remove(path)
+  path = table.concat(path, sep)
+  return string.format('%s (%s)', tail, path)
+end
+
+function M.entry_maker(entry)
+  local entry_display = require('telescope.pickers.entry_display')
+  local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
+  local displayer = entry_display.create({
+    separator = ' ',
+    items = {
+      { width = 3 },
+      { remaining = true },
+    },
+  })
+
+  local make_display = function(e)
+    return displayer({
+      e.lnum,
+      M.path_display(nil, e.filename),
+    })
+  end
+
+  return {
+    valid = true,
+    value = entry,
+    ordinal = filename .. ' ' .. entry.text,
+    display = make_display,
+    bufnr = entry.bufnr,
+    filename = filename,
+    lnum = entry.lnum,
+    col = entry.col,
+    text = entry.text,
+    start = entry.start,
+    finish = entry.finish,
+  }
+end
+
+local opts_cursor = {
   sorting_strategy = 'ascending',
   layout_strategy = 'cursor',
   results_title = false,
   layout_config = {
-    width = 0.5,
-    height = 0.4,
+    width = 0.9,
+    height = 0.5,
   },
 }
 
-M.opts_vertical = {
+local opts_vertical = {
   sorting_strategy = 'ascending',
   layout_strategy = 'vertical',
   results_title = false,
   layout_config = {
-    width = 0.3,
-    height = 0.5,
+    width = 0.4,
+    height = 0.6,
     prompt_position = 'top',
     mirror = true,
   },
 }
 
+M.changed_on_branch = function()
+  local previewers = require('telescope.previewers')
+  local pickers = require('telescope.pickers')
+  local sorters = require('telescope.sorters')
+  local finders = require('telescope.finders')
+  local script = CONFIG_PATH .. '/scripts/git-branch-modified.sh'
+
+  pickers.new({
+    results_title = 'Modified on current branch',
+    finder = finders.new_oneshot_job({ script, 'list' }),
+    sorter = sorters.get_fuzzy_file(),
+    previewer = previewers.new_termopen_previewer({
+      get_command = function(entry)
+        return { script, 'diff', entry.value }
+      end,
+    }),
+  }):find()
+end
+
 M.config = function()
   local actions = require('telescope.actions')
   require('telescope').setup({
     defaults = {
+      path_display = { 'smart' },
       vimgrep_arguments = {
         'rg',
-        '--ignore',
-        '--hidden',
         '--color=never',
         '--no-heading',
         '--with-filename',
@@ -74,38 +139,17 @@ M.config = function()
     },
     pickers = {
       buffers = {
-        mappings = {
-          i = {
-            ['<C-x>'] = actions.delete_buffer,
-          },
-        },
         sort_mru = true,
         preview_title = false,
       },
-      lsp_code_actions = vim.tbl_deep_extend('force', M.opts_cursor, {
-        prompt_title = 'Code Actions',
+      lsp_code_actions = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_range_code_actions = vim.tbl_deep_extend('force', opts_vertical, {}),
+      lsp_document_diagnostics = vim.tbl_deep_extend('force', opts_vertical, {}),
+      lsp_implementations = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_definitions = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_references = vim.tbl_deep_extend('force', opts_cursor, {
+        entry_maker = M.entry_maker,
       }),
-      lsp_range_code_actions = vim.tbl_deep_extend('force', M.opts_vertical, {
-        prompt_title = 'Code Actions',
-      }),
-      lsp_document_diagnostics = vim.tbl_deep_extend('force', M.opts_vertical, {
-        prompt_title = 'Document Diagnostics',
-      }),
-      lsp_implementations = vim.tbl_deep_extend('force', M.opts_cursor, {
-        prompt_title = 'Implementations',
-      }),
-      lsp_definitions = vim.tbl_deep_extend('force', M.opts_cursor, {
-        prompt_title = 'Definitions',
-      }),
-      lsp_references = vim.tbl_deep_extend('force', M.opts_cursor, {
-        prompt_title = 'References',
-      }),
-      find_files = {
-        hidden = true,
-      },
-      git_files = {
-        hidden = true,
-      },
       live_grep = {
         additional_args = function(opts)
           if opts.mode == 'filetype_mask' then
@@ -130,26 +174,26 @@ M.config = function()
       },
     },
     extensions = {
-      frecency = {
-        db_root = DATA_PATH,
-        show_scores = true,
-        show_unindexed = true,
-        disable_devicons = false,
-        workspaces = {
-          ['conf'] = CONFIG_PATH,
-        },
-      },
-      fzf = {
-        fuzzy = true, -- false will only do exact matching
-        override_generic_sorter = false, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
-        case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
-      },
+      -- frecency = {
+      --   db_root = DATA_PATH,
+      --   show_scores = true,
+      --   show_unindexed = true,
+      --   disable_devicons = false,
+      --   workspaces = {
+      --     ['conf'] = CONFIG_PATH,
+      --   },
+      -- },
+      -- fzf = {
+      --   fuzzy = true, -- false will only do exact matching
+      --   override_generic_sorter = false, -- override the generic sorter
+      --   override_file_sorter = true, -- override the file sorter
+      --   case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
+      -- },
     },
   })
 
-  require('telescope').load_extension('frecency')
-  require('telescope').load_extension('fzf')
+  -- require('telescope').load_extension('frecency')
+  -- require('telescope').load_extension('fzf')
 
   local opts = {
     noremap = true,
@@ -158,8 +202,8 @@ M.config = function()
 
   -- Essential
   vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("telescope.builtin").git_files()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
     '<Leader>m',
@@ -189,12 +233,15 @@ M.config = function()
   -- which-key mappings (used less often, so put behind a 3-char input)
   require('which-key').register({
     name = '+telescope',
-    f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
+    -- f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
     r = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume' },
     j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
     b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
     p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
-    i = { '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>', 'Grep (include ignore and hidden)' },
+    i = {
+      '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>',
+      'Grep (include ignore and hidden)',
+    },
     u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
     c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
     h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
@@ -202,6 +249,7 @@ M.config = function()
     s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
     k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
     a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
+    t = { '<cmd>lua require("telescope.builtin").treesitter()<CR>', 'Treesitter' },
     g = {
       name = '+git',
       c = { '<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Git Commits' },
