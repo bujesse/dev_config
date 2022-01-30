@@ -152,12 +152,10 @@ M.config = function()
 
     use({
       'jose-elias-alvarez/null-ls.nvim',
-      config = function()
-        require('plugins.lsp.null-ls').config()
-      end,
+      -- config is in lspconfig
       after = {
         'plenary.nvim',
-        'nvim-lspconfig',
+        -- 'nvim-lspconfig',
       },
     })
 
