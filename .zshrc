@@ -18,15 +18,12 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
         git
         git-extras
         common-aliases
-#        autojump
         virtualenv
-        virtualenvwrapper
         docker
         docker-compose
 
         safe-paste # Preventing any code from actually running while pasting
 
-        alias-tips
         zsh-vim-mode
 
         zsh-autosuggestions
@@ -110,7 +107,6 @@ source $ZSH/oh-my-zsh.sh
     alias ohmyzsh="cd ~/.oh-my-zsh"
     alias ,.="source ~/.zshrc"
     alias c="clear"
-    alias nvim="~/bin/squashfs-root/usr/bin/nvim"
     alias n="nvim"
     alias tmux="tmux -2"
     alias bat="/usr/local/bat/bat"
@@ -146,3 +142,13 @@ source $ZSH/oh-my-zsh.sh
 
 # Remove highlighting on wsl2
 export LS_COLORS=$LS_COLORS:'ow=1;34:';
+
+# GO
+export GOPATH=~/go/
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+
+# nvm
+unset NPM_CONFIG_PREFIX
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
