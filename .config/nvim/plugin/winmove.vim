@@ -2,6 +2,10 @@
 " move to the window in the direction shown, or create a new window
 function s:WinMove(key)
     let t:curwin = winnr()
+    let extension = expand('%')
+    if (extension == "NvimTree" && a:key == "h")
+      return
+    end
     exec "wincmd ".a:key
     if (t:curwin == winnr())
         if (match(a:key,'[jk]'))

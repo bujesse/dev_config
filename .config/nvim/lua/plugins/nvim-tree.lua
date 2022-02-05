@@ -10,8 +10,8 @@ M.settings = {
     folder_arrows = 1,
     tree_width = M.tree_width,
   },
-  quit_on_open = 1,
-  respect_buf_cwd = 1,
+  quit_on_open = 0,
+  respect_buf_cwd = 0,
   netrw_banner = 0,
   add_trailing = 1,
   group_empty = 1,
@@ -54,7 +54,7 @@ function M.config()
     update_cwd = true,
     open_on_tab = 0,
     ignore_ft_on_setup = { 'startify', 'dashboard' },
-    -- follow = 1,
+    follow = 0,
     view = {
       side = 'left',
       width = M.tree_width,
@@ -92,7 +92,7 @@ function M.config()
   --   open()
   -- end
 
-  vim.api.nvim_set_keymap('n', '<Leader>n', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<Leader>n', '<cmd>NvimTreeFocus<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>N', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
   -- vim.cmd("au WinClosed * lua require('plugins.nvim-tree').on_close()")

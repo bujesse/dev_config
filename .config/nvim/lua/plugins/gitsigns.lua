@@ -19,6 +19,10 @@ M.config = function()
       ['n <leader>hS'] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
       ['n <leader>hU'] = '<cmd>lua require"gitsigns".reset_buffer_index()<CR>',
 
+      -- From ideavim
+      ['n <leader>-'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+      ['n <leader>P'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+
       -- Text objects
       ['o ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
       ['x ih'] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',

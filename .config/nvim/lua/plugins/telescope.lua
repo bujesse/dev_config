@@ -146,7 +146,9 @@ M.config = function()
       lsp_range_code_actions = vim.tbl_deep_extend('force', opts_vertical, {}),
       lsp_document_diagnostics = vim.tbl_deep_extend('force', opts_vertical, {}),
       lsp_implementations = vim.tbl_deep_extend('force', opts_cursor, {}),
-      lsp_definitions = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_definitions = vim.tbl_deep_extend('force', opts_cursor, {
+        entry_maker = M.entry_maker,
+      }),
       lsp_references = vim.tbl_deep_extend('force', opts_cursor, {
         entry_maker = M.entry_maker,
       }),
