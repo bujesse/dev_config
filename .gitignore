@@ -12,3 +12,5 @@
 .config/configstore
 
 fonts/
+
+.config/nextjs-nodejs/config.json

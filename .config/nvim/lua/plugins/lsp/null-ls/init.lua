@@ -59,6 +59,9 @@ function M.setup(options)
       filetypes = { 'python' },
       diagnostics_format = '[flake8] #{m} (#{c})',
     },
+    {
+      exe = 'eslint',
+    },
   })
 end
 
