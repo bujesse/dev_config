@@ -75,8 +75,8 @@ $!+Right::Send {shift down}{End}{shift up}
 $!+Up::Send {Ctrl Down}{shift down}{Home}{shift up}{Ctrl Up}
 $!+Down::Send {Ctrl Down}{shift down}{End}{shift up}{Ctrl Up}
 
-!BS::Send {LShift down}{Home}{LShift Up}{Del}
-;#BS::Send {LCtrl down}{BS}{LCtrl up}
+$!BS::Send {LShift down}{Home}{LShift Up}{Del}
+$^w::Send {Ctrl Down}{BS}{Ctrl Up}
 
 $#Space::Send {Ctrl Down}{LWin Down}{Space}{LWin Up}{Ctrl Up}
 
@@ -97,6 +97,7 @@ $!Left::Send !{Left}
 $!c::Send ^+c
 $!v::Send ^+v
 $!f::Send ^+f
+$^w::Send ^w
 
 #IfWinActive ahk_exe chrome.exe
 ; Get mac-like behavior for cmd+shft+arrow for moving tabs
@@ -105,23 +106,12 @@ $!+Right::Send ^+{Right}
 $!+Up::Send ^+{Up}
 $!+Down::Send ^+{Down}
 
-#IfWinActive ahk_exe alacritty.exe
-$!w::Send ^+w
-$!t::Send ^+t
-$!Down::Send !{Down}
-$!Up::Send !{Up}
-$!Right::Send !{Right}
-$!Left::Send !{Left}
-$!c::Send ^+c
-$!v::Send ^+v
-$!f::Send ^+f
-
 #IfWinActive ahk_exe Update.exe
 $!Up::Send !{Up}
 $!Right::Send !{Right}
 
-; Reset settings for pycharm
-#IfWinActive ahk_exe pycharm64.exe
+; Reset settings for pycharm and webstorm
+#If WinActive("ahk_exe pycharm64.exe") || WinActive("ahk_exe webstorm64.exe") || WinActive("ahk_exe phpstorm64.exe")
 $!w::Send !w
 $!t::Send !t
 $!Down::Send !{Down}
@@ -146,30 +136,5 @@ $!7::Send !7
 $!8::Send !8
 $!9::Send !9
 $!0::Send !0
-
-#IfWinActive ahk_exe phpstorm64.exe
-$!w::Send !w
-$!t::Send !t
-$!Down::Send !{Down}
-$!Up::Send !{Up}
-$!Right::Send !{Right}
-$!Left::Send !{Left}
-$!r::Send !r
-$!c::Send !c
-$!v::Send !v
-$!f::Send !f
-$!n::Send !n
-$!+z::Send !+z
-$!+]::Send !+]
-$!+[::Send !+[
-$!1::Send !1
-$!2::Send !2
-$!3::Send !3
-$!4::Send !4
-$!5::Send !5
-$!6::Send !6
-$!7::Send !7
-$!8::Send !8
-$!9::Send !9
-$!0::Send !0
+$^w::Send ^w
 
