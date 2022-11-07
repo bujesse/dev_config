@@ -1,4 +1,4 @@
-theme = "gruvbox_dark_hard"
+theme = "custom_gruvbox_dark_hard"
 
 [editor]
 line-number = "relative"
@@ -20,6 +20,7 @@ G = "goto_file_end"
 V = ["select_mode", "extend_to_line_bounds"]
 "{" = ["goto_prev_paragraph", "collapse_selection"]
 "}" = ["goto_next_paragraph", "collapse_selection"]
+esc = ["collapse_selection", "keep_primary_selection"]
 
 [keys.insert]
 j = { k = "normal_mode" }
@@ -30,10 +31,12 @@ J = { K = "normal_mode" }
 J = { k = "normal_mode" }
 K = { j = "normal_mode" }
 K = { J = "normal_mode" }
+esc = ["collapse_selection", "normal_mode"]
 
 [keys.select]
 o = "flip_selections"
 V = ["normal_mode", "collapse_selection"]
+esc = ["collapse_selection", "keep_primary_selection", "normal_mode"]
 
 [editor.indent-guides]
 render = true
