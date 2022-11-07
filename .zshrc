@@ -109,6 +109,7 @@ source $ZSH/oh-my-zsh.sh
     alias c="clear"
     alias n="nvim"
     alias tmux="tmux -2"
+    alias lg="lazygit"
     alias bat="/usr/local/bat/bat"
     if [[ "$OSTYPE" != "darwin"* ]]; then
         alias open="explorer.exe"
