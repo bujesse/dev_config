@@ -1,0 +1,39 @@
+theme = "gruvbox_dark_hard"
+
+[editor]
+line-number = "relative"
+true-color = true
+cursorline = true
+color-modes = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+
+[keys.normal]
+0 = "goto_line_start"
+"$" = "goto_line_end"
+G = "goto_file_end"
+# C = ["collapse_selection", "extend_to_line_end", "change_selection"]
+# D = ["extend_to_line_end", "delete_selection"]
+# S = "surround_add"
+V = ["select_mode", "extend_to_line_bounds"]
+"{" = ["goto_prev_paragraph", "collapse_selection"]
+"}" = ["goto_next_paragraph", "collapse_selection"]
+
+[keys.insert]
+j = { k = "normal_mode" }
+k = { j = "normal_mode" }
+k = { J = "normal_mode" }
+j = { K = "normal_mode" }
+J = { K = "normal_mode" }
+J = { k = "normal_mode" }
+K = { j = "normal_mode" }
+K = { J = "normal_mode" }
+
+[keys.select]
+o = "flip_selections"
+V = ["normal_mode", "collapse_selection"]
+
+[editor.indent-guides]
+render = true
