@@ -91,8 +91,8 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
             $EDITOR "$file"
         fi
     }
-    bindkey -s '^o' 'fzf_find_edit^M'
-    bindkey '^j' fzf-cd-widget
+    bindkey -s '^O' 'fzf_find_edit^M'
+    bindkey '^J' fzf-cd-widget
 
 # === SOURCE ===
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

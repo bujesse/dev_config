@@ -58,6 +58,7 @@
 "ui.virtual.ruler" = { bg = "bg1" }
 
 "diagnostic" = { modifiers = ["underlined"] }
+"diagnostic.error" = { underline = { style = "curl", color = "red" } }
 
 "markup.heading" = "aqua1"
 "markup.bold" = { modifiers = ["bold"] }

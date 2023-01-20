@@ -203,9 +203,9 @@ M.config = function()
   }
 
   -- Essential
-  vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
     '<Leader>m',
@@ -213,7 +213,7 @@ M.config = function()
     opts
   )
   vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
-  vim.api.nvim_set_keymap('n', 'ga', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>a', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
   vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
 
   -- Custom
