@@ -166,4 +166,5 @@ if status --is-interactive
     abbr -a -- lt 'exa --tree --level=2 --long --git-ignore'
     abbr -a -- ld 'exa -lDbF'
 
+    abbr -a -- lg 'lazygit'
 end

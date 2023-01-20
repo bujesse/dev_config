@@ -6,6 +6,7 @@ true-color = true
 cursorline = true
 color-modes = true
 shell = ["zsh", "-ic"]
+bufferline = "multiple"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -13,6 +14,8 @@ normal = "block"
 
 [editor.statusline]
 left = ["mode", "spinner"]
+center = ["file-name"]
+right = ["diagnostics", "selections", "file-type"]
 
 [editor.indent-guides]
 render = true
@@ -35,6 +38,8 @@ esc = ["collapse_selection", "keep_primary_selection"]
 "C-j" = "jump_view_down"
 "C-k" = "jump_view_up"
 "C-l" = "jump_view_right"
+"H" = "goto_previous_buffer"
+"L" = "goto_next_buffer"
 
 [keys.insert]
 j = { k = "normal_mode" }
