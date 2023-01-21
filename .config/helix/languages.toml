@@ -1,3 +1,9 @@
 [[language]]
 name = "typescript"
 auto-format = true
+
+[[language]]
+name = "python"
+config = { pylsp = { plugins = { pycodestyle = { "enabled" = true }, rope_autoimport = { "enabled" = true, "memory" = true }, rope_completion = { "enabled" = true } } } }
+# pip install pylsp-rope
+ 
