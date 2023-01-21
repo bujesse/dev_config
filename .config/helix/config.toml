@@ -20,6 +20,9 @@ right = ["diagnostics", "selections", "file-type"]
 [editor.indent-guides]
 render = true
 
+[editor.lsp]
+display-messages = true
+
 [keys.normal]
 0 = "goto_line_start"
 "$" = "goto_line_end"
@@ -28,6 +31,7 @@ C = ["collapse_selection", "extend_to_line_end", "change_selection"]
 D = ["extend_to_line_end", "delete_selection"]
 S = "surround_add"
 V = ["select_mode", "extend_to_line_bounds"]
+X = "extend_line_above"
 ";" = "repeat_last_motion"
 "'" = "collapse_selection"
 "{" = ["goto_prev_paragraph", "collapse_selection"]
