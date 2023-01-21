@@ -5,12 +5,12 @@ if status is-interactive
 
     fish_vi_key_bindings
 
-    fish_add_path /home/vagrant/python_envs/global/bin 
-    fish_add_path /home/vagrant/go/bin 
+    fish_add_path ~/python_envs/global/bin 
+    fish_add_path ~/go/bin 
     fish_add_path /usr/local/go/bin 
     fish_add_path ~/.local/share/nvm/v17.9.1/bin
-    fish_add_path /home/vagrant/.fzf/bin 
-    fish_add_path /home/vagrant/.cargo/bin
+    fish_add_path ~/.fzf/bin 
+    fish_add_path ~/.cargo/bin
 
     set fzf_dir_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 end
