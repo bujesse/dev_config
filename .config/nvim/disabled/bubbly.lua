@@ -1,7 +1,6 @@
 local M = {}
 
 M.bubbly_palette = function ()
-  local colors = require('core.themes.gruvbox-material').get_colors()
   return {
       -- aqua = "#8bba7f",
       -- bg0 = "#282828",
@@ -31,18 +30,7 @@ M.bubbly_palette = function ()
       -- grey2 = "#a89984",
       -- none = "NONE",
       -- orange = "#f28534",
-    background = colors.bg0,
-    foreground = colors.fg0,
-    black = colors.bg_statusline1,
-    red = colors.red,
-    green = colors.green,
-    yellow = colors.yellow,
-    blue = colors.blue,
-    purple = colors.purple,
-    cyan = colors.bg_diff_blue,
     white = "#c5cdd9",
-    lightgrey = colors.grey0,
-    darkgrey = colors.grey2,
   }
 end
 

@@ -14,18 +14,14 @@ M.config = function()
 
    -- TODO: WhichKey-ify
    vim.api.nvim_set_keymap('n', '*' ,  '<Plug>(asterisk-*)', opts)
-   vim.api.nvim_set_keymap('n', '#' ,  '<Plug>(asterisk-#)', opts)
-   vim.api.nvim_set_keymap('n', 'g*' , '<Plug>(asterisk-g*)', opts)
-   vim.api.nvim_set_keymap('n', 'g#' , '<Plug>(asterisk-g#)', opts)
-   vim.api.nvim_set_keymap('n', 'z*' , '<Plug>(asterisk-z*)', opts)
-   vim.api.nvim_set_keymap('n', 'gz*', '<Plug>(asterisk-gz*)', opts)
-   vim.api.nvim_set_keymap('n', 'z#' , '<Plug>(asterisk-z#)', opts)
-   vim.api.nvim_set_keymap('n', 'gz#', '<Plug>(asterisk-gz#)', opts)
-
-   -- map *  <Plug>(asterisk-z*)
-   -- map #  <Plug>(asterisk-z#)
-   -- map g* <Plug>(asterisk-gz*)
-   -- map g# <Plug>(asterisk-gz#)
+   vim.api.nvim_set_keymap('', '#' ,  '<Plug>(asterisk-#)', opts)
+   vim.api.nvim_set_keymap('', 'g*' , '<Plug>(asterisk-g*)', opts)
+   vim.api.nvim_set_keymap('', 'g#' , '<Plug>(asterisk-g#)', opts)
+   vim.api.nvim_set_keymap('', 'z*' , '<Plug>(asterisk-z*)', opts)
+   vim.api.nvim_set_keymap('', 'gz*', '<Plug>(asterisk-gz*)', opts)
+   vim.api.nvim_set_keymap('', 'z#' , '<Plug>(asterisk-z#)', opts)
+   vim.api.nvim_set_keymap('', 'gz#', '<Plug>(asterisk-gz#)', opts)
+   vim.api.nvim_set_keymap('', 'gz#', '<Plug>(asterisk-gz#)', opts)
 end
 
 return M

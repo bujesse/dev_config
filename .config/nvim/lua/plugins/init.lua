@@ -20,9 +20,6 @@ M.config = function()
       event = 'VimEnter',
     })
 
-    -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
-    use({ 'antoinemadec/FixCursorHold.nvim' })
-
     use({
       'folke/which-key.nvim',
       config = function()
@@ -31,12 +28,12 @@ M.config = function()
     })
 
     use({
-      'sainnhe/gruvbox-material',
+      'ellisonleao/gruvbox.nvim',
       config = function()
-        -- vim.cmd([[source ~/.config/nvim/core/themes/gruvbox-material.vim]])
-        require('core.themes.gruvbox-material').config()
+        require('plugins.gruvbox').config()
       end,
     })
+
 
     use({
       'mhinz/vim-startify',
@@ -58,9 +55,6 @@ M.config = function()
         'kyazdani42/nvim-web-devicons',
         opt = true,
       },
-      after = {
-        'gruvbox-material',
-      },
       config = function()
         require('plugins.lualine.init').config()
       end,
@@ -72,9 +66,9 @@ M.config = function()
       requires = {
         'kyazdani42/nvim-web-devicons',
       },
-      after = {
-        'gruvbox-material',
-      },
+      -- after = {
+      --   'gruvbox-material',
+      -- },
       config = function()
         require('plugins.bubbly').config()
       end,
@@ -104,14 +98,6 @@ M.config = function()
       end,
     })
 
-    -- use({
-    --   'norcalli/nvim-colorizer.lua',
-    --   event = 'BufRead',
-    --   config = function()
-    --     require('plugins.configs.others').colorizer()
-    --   end,
-    -- })
-
     use({
       'nvim-treesitter/nvim-treesitter',
       event = 'BufRead',
@@ -128,9 +114,6 @@ M.config = function()
         require('plugins.gitsigns').config()
       end,
       requires = { 'plenary.nvim' },
-      -- setup = function()
-      --   require('core.utils').packer_lazy_load('gitsigns.nvim')
-      -- end,
     })
 
     -- smooth scroll
@@ -173,6 +156,7 @@ M.config = function()
       },
     })
 
+    -- Show function signature when you type
     -- use({
     --   'ray-x/lsp_signature.nvim',
     --   disable = not plugin_status.lspsignature,
@@ -188,18 +172,6 @@ M.config = function()
     --   opt = true,
     --   setup = function()
     --     require('core.utils').packer_lazy_load('vim-matchup')
-    --   end,
-    -- })
-
-    -- load autosave only if its globally enabled
-    -- use({
-    --   disable = not plugin_status.autosave,
-    --   'Pocco81/AutoSave.nvim',
-    --   config = function()
-    --     require('plugins.configs.others').autosave()
-    --   end,
-    --   cond = function()
-    --     return require('core.utils').load_config().options.plugin.autosave == true
     --   end,
     -- })
 
@@ -220,7 +192,7 @@ M.config = function()
 
     use({
       'L3MON4D3/LuaSnip',
-      requires = { 'rafamadriz/friendly-snippets', },
+      requires = { 'rafamadriz/friendly-snippets' },
       config = function()
         require('plugins.luasnip').config()
       end,
@@ -293,12 +265,25 @@ M.config = function()
     --   end,
     -- })
 
-    -- file managing , picker etc
+--     -- file managing , picker etc
+--     use({
+--       'kyazdani42/nvim-tree.lua',
+--       -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+--       config = function()
+--         require('plugins.nvim-tree').config()
+--       end,
+--     })
+
     use({
-      'kyazdani42/nvim-tree.lua',
-      -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+      'nvim-neo-tree/neo-tree.nvim',
+      branch = 'v2.x',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'nvim-tree/nvim-web-devicons',
+        'MunifTanjim/nui.nvim',
+      },
       config = function()
-        require('plugins.nvim-tree').config()
+        require('plugins.neo-tree').config()
       end,
     })
 
@@ -321,20 +306,20 @@ M.config = function()
     })
 
     -- Debugging
-    use({
-      'mfussenegger/nvim-dap',
-      -- event = "BufWinEnter",
-      ft = { 'python' },
-      config = function()
-        require('plugins.nvim-dap').config()
-      end,
-    })
+    -- use({
+    --   'mfussenegger/nvim-dap',
+    --   -- event = "BufWinEnter",
+    --   ft = { 'python' },
+    --   config = function()
+    --     require('plugins.nvim-dap').config()
+    --   end,
+    -- })
 
-    use({
-      'Pocco81/DAPInstall.nvim',
-      -- event = "BufWinEnter",
-      -- event = "BufRead",
-    })
+    -- use({
+    --   'Pocco81/DAPInstall.nvim',
+    --   -- event = "BufWinEnter",
+    --   -- event = "BufRead",
+    -- })
 
     -- Tpope
     use({
@@ -395,20 +380,8 @@ M.config = function()
       end,
     })
     use({ 'tommcdo/vim-exchange' })
-    use({
-      'junegunn/vim-easy-align',
-      config = function()
-        require('plugins.vim-easy-align').config()
-      end,
-    })
     use({ 'nelstrom/vim-visual-star-search' })
     use({ 'mg979/vim-visual-multi' })
-    use({
-      'svermeulen/vim-yoink',
-      config = function()
-        require('plugins.vim-yoink').config()
-      end,
-    })
     use({
       'AndrewRadev/splitjoin.vim',
       config = function()

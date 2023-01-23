@@ -49,12 +49,9 @@ function M.config()
   require('nvim-tree').setup({
     disable_netrw = false,
     hijack_netrw = false,
-    auto_close = false,
     hijack_cursor = true,
     update_cwd = true,
-    open_on_tab = 0,
     ignore_ft_on_setup = { 'startify', 'dashboard' },
-    follow = 0,
     view = {
       side = 'left',
       width = M.tree_width,
@@ -69,10 +66,6 @@ function M.config()
       enable = false,
       icons = { hint = '', info = '', warning = '', error = '' },
     },
-    update_to_buf_dir = {
-      enable = false,
-      auto_open = false,
-    },
     update_focused_file = {
       enable = true,
       update_cwd = true,
@@ -80,6 +73,13 @@ function M.config()
     },
     filters = {
       custom = { '.git', 'node_modules', '.cache' },
+    },
+    tab = {
+      sync = {
+        open = false,
+        close = false,
+        ignore = {},
+      },
     },
   })
 
