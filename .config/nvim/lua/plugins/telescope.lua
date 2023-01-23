@@ -8,7 +8,7 @@ end
 
 function M.path_display(opts, file)
   -- Format path as "file.txt (path\to\file)"
-  local Path = require('plenary.path')
+  -- local Path = require('plenary.path')
   local tele_utils = require('telescope.utils')
   local sep = require('core.utils').sep
   local tail = tele_utils.path_tail(file)
@@ -22,13 +22,11 @@ end
 
 function M.entry_maker(entry)
   local entry_display = require('telescope.pickers.entry_display')
-
   local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
-
   local displayer = entry_display.create({
     separator = ' ',
     items = {
-      { width = 4 },
+      { width = 3 },
       { remaining = true },
     },
   })
@@ -42,11 +40,9 @@ function M.entry_maker(entry)
 
   return {
     valid = true,
-
     value = entry,
     ordinal = filename .. ' ' .. entry.text,
     display = make_display,
-
     bufnr = entry.bufnr,
     filename = filename,
     lnum = entry.lnum,
@@ -62,7 +58,7 @@ local opts_cursor = {
   layout_strategy = 'cursor',
   results_title = false,
   layout_config = {
-    width = 0.6,
+    width = 0.9,
     height = 0.5,
   },
 }
@@ -150,7 +146,9 @@ M.config = function()
       lsp_range_code_actions = vim.tbl_deep_extend('force', opts_vertical, {}),
       lsp_document_diagnostics = vim.tbl_deep_extend('force', opts_vertical, {}),
       lsp_implementations = vim.tbl_deep_extend('force', opts_cursor, {}),
-      lsp_definitions = vim.tbl_deep_extend('force', opts_cursor, {}),
+      lsp_definitions = vim.tbl_deep_extend('force', opts_cursor, {
+        entry_maker = M.entry_maker,
+      }),
       lsp_references = vim.tbl_deep_extend('force', opts_cursor, {
         entry_maker = M.entry_maker,
       }),
@@ -205,9 +203,9 @@ M.config = function()
   }
 
   -- Essential
-  vim.api.nvim_set_keymap('n', '<Leader>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Leader>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Leader>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
     '<Leader>m',
@@ -215,7 +213,7 @@ M.config = function()
     opts
   )
   vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
-  vim.api.nvim_set_keymap('n', 'ga', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>a', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
   vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
 
   -- Custom

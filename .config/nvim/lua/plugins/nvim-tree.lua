@@ -10,8 +10,8 @@ M.settings = {
     folder_arrows = 1,
     tree_width = M.tree_width,
   },
-  quit_on_open = 1,
-  respect_buf_cwd = 1,
+  quit_on_open = 0,
+  respect_buf_cwd = 0,
   netrw_banner = 0,
   add_trailing = 1,
   group_empty = 1,
@@ -49,12 +49,9 @@ function M.config()
   require('nvim-tree').setup({
     disable_netrw = false,
     hijack_netrw = false,
-    auto_close = false,
     hijack_cursor = true,
     update_cwd = true,
-    open_on_tab = 0,
     ignore_ft_on_setup = { 'startify', 'dashboard' },
-    -- follow = 1,
     view = {
       side = 'left',
       width = M.tree_width,
@@ -69,10 +66,6 @@ function M.config()
       enable = false,
       icons = { hint = '', info = '', warning = '', error = '' },
     },
-    update_to_buf_dir = {
-      enable = false,
-      auto_open = false,
-    },
     update_focused_file = {
       enable = true,
       update_cwd = true,
@@ -81,21 +74,28 @@ function M.config()
     filters = {
       custom = { '.git', 'node_modules', '.cache' },
     },
+    tab = {
+      sync = {
+        open = false,
+        close = false,
+        ignore = {},
+      },
+    },
   })
 
-  local tree_view = require('nvim-tree.view')
+  -- local tree_view = require('nvim-tree.view')
 
-  -- Add nvim_tree open callback
-  local open = tree_view.open
-  tree_view.open = function()
-    M.on_open()
-    open()
-  end
+  -- -- Add nvim_tree open callback
+  -- local open = tree_view.open
+  -- tree_view.open = function()
+  --   M.on_open()
+  --   open()
+  -- end
 
-  vim.api.nvim_set_keymap('n', '<Leader>n', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<Leader>n', '<cmd>NvimTreeFocus<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>N', '<cmd>NvimTreeFindFile<CR>', { noremap = true, silent = true })
 
-  vim.cmd("au WinClosed * lua require('plugins.nvim-tree').on_close()")
+  -- vim.cmd("au WinClosed * lua require('plugins.nvim-tree').on_close()")
 end
 
 function M.on_open()

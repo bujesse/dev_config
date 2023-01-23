@@ -46,7 +46,7 @@ function M.turn_on_autoformat()
       {
         'BufWritePre',
         '*',
-        ':silent lua vim.lsp.buf.formatting_sync()',
+        ':silent lua vim.lsp.buf.format()',
       },
     },
   })

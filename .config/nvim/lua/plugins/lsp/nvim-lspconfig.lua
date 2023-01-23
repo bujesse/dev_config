@@ -22,14 +22,15 @@ M.common_on_attach = function(client, bufnr)
   }
 
   buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gq', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<Leader>af', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', 'gh', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_set_keymap('n', 'gp', '<cmd>lua require"plugins.lsp.peek".Peek("definition")<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   -- See `:help vim.lsp.*` for documentation on functions
 
   -- Enable vim-illuminate
@@ -53,7 +54,7 @@ M.common_on_attach = function(client, bufnr)
 end
 
 local function select_default_formater(client)
-  if client.name == 'null-ls' or not client.resolved_capabilities.document_formatting then
+  if client.name == 'null-ls' or not client.server_capabilities.document_formatting then
     return
   end
   Log:debug('Checking for formatter overriding for ' .. client.name)
@@ -61,9 +62,9 @@ local function select_default_formater(client)
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
     if #vim.tbl_keys(formatters.list_registered(filetype)) > 0 then
-      Log:debug('Formatter overriding detected. Disabling formatting capabilities for ' .. client.name)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      Log:info('Formatter overriding detected. Disabling formatting capabilities for ' .. client.name)
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
     end
   end
 end
@@ -87,7 +88,7 @@ M.common_capabilities = function()
   if not status_ok then
     return capabilities
   end
-  capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
   return capabilities
 end
 

@@ -1,6 +1,5 @@
 local conditions = require('plugins.lualine.conditions')
 local utils = require('core.utils')
-local colors = require('core.colors')
 
 local function env_cleanup(venv)
   if string.find(venv, '/') then
@@ -43,11 +42,6 @@ return {
     'diff',
     source = diff_source,
     symbols = { added = ' ', modified = ' ', removed = ' ' },
-    diff_color = {
-      added = { fg = colors.green },
-      modified = { fg = colors.yellow },
-      removed = { fg = colors.red },
-    },
     color = {},
     condition = nil,
   },
@@ -70,7 +64,6 @@ return {
       end
       return ''
     end,
-    color = { fg = colors.green },
     cond = conditions.hide_in_width,
   },
   diagnostics = {
@@ -87,7 +80,6 @@ return {
       end
       return ''
     end,
-    -- color = { fg = colors.green },
     cond = conditions.hide_in_width,
   },
   lsp = {
@@ -171,7 +163,6 @@ return {
       return chars[index]
     end,
     padding = { left = 0, right = 0 },
-    color = { fg = colors.yellow, bg = colors.bg },
     cond = nil,
   },
 }

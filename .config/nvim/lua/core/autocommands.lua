@@ -23,11 +23,6 @@ M.autocommands = {
       '*',
       ':call TrimWhitespace()',
     },
-    -- {
-    --   'BufEnter,BufWinEnter,FileType,WinEnter',
-    --   '*',
-    --   'lua require("core.utils").hide_statusline()',
-    -- },
     -- { "BufWritePost", config.path, "lua require('utils').reload_lv_config()" },
   },
   _markdown = {

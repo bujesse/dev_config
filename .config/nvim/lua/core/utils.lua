@@ -25,31 +25,6 @@ function P(obj)
   return obj
 end
 
--- hide statusline
--- tables fetched from load_config function
--- M.hide_statusline = function()
---   local hidden = {
---     'startify',
---     'dashboard',
---     'terminal',
---   }
---   local shown = {}
---   local buftype = vim.api.nvim_buf_get_option('%', 'ft')
-
---   -- shown table from config has the highest priority
---   if vim.tbl_contains(shown, buftype) then
---     vim.api.nvim_set_option('laststatus', 2)
---     return
---   end
-
---   if vim.tbl_contains(hidden, buftype) then
---     vim.api.nvim_set_option('laststatus', 0)
---     return
---   else
---     vim.api.nvim_set_option('laststatus', 2)
---   end
--- end
-
 -- load plugin after entering vim ui
 M.packer_lazy_load = function(plugin, timer)
   if plugin then
@@ -63,10 +38,10 @@ end
 M.sep = (function()
   if jit then
     local os = string.lower(jit.os)
-    if os == "linux" or os == "osx" or os == "bsd" then
-      return "/"
+    if os == 'linux' or os == 'osx' or os == 'bsd' then
+      return '/'
     else
-      return "\\"
+      return '\\'
     end
   else
     return package.config:sub(1, 1)

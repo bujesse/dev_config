@@ -20,9 +20,6 @@ M.config = function()
       event = 'VimEnter',
     })
 
-    -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
-    use({ 'antoinemadec/FixCursorHold.nvim' })
-
     use({
       'folke/which-key.nvim',
       config = function()
@@ -31,12 +28,12 @@ M.config = function()
     })
 
     use({
-      'sainnhe/gruvbox-material',
+      'ellisonleao/gruvbox.nvim',
       config = function()
-        -- vim.cmd([[source ~/.config/nvim/core/themes/gruvbox-material.vim]])
-        require('core.themes.gruvbox-material').config()
+        require('plugins.gruvbox').config()
       end,
     })
+
 
     use({
       'mhinz/vim-startify',
@@ -58,11 +55,22 @@ M.config = function()
         'kyazdani42/nvim-web-devicons',
         opt = true,
       },
-      after = {
-        'gruvbox-material',
-      },
       config = function()
         require('plugins.lualine.init').config()
+      end,
+    })
+
+    use({
+      'datwaft/bubbly.nvim',
+      disable = true,
+      requires = {
+        'kyazdani42/nvim-web-devicons',
+      },
+      -- after = {
+      --   'gruvbox-material',
+      -- },
+      config = function()
+        require('plugins.bubbly').config()
       end,
     })
 
@@ -72,11 +80,11 @@ M.config = function()
       config = function()
         require('plugins.bufferline').config()
       end,
-      disable = true,
     })
     use({
       'romgrk/barbar.nvim',
       after = 'nvim-web-devicons',
+      disable = true,
       config = function()
         require('plugins.barbar').config()
       end,
@@ -89,14 +97,6 @@ M.config = function()
         require('plugins.indent-blankline').config()
       end,
     })
-
-    -- use({
-    --   'norcalli/nvim-colorizer.lua',
-    --   event = 'BufRead',
-    --   config = function()
-    --     require('plugins.configs.others').colorizer()
-    --   end,
-    -- })
 
     use({
       'nvim-treesitter/nvim-treesitter',
@@ -114,9 +114,6 @@ M.config = function()
         require('plugins.gitsigns').config()
       end,
       requires = { 'plenary.nvim' },
-      -- setup = function()
-      --   require('core.utils').packer_lazy_load('gitsigns.nvim')
-      -- end,
     })
 
     -- smooth scroll
@@ -159,6 +156,7 @@ M.config = function()
       },
     })
 
+    -- Show function signature when you type
     -- use({
     --   'ray-x/lsp_signature.nvim',
     --   disable = not plugin_status.lspsignature,
@@ -177,18 +175,6 @@ M.config = function()
     --   end,
     -- })
 
-    -- load autosave only if its globally enabled
-    -- use({
-    --   disable = not plugin_status.autosave,
-    --   'Pocco81/AutoSave.nvim',
-    --   config = function()
-    --     require('plugins.configs.others').autosave()
-    --   end,
-    --   cond = function()
-    --     return require('core.utils').load_config().options.plugin.autosave == true
-    --   end,
-    -- })
-
     -- load luasnips + cmp related in insert mode only
     use({
       'onsails/lspkind-nvim',
@@ -196,13 +182,9 @@ M.config = function()
     })
 
     use({
-      'rafamadriz/friendly-snippets',
-      event = 'InsertEnter',
-    })
-
-    use({
       'hrsh7th/nvim-cmp',
-      after = { 'friendly-snippets', 'lspkind-nvim' },
+      after = { 'lspkind-nvim' },
+      requires = { 'LuaSnip' },
       config = function()
         require('plugins.nvim-cmp').config()
       end,
@@ -210,8 +192,7 @@ M.config = function()
 
     use({
       'L3MON4D3/LuaSnip',
-      wants = 'friendly-snippets',
-      after = 'nvim-cmp',
+      requires = { 'rafamadriz/friendly-snippets' },
       config = function()
         require('plugins.luasnip').config()
       end,
@@ -219,7 +200,7 @@ M.config = function()
 
     use({
       'saadparwaiz1/cmp_luasnip',
-      after = 'LuaSnip',
+      after = 'nvim-cmp',
     })
 
     use({
@@ -284,12 +265,25 @@ M.config = function()
     --   end,
     -- })
 
-    -- file managing , picker etc
+--     -- file managing , picker etc
+--     use({
+--       'kyazdani42/nvim-tree.lua',
+--       -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+--       config = function()
+--         require('plugins.nvim-tree').config()
+--       end,
+--     })
+
     use({
-      'kyazdani42/nvim-tree.lua',
-      -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+      'nvim-neo-tree/neo-tree.nvim',
+      branch = 'v2.x',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'nvim-tree/nvim-web-devicons',
+        'MunifTanjim/nui.nvim',
+      },
       config = function()
-        require('plugins.nvim-tree').config()
+        require('plugins.neo-tree').config()
       end,
     })
 
@@ -300,12 +294,10 @@ M.config = function()
         {
           'nvim-telescope/telescope-fzf-native.nvim',
           run = 'make',
-          disabled = true,
         },
         {
           'nvim-telescope/telescope-frecency.nvim',
           requires = { 'tami5/sqlite.lua' },
-          disabled = true,
         },
       },
       config = function()
@@ -314,20 +306,20 @@ M.config = function()
     })
 
     -- Debugging
-    use({
-      'mfussenegger/nvim-dap',
-      -- event = "BufWinEnter",
-      ft = { 'python' },
-      config = function()
-        require('plugins.nvim-dap').config()
-      end,
-    })
+    -- use({
+    --   'mfussenegger/nvim-dap',
+    --   -- event = "BufWinEnter",
+    --   ft = { 'python' },
+    --   config = function()
+    --     require('plugins.nvim-dap').config()
+    --   end,
+    -- })
 
-    use({
-      'Pocco81/DAPInstall.nvim',
-      -- event = "BufWinEnter",
-      -- event = "BufRead",
-    })
+    -- use({
+    --   'Pocco81/DAPInstall.nvim',
+    --   -- event = "BufWinEnter",
+    --   -- event = "BufRead",
+    -- })
 
     -- Tpope
     use({
@@ -363,6 +355,13 @@ M.config = function()
       end,
     })
     use({
+      'ggandor/lightspeed.nvim',
+      disable = true,
+      config = function()
+        require('plugins.clever-f').config()
+      end,
+    })
+    use({
       'rhysd/clever-f.vim',
       config = function()
         require('plugins.clever-f').config()
@@ -381,20 +380,8 @@ M.config = function()
       end,
     })
     use({ 'tommcdo/vim-exchange' })
-    use({
-      'junegunn/vim-easy-align',
-      config = function()
-        require('plugins.vim-easy-align').config()
-      end,
-    })
     use({ 'nelstrom/vim-visual-star-search' })
     use({ 'mg979/vim-visual-multi' })
-    use({
-      'svermeulen/vim-yoink',
-      config = function()
-        require('plugins.vim-yoink').config()
-      end,
-    })
     use({
       'AndrewRadev/splitjoin.vim',
       config = function()
