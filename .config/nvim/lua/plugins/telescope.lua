@@ -30,6 +30,7 @@ end
 function M.entry_maker(entry)
   local entry_display = require('telescope.pickers.entry_display')
   local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
+  P(filename)
   local displayer = entry_display.create({
     separator = ' ',
     items = {
@@ -164,26 +165,8 @@ M.config = function()
       },
     },
     extensions = {
-      -- frecency = {
-      --   db_root = DATA_PATH,
-      --   show_scores = true,
-      --   show_unindexed = true,
-      --   disable_devicons = false,
-      --   workspaces = {
-      --     ['conf'] = CONFIG_PATH,
-      --   },
-      -- },
-      -- fzf = {
-      --   fuzzy = true, -- false will only do exact matching
-      --   override_generic_sorter = false, -- override the generic sorter
-      --   override_file_sorter = true, -- override the file sorter
-      --   case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
-      -- },
     },
   })
-
-  -- require('telescope').load_extension('frecency')
-  -- require('telescope').load_extension('fzf')
 
   local opts = {
     noremap = true,
@@ -203,12 +186,13 @@ M.config = function()
   )
   vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
   vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
+  vim.api.nvim_set_keymap('n', 'gy', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', opts)
 
   -- Custom
   vim.api.nvim_set_keymap(
     'n',
     '<Space>O',
-    ':Telescope find_files find_command=rg,--no-ignore,--hidden,--files<CR>',
+    '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<CR>',
     opts
   )
   vim.api.nvim_set_keymap(

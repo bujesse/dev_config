@@ -58,8 +58,7 @@ M.config = function()
 
   vim.api.nvim_set_keymap('n', '<Leader>bl', ':BufferLineCloseRight<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>bh', ':BufferLineCloseLeft<CR>', { noremap = true, silent = true })
-  vim.api.nvim_set_keymap('n', '<Space>w', ':BufDel<CR>',
-    { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 'X', ':BufDel<CR>', { noremap = true, silent = true })
 end
 
 return M

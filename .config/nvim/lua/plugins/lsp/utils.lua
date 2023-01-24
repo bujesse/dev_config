@@ -71,12 +71,12 @@ function M.toggle_autoformat(should_log)
   end
 end
 
-function M.setup(buf_set_keymap)
+function M.setup()
   M.diagnostics_visible = not GLOBAL_CONFIG.diagnostics_visible
   M.autoformat_is_on = not GLOBAL_CONFIG.format_on_save
 
   M.toggle_autoformat(false)
-  buf_set_keymap(
+  vim.keymap.set(
     'n',
     'yoa',
     '<cmd>lua require("plugins.lsp.utils").toggle_autoformat(1)<CR>',
@@ -85,7 +85,7 @@ function M.setup(buf_set_keymap)
 
   -- Start with diagnostics off
   M.toggle_diagnostics(false)
-  buf_set_keymap(
+  vim.keymap.set(
     'n',
     'yod',
     '<cmd>lua require("plugins.lsp.utils").toggle_diagnostics(1)<CR>',

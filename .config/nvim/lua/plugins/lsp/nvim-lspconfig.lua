@@ -5,10 +5,6 @@ M = {}
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 M.common_on_attach = function(client, bufnr)
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
-  end
-
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
@@ -22,17 +18,23 @@ M.common_on_attach = function(client, bufnr)
     silent = true,
   }
 
-  buf_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  buf_set_keymap('n', '<Leader>af', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', 'gp', '<cmd>lua require"plugins.lsp.peek".Peek("definition")<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.keymap.set('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+  vim.keymap.set('n', '<Leader>af', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.keymap.set('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.keymap.set('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.keymap.set('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  vim.keymap.set('n', 'gp', '<cmd>lua require"plugins.lsp.peek".Peek("definition")<CR>', opts)
+  vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  vim.keymap.set('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+
+  vim.keymap.set('n', '<Space>wa', vim.lsp.buf.add_workspace_folder, opts)
+  vim.keymap.set('n', '<Space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+  vim.keymap.set('n', '<Space>wl', function()
+    P(vim.lsp.buf.list_workspace_folders())
+  end, opts)
   -- See `:help vim.lsp.*` for documentation on functions
 
   -- Enable vim-illuminate
@@ -40,13 +42,13 @@ M.common_on_attach = function(client, bufnr)
   vim.api.nvim_command([[ hi def link LspReferenceText CursorLine ]])
   vim.api.nvim_command([[ hi def link LspReferenceWrite CursorLine ]])
   vim.api.nvim_command([[ hi def link LspReferenceRead CursorLine ]])
-  buf_set_keymap('x', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-  buf_set_keymap('x', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
-  buf_set_keymap('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-  buf_set_keymap('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+  vim.keymap.set('x', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
+  vim.keymap.set('x', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
+  vim.keymap.set('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
+  vim.keymap.set('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
 
   -- Setup lsp toggles
-  require('plugins.lsp.utils').setup(buf_set_keymap)
+  require('plugins.lsp.utils').setup()
 
   -- Setup formatters and linters
   require('plugins.lsp.null-ls').setup()

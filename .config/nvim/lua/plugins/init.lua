@@ -286,17 +286,6 @@ M.config = function()
 
     use({
       'nvim-telescope/telescope.nvim',
-      -- cmd = 'Telescope',
-      requires = {
-        {
-          'nvim-telescope/telescope-fzf-native.nvim',
-          run = 'make',
-        },
-        {
-          'nvim-telescope/telescope-frecency.nvim',
-          requires = { 'tami5/sqlite.lua' },
-        },
-      },
       config = function()
         require('plugins.telescope').config()
       end,
