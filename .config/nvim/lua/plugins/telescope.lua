@@ -3,7 +3,14 @@ local M = {}
 function M.grep_string_visual()
   local visual_selection = require('core.utils').selected_text()
   print('Search string: ' .. visual_selection)
-  require('telescope.builtin').grep_string({ search = visual_selection })
+  -- Treat the pattern as a literal string instead of a regular expression.
+  require('telescope.builtin').grep_string({ search = visual_selection, use_regex = false })
+end
+
+function M.print_visual()
+  local visual_selection = require('core.utils').selected_text()
+  vim.cmd([[messages clear]])
+  print(visual_selection .. '\n \n ')
 end
 
 function M.path_display(opts, file)
@@ -74,25 +81,6 @@ local opts_vertical = {
     mirror = true,
   },
 }
-
-M.changed_on_branch = function()
-  local previewers = require('telescope.previewers')
-  local pickers = require('telescope.pickers')
-  local sorters = require('telescope.sorters')
-  local finders = require('telescope.finders')
-  local script = CONFIG_PATH .. '/scripts/git-branch-modified.sh'
-
-  pickers.new({
-    results_title = 'Modified on current branch',
-    finder = finders.new_oneshot_job({ script, 'list' }),
-    sorter = sorters.get_fuzzy_file(),
-    previewer = previewers.new_termopen_previewer({
-      get_command = function(entry)
-        return { script, 'diff', entry.value }
-      end,
-    }),
-  }):find()
-end
 
 M.config = function()
   local actions = require('telescope.actions')
@@ -203,40 +191,48 @@ M.config = function()
   }
 
   -- Essential
+  vim.api.nvim_set_keymap('n', '<Space>\'', '<cmd>lua require("telescope.builtin").resume()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Space>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Space>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("telescope.builtin").git_status()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
-    '<Leader>m',
+    '<Space>m',
     '<cmd>lua require("telescope.builtin").oldfiles({include_current_session = true})<CR>',
     opts
   )
   vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Space>a', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
   vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
 
   -- Custom
   vim.api.nvim_set_keymap(
     'n',
-    '<Leader>O',
+    '<Space>O',
     ':Telescope find_files find_command=rg,--no-ignore,--hidden,--files<CR>',
     opts
   )
   vim.api.nvim_set_keymap(
     'n',
-    '<Leader>F',
+    '<Space>F',
     '<cmd>lua require("telescope.builtin").live_grep({mode = "filetype_mask"})<CR>',
     opts
   )
 
-  vim.api.nvim_set_keymap('x', '<Leader>f', '<cmd>lua require("plugins.telescope").grep_string_visual()<CR>', opts)
+  vim.api.nvim_set_keymap(
+    'n',
+    '<Space>d',
+    '<cmd>lua require("telescope.builtin").live_grep({cwd = require("telescope.utils").buffer_dir()})<CR>',
+    opts
+  )
+
+  vim.api.nvim_set_keymap('x', '<Space>f', '<cmd>lua require("plugins.telescope").grep_string_visual()<CR>', opts)
+
+  vim.api.nvim_set_keymap('x', '<Leader>y', '<cmd>lua require("plugins.telescope").print_visual()<CR>', opts)
 
   -- which-key mappings (used less often, so put behind a 3-char input)
   require('which-key').register({
     name = '+telescope',
     -- f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
-    r = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume' },
     j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
     b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
     p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
@@ -260,7 +256,7 @@ M.config = function()
       s = { '<cmd>lua require("telescope.builtin").git_status()<CR>', 'Git Status' },
     },
   }, {
-    prefix = '<Leader>t',
+    prefix = '<Space>t',
   })
 end
 

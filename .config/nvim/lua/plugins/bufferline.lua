@@ -1,25 +1,6 @@
 local M = {}
 local bufferline = require('bufferline')
 
-M.intellij_close = function()
-  -- Close current buffer and cycle left.
-  -- If current buffer is the leftmost buffer, then cycle right.
-  local current_buf_num = vim.fn.winbufnr(0)
-  bufferline.buf_exec(1, function(current_buf, visible_buffers)
-    for _, buf in ipairs(visible_buffers) do
-      if buf and buf.id == current_buf_num then
-        if buf.ordinal == 1 then
-          bufferline.cycle(1)
-        else
-          bufferline.cycle(-1)
-        end
-        vim.cmd('bdelete! ' .. current_buf_num)
-        break
-      end
-    end
-  end)
-end
-
 M.config = function()
   bufferline.setup({
     options = {
@@ -66,12 +47,6 @@ M.config = function()
 
   vim.api.nvim_set_keymap('n', 'L', ':BufferLineCycleNext<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', 'H', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
-  vim.api.nvim_set_keymap(
-    'n',
-    'X',
-    '<cmd>lua require"plugins.bufferline".intellij_close()<CR>',
-    { noremap = true, silent = true }
-  )
   vim.api.nvim_set_keymap('n', '<C-Left>', ':BufferLineMovePrev<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<C-Right>', ':BufferLineMoveNext<CR>', { noremap = true, silent = true })
 
@@ -83,6 +58,8 @@ M.config = function()
 
   vim.api.nvim_set_keymap('n', '<Leader>bl', ':BufferLineCloseRight<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>bh', ':BufferLineCloseLeft<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<Space>w', ':BufDel<CR>',
+    { noremap = true, silent = true })
 end
 
 return M

@@ -43,6 +43,13 @@ M.config = function()
     })
 
     use({
+      'ThePrimeagen/harpoon',
+      config = function()
+        require('plugins.harpoon').config()
+      end,
+    })
+
+    use({
       'kyazdani42/nvim-web-devicons',
       config = function()
         require('plugins.nvim-web-devicons').config()
@@ -75,8 +82,21 @@ M.config = function()
     })
 
     use({
+      'ojroques/nvim-bufdel',
+      config = function()
+        require('bufdel').setup {
+          next = 'cycle', -- or 'cycle, 'alternate'
+          quit = true, -- quit Neovim when last buffer is closed
+        }
+      end,
+    })
+
+    use({
       'akinsho/bufferline.nvim',
-      requires = 'kyazdani42/nvim-web-devicons',
+      requires = {
+        'kyazdani42/nvim-web-devicons',
+        'ojroques/nvim-bufdel'
+      },
       config = function()
         require('plugins.bufferline').config()
       end,
@@ -232,47 +252,24 @@ M.config = function()
       end,
     })
 
-    -- use({
-    --   'glepnir/dashboard-nvim',
-    --   disable = not plugin_status.dashboard,
-    --   config = function()
-    --     require('plugins.configs.dashboard')
-    --   end,
-    --   setup = function()
-    --     require('core.mappings').dashboard()
-    --   end,
-    -- })
+    use({
+      'akinsho/toggleterm.nvim',
+      tag = '*',
+      config = function()
+        require('plugins.toggleterm').config()
+      end,
+    })
 
-    -- use({
-    --   'sbdchd/neoformat',
-    --   disable = not plugin_status.neoformat,
-    --   cmd = 'Neoformat',
-    --   setup = function()
-    --     require('core.mappings').neoformat()
-    --   end,
-    -- })
+    --   use 'alvan/vim-closetag' -- for html autoclosing tag
 
-    --   use "alvan/vim-closetag" -- for html autoclosing tag
-    -- use({
-    --   'terrortylor/nvim-comment',
-    --   disable = not plugin_status.comment,
-    --   cmd = 'CommentToggle',
-    --   config = function()
-    --     require('plugins.configs.others').comment()
-    --   end,
-    --   setup = function()
-    --     require('core.mappings').comment()
-    --   end,
-    -- })
-
---     -- file managing , picker etc
---     use({
---       'kyazdani42/nvim-tree.lua',
---       -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
---       config = function()
---         require('plugins.nvim-tree').config()
---       end,
---     })
+    --     -- file managing , picker etc
+    --     use({
+    --       'kyazdani42/nvim-tree.lua',
+    --       -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
+    --       config = function()
+    --         require('plugins.nvim-tree').config()
+    --       end,
+    --     })
 
     use({
       'nvim-neo-tree/neo-tree.nvim',
@@ -308,7 +305,7 @@ M.config = function()
     -- Debugging
     -- use({
     --   'mfussenegger/nvim-dap',
-    --   -- event = "BufWinEnter",
+    --   -- event = 'BufWinEnter',
     --   ft = { 'python' },
     --   config = function()
     --     require('plugins.nvim-dap').config()
@@ -317,8 +314,8 @@ M.config = function()
 
     -- use({
     --   'Pocco81/DAPInstall.nvim',
-    --   -- event = "BufWinEnter",
-    --   -- event = "BufRead",
+    --   -- event = 'BufWinEnter',
+    --   -- event = 'BufRead',
     -- })
 
     -- Tpope
@@ -342,7 +339,15 @@ M.config = function()
       end,
     })
 
-    use({ 'tpope/vim-commentary' })
+    use {
+      'numToStr/Comment.nvim',
+      config = function()
+        -- `gco` - Insert comment to the next line and enters INSERT mode
+        -- `gcO` - Insert comment to the previous line and enters INSERT mode
+        -- `gcA` - Insert comment to end of the current line and enters INSERT mode
+        require('Comment').setup()
+      end
+    }
     use({ 'tpope/vim-repeat' })
     use({ 'tpope/vim-surround' })
 
@@ -354,31 +359,28 @@ M.config = function()
         require('plugins.replace-with-register').config()
       end,
     })
-    use({
-      'ggandor/lightspeed.nvim',
-      disable = true,
-      config = function()
-        require('plugins.clever-f').config()
-      end,
-    })
+
     use({
       'rhysd/clever-f.vim',
       config = function()
         require('plugins.clever-f').config()
       end,
     })
+
     use({
       'phaazon/hop.nvim',
       config = function()
         require('plugins.hop').config()
       end,
     })
+
     use({
       'haya14busa/vim-asterisk',
       config = function()
         require('plugins.vim-asterisk').config()
       end,
     })
+
     use({ 'tommcdo/vim-exchange' })
     use({ 'nelstrom/vim-visual-star-search' })
     use({ 'mg979/vim-visual-multi' })
