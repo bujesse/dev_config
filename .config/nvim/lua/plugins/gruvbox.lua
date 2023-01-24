@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   vim.o.background = "dark" -- or "light" for light mode
   require("gruvbox").setup({
     undercurl = true,

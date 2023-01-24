@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local opts = {
     noremap = false,
     silent = true,

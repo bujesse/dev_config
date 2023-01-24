@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local dap = require('dap')
 
   vim.fn.sign_define('DapBreakpoint', { text = '🛑', texthl = '', linehl = '', numhl = '' })

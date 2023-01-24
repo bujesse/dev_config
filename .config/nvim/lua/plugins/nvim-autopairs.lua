@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   require('nvim-autopairs').setup({})
   -- require('nvim-autopairs.completion.cmp').setup({
   --   map_cr = true, -- map <CR> on insert mode

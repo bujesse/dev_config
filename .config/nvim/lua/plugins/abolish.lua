@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   -- Remap with which-key because I never remember these
   vim.g.abolish_no_mappings = 1
   require('which-key').register({

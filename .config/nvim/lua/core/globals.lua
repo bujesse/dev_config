@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   vim.o.clipboard = 'unnamed'
 
   vim.g.python3_host_prog = '~/python_envs/nvim/bin/python'

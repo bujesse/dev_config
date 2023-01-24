@@ -1,7 +1,7 @@
 local M = {}
 local bufferline = require('bufferline')
 
-M.config = function()
+function M.config()
   bufferline.setup({
     options = {
       middle_mouse_command = function(bufnum)

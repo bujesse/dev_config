@@ -144,7 +144,7 @@ M.setup_servers = function()
   end)
 end
 
-M.config = function()
+function M.config()
   require('lspconfig')
   require('plugins.lsp.null-ls').config()
   M.setup_servers()

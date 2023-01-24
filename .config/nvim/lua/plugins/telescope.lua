@@ -30,7 +30,6 @@ end
 function M.entry_maker(entry)
   local entry_display = require('telescope.pickers.entry_display')
   local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
-  P(filename)
   local displayer = entry_display.create({
     separator = ' ',
     items = {
@@ -83,7 +82,7 @@ local opts_vertical = {
   },
 }
 
-M.config = function()
+function M.config()
   local actions = require('telescope.actions')
   require('telescope').setup({
     defaults = {
@@ -176,7 +175,9 @@ M.config = function()
   -- Essential
   vim.api.nvim_set_keymap('n', '<Space>\'', '<cmd>lua require("telescope.builtin").resume()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Space>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Space>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>f',
+    '<cmd>lua require("telescope.builtin").live_grep({ additional_args = { "--fixed-strings" } })<CR>',
+    opts)
   vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("telescope.builtin").git_status()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
@@ -224,6 +225,7 @@ M.config = function()
       '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>',
       'Grep (include ignore and hidden)',
     },
+    r = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Regex Search' },
     u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
     c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
     h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },

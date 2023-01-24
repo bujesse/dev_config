@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local present, packer = pcall(require, 'core.packer-init')
   if not present then
     return false
@@ -262,14 +262,23 @@ M.config = function()
 
     --   use 'alvan/vim-closetag' -- for html autoclosing tag
 
-    --     -- file managing , picker etc
-    --     use({
-    --       'kyazdani42/nvim-tree.lua',
-    --       -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
-    --       config = function()
-    --         require('plugins.nvim-tree').config()
-    --       end,
-    --     })
+    use {
+      'AckslD/nvim-neoclip.lua',
+      requires = {
+        { 'nvim-telescope/telescope.nvim' },
+      },
+      config = function()
+        require('plugins.neoclip').config()
+      end,
+    }
+
+    use {
+      's1n7ax/nvim-window-picker',
+      tag = 'v1.*',
+      config = function()
+        require 'window-picker'.setup()
+      end,
+    }
 
     use({
       'nvim-neo-tree/neo-tree.nvim',
@@ -278,6 +287,7 @@ M.config = function()
         'nvim-lua/plenary.nvim',
         'nvim-tree/nvim-web-devicons',
         'MunifTanjim/nui.nvim',
+        's1n7ax/nvim-window-picker',
       },
       config = function()
         require('plugins.neo-tree').config()
@@ -331,12 +341,10 @@ M.config = function()
     use {
       'numToStr/Comment.nvim',
       config = function()
-        -- `gco` - Insert comment to the next line and enters INSERT mode
-        -- `gcO` - Insert comment to the previous line and enters INSERT mode
-        -- `gcA` - Insert comment to end of the current line and enters INSERT mode
-        require('Comment').setup()
+        require('plugins.comment').config()
       end
     }
+
     use({ 'tpope/vim-repeat' })
     use({ 'tpope/vim-surround' })
 
@@ -357,9 +365,9 @@ M.config = function()
     })
 
     use({
-      'phaazon/hop.nvim',
+      'ggandor/leap.nvim',
       config = function()
-        require('plugins.hop').config()
+        require('plugins.leap').config()
       end,
     })
 

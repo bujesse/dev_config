@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   -- local function prequire(...)
   --   local status, lib = pcall(require, ...)
   --   if status then

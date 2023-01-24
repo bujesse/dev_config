@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local components = require('plugins.lualine.components')
 
   require('lualine').setup({

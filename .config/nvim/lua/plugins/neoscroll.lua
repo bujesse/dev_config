@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   require('neoscroll').setup()
 
   local t = {}
