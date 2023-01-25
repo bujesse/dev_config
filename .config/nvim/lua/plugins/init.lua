@@ -279,11 +279,22 @@ function M.config()
 
     use {
       'AckslD/nvim-neoclip.lua',
+      disable = true,
       requires = {
         { 'nvim-telescope/telescope.nvim' },
       },
       config = function()
         require('plugins.neoclip').config()
+      end,
+    }
+
+    use {
+      'gbprod/yanky.nvim',
+      requires = {
+        { 'nvim-telescope/telescope.nvim' },
+      },
+      config = function()
+        require('plugins.yanky').config()
       end,
     }
 
