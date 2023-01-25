@@ -232,7 +232,6 @@ function M.config()
     v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
     s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
     k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
-    a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
     t = { '<cmd>lua require("telescope.builtin").treesitter()<CR>', 'Treesitter' },
     g = {
       name = '+git',

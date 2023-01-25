@@ -20,7 +20,7 @@ M.common_on_attach = function(client, bufnr)
 
   vim.keymap.set('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  vim.keymap.set('n', '<Leader>af', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.keymap.set('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)

@@ -68,6 +68,13 @@ function M.config()
     })
 
     use({
+      'stevearc/aerial.nvim',
+      config = function()
+        require('plugins.aerial').config()
+      end
+    })
+
+    use({
       'datwaft/bubbly.nvim',
       disable = true,
       requires = {
@@ -379,7 +386,6 @@ function M.config()
     })
 
     use({ 'tommcdo/vim-exchange' })
-    use({ 'nelstrom/vim-visual-star-search' })
     use({ 'mg979/vim-visual-multi' })
     use({
       'AndrewRadev/splitjoin.vim',
