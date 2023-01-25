@@ -3,7 +3,14 @@ local M = {}
 function M.grep_string_visual()
   local visual_selection = require('core.utils').selected_text()
   print('Search string: ' .. visual_selection)
-  require('telescope.builtin').grep_string({ search = visual_selection })
+  -- Treat the pattern as a literal string instead of a regular expression.
+  require('telescope.builtin').grep_string({ search = visual_selection, use_regex = false })
+end
+
+function M.print_visual()
+  local visual_selection = require('core.utils').selected_text()
+  vim.cmd([[messages clear]])
+  print(visual_selection .. '\n \n ')
 end
 
 function M.path_display(opts, file)
@@ -75,26 +82,7 @@ local opts_vertical = {
   },
 }
 
-M.changed_on_branch = function()
-  local previewers = require('telescope.previewers')
-  local pickers = require('telescope.pickers')
-  local sorters = require('telescope.sorters')
-  local finders = require('telescope.finders')
-  local script = CONFIG_PATH .. '/scripts/git-branch-modified.sh'
-
-  pickers.new({
-    results_title = 'Modified on current branch',
-    finder = finders.new_oneshot_job({ script, 'list' }),
-    sorter = sorters.get_fuzzy_file(),
-    previewer = previewers.new_termopen_previewer({
-      get_command = function(entry)
-        return { script, 'diff', entry.value }
-      end,
-    }),
-  }):find()
-end
-
-M.config = function()
+function M.config()
   local actions = require('telescope.actions')
   require('telescope').setup({
     defaults = {
@@ -176,26 +164,8 @@ M.config = function()
       },
     },
     extensions = {
-      -- frecency = {
-      --   db_root = DATA_PATH,
-      --   show_scores = true,
-      --   show_unindexed = true,
-      --   disable_devicons = false,
-      --   workspaces = {
-      --     ['conf'] = CONFIG_PATH,
-      --   },
-      -- },
-      -- fzf = {
-      --   fuzzy = true, -- false will only do exact matching
-      --   override_generic_sorter = false, -- override the generic sorter
-      --   override_file_sorter = true, -- override the file sorter
-      --   case_mode = 'smart_case', -- or "ignore_case" or "respect_case"
-      -- },
     },
   })
-
-  -- require('telescope').load_extension('frecency')
-  -- require('telescope').load_extension('fzf')
 
   local opts = {
     noremap = true,
@@ -203,40 +173,51 @@ M.config = function()
   }
 
   -- Essential
+  vim.api.nvim_set_keymap('n', '<Space>\'', '<cmd>lua require("telescope.builtin").resume()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Space>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Space>f', '<cmd>lua require("telescope.builtin").live_grep()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("plugins.telescope").changed_on_branch()<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<Space>f',
+    '<cmd>lua require("telescope.builtin").live_grep({ additional_args = { "--fixed-strings" } })<CR>',
+    opts)
+  vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("telescope.builtin").git_status()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
-    '<Leader>m',
+    '<Space>m',
     '<cmd>lua require("telescope.builtin").oldfiles({include_current_session = true})<CR>',
     opts
   )
   vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Space>a', '<cmd>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
   vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', opts)
+  vim.api.nvim_set_keymap('n', 'gy', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', opts)
 
   -- Custom
   vim.api.nvim_set_keymap(
     'n',
-    '<Leader>O',
-    ':Telescope find_files find_command=rg,--no-ignore,--hidden,--files<CR>',
+    '<Space>O',
+    '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<CR>',
     opts
   )
   vim.api.nvim_set_keymap(
     'n',
-    '<Leader>F',
+    '<Space>F',
     '<cmd>lua require("telescope.builtin").live_grep({mode = "filetype_mask"})<CR>',
     opts
   )
 
-  vim.api.nvim_set_keymap('x', '<Leader>f', '<cmd>lua require("plugins.telescope").grep_string_visual()<CR>', opts)
+  vim.api.nvim_set_keymap(
+    'n',
+    '<Space>d',
+    '<cmd>lua require("telescope.builtin").live_grep({cwd = require("telescope.utils").buffer_dir()})<CR>',
+    opts
+  )
+
+  vim.api.nvim_set_keymap('x', '<Space>f', '<cmd>lua require("plugins.telescope").grep_string_visual()<CR>', opts)
+
+  vim.api.nvim_set_keymap('x', '<Leader>y', '<cmd>lua require("plugins.telescope").print_visual()<CR>', opts)
 
   -- which-key mappings (used less often, so put behind a 3-char input)
   require('which-key').register({
     name = '+telescope',
     -- f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
-    r = { '<cmd>lua require("telescope.builtin").resume()<CR>', 'Resume' },
     j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
     b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
     p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
@@ -244,13 +225,13 @@ M.config = function()
       '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>',
       'Grep (include ignore and hidden)',
     },
+    r = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Regex Search' },
     u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
     c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
-    h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
+    h = { '<cmd>lua require("telescope.builtin").help_tags()<CR>', 'Help Tags' },
     v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
     s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
     k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
-    a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
     t = { '<cmd>lua require("telescope.builtin").treesitter()<CR>', 'Treesitter' },
     g = {
       name = '+git',
@@ -260,7 +241,7 @@ M.config = function()
       s = { '<cmd>lua require("telescope.builtin").git_status()<CR>', 'Git Status' },
     },
   }, {
-    prefix = '<Leader>t',
+    prefix = '<Space>t',
   })
 end
 

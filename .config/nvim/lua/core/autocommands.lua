@@ -68,7 +68,7 @@ function M.define_augroups(definitions) -- {{{1
   end
 end
 
-M.config = function()
+function M.config()
   M.define_augroups(M.autocommands)
 end
 

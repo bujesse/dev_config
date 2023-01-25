@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local cmd = vim.cmd
   local opt = vim.opt
 
@@ -27,10 +27,10 @@ M.config = function()
   opt.encoding = 'UTF-8'
 
   -- Sexy folds
-  vim.o.foldmethod='expr'
-  vim.o.foldexpr='nvim_treesitter#foldexpr()'
+  vim.o.foldmethod = 'expr'
+  vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
   opt.foldtext =
-    [[ substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)' ]]
+  [[ substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)' ]]
   -- opt.fillchars = 'fold: '
   opt.foldlevelstart = 99 -- Start with no folds
   opt.foldnestmax = 3

@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   require('nvim-treesitter.configs').setup({
     highlight = {
       enable = true,
@@ -80,6 +80,7 @@ M.config = function()
 
   --   local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
   --   parser_config.tsx.used_by = { 'javascript', 'typescript.tsx' }
+  require('nvim-treesitter.install').compilers = { "clang" }
 end
 
 return M

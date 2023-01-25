@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local present, packer = pcall(require, 'core.packer-init')
   if not present then
     return false
@@ -34,11 +34,17 @@ M.config = function()
       end,
     })
 
-
     use({
       'mhinz/vim-startify',
       config = function()
         require('plugins.startify').config()
+      end,
+    })
+
+    use({
+      'ThePrimeagen/harpoon',
+      config = function()
+        require('plugins.harpoon').config()
       end,
     })
 
@@ -61,6 +67,21 @@ M.config = function()
     })
 
     use({
+      'stevearc/aerial.nvim',
+      config = function()
+        require('plugins.aerial').config()
+      end,
+    })
+
+    use({
+      'petertriho/nvim-scrollbar',
+      after = { 'gitsigns.nvim' },
+      config = function()
+        require('plugins.nvim-scrollbar').config()
+      end,
+    })
+
+    use({
       'datwaft/bubbly.nvim',
       disable = true,
       requires = {
@@ -75,8 +96,21 @@ M.config = function()
     })
 
     use({
+      'ojroques/nvim-bufdel',
+      config = function()
+        require('bufdel').setup({
+          next = 'cycle', -- or 'cycle, 'alternate'
+          quit = true, -- quit Neovim when last buffer is closed
+        })
+      end,
+    })
+
+    use({
       'akinsho/bufferline.nvim',
-      requires = 'kyazdani42/nvim-web-devicons',
+      requires = {
+        'kyazdani42/nvim-web-devicons',
+        'ojroques/nvim-bufdel',
+      },
       config = function()
         require('plugins.bufferline').config()
       end,
@@ -232,47 +266,44 @@ M.config = function()
       end,
     })
 
-    -- use({
-    --   'glepnir/dashboard-nvim',
-    --   disable = not plugin_status.dashboard,
-    --   config = function()
-    --     require('plugins.configs.dashboard')
-    --   end,
-    --   setup = function()
-    --     require('core.mappings').dashboard()
-    --   end,
-    -- })
+    use({
+      'akinsho/toggleterm.nvim',
+      tag = '*',
+      config = function()
+        require('plugins.toggleterm').config()
+      end,
+    })
 
-    -- use({
-    --   'sbdchd/neoformat',
-    --   disable = not plugin_status.neoformat,
-    --   cmd = 'Neoformat',
-    --   setup = function()
-    --     require('core.mappings').neoformat()
-    --   end,
-    -- })
+    --   use 'alvan/vim-closetag' -- for html autoclosing tag
 
-    --   use "alvan/vim-closetag" -- for html autoclosing tag
-    -- use({
-    --   'terrortylor/nvim-comment',
-    --   disable = not plugin_status.comment,
-    --   cmd = 'CommentToggle',
-    --   config = function()
-    --     require('plugins.configs.others').comment()
-    --   end,
-    --   setup = function()
-    --     require('core.mappings').comment()
-    --   end,
-    -- })
+    use({
+      'AckslD/nvim-neoclip.lua',
+      disable = true,
+      requires = {
+        { 'nvim-telescope/telescope.nvim' },
+      },
+      config = function()
+        require('plugins.neoclip').config()
+      end,
+    })
 
---     -- file managing , picker etc
---     use({
---       'kyazdani42/nvim-tree.lua',
---       -- cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
---       config = function()
---         require('plugins.nvim-tree').config()
---       end,
---     })
+    use({
+      'gbprod/yanky.nvim',
+      requires = {
+        { 'nvim-telescope/telescope.nvim' },
+      },
+      config = function()
+        require('plugins.yanky').config()
+      end,
+    })
+
+    use({
+      's1n7ax/nvim-window-picker',
+      tag = 'v1.*',
+      config = function()
+        require('window-picker').setup()
+      end,
+    })
 
     use({
       'nvim-neo-tree/neo-tree.nvim',
@@ -281,6 +312,7 @@ M.config = function()
         'nvim-lua/plenary.nvim',
         'nvim-tree/nvim-web-devicons',
         'MunifTanjim/nui.nvim',
+        's1n7ax/nvim-window-picker',
       },
       config = function()
         require('plugins.neo-tree').config()
@@ -289,17 +321,6 @@ M.config = function()
 
     use({
       'nvim-telescope/telescope.nvim',
-      -- cmd = 'Telescope',
-      requires = {
-        {
-          'nvim-telescope/telescope-fzf-native.nvim',
-          run = 'make',
-        },
-        {
-          'nvim-telescope/telescope-frecency.nvim',
-          requires = { 'tami5/sqlite.lua' },
-        },
-      },
       config = function()
         require('plugins.telescope').config()
       end,
@@ -308,7 +329,7 @@ M.config = function()
     -- Debugging
     -- use({
     --   'mfussenegger/nvim-dap',
-    --   -- event = "BufWinEnter",
+    --   -- event = 'BufWinEnter',
     --   ft = { 'python' },
     --   config = function()
     --     require('plugins.nvim-dap').config()
@@ -317,8 +338,8 @@ M.config = function()
 
     -- use({
     --   'Pocco81/DAPInstall.nvim',
-    --   -- event = "BufWinEnter",
-    --   -- event = "BufRead",
+    --   -- event = 'BufWinEnter',
+    --   -- event = 'BufRead',
     -- })
 
     -- Tpope
@@ -342,7 +363,13 @@ M.config = function()
       end,
     })
 
-    use({ 'tpope/vim-commentary' })
+    use({
+      'numToStr/Comment.nvim',
+      config = function()
+        require('plugins.comment').config()
+      end,
+    })
+
     use({ 'tpope/vim-repeat' })
     use({ 'tpope/vim-surround' })
 
@@ -354,33 +381,29 @@ M.config = function()
         require('plugins.replace-with-register').config()
       end,
     })
-    use({
-      'ggandor/lightspeed.nvim',
-      disable = true,
-      config = function()
-        require('plugins.clever-f').config()
-      end,
-    })
+
     use({
       'rhysd/clever-f.vim',
       config = function()
         require('plugins.clever-f').config()
       end,
     })
+
     use({
-      'phaazon/hop.nvim',
+      'ggandor/leap.nvim',
       config = function()
-        require('plugins.hop').config()
+        require('plugins.leap').config()
       end,
     })
+
     use({
       'haya14busa/vim-asterisk',
       config = function()
         require('plugins.vim-asterisk').config()
       end,
     })
+
     use({ 'tommcdo/vim-exchange' })
-    use({ 'nelstrom/vim-visual-star-search' })
     use({ 'mg979/vim-visual-multi' })
     use({
       'AndrewRadev/splitjoin.vim',

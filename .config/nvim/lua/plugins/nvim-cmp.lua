@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   local cmp = require('cmp')
   local luasnip = require("luasnip")
   local lspkind = require('lspkind')
@@ -26,6 +26,8 @@ M.config = function()
       ['<C-u>'] = cmp.mapping.scroll_docs(4),
       ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
       ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+      ['<Up>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+      ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
       ['<C-c>'] = cmp.mapping.close(),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.close(),

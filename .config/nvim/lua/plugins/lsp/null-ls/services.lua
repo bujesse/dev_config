@@ -41,6 +41,7 @@ local local_providers = {
 
   -- Python
   black = { find = M.from_nvim_venv },
+  darker = { find = M.from_nvim_venv },
   flake8 = { find = M.from_nvim_venv },
 }
 
@@ -56,6 +57,17 @@ function M.find_command(command)
     return command
   end
   return nil
+end
+
+function M.register_custom_sources()
+  local null_ls = require("null-ls")
+  local darker = {
+    name = 'darker',
+    filetypes = { ['python'] = true },
+    methods = { [null_ls.methods.FORMATTING] = true },
+    id = 1,
+  }
+  null_ls.register(darker)
 end
 
 function M.list_registered_providers_names(filetype)

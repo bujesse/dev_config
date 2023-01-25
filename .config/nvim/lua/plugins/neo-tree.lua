@@ -3,10 +3,10 @@ local M = {}
 function M.config()
   vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 
-  vim.fn.sign_define('DiagnosticSignError', {text = ' ', texthl = 'DiagnosticSignError'})
-  vim.fn.sign_define('DiagnosticSignWarn', {text = ' ', texthl = 'DiagnosticSignWarn'})
-  vim.fn.sign_define('DiagnosticSignInfo', {text = ' ', texthl = 'DiagnosticSignInfo'})
-  vim.fn.sign_define('DiagnosticSignHint', {text = ' ', texthl = 'DiagnosticSignHint'})
+  vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
+  vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
+  vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
+  vim.fn.sign_define('DiagnosticSignHint', { text = ' ', texthl = 'DiagnosticSignHint' })
 
   require('neo-tree').setup({
     close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
@@ -27,10 +27,10 @@ function M.config()
       git_status = {
         symbols = {
           -- Change type
-          added     = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
-          modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-          deleted   = "✖",-- this can only be used in the git_status source
-          renamed   = "",-- this can only be used in the git_status source
+          added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
+          modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
+          deleted   = "✖", -- this can only be used in the git_status source
+          renamed   = "", -- this can only be used in the git_status source
           -- Status type
           untracked = "",
           ignored   = "",
@@ -65,12 +65,12 @@ function M.config()
   })
 
   require('which-key').register({
-      name = 'Neotree',
-      n = { ':Neotree source=filesystem toggle=true<CR>', 'Open Neotree' },
-      N = { ':Neotree source=filesystem toggle=true reveal=true<CR>', 'Open Neotree and find file' },
-      g = { ':Neotree source=git_status position=float toggle=true reveal=true<CR>', 'Open git status Neotree in a float' },
+    name = 'Neotree',
+    n = { ':Neotree source=filesystem toggle=true<CR>', 'Open Neotree' },
+    N = { ':Neotree source=filesystem reveal=true<CR>', 'Open Neotree and find file' },
+    g = { ':Neotree source=git_status position=float toggle=true reveal=true<CR>', 'Open git status Neotree in a float' },
   }, {
-      prefix = '<Leader>',
+    prefix = '<Leader>',
   })
 end
 

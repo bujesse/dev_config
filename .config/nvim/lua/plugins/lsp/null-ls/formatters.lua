@@ -10,12 +10,12 @@ function M.list_registered(filetype)
   return registered_providers[method] or {}
 end
 
-function M.list_supported(filetype)
-  local s = require('null-ls.sources')
-  local supported_formatters = s.get_supported(filetype, 'formatting')
-  table.sort(supported_formatters)
-  return supported_formatters
-end
+-- function M.list_supported(filetype)
+--   local s = require('null-ls.sources')
+--   local supported_formatters = s.get_supported(filetype, 'formatting')
+--   table.sort(supported_formatters)
+--   return supported_formatters
+-- end
 
 function M.setup(formatter_configs)
   if vim.tbl_isempty(formatter_configs) then

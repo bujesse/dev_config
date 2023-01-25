@@ -8,9 +8,18 @@
 .config/karabiner/automatic_backups/
 .config/nvim/plugin/packer_compiled.lua
 .config/nvim/lua/packer_compiled.lua
-.config/lazygit
 .config/configstore
+.config/yarn
 
 fonts/
+.config/lazygit
+.config/composer
+.config/fish/functions
+.config/fish/completions
+.config/fish/conf.d
+.config/fish/fish_plugins
+.config/fish/fish_variables
+.config/fish/fishd.tmp.F3tGza
 
+.config/fish/fish_variables
 .config/nextjs-nodejs/config.json

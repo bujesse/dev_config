@@ -162,8 +162,9 @@ function M.config_keys()
       ['[t'] = ':tabp<CR>,',
 
       -- TODO: probably need better space mapping here
-      ['<space>'] = ':',
-      ['<space><space>'] = ':w<CR>,',
+      -- ['<space>'] = ':',
+      -- ['<space><space>'] = ':w<CR>,',
+      ['<space>;'] = ":<Up><CR>",
 
       -- system yank
       ['<C-y>'] = '"*y',

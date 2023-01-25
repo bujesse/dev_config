@@ -16,11 +16,11 @@ end
 
 function M.setup(options)
   options = options
-    or {
-      diagnostics_format = '[#{s}] #{m} (#{s})',
-      debounce = 250,
-      default_timeout = 5000,
-    }
+      or {
+        diagnostics_format = '[#{s}] #{m} (#{s})',
+        debounce = 250,
+        default_timeout = 5000,
+      }
 
   local ok, _ = pcall(require, 'null-ls')
   if not ok then
@@ -43,11 +43,11 @@ function M.setup(options)
         'AutoPreferSingle',
       },
     },
-    {
-      exe = 'black',
-      args = { '--line-length', '120', '--skip-string-normalization' },
-      diagnostics_format = '[black] #{m} (#{c})',
-    },
+    -- {
+    --   exe = 'darker',
+    --   args = { '-S', '-l', '120' },
+    --   diagnostics_format = '[darker] #{m} (#{c})',
+    -- },
     {
       exe = 'prettier',
     },

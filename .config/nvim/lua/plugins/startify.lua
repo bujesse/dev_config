@@ -22,14 +22,11 @@ function M.config()
     { z = '~/.zshrc' },
     { h = '~/dev_config/mac_to_windows.ahk' },
     { a = '/mnt/c/Users/Jesse/AppData/Roaming/alacritty/alacritty.yml' },
+    { f = '~/dev_config/.config/fish/config.fish' },
   }
 
   vim.g.startify_commands = {
-    -- ':help reference',
-    -- { 'Vim Reference', 'h ref' },
-    -- { h = 'h ref' },
-    { m = { '  MRU', 'Telescope frecency' } },
-    { f = { '  Find Files', 'Telescope find_files' } },
+    -- { f = { '  Find Files', 'Telescope find_files' } },
     { w = { '  Find Word', 'Telescope live_grep' } },
     { up = { '  Update Plugins', 'PackerSync' } },
     { ts = { '  Update Treesitter', 'TSUpdate' } },
@@ -51,15 +48,14 @@ function M.config()
   -- Help texts should not be added to the session
   vim.g.startify_session_before_save = {
     'silent! helpclose',
-    'silent! NvimTreeClose',
+    'silent! Neotree action=close',
+    'silent! AerialCloseAll',
   }
 
-  -- This prevents NvimTree from freaking out when loading a session
-  -- Also, barbar doesn't load immediately because it
+  -- barbar doesn't load immediately because it
   -- ignores the autocommands while SessionLoad is set
   vim.g.startify_session_remove_lines = { 'unlet SessionLoad' }
   vim.g.startify_session_savecmds = {
-    'silent! bd! NvimTree',
     'unlet SessionLoad',
   }
 

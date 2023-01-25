@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   require('nvim-web-devicons').setup({
     default = true,
   })

@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   vim.g.mkdp_auto_start = 1
   vim.g.mkdp_auto_close = 1
 

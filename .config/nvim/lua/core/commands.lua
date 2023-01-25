@@ -27,7 +27,7 @@ M.load = function(commands)
   end
 end
 
-M.config = function()
+function M.config()
   M.load(M.defaults)
 end
 

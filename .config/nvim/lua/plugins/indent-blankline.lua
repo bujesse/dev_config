@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   -- vim.cmd [[highlight IndentBlanklineIndent1 guifg=#61AFEF blend=nocombine]]
   -- vim.cmd [[highlight IndentBlanklineIndent2 guifg=#C678DD blend=nocombine]]
   -- https://github.com/lukas-reineke/indent-blankline.nvim/blob/master/lua/indent_blankline/init.lua

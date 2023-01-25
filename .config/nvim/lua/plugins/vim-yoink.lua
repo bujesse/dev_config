@@ -1,6 +1,6 @@
 local M = {}
 
-M.config = function()
+function M.config()
   vim.g.yoinkAutoFormatPaste = 1
   vim.g.yoinkSyncNumberedRegisters = 1
 
