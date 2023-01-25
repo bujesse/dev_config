@@ -228,7 +228,7 @@ function M.config()
     r = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Regex Search' },
     u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
     c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
-    h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
+    h = { '<cmd>lua require("telescope.builtin").help_tags()<CR>', 'Help Tags' },
     v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
     s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
     k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },

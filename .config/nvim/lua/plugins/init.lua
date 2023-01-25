@@ -75,6 +75,14 @@ function M.config()
     })
 
     use({
+      'petertriho/nvim-scrollbar',
+      after = { 'gitsigns.nvim' },
+      config = function()
+        require('plugins.nvim-scrollbar').config()
+      end
+    })
+
+    use({
       'datwaft/bubbly.nvim',
       disable = true,
       requires = {

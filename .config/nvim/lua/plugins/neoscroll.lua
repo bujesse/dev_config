@@ -1,7 +1,9 @@
 local M = {}
 
 function M.config()
-  require('neoscroll').setup()
+  require('neoscroll').setup({
+    mappings = {},
+  })
 
   local t = {}
 
