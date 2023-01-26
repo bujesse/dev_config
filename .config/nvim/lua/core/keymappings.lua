@@ -210,6 +210,8 @@ function M.config_keys()
       -- save all
       ['<C-s>'] = '<C-c>:wa<cr>gv',
 
+      ['<Leader>;'] = { 'q:k', { silent = false } },
+
       -- ["p"] = '"0p',
       -- ["P"] = '"0P',
     },

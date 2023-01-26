@@ -385,6 +385,28 @@ function M.config()
       end,
     })
 
+    use {
+      'smjonas/inc-rename.nvim',
+      config = function()
+        require('inc_rename').setup()
+        vim.keymap.set('n', 'gR', ':IncRename ')
+      end,
+    }
+
+    use {
+      'kevinhwang91/nvim-bqf',
+      ft = 'qf', -- filetype: quickfix
+      requires = {
+        {
+          'junegunn/fzf',
+          run = function() vim.fn['fzf#install']() end,
+        }
+      },
+      config = function()
+        require('plugins.bqf').config()
+      end,
+    }
+
     use({
       'rhysd/clever-f.vim',
       config = function()
