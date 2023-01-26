@@ -9,13 +9,15 @@ function M.config()
       end,
       offsets = {
         {
-          filetype = 'NvimTree',
-          text = 'Nvim Tree',
+          filetype = 'neo-tree',
+          text = 'Neo-tree',
           highlight = 'Directory',
           text_align = 'left',
         },
       },
       persist_buffer_sort = true,
+      max_name_length = 25,
+      max_prefix_length = 20, -- prefix used when a buffer is de-duplicated
       groups = {
         options = {
           toggle_hidden_on_enter = true, -- when you re-enter a hidden group this options re-opens that group so the buffer is visible
@@ -49,15 +51,10 @@ function M.config()
   vim.api.nvim_set_keymap('n', 'H', ':BufferLineCyclePrev<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<C-Left>', ':BufferLineMovePrev<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<C-Right>', ':BufferLineMoveNext<CR>', { noremap = true, silent = true })
-
   vim.api.nvim_set_keymap('n', 'gb', ':BufferLinePick<CR>', { noremap = true, silent = true })
-
-  vim.api.nvim_set_keymap('n', '<Leader>be', ':BufferLineSortByExtension<CR>', { noremap = true, silent = true })
-  vim.api.nvim_set_keymap('n', '<Leader>bd', ':BufferLineSortByDirectory<CR>', { noremap = true, silent = true })
-  vim.api.nvim_set_keymap('n', '<Leader>bd', ':BufferLineSortByDirectory<CR>', { noremap = true, silent = true })
-
   vim.api.nvim_set_keymap('n', '<Leader>bl', ':BufferLineCloseRight<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>bh', ':BufferLineCloseLeft<CR>', { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', '<Leader>bp', ':BufferLineTogglePin<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', 'X', ':BufDel<CR>', { noremap = true, silent = true })
 end
 

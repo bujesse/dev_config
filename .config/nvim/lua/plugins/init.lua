@@ -409,9 +409,10 @@ function M.config()
     use({ 'tommcdo/vim-exchange' })
     use({ 'mg979/vim-visual-multi' })
     use({
-      'AndrewRadev/splitjoin.vim',
+      'Wansmer/treesj',
+      requires = { 'nvim-treesitter' },
       config = function()
-        require('plugins.splitjoin').config()
+        require('plugins.treesj').config()
       end,
     })
 
