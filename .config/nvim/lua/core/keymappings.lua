@@ -143,7 +143,7 @@ function M.config_keys()
       ['<C-l>'] = { '<Plug>WinMoveRight', { noremap = false } },
 
       -- Source
-      ['<Leader>.'] = { ':source ~/.config/nvim/init.vim<CR>', { noremap = false, silent = true } },
+      -- ['<Leader>.'] = { ':source ~/.config/nvim/init.vim<CR>', { noremap = false, silent = true } },
 
       -- format entire file
       ['+'] = 'gg=G<C-o>zz',
@@ -187,11 +187,6 @@ function M.config_keys()
 
     ---@usage change or add keymappings for terminal mode
     term_mode = {
-      -- Terminal window navigation
-      ['<C-h>'] = '<C-\\><C-N><C-w>h',
-      ['<C-j>'] = '<C-\\><C-N><C-w>j',
-      ['<C-k>'] = '<C-\\><C-N><C-w>k',
-      ['<C-l>'] = '<C-\\><C-N><C-w>l',
     },
 
     ---@usage change or add keymappings for visual mode

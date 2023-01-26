@@ -23,7 +23,7 @@ function M.config()
     },
     on_open = function(term)
       vim.cmd("startinsert!")
-      vim.keymap.set('t', 'q', [[<Cmd>wincmd q<CR>]], { buffer = term.bufnr })
+      vim.keymap.set('t', ',l', [[<Cmd>wincmd q<CR>]], { buffer = term.bufnr })
     end,
     on_close = function(term) end,
     count = 99,

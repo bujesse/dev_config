@@ -8,6 +8,7 @@ local core_modules = {
   'core.autocommands',
   'plugins',
   'core.keymappings',
+  'core.macros',
 }
 
 for _, module_name in ipairs(core_modules) do
