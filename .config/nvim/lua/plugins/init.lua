@@ -343,19 +343,6 @@ function M.config()
     --   -- event = 'BufRead',
     -- })
 
-    -- Tpope
-    use({
-      'tpope/vim-fugitive',
-      cmd = {
-        'Git',
-        'Gdiff',
-        'Gdiffsplit',
-        'Gvdiffsplit',
-        'Gwrite',
-        'Gw',
-      },
-    })
-
     use({
       -- cr_ to change between cases
       'tpope/vim-abolish',
@@ -371,8 +358,25 @@ function M.config()
       end
     }
 
+    use({
+      'kevinhwang91/nvim-ufo',
+      requires = 'kevinhwang91/promise-async',
+      config = function()
+        require('plugins.nvim-ufo').config()
+      end
+    })
+
     use({ 'tpope/vim-repeat' })
-    use({ 'tpope/vim-surround' })
+
+    use({
+      'kylechui/nvim-surround',
+      -- tag = '*', -- Use for stability; omit to use `main` branch for the latest features
+      config = function()
+        require('nvim-surround').setup({
+          -- Configuration here, or leave empty to use defaults
+        })
+      end
+    })
 
     -- Text editing
     use({

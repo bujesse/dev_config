@@ -6,6 +6,7 @@ function M.config()
   require('yanky').setup({
     highlight = {
       on_put = false,
+      on_yank = false,
       timer = 300,
     },
     system_clipboard = {
@@ -18,18 +19,6 @@ function M.config()
       telescope = {
         mappings = {
           default = mapping.set_register(utils.get_default_register()),
-          -- i = {
-          --   -- ['<c-p>'] = mapping.put('p'),
-          --   -- ['<c-k>'] = mapping.put('P'),
-          --   -- ['<c-x>'] = mapping.delete(),
-          --   -- ['<c-r>'] = mapping.set_register(utils.get_default_register()),
-          -- },
-          -- n = {
-          --   -- p = mapping.put('p'),
-          --   -- P = mapping.put('P'),
-          --   -- d = mapping.delete(),
-          --   -- r = mapping.set_register(utils.get_default_register())
-          -- },
         }
       }
     }

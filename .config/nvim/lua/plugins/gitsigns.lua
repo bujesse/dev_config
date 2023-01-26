@@ -63,6 +63,7 @@ function M.config()
       map('n', '<leader>htw', gs.toggle_word_diff, 'Toggle Word Diff')
       map('n', '<leader>htl', gs.toggle_linehl, 'Toggle Line Diff HL')
       map('n', '<leader>htb', gs.toggle_current_line_blame, 'Toggle Current Line Blame')
+      map('n', 'yog', M.toggle_line_diffs, 'Toggle Line, Word, and Deleted')
 
       -- from ideavim
       map('n', '<leader>-', gs.reset_hunk, 'Reset Hunk')
@@ -72,6 +73,13 @@ function M.config()
       map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
     end,
   })
+end
+
+M.toggle_line_diffs = function()
+  local gs = package.loaded.gitsigns
+  gs.toggle_linehl()
+  gs.toggle_word_diff()
+  gs.toggle_deleted()
 end
 
 return M
