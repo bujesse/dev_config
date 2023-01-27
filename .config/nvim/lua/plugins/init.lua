@@ -197,7 +197,8 @@ function M.config()
         'rrethy/vim-illuminate',
       },
       after = {
-        'mason-lspconfig.nvim'
+        'mason-lspconfig.nvim',
+        'neodev.nvim',
       },
     })
 
@@ -218,6 +219,13 @@ function M.config()
       end,
     })
 
+    use({
+      'folke/neodev.nvim',
+      config = function()
+        require('neodev').setup({})
+      end,
+    })
+
     -- Show function signature when you type
     -- use({
     --   'ray-x/lsp_signature.nvim',
@@ -225,15 +233,6 @@ function M.config()
     --   after = 'nvim-lspconfig',
     --   config = function()
     --     require('plugins.configs.others').signature()
-    --   end,
-    -- })
-
-    -- use({
-    --   'andymass/vim-matchup',
-    --   disable = not plugin_status.vim_matchup,
-    --   opt = true,
-    --   setup = function()
-    --     require('core.utils').packer_lazy_load('vim-matchup')
     --   end,
     -- })
 
