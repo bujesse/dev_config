@@ -210,6 +210,14 @@ function M.config()
       },
     })
 
+    -- UI for nvim-lsp
+    use({
+      'j-hui/fidget.nvim',
+      config = function()
+        require('fidget').setup({})
+      end,
+    })
+
     -- Show function signature when you type
     -- use({
     --   'ray-x/lsp_signature.nvim',
