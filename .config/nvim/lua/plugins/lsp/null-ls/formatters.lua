@@ -16,6 +16,7 @@ function M.setup(formatter_configs)
   end
 
   local registered = services.register_sources(formatter_configs, method)
+  services.register_custom_sources()
 
   if #registered > 0 then
     Log:debug('Registered the following formatters: ' .. unpack(registered))

@@ -33,16 +33,18 @@ end
 
 -- Autoformat
 function M.turn_off_autoformat()
-  vim.cmd([[
-  if exists('#autoformat#BufWritePre')
-    :autocmd! autoformat
-    endif
-    ]])
+  local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+  vim.api.nvim_clear_autocmds({ group = augroup })
+  -- vim.cmd([[
+  -- if exists('#LspFormatting#BufWritePre')
+  --   :autocmd! LspFormatting
+  --   endif
+  --   ]])
 end
 
 function M.turn_on_autoformat()
   require('core.autocommands').define_augroups({
-    autoformat = {
+    LspFormatting = {
       {
         'BufWritePre',
         '*',

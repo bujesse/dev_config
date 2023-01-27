@@ -11,9 +11,7 @@ function M.config()
 
   local lsp_config = require('plugins.lsp.nvim-lspconfig')
   local default_opts = lsp_config.get_common_opts()
-  null_ls.setup(vim.tbl_deep_extend('force', default_opts, {
-    debug = true,
-  }))
+  null_ls.setup(vim.tbl_deep_extend('force', default_opts, {}))
 end
 
 function M.setup(options)
@@ -33,6 +31,7 @@ function M.setup(options)
   local formatters = require('plugins.lsp.null-ls.formatters')
   local linters = require('plugins.lsp.null-ls.linters')
 
+  -- THIS STUFF WORKS ON HOME PC:
   formatters.setup({
     {
       exe = 'stylua',
@@ -45,11 +44,6 @@ function M.setup(options)
         'AutoPreferSingle',
       },
     },
-    -- {
-    --   exe = 'darker',
-    --   args = { '-S', '-l', '120' },
-    --   diagnostics_format = '[darker] #{m} (#{c})',
-    -- },
     {
       exe = 'prettier',
     },

@@ -41,8 +41,10 @@ local local_providers = {
 
   -- Python
   black = { find = M.from_nvim_venv },
-  darker = { find = M.from_nvim_venv },
   flake8 = { find = M.from_nvim_venv },
+
+  -- Custom
+  darker = { find = M.from_nvim_venv },
 }
 
 function M.find_command(command)
@@ -60,33 +62,45 @@ function M.find_command(command)
 end
 
 function M.register_custom_sources()
-  local null_ls = require("null-ls")
-  local helpers = require("null-ls.helpers")
+  local null_ls = require('null-ls')
+  local helpers = require('null-ls.helpers')
+
   local darker = {
     name = 'darker',
-    filetypes = { ['python'] = true },
-    method = { [null_ls.methods.FORMATTING] = true },
+    filetypes = { 'python' },
+    method = { null_ls.methods.FORMATTING },
     meta = {
-      url = "https://github.com/psf/black",
-      description = "The uncompromising Python code formatter",
+      url = 'https://github.com/akaihola/darker',
+      description = [[
+        Re-format Python source files by using
+        - `isort` to sort Python import definitions alphabetically within logical sections
+        - `black` to re-format code changed since the last Git commit
+
+        Please run `pip install darker[isort]` to enable sorting of import definitions
+      ]],
     },
     generator = helpers.formatter_factory({
-      command = "darker",
+      command = M.find_command('darker'),
       args = {
-        "$FILENAME",
-        "--quiet",
-        "-",
-        "-S",
-        "-l",
-        "120",
+        '--quiet',
+        '--isort',
+        '--skip-string-normalization',
+        '--stdout',
+        '--line-length',
+        '120',
+        '$FILENAME',
       },
+      to_stdin = false,
+      from_stderr = true,
+      -- to_temp_file = false,
+      -- from_temp_file = true,
     }),
   }
 
-  local command = M.find_command('darker')
-  darker.command = command
-  P(command)
-  null_ls.register(darker)
+  local is_registered = require('null-ls.sources').is_registered
+  if not is_registered({ name = darker.name }) then
+    null_ls.register(darker)
+  end
 end
 
 function M.list_registered_providers_names(filetype)
@@ -139,8 +153,6 @@ function M.register_sources(configs, method)
   if #sources > 0 then
     null_ls.register({ sources = sources })
   end
-
-  M.register_custom_sources()
 
   return registered_names
 end

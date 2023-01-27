@@ -4,7 +4,7 @@ M = {}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-M.common_on_attach = function(client, bufnr)
+function M.common_on_attach(client, bufnr)
   local function buf_set_option(...)
     vim.api.nvim_buf_set_option(bufnr, ...)
   end
@@ -131,7 +131,7 @@ end
 
 -- lsp-install
 M.setup_servers = function()
-  require("mason-lspconfig").setup_handlers {
+  require('mason-lspconfig').setup_handlers({
     -- The first entry (without a key) will be the default handler
     -- and will be called for each installed server that doesn't have
     -- a dedicated handler.
@@ -145,7 +145,7 @@ M.setup_servers = function()
     -- ["rust_analyzer"] = function ()
     --     require("rust-tools").setup {}
     -- end
-  }
+  })
   -- require('lspconfig').setup(function(server)
   --   local config = M.make_config(server)
   --   server:setup(config)
