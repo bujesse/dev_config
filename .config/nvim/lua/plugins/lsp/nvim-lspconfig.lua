@@ -46,15 +46,113 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
   vim.keymap.set('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
 
-  -- Setup lsp toggles
-  require('plugins.lsp.utils').setup()
-
   -- Setup formatters and linters
   require('plugins.lsp.null-ls').setup()
   M.select_default_formater(client)
 
   -- Setup UI configuration
   require('plugins.lsp.ui').setup()
+
+  -- Diagnostic virutal text
+  if M.first_setup then
+    M.toggle_diagnostics(false)
+  end
+
+  vim.keymap.set('n', 'yod', function()
+    M.toggle_diagnostics(true)
+  end, { noremap = true, silent = true })
+
+  -- Setup auto format on save
+  if client.supports_method('textDocument/formatting') then
+    local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+
+    -- TODO: this will keep turning on af for newly mounted lsp's
+    M.turn_autoformat_on(augroup)
+
+    vim.keymap.set('n', 'yoa', function()
+      M.toggle_autoformat(augroup, bufnr, true)
+    end, { noremap = true, silent = true })
+  end
+
+  M.first_setup = false
+end
+
+function M.turn_autoformat_on(augroup, bufnr)
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = augroup,
+    callback = function()
+      vim.lsp.buf.format()
+      -- vim.lsp.buf.format({ bufnr = bufnr })
+      -- M.async_formatting(bufnr)
+    end,
+  })
+  M.formatting_on = true
+end
+
+-- autoformatting is a global setting
+function M.toggle_autoformat(augroup, bufnr, should_log)
+  M.formatting_on = not M.formatting_on
+
+  if M.formatting_on then
+    M.turn_autoformat_on(augroup)
+  else
+    vim.api.nvim_clear_autocmds({ group = augroup })
+  end
+
+  if should_log then
+    print('Format on save ' .. (M.formatting_on and 'ON' or 'OFF'))
+  end
+end
+
+function M.toggle_diagnostics(should_log)
+  M.diagnostics_visible = not M.diagnostics_visible
+
+  local conf = {
+    virtual_text = M.diagnostics_visible,
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+  }
+
+  vim.diagnostic.config(conf)
+
+  if should_log then
+    print('Diagnostics are ' .. (M.diagnostics_visible and 'ON' or 'OFF'))
+  end
+end
+
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Formatting-on-save
+M.async_formatting = function(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+  vim.lsp.buf_request(
+    bufnr,
+    "textDocument/formatting",
+    vim.lsp.util.make_formatting_params({}),
+    function(err, res, ctx)
+      if err then
+        local err_msg = type(err) == "string" and err or err.message
+        -- you can modify the log message / level (or ignore it completely)
+        vim.notify("formatting: " .. err_msg, vim.log.levels.WARN)
+        return
+      end
+
+      -- don't apply results if buffer is unloaded or has been modified
+      if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, "modified") then
+        return
+      end
+
+      if res then
+        local client = vim.lsp.get_client_by_id(ctx.client_id)
+        vim.lsp.util.apply_text_edits(res, bufnr, client and client.offset_encoding or "utf-16")
+        vim.api.nvim_buf_call(bufnr, function()
+          vim.cmd("silent noautocmd update")
+        end)
+      end
+    end
+  )
 end
 
 function M.select_default_formater(client)
@@ -66,9 +164,9 @@ function M.select_default_formater(client)
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
     if #vim.tbl_keys(formatters.list_registered(filetype)) > 0 then
-      Log:info('Formatter overriding detected. Disabling formatting capabilities for ' .. client.name)
-      client.server_capabilities.document_formatting = false
-      client.server_capabilities.document_range_formatting = false
+      P('Formatter overriding detected. Disabling formatting capabilities for ' .. client.name)
+      client.server_capabilities.documentFormattingProvider = false
+      -- client.server_capabilities.document_range_formatting = false
     end
   end
 end
@@ -99,8 +197,7 @@ end
 function M.get_common_opts()
   return {
     on_attach = M.common_on_attach,
-    on_init = M.common_on_init,
-    -- on_exit = M.common_on_exit,
+    -- on_init = M.common_on_init,
     capabilities = M.common_capabilities(),
   }
 end
@@ -130,7 +227,7 @@ M.make_config = function(server_name)
 end
 
 -- lsp-install
-M.setup_servers = function()
+function M.setup_servers()
   require('mason-lspconfig').setup_handlers({
     -- The first entry (without a key) will be the default handler
     -- and will be called for each installed server that doesn't have
@@ -138,7 +235,7 @@ M.setup_servers = function()
     function(server_name) -- default handler (optional)
       local config = M.make_config(server_name)
       require('lspconfig')[server_name].setup(config)
-      vim.cmd([[ do User LspAttachBuffers ]])
+      -- vim.cmd([[ do User LspAttach ]])
     end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
@@ -146,14 +243,13 @@ M.setup_servers = function()
     --     require("rust-tools").setup {}
     -- end
   })
-  -- require('lspconfig').setup(function(server)
-  --   local config = M.make_config(server)
-  --   server:setup(config)
-  --   vim.cmd([[ do User LspAttachBuffers ]])
-  -- end)
 end
 
 function M.config()
+  M.first_setup = true
+  M.diagnostics_visible = not GLOBAL_CONFIG.diagnostics_visible
+  M.formatting_on = not GLOBAL_CONFIG.format_on_save
+
   require('lspconfig')
   require('plugins.lsp.null-ls').config()
   M.setup_servers()

@@ -18,12 +18,11 @@ M.autocommands = {
       'qf',
       'set nobuflisted',
     },
-    {
-      'BufWritePre',
-      '*',
-      ':call TrimWhitespace()',
-    },
-    -- { "BufWritePost", config.path, "lua require('utils').reload_lv_config()" },
+    -- {
+    --   'BufWritePre',
+    --   '*',
+    --   ':call TrimWhitespace()',
+    -- },
   },
   _markdown = {
     { 'FileType', 'markdown', 'setlocal wrap' },
@@ -70,6 +69,15 @@ end
 
 function M.config()
   M.define_augroups(M.autocommands)
+
+  -- This is needed on VAGRANT
+  vim.api.nvim_create_autocmd('BufWritePost', {
+    callback = function()
+      vim.defer_fn(function()
+        vim.cmd('checktime')
+      end, 2000)
+    end,
+  })
 end
 
 return M

@@ -24,7 +24,7 @@ function M.config()
 
   -- vim.cmd([[set shell=/usr/local/bin/fish]])
 
-  -- This is necesary for copying to a clipboard outside of vagrant
+  -- This is necesary for copying to a clipboard outside of VAGRANT
   vim.cmd([[
     let g:clipboard = {
           \   'name': 'cbcopy',
