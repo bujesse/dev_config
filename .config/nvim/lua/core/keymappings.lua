@@ -81,8 +81,8 @@ function M.config_keys()
       ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
       ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
 
-      -- muscle memory for undoing pastes
-      ['<C-z>'] = 'u',
+      -- save all
+      ['<C-s>'] = '<C-o>:wa<cr>',
     },
 
     ---@usage change or add keymappings for normal mode
@@ -108,12 +108,15 @@ function M.config_keys()
       -- U feels like a more natural companion to u
       ['U'] = '<C-r>',
 
-      -- TODO: this is prime real esate
-      ['Q'] = '',
+      -- Quickly replay the macro at q register
+      ['Q'] = '@q',
+
+      -- save all
+      ['<C-s>'] = ':<C-u>wa<cr>',
 
       -- Center after search
-      ['n'] = 'nzzzv',
-      ['N'] = 'Nzzzv',
+      -- ['n'] = 'nzzzv',
+      -- ['N'] = 'Nzzzv',
 
       [']p'] = { '<Plug>unimpairedPutBelow', { noremap = false } },
       ['[p'] = { '<Plug>unimpairedPutAbove', { noremap = false } },
@@ -140,7 +143,7 @@ function M.config_keys()
       ['<C-l>'] = { '<Plug>WinMoveRight', { noremap = false } },
 
       -- Source
-      ['<Leader>.'] = { ':source ~/.config/nvim/init.vim<CR>', { noremap = false, silent = true } },
+      -- ['<Leader>.'] = { ':source ~/.config/nvim/init.vim<CR>', { noremap = false, silent = true } },
 
       -- format entire file
       ['+'] = 'gg=G<C-o>zz',
@@ -184,11 +187,6 @@ function M.config_keys()
 
     ---@usage change or add keymappings for terminal mode
     term_mode = {
-      -- Terminal window navigation
-      ['<C-h>'] = '<C-\\><C-N><C-w>h',
-      ['<C-j>'] = '<C-\\><C-N><C-w>j',
-      ['<C-k>'] = '<C-\\><C-N><C-w>k',
-      ['<C-l>'] = '<C-\\><C-N><C-w>l',
     },
 
     ---@usage change or add keymappings for visual mode
@@ -209,6 +207,11 @@ function M.config_keys()
       -- Apply the 'q' register macro to the visual selection
       ['Q'] = ":'<,'>:norm @q<CR>",
 
+      -- save all
+      ['<C-s>'] = '<C-c>:wa<cr>gv',
+
+      ['<Leader>;'] = { 'q:k', { silent = false } },
+
       -- ["p"] = '"0p',
       -- ["P"] = '"0P',
     },
@@ -218,6 +221,10 @@ function M.config_keys()
       -- Move selected line / block of text in visual mode
       [']e'] = { '<Plug>unimpairedMoveSelectionDown', { noremap = false } },
       ['[e'] = { '<Plug>unimpairedMoveSelectionUp', { noremap = false } },
+
+
+      -- save all
+      ['<C-s>'] = '<C-c>:wa<cr>gv',
     },
 
     ---@usage change or add keymappings for command mode

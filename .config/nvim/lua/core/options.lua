@@ -26,15 +26,6 @@ function M.config()
   opt.confirm = true
   opt.encoding = 'UTF-8'
 
-  -- Sexy folds
-  vim.o.foldmethod = 'expr'
-  vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
-  opt.foldtext =
-  [[ substitute(getline(v:foldstart),'\\t',repeat('\ ',&tabstop),'g').'...'.trim(getline(v:foldend)) . ' (' . (v:foldend - v:foldstart + 1) . ' lines)' ]]
-  -- opt.fillchars = 'fold: '
-  opt.foldlevelstart = 99 -- Start with no folds
-  opt.foldnestmax = 3
-
   -- Always do global substitutes
   opt.gdefault = true
 

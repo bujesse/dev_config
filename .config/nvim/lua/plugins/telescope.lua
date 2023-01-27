@@ -1,3 +1,5 @@
+local themes = require('telescope.themes')
+
 local M = {}
 
 function M.grep_string_visual()
@@ -210,6 +212,15 @@ function M.config()
     opts
   )
 
+  -- This will allow easy access to hard-to-remember, obscure commands through mappings
+  vim.api.nvim_set_keymap(
+    'n',
+    '<Space><Space>',
+    [[<cmd>lua require("telescope.builtin").commands(require("telescope.themes").get_dropdown({ layout_config = { width = 0.7, height = 0.7, } }))<cr>]]
+    ,
+    opts
+  )
+
   vim.api.nvim_set_keymap('x', '<Space>f', '<cmd>lua require("plugins.telescope").grep_string_visual()<CR>', opts)
 
   vim.api.nvim_set_keymap('x', '<Leader>y', '<cmd>lua require("plugins.telescope").print_visual()<CR>', opts)
@@ -227,7 +238,6 @@ function M.config()
     },
     r = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Regex Search' },
     u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String (under cursor)' },
-    c = { '<cmd>lua require("telescope.builtin").commands()<CR>', 'Commands' },
     h = { '<cmd>lua require("telescope.builtin").help_tags()<CR>', 'Help Tags' },
     v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
     s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },

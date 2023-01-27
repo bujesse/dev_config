@@ -25,6 +25,15 @@ function P(obj)
   return obj
 end
 
+function RELOAD(...)
+  return require('plenary.reload').reload_module(...)
+end
+
+function R(name)
+  RELOAD(name)
+  return require(name)
+end
+
 -- load plugin after entering vim ui
 M.packer_lazy_load = function(plugin, timer)
   if plugin then

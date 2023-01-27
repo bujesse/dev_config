@@ -15,7 +15,9 @@ function M.config()
     inverse = true, -- invert background for search, diffs, statuslines and errors
     contrast = "soft", -- can be "hard", "soft" or empty string
     palette_overrides = {},
-    overrides = {},
+    overrides = {
+      CursorLine = { bg = '#504945' } -- make CursorLine visible af
+    },
     dim_inactive = false,
     transparent_mode = false,
   })

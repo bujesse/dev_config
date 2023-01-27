@@ -34,6 +34,7 @@ function M.config()
       end,
     })
 
+
     use({
       'mhinz/vim-startify',
       config = function()
@@ -70,7 +71,7 @@ function M.config()
       'stevearc/aerial.nvim',
       config = function()
         require('plugins.aerial').config()
-      end,
+      end
     })
 
     use({
@@ -78,7 +79,7 @@ function M.config()
       after = { 'gitsigns.nvim' },
       config = function()
         require('plugins.nvim-scrollbar').config()
-      end,
+      end
     })
 
     use({
@@ -98,10 +99,10 @@ function M.config()
     use({
       'ojroques/nvim-bufdel',
       config = function()
-        require('bufdel').setup({
+        require('bufdel').setup {
           next = 'cycle', -- or 'cycle, 'alternate'
           quit = true, -- quit Neovim when last buffer is closed
-        })
+        }
       end,
     })
 
@@ -109,7 +110,7 @@ function M.config()
       'akinsho/bufferline.nvim',
       requires = {
         'kyazdani42/nvim-web-devicons',
-        'ojroques/nvim-bufdel',
+        'ojroques/nvim-bufdel'
       },
       config = function()
         require('plugins.bufferline').config()
@@ -164,6 +165,23 @@ function M.config()
     -- lsp stuff
 
     use({
+      'williamboman/mason.nvim',
+      config = function()
+        require('plugins.mason').config()
+      end,
+    })
+
+    use({
+      'williamboman/mason-lspconfig.nvim',
+      config = function()
+        require("mason-lspconfig").setup()
+      end,
+      after = {
+        'mason.nvim'
+      },
+    })
+
+    use({
       'neovim/nvim-lspconfig',
       setup = function()
         require('core.utils').packer_lazy_load('nvim-lspconfig')
@@ -176,8 +194,10 @@ function M.config()
         require('plugins.lsp.nvim-lspconfig').config()
       end,
       requires = {
-        'williamboman/nvim-lsp-installer',
         'rrethy/vim-illuminate',
+      },
+      after = {
+        'mason-lspconfig.nvim'
       },
     })
 
@@ -276,7 +296,7 @@ function M.config()
 
     --   use 'alvan/vim-closetag' -- for html autoclosing tag
 
-    use({
+    use {
       'AckslD/nvim-neoclip.lua',
       disable = true,
       requires = {
@@ -285,9 +305,9 @@ function M.config()
       config = function()
         require('plugins.neoclip').config()
       end,
-    })
+    }
 
-    use({
+    use {
       'gbprod/yanky.nvim',
       requires = {
         { 'nvim-telescope/telescope.nvim' },
@@ -295,15 +315,15 @@ function M.config()
       config = function()
         require('plugins.yanky').config()
       end,
-    })
+    }
 
-    use({
+    use {
       's1n7ax/nvim-window-picker',
       tag = 'v1.*',
       config = function()
-        require('window-picker').setup()
+        require 'window-picker'.setup()
       end,
-    })
+    }
 
     use({
       'nvim-neo-tree/neo-tree.nvim',
@@ -342,19 +362,6 @@ function M.config()
     --   -- event = 'BufRead',
     -- })
 
-    -- Tpope
-    use({
-      'tpope/vim-fugitive',
-      cmd = {
-        'Git',
-        'Gdiff',
-        'Gdiffsplit',
-        'Gvdiffsplit',
-        'Gwrite',
-        'Gw',
-      },
-    })
-
     use({
       -- cr_ to change between cases
       'tpope/vim-abolish',
@@ -363,15 +370,30 @@ function M.config()
       end,
     })
 
-    use({
+    use {
       'numToStr/Comment.nvim',
       config = function()
         require('plugins.comment').config()
-      end,
+      end
+    }
+
+    use({
+      'kevinhwang91/nvim-ufo',
+      requires = 'kevinhwang91/promise-async',
+      config = function()
+        require('plugins.nvim-ufo').config()
+      end
     })
 
     use({ 'tpope/vim-repeat' })
-    use({ 'tpope/vim-surround' })
+
+    use({
+      'kylechui/nvim-surround',
+      -- tag = '*', -- Use for stability; omit to use `main` branch for the latest features
+      config = function()
+        require('plugins.nvim-surround').config()
+      end
+    })
 
     -- Text editing
     use({
@@ -381,6 +403,28 @@ function M.config()
         require('plugins.replace-with-register').config()
       end,
     })
+
+    use {
+      'smjonas/inc-rename.nvim',
+      config = function()
+        require('inc_rename').setup()
+        vim.keymap.set('n', 'gR', ':IncRename ')
+      end,
+    }
+
+    use {
+      'kevinhwang91/nvim-bqf',
+      ft = 'qf', -- filetype: quickfix
+      requires = {
+        {
+          'junegunn/fzf',
+          run = function() vim.fn['fzf#install']() end,
+        }
+      },
+      config = function()
+        require('plugins.bqf').config()
+      end,
+    }
 
     use({
       'rhysd/clever-f.vim',
@@ -406,9 +450,10 @@ function M.config()
     use({ 'tommcdo/vim-exchange' })
     use({ 'mg979/vim-visual-multi' })
     use({
-      'AndrewRadev/splitjoin.vim',
+      'Wansmer/treesj',
+      requires = { 'nvim-treesitter' },
       config = function()
-        require('plugins.splitjoin').config()
+        require('plugins.treesj').config()
       end,
     })
 

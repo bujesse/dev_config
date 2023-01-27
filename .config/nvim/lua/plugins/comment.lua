@@ -7,10 +7,10 @@ function M.config()
   require('Comment').setup({
     ignore = '^$',
     toggler = {
-      block = 'gcb',
+      block = 'gC',
     },
     opleader = {
-      block = 'gcb',
+      block = 'gC',
     },
   })
 end
