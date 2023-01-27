@@ -61,12 +61,31 @@ end
 
 function M.register_custom_sources()
   local null_ls = require("null-ls")
+  local helpers = require("null-ls.helpers")
   local darker = {
     name = 'darker',
     filetypes = { ['python'] = true },
-    methods = { [null_ls.methods.FORMATTING] = true },
-    id = 1,
+    method = { [null_ls.methods.FORMATTING] = true },
+    meta = {
+      url = "https://github.com/psf/black",
+      description = "The uncompromising Python code formatter",
+    },
+    generator = helpers.formatter_factory({
+      command = "darker",
+      args = {
+        "$FILENAME",
+        "--quiet",
+        "-",
+        "-S",
+        "-l",
+        "120",
+      },
+    }),
   }
+
+  local command = M.find_command('darker')
+  darker.command = command
+  P(command)
   null_ls.register(darker)
 end
 
@@ -120,6 +139,9 @@ function M.register_sources(configs, method)
   if #sources > 0 then
     null_ls.register({ sources = sources })
   end
+
+  M.register_custom_sources()
+
   return registered_names
 end
 

@@ -19,7 +19,7 @@ M.common_on_attach = function(client, bufnr)
   }
 
   vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
   vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.keymap.set('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -51,12 +51,13 @@ M.common_on_attach = function(client, bufnr)
 
   -- Setup formatters and linters
   require('plugins.lsp.null-ls').setup()
+  M.select_default_formater(client)
 
   -- Setup UI configuration
   require('plugins.lsp.ui').setup()
 end
 
-local function select_default_formater(client)
+function M.select_default_formater(client)
   if client.name == 'null-ls' or not client.server_capabilities.document_formatting then
     return
   end
@@ -73,7 +74,7 @@ local function select_default_formater(client)
 end
 
 M.common_on_init = function(client, bufnr)
-  select_default_formater(client)
+  M.select_default_formater(client)
 end
 
 M.common_capabilities = function()
@@ -104,21 +105,15 @@ function M.get_common_opts()
   }
 end
 
-M.make_config = function(server)
-  local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. server.name)
+M.make_config = function(server_name)
+  local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. server_name)
   if ok and config.lsp and config.lsp.setup then
     config = config.lsp.setup
-    if not config.cmd then
-      config.cmd = server._default_options.cmd
-    end
-    if not config.on_init then
-      config.on_init = M.common_on_init
-    end
     if not config.capabilities then
       config.capabilities = M.common_capabilities()
     end
   else
-    config = server._default_options
+    config = {}
   end
 
   config.on_attach = function(client, bufnr)
@@ -136,11 +131,26 @@ end
 
 -- lsp-install
 M.setup_servers = function()
-  require('nvim-lsp-installer').on_server_ready(function(server)
-    local config = M.make_config(server)
-    server:setup(config)
-    vim.cmd([[ do User LspAttachBuffers ]])
-  end)
+  require("mason-lspconfig").setup_handlers {
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
+    function(server_name) -- default handler (optional)
+      local config = M.make_config(server_name)
+      require('lspconfig')[server_name].setup(config)
+      vim.cmd([[ do User LspAttachBuffers ]])
+    end,
+    -- Next, you can provide a dedicated handler for specific servers.
+    -- For example, a handler override for the `rust_analyzer`:
+    -- ["rust_analyzer"] = function ()
+    --     require("rust-tools").setup {}
+    -- end
+  }
+  -- require('lspconfig').setup(function(server)
+  --   local config = M.make_config(server)
+  --   server:setup(config)
+  --   vim.cmd([[ do User LspAttachBuffers ]])
+  -- end)
 end
 
 function M.config()

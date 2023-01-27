@@ -11,7 +11,9 @@ function M.config()
 
   local lsp_config = require('plugins.lsp.nvim-lspconfig')
   local default_opts = lsp_config.get_common_opts()
-  null_ls.setup(vim.tbl_deep_extend('force', default_opts, {}))
+  null_ls.setup(vim.tbl_deep_extend('force', default_opts, {
+    debug = true,
+  }))
 end
 
 function M.setup(options)

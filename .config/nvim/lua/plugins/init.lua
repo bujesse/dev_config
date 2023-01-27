@@ -165,6 +165,23 @@ function M.config()
     -- lsp stuff
 
     use({
+      'williamboman/mason.nvim',
+      config = function()
+        require('plugins.mason').config()
+      end,
+    })
+
+    use({
+      'williamboman/mason-lspconfig.nvim',
+      config = function()
+        require("mason-lspconfig").setup()
+      end,
+      after = {
+        'mason.nvim'
+      },
+    })
+
+    use({
       'neovim/nvim-lspconfig',
       setup = function()
         require('core.utils').packer_lazy_load('nvim-lspconfig')
@@ -177,8 +194,10 @@ function M.config()
         require('plugins.lsp.nvim-lspconfig').config()
       end,
       requires = {
-        'williamboman/nvim-lsp-installer',
         'rrethy/vim-illuminate',
+      },
+      after = {
+        'mason-lspconfig.nvim'
       },
     })
 

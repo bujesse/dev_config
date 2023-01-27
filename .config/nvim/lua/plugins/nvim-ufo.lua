@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-  vim.o.foldcolumn = '1' -- '0' is not bad
+  vim.o.foldcolumn = '0' -- '1' displays folds in the column but it's ugly for now - https://github.com/kevinhwang91/nvim-ufo/issues/4
   vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
   vim.o.foldlevelstart = 99
   vim.o.foldenable = true
@@ -30,7 +30,7 @@ function M.config()
   vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
   vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith)
   vim.keymap.set('n', 'zp', require('ufo').peekFoldedLinesUnderCursor) -- closeAllFolds == closeFoldsWith(0)
-  vim.keymap.set('n', '[z', require('ufo').goPreviousStartFold)
+  vim.keymap.set('n', '[z', require('ufo').goPreviousClosedFold)
   vim.keymap.set('n', ']z', require('ufo').goNextClosedFold)
   vim.keymap.set('n', 'zo', 'zO')
 
