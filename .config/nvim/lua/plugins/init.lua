@@ -160,6 +160,7 @@ function M.config()
     -- smooth scroll
     use({
       'karb94/neoscroll.nvim',
+      disable = true,
       config = function()
         require('plugins.neoscroll').config()
       end,
@@ -204,6 +205,7 @@ function M.config()
       },
       after = {
         'mason-lspconfig.nvim',
+        'neodev.nvim',
       },
     })
 
@@ -224,6 +226,19 @@ function M.config()
       end,
     })
 
+    use({
+      'folke/neodev.nvim',
+      config = function()
+        require('neodev').setup({
+          library = {
+            -- runtime = false,
+            -- types = false,
+            plugins = { 'plenary.nvim', 'telescope.nvim' }, -- this one makes it slow; probably because i have too many i guess. Can use a table here if i want access to certain plugins. In fact it's probably just a few bad plugins making it slow
+          },
+        })
+      end,
+    })
+
     -- Show function signature when you type
     -- use({
     --   'ray-x/lsp_signature.nvim',
@@ -231,15 +246,6 @@ function M.config()
     --   after = 'nvim-lspconfig',
     --   config = function()
     --     require('plugins.configs.others').signature()
-    --   end,
-    -- })
-
-    -- use({
-    --   'andymass/vim-matchup',
-    --   disable = not plugin_status.vim_matchup,
-    --   opt = true,
-    --   setup = function()
-    --     require('core.utils').packer_lazy_load('vim-matchup')
     --   end,
     -- })
 

@@ -55,6 +55,19 @@ M.common_on_attach = function(client, bufnr)
 
   -- Setup UI configuration
   require('plugins.lsp.ui').setup()
+
+  -- Specific to darker only; it doesn't play nicely with null-ls
+  vim.api.nvim_create_autocmd('BufWinEnter', {
+    pattern = '*.py',
+    callback = function(ev)
+      vim.keymap.set(
+        'n',
+        '<Leader>f',
+        ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
+        { buffer = true }
+      )
+    end,
+  })
 end
 
 function M.select_default_formater(client)
@@ -105,7 +118,7 @@ function M.get_common_opts()
   }
 end
 
-M.make_config = function(server_name)
+function M.make_config(server_name)
   local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. server_name)
   if ok and config.lsp and config.lsp.setup then
     config = config.lsp.setup
@@ -142,9 +155,9 @@ M.setup_servers = function()
     end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
-    -- ["rust_analyzer"] = function ()
-    --     require("rust-tools").setup {}
-    -- end
+    -- ['pyright'] = function()
+    --   P('Hello')
+    -- end,
   })
   -- require('lspconfig').setup(function(server)
   --   local config = M.make_config(server)
