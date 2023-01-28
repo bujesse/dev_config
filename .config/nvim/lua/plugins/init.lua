@@ -34,7 +34,6 @@ function M.config()
       end,
     })
 
-
     use({
       'mhinz/vim-startify',
       config = function()
@@ -67,11 +66,18 @@ function M.config()
       end,
     })
 
+    -- use({
+    --   'stevearc/aerial.nvim',
+    --   config = function()
+    --     require('plugins.aerial').config()
+    --   end
+    -- })
+
     use({
-      'stevearc/aerial.nvim',
+      'simrat39/symbols-outline.nvim',
       config = function()
-        require('plugins.aerial').config()
-      end
+        require('plugins.symbols-outline').config()
+      end,
     })
 
     use({
@@ -79,7 +85,7 @@ function M.config()
       after = { 'gitsigns.nvim' },
       config = function()
         require('plugins.nvim-scrollbar').config()
-      end
+      end,
     })
 
     use({
@@ -99,10 +105,10 @@ function M.config()
     use({
       'ojroques/nvim-bufdel',
       config = function()
-        require('bufdel').setup {
+        require('bufdel').setup({
           next = 'cycle', -- or 'cycle, 'alternate'
           quit = true, -- quit Neovim when last buffer is closed
-        }
+        })
       end,
     })
 
@@ -110,7 +116,7 @@ function M.config()
       'akinsho/bufferline.nvim',
       requires = {
         'kyazdani42/nvim-web-devicons',
-        'ojroques/nvim-bufdel'
+        'ojroques/nvim-bufdel',
       },
       config = function()
         require('plugins.bufferline').config()
@@ -174,10 +180,10 @@ function M.config()
     use({
       'williamboman/mason-lspconfig.nvim',
       config = function()
-        require("mason-lspconfig").setup()
+        require('mason-lspconfig').setup()
       end,
       after = {
-        'mason.nvim'
+        'mason.nvim',
       },
     })
 
@@ -197,7 +203,7 @@ function M.config()
         'rrethy/vim-illuminate',
       },
       after = {
-        'mason-lspconfig.nvim'
+        'mason-lspconfig.nvim',
       },
     })
 
@@ -304,7 +310,7 @@ function M.config()
 
     --   use 'alvan/vim-closetag' -- for html autoclosing tag
 
-    use {
+    use({
       'AckslD/nvim-neoclip.lua',
       disable = true,
       requires = {
@@ -313,9 +319,9 @@ function M.config()
       config = function()
         require('plugins.neoclip').config()
       end,
-    }
+    })
 
-    use {
+    use({
       'gbprod/yanky.nvim',
       requires = {
         { 'nvim-telescope/telescope.nvim' },
@@ -323,15 +329,15 @@ function M.config()
       config = function()
         require('plugins.yanky').config()
       end,
-    }
+    })
 
-    use {
+    use({
       's1n7ax/nvim-window-picker',
       tag = 'v1.*',
       config = function()
-        require 'window-picker'.setup()
+        require('window-picker').setup()
       end,
-    }
+    })
 
     use({
       'nvim-neo-tree/neo-tree.nvim',
@@ -378,19 +384,19 @@ function M.config()
       end,
     })
 
-    use {
+    use({
       'numToStr/Comment.nvim',
       config = function()
         require('plugins.comment').config()
-      end
-    }
+      end,
+    })
 
     use({
       'kevinhwang91/nvim-ufo',
       requires = 'kevinhwang91/promise-async',
       config = function()
         require('plugins.nvim-ufo').config()
-      end
+      end,
     })
 
     use({ 'tpope/vim-repeat' })
@@ -400,7 +406,7 @@ function M.config()
       -- tag = '*', -- Use for stability; omit to use `main` branch for the latest features
       config = function()
         require('plugins.nvim-surround').config()
-      end
+      end,
     })
 
     -- Text editing
@@ -412,27 +418,29 @@ function M.config()
       end,
     })
 
-    use {
+    use({
       'smjonas/inc-rename.nvim',
       config = function()
         require('inc_rename').setup()
         vim.keymap.set('n', 'gR', ':IncRename ')
       end,
-    }
+    })
 
-    use {
+    use({
       'kevinhwang91/nvim-bqf',
       ft = 'qf', -- filetype: quickfix
       requires = {
         {
           'junegunn/fzf',
-          run = function() vim.fn['fzf#install']() end,
-        }
+          run = function()
+            vim.fn['fzf#install']()
+          end,
+        },
       },
       config = function()
         require('plugins.bqf').config()
       end,
-    }
+    })
 
     use({
       'rhysd/clever-f.vim',
