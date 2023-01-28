@@ -6,7 +6,7 @@ function M.config()
     func_map = {
       drop = 'o',
       tabdrop = 't',
-      ptoggleitem = 'p',
+      ptoggleitem = 'P',
       ptogglemode = 'zp',
       prevhist = '<',
       nexthist = '>',
