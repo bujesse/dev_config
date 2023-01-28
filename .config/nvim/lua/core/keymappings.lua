@@ -183,6 +183,12 @@ function M.config_keys()
 
       ['<RightMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.hover({border = "single"})<CR>',
       ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
+
+      -- Open definition in vertial split
+      ['<C-w>gd'] = '<C-w>]<C-w>L',
+
+      -- Reload keymappings
+      ['<Leader>.k'] = ':lua R("core.keymappings").config()<CR>',
     },
 
     ---@usage change or add keymappings for terminal mode

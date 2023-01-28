@@ -5,7 +5,8 @@ function M.config()
     aliases = {
       ["q"] = { '"', "'", "`" },
       ["b"] = { ')', "}", "]" },
-    }
+    },
+    move_cursor = false,
   })
 end
 

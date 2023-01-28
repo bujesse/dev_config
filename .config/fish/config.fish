@@ -14,4 +14,9 @@ if status is-interactive
     fish_add_path /home/vagrant/dev_config/scripts
 
     set fzf_dir_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
+
+    # load pyenv automatically
+    # set -gx PYENV_ROOT "$HOME/.pyenv"
+    # fish_add_path "$PYENV_ROOT/bin"
+    # . (pyenv init -|psub)
 end

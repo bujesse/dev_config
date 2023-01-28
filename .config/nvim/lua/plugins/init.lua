@@ -67,10 +67,17 @@ function M.config()
       end,
     })
 
+    -- use({
+    --   'stevearc/aerial.nvim',
+    --   config = function()
+    --     require('plugins.aerial').config()
+    --   end
+    -- })
+
     use({
-      'stevearc/aerial.nvim',
+      'simrat39/symbols-outline.nvim',
       config = function()
-        require('plugins.aerial').config()
+        require('plugins.symbols-outline').config()
       end
     })
 
