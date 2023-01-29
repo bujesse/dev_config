@@ -2,18 +2,13 @@ local M = {}
 
 function M.config()
   local cmp = require('cmp')
-  local luasnip = require("luasnip")
+  local luasnip = require('luasnip')
   local lspkind = require('lspkind')
 
   local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
   end
-
-  local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-  end
-
 
   cmp.setup({
     snippet = {
@@ -48,7 +43,7 @@ function M.config()
         if luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else
-          vim.api.nvim_feedkeys(t('<C-d>'), 'n', true)
+          cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select })
         end
       end, { 'i', 's' }),
 
@@ -58,14 +53,30 @@ function M.config()
       }),
     },
 
-    -- You should specify your *installed* sources.
-    sources = {
-      { name = 'nvim_lsp' },
-      { name = 'path' },
-      { name = 'luasnip' },
-      { name = 'nvim_lua' },
-      { name = 'treesitter' },
-      { name = 'buffer' },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp', priority = 8 },
+      { name = 'luasnip', priority = 7 },
+      { name = 'buffer', priority = 7 },
+      { name = 'nvim_lua', priority = 5 },
+      { name = 'path', priority = 4 },
+      -- { name = 'treesitter', priority = 4 },
+    }),
+
+    sorting = {
+      priority_weight = 1.0,
+      comparators = {
+        -- compare.score_offset, -- not good at all
+        cmp.config.compare.locality,
+        cmp.config.compare.recently_used,
+        cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+        cmp.config.compare.offset,
+        cmp.config.compare.order,
+        -- compare.scopes, -- what?
+        -- compare.sort_text,
+        -- compare.exact,
+        -- compare.kind,
+        -- compare.length, -- useless
+      },
     },
 
     formatting = {
@@ -92,6 +103,24 @@ function M.config()
         return vim_item
       end,
     },
+  })
+
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' },
+    },
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' },
+    }, {
+      { name = 'cmdline' },
+    }),
   })
 
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')

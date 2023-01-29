@@ -165,8 +165,7 @@ function M.config()
         end,
       },
     },
-    extensions = {
-    },
+    extensions = {},
   })
 
   local opts = {
@@ -175,11 +174,14 @@ function M.config()
   }
 
   -- Essential
-  vim.api.nvim_set_keymap('n', '<Space>\'', '<cmd>lua require("telescope.builtin").resume()<CR>', opts)
+  vim.api.nvim_set_keymap('n', "<Space>'", '<cmd>lua require("telescope.builtin").resume()<CR>', opts)
   vim.api.nvim_set_keymap('n', '<Space>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<Space>f',
+  vim.api.nvim_set_keymap(
+    'n',
+    '<Space>f',
     '<cmd>lua require("telescope.builtin").live_grep({ additional_args = { "--fixed-strings" } })<CR>',
-    opts)
+    opts
+  )
   vim.api.nvim_set_keymap('n', '<Space>g', '<cmd>lua require("telescope.builtin").git_status()<CR>', opts)
   vim.api.nvim_set_keymap(
     'n',
@@ -216,8 +218,7 @@ function M.config()
   vim.api.nvim_set_keymap(
     'n',
     '<Space><Space>',
-    [[<cmd>lua require("telescope.builtin").commands(require("telescope.themes").get_dropdown({ layout_config = { width = 0.7, height = 0.7, } }))<cr>]]
-    ,
+    [[<cmd>lua require("telescope.builtin").commands(require("telescope.themes").get_dropdown({ layout_config = { width = 0.7, height = 0.7, } }))<cr>]],
     opts
   )
 

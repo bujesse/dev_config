@@ -84,10 +84,10 @@ return {
   },
   lsp = {
     function(msg)
-      msg = msg or '年'
-      local buf_clients = vim.lsp.buf_get_clients()
+      local default_msg = '年'
+      local buf_clients = vim.lsp.get_active_clients()
       if next(buf_clients) == nil then
-        return msg
+        return default_msg
       end
 
       local buf_client_names = {}

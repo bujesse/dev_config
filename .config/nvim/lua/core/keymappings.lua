@@ -167,10 +167,10 @@ function M.config_keys()
       -- TODO: probably need better space mapping here
       -- ['<space>'] = ':',
       -- ['<space><space>'] = ':w<CR>,',
-      ['<space>;'] = ":<Up><CR>",
+      ['<space>;'] = ':<Up><CR>',
 
       -- system yank
-      ['<C-y>'] = '"*y',
+      ['<C-y>'] = '"+y',
 
       -- Move current line / block with Alt-j/k a la vscode.
       -- ['<A-j>'] = ':m .+1<CR>==',
@@ -189,11 +189,12 @@ function M.config_keys()
 
       -- Reload keymappings
       ['<Leader>.k'] = ':lua R("core.keymappings").config()<CR>',
+
+      ['<Leader>.,'] = ':wa<CR>:lua R("what-key").setup()<CR>',
     },
 
     ---@usage change or add keymappings for terminal mode
-    term_mode = {
-    },
+    term_mode = {},
 
     ---@usage change or add keymappings for visual mode
     visual_mode = {
@@ -202,7 +203,7 @@ function M.config_keys()
       ['>'] = '>gv',
 
       -- system yank
-      ['<C-y>'] = '"*y',
+      ['<C-y>'] = '"+y',
 
       -- Replace word with last yank (repeatable)
       ['<Leader>v'] = 'c<C-r>0<Esc>',
@@ -227,7 +228,6 @@ function M.config_keys()
       -- Move selected line / block of text in visual mode
       [']e'] = { '<Plug>unimpairedMoveSelectionDown', { noremap = false } },
       ['[e'] = { '<Plug>unimpairedMoveSelectionUp', { noremap = false } },
-
 
       -- save all
       ['<C-s>'] = '<C-c>:wa<cr>gv',

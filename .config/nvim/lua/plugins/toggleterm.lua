@@ -19,7 +19,6 @@ function M.config()
     },
     env = {
       -- pip install neovim-remote
-      -- TODO: ensure this is installed
       GIT_EDITOR = [[nvr -cc vsplit --remote-wait +'set bufhidden=wipe']],
     },
     on_open = function(term)

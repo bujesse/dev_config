@@ -19,7 +19,6 @@ function M.common_on_attach(client, bufnr)
   }
 
   vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
   vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.keymap.set('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -35,6 +34,27 @@ function M.common_on_attach(client, bufnr)
     P(vim.lsp.buf.list_workspace_folders())
   end, opts)
   -- See `:help vim.lsp.*` for documentation on functions
+
+  if vim.bo.filetype == 'python' then
+    -- Specific to darker only; it doesn't play nicely with null-ls
+    vim.keymap.set(
+      'n',
+      '<Leader>f',
+      function()
+        vim.cmd.write()
+        vim.cmd([[silent !darker --isort --skip-string-normalization -l 120 %]])
+
+        -- VAGRANT
+        vim.defer_fn(function()
+          vim.cmd('checktime')
+        end, 1500)
+        -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
+      end,
+      { buffer = true }
+    )
+  else
+    vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+  end
 
   -- Enable vim-illuminate
   require('illuminate').on_attach(client)
@@ -64,11 +84,11 @@ function M.common_on_attach(client, bufnr)
 
   -- Setup auto format on save
   if client.supports_method('textDocument/formatting') then
-    local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
+    local augroup = vim.api.nvim_create_augroup('LspFormatting', { clear = false })
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
     -- TODO: this will keep turning on af for newly mounted lsp's
-    M.turn_autoformat_on(augroup)
+    M.turn_autoformat_on(augroup, bufnr)
 
     vim.keymap.set('n', 'yoa', function()
       M.toggle_autoformat(augroup, bufnr, true)
@@ -80,9 +100,10 @@ end
 
 function M.turn_autoformat_on(augroup, bufnr)
   vim.api.nvim_create_autocmd('BufWritePre', {
+    buffer = bufnr,
     group = augroup,
     callback = function()
-      vim.lsp.buf.format()
+      vim.lsp.buf.format({ bufnr = bufnr })
       -- vim.lsp.buf.format({ bufnr = bufnr })
       -- M.async_formatting(bufnr)
     end,
@@ -95,9 +116,9 @@ function M.toggle_autoformat(augroup, bufnr, should_log)
   M.formatting_on = not M.formatting_on
 
   if M.formatting_on then
-    M.turn_autoformat_on(augroup)
+    M.turn_autoformat_on(augroup, bufnr)
   else
-    vim.api.nvim_clear_autocmds({ group = augroup })
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
   end
 
   if should_log then
@@ -127,32 +148,28 @@ end
 M.async_formatting = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
-  vim.lsp.buf_request(
-    bufnr,
-    "textDocument/formatting",
-    vim.lsp.util.make_formatting_params({}),
+  vim.lsp.buf_request(bufnr, 'textDocument/formatting', vim.lsp.util.make_formatting_params({}),
     function(err, res, ctx)
       if err then
-        local err_msg = type(err) == "string" and err or err.message
+        local err_msg = type(err) == 'string' and err or err.message
         -- you can modify the log message / level (or ignore it completely)
-        vim.notify("formatting: " .. err_msg, vim.log.levels.WARN)
+        vim.notify('formatting: ' .. err_msg, vim.log.levels.WARN)
         return
       end
 
       -- don't apply results if buffer is unloaded or has been modified
-      if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, "modified") then
+      if not vim.api.nvim_buf_is_loaded(bufnr) or vim.api.nvim_buf_get_option(bufnr, 'modified') then
         return
       end
 
       if res then
         local client = vim.lsp.get_client_by_id(ctx.client_id)
-        vim.lsp.util.apply_text_edits(res, bufnr, client and client.offset_encoding or "utf-16")
+        vim.lsp.util.apply_text_edits(res, bufnr, client and client.offset_encoding or 'utf-16')
         vim.api.nvim_buf_call(bufnr, function()
-          vim.cmd("silent noautocmd update")
+          vim.cmd('silent noautocmd update')
         end)
       end
-    end
-  )
+    end)
 end
 
 function M.select_default_formater(client)
@@ -202,7 +219,7 @@ function M.get_common_opts()
   }
 end
 
-M.make_config = function(server_name)
+function M.make_config(server_name)
   local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. server_name)
   if ok and config.lsp and config.lsp.setup then
     config = config.lsp.setup
@@ -239,9 +256,9 @@ function M.setup_servers()
     end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
-    -- ["rust_analyzer"] = function ()
-    --     require("rust-tools").setup {}
-    -- end
+    -- ['pyright'] = function()
+    --   P('Hello')
+    -- end,
   })
 end
 

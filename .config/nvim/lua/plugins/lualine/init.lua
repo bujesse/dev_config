@@ -31,11 +31,11 @@ function M.config()
         },
       },
       lualine_x = {
-        components.diagnostics,
+        -- components.diagnostics,
         'filetype',
       },
       lualine_y = {
-        'progress',
+        'location',
       },
       lualine_z = {
         components.treesitter,

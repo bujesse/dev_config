@@ -29,7 +29,8 @@ local function create_floating_file(location, opts)
   local contents = vim.api.nvim_buf_get_lines(
     bufnr,
     range.start.line,
-    math.min(range['end'].line + 1 + (opts.context or 10), range.start.line + (opts.max_height or 15)), -- Don't let the window be more that 15 lines long(height)
+    math.min(range['end'].line + 1 + (opts.context or 10), range.start.line + (opts.max_height or 15)),
+    -- Don't let the window be more that 15 lines long(height)
     false
   )
   local width, height = vim.lsp.util._make_floating_popup_size(contents, opts)

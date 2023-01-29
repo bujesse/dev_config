@@ -16,11 +16,11 @@ end
 
 function M.setup(options)
   options = options
-      or {
-        diagnostics_format = '[#{s}] #{m} (#{s})',
-        debounce = 250,
-        default_timeout = 5000,
-      }
+    or {
+      diagnostics_format = '[#{s}] #{m} (#{s})',
+      debounce = 250,
+      default_timeout = 5000,
+    }
 
   local ok, _ = pcall(require, 'null-ls')
   if not ok then

@@ -56,6 +56,9 @@ function M.config()
   vim.api.nvim_set_keymap('n', '<Leader>bh', ':BufferLineCloseLeft<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', '<Leader>bp', ':BufferLineTogglePin<CR>', { noremap = true, silent = true })
   vim.api.nvim_set_keymap('n', 'X', ':BufDel<CR>', { noremap = true, silent = true })
+
+  -- Confines buffers to tabs
+  require('scope').setup()
 end
 
 return M

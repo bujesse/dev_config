@@ -38,10 +38,6 @@ M.autocommands = {
   _general_lsp = {
     { 'FileType', 'lspinfo', 'nnoremap <silent> <buffer> q :q<CR>' },
   },
-  _help = {
-    -- Open split vertically on the right
-    { 'BufEnter', '*.txt', "if &buftype == 'help' | wincmd L | endif" },
-  },
   custom_groups = {},
 }
 
@@ -75,7 +71,7 @@ function M.config()
     callback = function()
       vim.defer_fn(function()
         vim.cmd('checktime')
-      end, 2000)
+      end, 1500)
     end,
   })
 end

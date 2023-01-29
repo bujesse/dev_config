@@ -1,10 +1,11 @@
 local M = {}
 
 function M.config()
-  vim.o.foldcolumn = '0' -- '1' displays folds in the column but it's ugly for now - https://github.com/kevinhwang91/nvim-ufo/issues/4
+  vim.o.foldcolumn = '1'
   vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
   vim.o.foldlevelstart = 99
   vim.o.foldenable = true
+  vim.o.numberwidth = 4
 
   -- Option 3: treesitter as a main provider instead
   -- Only depend on `nvim-treesitter/queries/filetype/folds.scm`,
@@ -19,9 +20,17 @@ function M.config()
     preview = {
       mappings = {
         scrollU = '<C-u>',
-        scrollD = '<C-d>'
-      }
-    }
+        scrollD = '<C-d>',
+      },
+    },
+  })
+
+  -- Allows configurinig the fold stuff in the column
+  -- Can also configure clicking (like DAP breakpoints, folds, etc)
+  require('statuscol').setup({
+    foldfunc = 'builtin',
+    order = 'SFNs',
+    setopt = true,
   })
 
   -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
@@ -32,6 +41,7 @@ function M.config()
   vim.keymap.set('n', 'zp', require('ufo').peekFoldedLinesUnderCursor) -- closeAllFolds == closeFoldsWith(0)
   vim.keymap.set('n', '[z', require('ufo').goPreviousClosedFold)
   vim.keymap.set('n', ']z', require('ufo').goNextClosedFold)
+  vim.keymap.set('n', 'zk', require('ufo').goPreviousStartFold) -- zj goes to next start fold, and is built in
   vim.keymap.set('n', 'zo', 'zO')
 
   -- Option 2: nvim lsp as LSP client

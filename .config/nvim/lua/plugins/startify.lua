@@ -50,6 +50,7 @@ function M.config()
     'silent! helpclose',
     'silent! Neotree action=close',
     'silent! AerialCloseAll',
+    'silent! cclose'
   }
 
   -- barbar doesn't load immediately because it

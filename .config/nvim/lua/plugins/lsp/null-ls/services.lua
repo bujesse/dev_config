@@ -97,10 +97,10 @@ function M.register_custom_sources()
     }),
   }
 
-  local is_registered = require('null-ls.sources').is_registered
-  if not is_registered({ name = darker.name }) then
-    null_ls.register(darker)
-  end
+  -- local is_registered = require('null-ls.sources').is_registered
+  -- if not is_registered({ name = darker.name }) then
+  --   null_ls.register(darker)
+  -- end
 end
 
 function M.list_registered_providers_names(filetype)

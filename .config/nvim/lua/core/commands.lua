@@ -17,8 +17,16 @@ M.defaults = {
       call winrestview(l:save)
     endfun
   ]],
-  -- :LvimInfo
-  -- [[command! LvimInfo lua require('core.info').toggle_popup(vim.bo.filetype)]],
+  -- Use like :Redir <command> to put output of whatever command in a new scratch window
+  [[
+    command -nargs=1 -complete=command Redir
+        \ :execute "15new | pu=execute(\'" . <q-args> . "\') | setl nobuflisted buftype=nofile bufhidden=wipe noswapfile nu"
+  ]],
+  -- Put messages in a scratch
+  [[
+    command M
+        \ :execute "Redir messages"
+  ]],
 }
 
 M.load = function(commands)
