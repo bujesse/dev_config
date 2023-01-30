@@ -2,10 +2,18 @@
 " move to the window in the direction shown, or create a new window
 function s:WinMove(key)
     let t:curwin = winnr()
-    let extension = expand('%')
-    if (extension == "NvimTree" && a:key == "h")
+
+    let extension = &filetype
+    if (extension == "neo-tree" && a:key != "l")
+      return
+    elseif (extension == "DiffviewFiles" && a:key != "l")
+      return
+    elseif (extension == "Outline" && a:key != "h")
+      return
+    elseif (extension == "startify")
       return
     end
+
     exec "wincmd ".a:key
     if (t:curwin == winnr())
         if (match(a:key,'[jk]'))

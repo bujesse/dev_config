@@ -1,108 +1,80 @@
 local M = {}
 
 function M.config()
-  local present, packer = pcall(require, 'core.packer-init')
-  if not present then
-    return false
-  end
+  require('lazy').setup({
+    {
+      'nvim-lua/plenary.nvim',
+      dependencies = {
+        'lewis6991/gitsigns.nvim',
+        'jose-elias-alvarez/null-ls.nvim',
+        'sindrets/diffview.nvim',
+        'nvim-neo-tree/neo-tree.nvim',
+      }
+    },
 
-  local use = packer.use
-
-  return packer.startup(function()
-    -- this is arranged on the basis of when a plugin starts
-    use({ 'nvim-lua/plenary.nvim' })
-    -- use({ 'romgrk/fzy-lua-native' })
-
-    use({ 'lewis6991/impatient.nvim' })
-
-    use({
-      'wbthomason/packer.nvim',
-      event = 'VimEnter',
-    })
-
-    use({
+    {
       'folke/which-key.nvim',
       config = function()
         require('plugins.which-key').config()
       end,
-    })
+    },
 
-    use({
+    {
       'ellisonleao/gruvbox.nvim',
+      lazy = false, -- make sure we load this during startup if it is your main colorscheme
+      priority = 1000, -- make sure to load this before all the other start plugins
       config = function()
         require('plugins.gruvbox').config()
       end,
-    })
+    },
 
-    use({
+    {
       'mhinz/vim-startify',
       config = function()
         require('plugins.startify').config()
       end,
-    })
+    },
 
-    use({
+    {
       'ThePrimeagen/harpoon',
       config = function()
         require('plugins.harpoon').config()
       end,
-    })
+    },
 
-    use({
+    {
       'kyazdani42/nvim-web-devicons',
       config = function()
         require('plugins.nvim-web-devicons').config()
       end,
-    })
+      dependencies = {
+        {
+          'romgrk/barbar.nvim',
+          enabled = false,
+          config = function()
+            require('plugins.barbar').config()
+          end,
+        },
+        'nvim-lualine/lualine.nvim',
+        'akinsho/bufferline.nvim',
+      }
+    },
 
-    use({
+    {
       'nvim-lualine/lualine.nvim',
-      requires = {
-        'kyazdani42/nvim-web-devicons',
-        opt = true,
-      },
       config = function()
         require('plugins.lualine.init').config()
       end,
-    })
+    },
 
-    -- use({
-    --   'stevearc/aerial.nvim',
-    --   config = function()
-    --     require('plugins.aerial').config()
-    --   end
-    -- })
-
-    use({
+    {
       'simrat39/symbols-outline.nvim',
       config = function()
         require('plugins.symbols-outline').config()
       end,
-    })
+    },
 
-    use({
-      'petertriho/nvim-scrollbar',
-      after = { 'gitsigns.nvim' },
-      config = function()
-        require('plugins.nvim-scrollbar').config()
-      end,
-    })
-
-    use({
-      'datwaft/bubbly.nvim',
-      disable = true,
-      requires = {
-        'kyazdani42/nvim-web-devicons',
-      },
-      -- after = {
-      --   'gruvbox-material',
-      -- },
-      config = function()
-        require('plugins.bubbly').config()
-      end,
-    })
-
-    use({
+    {
       'ojroques/nvim-bufdel',
       config = function()
         require('bufdel').setup({
@@ -110,346 +82,299 @@ function M.config()
           quit = true, -- quit Neovim when last buffer is closed
         })
       end,
-    })
+    },
 
-    use({
+    {
       'akinsho/bufferline.nvim',
-      requires = {
-        'kyazdani42/nvim-web-devicons',
+      dependencies = {
         'ojroques/nvim-bufdel',
         'tiagovla/scope.nvim',
       },
       config = function()
         require('plugins.bufferline').config()
       end,
-    })
+    },
 
-    use({
-      'romgrk/barbar.nvim',
-      after = 'nvim-web-devicons',
-      disable = true,
-      config = function()
-        require('plugins.barbar').config()
-      end,
-    })
-
-    use({
+    {
       'lukas-reineke/indent-blankline.nvim',
       config = function()
         require('plugins.indent-blankline').config()
       end,
-    })
+    },
 
-    use({
+    {
       'nvim-treesitter/nvim-treesitter',
       event = 'BufRead',
-      run = ':TSUpdate',
+      build = ':TSUpdate',
       config = function()
         require('plugins.nvim-treesitter').config()
       end,
-    })
+    },
 
     -- git stuff
-    use({
+    {
       'lewis6991/gitsigns.nvim',
       config = function()
         require('plugins.gitsigns').config()
       end,
-      requires = { 'plenary.nvim' },
-    })
+      dependencies = {
+        {
+          'petertriho/nvim-scrollbar',
+          config = function()
+            require('plugins.nvim-scrollbar').config()
+          end,
+        },
+      },
+    },
 
-    use {
+    {
       'sindrets/diffview.nvim',
-      requires = 'nvim-lua/plenary.nvim',
       config = function()
         require('plugins.diffview').config()
       end,
-    }
+    },
 
     -- smooth scroll
-    use({
+    {
       'karb94/neoscroll.nvim',
       config = function()
         require('plugins.neoscroll').config()
       end,
-      setup = function()
-        require('core.utils').packer_lazy_load('neoscroll.nvim')
-      end,
-    })
+    },
 
     -- lsp stuff
 
-    use({
+    {
       'williamboman/mason.nvim',
       config = function()
         require('plugins.mason').config()
       end,
-    })
+      dependencies = {
+        'williamboman/mason-lspconfig.nvim'
+      }
+    },
 
-    use({
+    {
       'williamboman/mason-lspconfig.nvim',
       config = function()
         require('mason-lspconfig').setup()
       end,
-      after = {
-        'mason.nvim',
-      },
-    })
+      dependencies = {
+        'neovim/nvim-lspconfig',
+      }
+    },
 
-    use({
+    {
       'neovim/nvim-lspconfig',
-      setup = function()
-        require('core.utils').packer_lazy_load('nvim-lspconfig')
-        -- reload the current file so lsp actually starts for it
-        vim.defer_fn(function()
-          vim.cmd('silent! e %')
-        end, 0)
-      end,
       config = function()
         require('plugins.lsp.nvim-lspconfig').config()
       end,
-      requires = {
+      dependencies = {
         'rrethy/vim-illuminate',
+        'jose-elias-alvarez/null-ls.nvim',
       },
-      after = {
-        'mason-lspconfig.nvim',
-        'neodev.nvim',
-      },
-    })
-
-    use({
-      'jose-elias-alvarez/null-ls.nvim',
-      -- config is in lspconfig
-      after = {
-        'plenary.nvim',
-        -- 'nvim-lspconfig',
-      },
-    })
+    },
 
     -- UI for nvim-lsp
-    use({
+    {
       'j-hui/fidget.nvim',
       config = function()
         require('fidget').setup({})
       end,
-    })
+    },
 
-    use({
+    {
       'folke/neodev.nvim',
-      config = function()
-        require('neodev').setup({
-          library = {
-            -- runtime = false,
-            -- types = false,
-            plugins = { 'plenary.nvim', 'telescope.nvim' }, -- this one makes it slow; probably because i have too many i guess. Can use a table here if i want access to certain plugins. In fact it's probably just a few bad plugins making it slow
-          },
-        })
-      end,
-    })
-
-    -- Show function signature when you type
-    -- use({
-    --   'ray-x/lsp_signature.nvim',
-    --   disable = not plugin_status.lspsignature,
-    --   after = 'nvim-lspconfig',
-    --   config = function()
-    --     require('plugins.configs.others').signature()
-    --   end,
-    -- })
+    },
 
     -- load luasnips + cmp related in insert mode only
-    use({
+    {
       'onsails/lspkind-nvim',
       event = 'InsertEnter',
-    })
+      dependencies = {
+        'hrsh7th/nvim-cmp',
+      }
+    },
 
-    use({
+    {
       'hrsh7th/nvim-cmp',
-      after = { 'lspkind-nvim' },
-      requires = { 'LuaSnip' },
-      config = function()
-        require('plugins.nvim-cmp').config()
-      end,
-    })
+      dependencies = {
+        'LuaSnip',
+        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-nvim-lua',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-path',
+        'windwp/nvim-autopairs',
+      },
+      config = function() require('plugins.nvim-cmp').config() end,
+    },
 
-    use({
+    {
       'L3MON4D3/LuaSnip',
-      requires = { 'rafamadriz/friendly-snippets' },
+      dependencies = { 'rafamadriz/friendly-snippets' },
       config = function()
         require('plugins.luasnip').config()
       end,
-    })
-
-    use({
-      'saadparwaiz1/cmp_luasnip',
-      after = 'nvim-cmp',
-    })
-
-    use({
-      'hrsh7th/cmp-nvim-lua',
-      after = 'cmp_luasnip',
-    })
-
-    use({
-      'hrsh7th/cmp-nvim-lsp',
-      after = 'cmp-nvim-lua',
-    })
-
-    use({
-      'hrsh7th/cmp-buffer',
-      after = 'cmp-nvim-lsp',
-    })
-
-    use({
-      'hrsh7th/cmp-path',
-      after = 'cmp-buffer',
-    })
+    },
 
     -- misc plugins
-    use({
+    {
       'windwp/nvim-autopairs',
-      after = 'nvim-cmp',
       config = function()
         require('plugins.nvim-autopairs').config()
       end,
-    })
+    },
 
-    use({
+    {
       'akinsho/toggleterm.nvim',
-      tag = '*',
+      version = '*',
       config = function()
         require('plugins.toggleterm').config()
       end,
-    })
+    },
 
-    --   use 'alvan/vim-closetag' -- for html autoclosing tag
+    --    ,'alvan/vim-closetag' -- for html autoclosing tag
 
-    use({
+    {
       'AckslD/nvim-neoclip.lua',
-      disable = true,
-      requires = {
-        { 'nvim-telescope/telescope.nvim' },
+      enabled = false,
+      dependencies = {
+        'nvim-telescope/telescope.nvim',
       },
       config = function()
         require('plugins.neoclip').config()
       end,
-    })
+    },
 
-    use({
+    {
       'gbprod/yanky.nvim',
-      requires = {
-        { 'nvim-telescope/telescope.nvim' },
+      dependencies = {
+        'nvim-telescope/telescope.nvim',
       },
       config = function()
         require('plugins.yanky').config()
       end,
-    })
+    },
 
-    use({
+    {
       's1n7ax/nvim-window-picker',
-      tag = 'v1.*',
+      version = 'v1.*',
       config = function()
         require('window-picker').setup()
       end,
-    })
+      dependencies = {
+        'nvim-neo-tree/neo-tree.nvim',
+      }
+    },
 
-    use({
+    {
+      'MunifTanjim/nui.nvim',
+      dependencies = {
+        'nvim-neo-tree/neo-tree.nvim',
+      }
+    },
+
+    {
       'nvim-neo-tree/neo-tree.nvim',
       branch = 'v2.x',
-      requires = {
-        'nvim-lua/plenary.nvim',
-        'nvim-tree/nvim-web-devicons',
-        'MunifTanjim/nui.nvim',
-        's1n7ax/nvim-window-picker',
-      },
       config = function()
         require('plugins.neo-tree').config()
       end,
-    })
+    },
 
-    use({
+    {
       'nvim-telescope/telescope.nvim',
       config = function()
         require('plugins.telescope').config()
       end,
-    })
+    },
 
     -- Debugging
-    -- use({
+    -- {
     --   'mfussenegger/nvim-dap',
     --   -- event = 'BufWinEnter',
     --   ft = { 'python' },
     --   config = function()
     --     require('plugins.nvim-dap').config()
     --   end,
-    -- })
+    -- },
 
-    -- use({
+    -- {
     --   'Pocco81/DAPInstall.nvim',
     --   -- event = 'BufWinEnter',
     --   -- event = 'BufRead',
-    -- })
+    -- },
 
-    use({
+    {
       -- cr_ to change between cases
       'tpope/vim-abolish',
       config = function()
         require('plugins.abolish').config()
       end,
-    })
+    },
 
-    use({
+    {
       'numToStr/Comment.nvim',
       config = function()
         require('plugins.comment').config()
       end,
-    })
+    },
 
-    use({
+    {
+      'kevinhwang91/promise-async',
+      dependencies = {
+        'kevinhwang91/nvim-ufo',
+      }
+    },
+
+    {
+      'luukvbaal/statuscol.nvim',
+      dependencies = {
+        'kevinhwang91/nvim-ufo',
+      }
+    },
+
+    {
       'kevinhwang91/nvim-ufo',
-      requires = {
-        'kevinhwang91/promise-async',
-        'luukvbaal/statuscol.nvim',
-      },
       config = function()
         require('plugins.nvim-ufo').config()
       end,
-    })
+    },
 
-    use({ 'tpope/vim-repeat' })
+    { 'tpope/vim-repeat' },
 
-    use({
+    {
       'kylechui/nvim-surround',
-      -- tag = '*', -- Use for stability; omit to use `main` branch for the latest features
+      -- version = '*', -- Use for stability; omit to use `main` branch for the latest features
       config = function()
         require('plugins.nvim-surround').config()
       end,
-    })
+    },
 
     -- Text editing
-    use({
+    {
       'vim-scripts/ReplaceWithRegister',
-      -- Before load because the plugin checks if a mapping exists
-      setup = function()
+      config = function()
         require('plugins.replace-with-register').config()
       end,
-    })
+    },
 
-    use({
+    {
       'smjonas/inc-rename.nvim',
       config = function()
         require('inc_rename').setup()
         vim.keymap.set('n', 'gR', ':IncRename ')
       end,
-    })
+    },
 
-    use({
+    {
       'kevinhwang91/nvim-bqf',
       ft = 'qf', -- filetype: quickfix
-      requires = {
+      dependencies = {
         {
           'junegunn/fzf',
-          run = function()
+          build = function()
             vim.fn['fzf#install']()
           end,
         },
@@ -457,43 +382,61 @@ function M.config()
       config = function()
         require('plugins.bqf').config()
       end,
-    })
+    },
 
-    use({
+    {
       'rhysd/clever-f.vim',
       config = function()
         require('plugins.clever-f').config()
       end,
-    })
+    },
 
-    use({
+    {
       'ggandor/leap.nvim',
       config = function()
         require('plugins.leap').config()
       end,
-    })
+    },
 
-    use({
+    {
       'haya14busa/vim-asterisk',
       config = function()
         require('plugins.vim-asterisk').config()
       end,
-    })
+    },
 
-    use({ 'tommcdo/vim-exchange' })
-    use({ 'mg979/vim-visual-multi' })
-    use({
+    { 'tommcdo/vim-exchange' },
+    { 'mg979/vim-visual-multi' },
+    {
       'Wansmer/treesj',
-      requires = { 'nvim-treesitter' },
+      dependencies = { 'nvim-treesitter' },
       config = function()
         require('plugins.treesj').config()
       end,
-    })
+    },
 
     -- Text objects
-    use({ 'michaeljsmith/vim-indent-object' })
-    use({ 'dbakker/vim-paragraph-motion' })
-  end)
+    { 'michaeljsmith/vim-indent-object' },
+    { 'dbakker/vim-paragraph-motion' },
+  },
+    {
+      ui = {
+        icons = {
+          cmd = "⌘",
+          config = "🛠",
+          event = "📅",
+          ft = "📂",
+          init = "⚙",
+          keys = "🗝",
+          plugin = "🔌",
+          runtime = "💻",
+          source = "📄",
+          start = "🚀",
+          task = "📌",
+          lazy = "💤 ",
+        }
+      },
+    })
 end
 
 return M

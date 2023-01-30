@@ -28,7 +28,8 @@ function M.config()
   vim.g.startify_commands = {
     -- { f = { '  Find Files', 'Telescope find_files' } },
     { w = { '  Find Word', 'Telescope live_grep' } },
-    { up = { '  Update Plugins', 'PackerSync' } },
+    { lc = { '  Check Plugins', 'Lazy check' } },
+    { ls = { '  Sync Plugins (Lazy install, clean, update)', 'Lazy sync' } },
     { ts = { '  Update Treesitter', 'TSUpdate' } },
     { ch = { '  Check Health', 'checkhealth' } },
   }

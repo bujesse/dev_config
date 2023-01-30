@@ -34,16 +34,6 @@ function R(name)
   return require(name)
 end
 
--- load plugin after entering vim ui
-M.packer_lazy_load = function(plugin, timer)
-  if plugin then
-    timer = timer or 0
-    vim.defer_fn(function()
-      require('packer').loader(plugin)
-    end, timer)
-  end
-end
-
 M.sep = (function()
   if jit then
     local os = string.lower(jit.os)

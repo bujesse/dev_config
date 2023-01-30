@@ -114,7 +114,6 @@ function M.config()
         '*/tmp/*',
         '*.cache/*',
         '*plugged/*',
-        'packer_compiled.lua',
         'node_modules/',
         'package-lock.json',
         'plug.vim',
@@ -215,10 +214,12 @@ function M.config()
   )
 
   -- This will allow easy access to hard-to-remember, obscure commands through mappings
+  -- TODO: this needs work, as just the commands aren't good enough for <space><space>
   vim.api.nvim_set_keymap(
     'n',
     '<Space><Space>',
-    [[<cmd>lua require("telescope.builtin").commands(require("telescope.themes").get_dropdown({ layout_config = { width = 0.7, height = 0.7, } }))<cr>]],
+    [[<cmd>lua require("telescope.builtin").commands(require("telescope.themes").get_dropdown({ layout_config = { width = 0.7, height = 0.7, } }))<cr>]]
+    ,
     opts
   )
 
