@@ -59,8 +59,8 @@ function M.config()
         },
         -- ['l'] = 'open_node',
         ['h'] = 'close_node',
-        ['/'] = 'filter_on_submit',
-        ['f'] = 'fuzzy_finder',
+        -- ['/'] = 'filter_on_submit',
+        -- ['f'] = 'fuzzy_finder',
       },
     },
     filesystem = {
@@ -127,10 +127,10 @@ function M.config()
     name = 'Neotree',
     n = { ':Neotree source=filesystem toggle=true<CR>', 'Open Neotree' },
     N = { ':Neotree source=filesystem reveal=true<CR>', 'Open Neotree and find file' },
-    g = {
-      ':Neotree source=git_status position=float toggle=true reveal=true<CR>',
-      'Open git status Neotree in a float',
-    },
+    -- g = {
+    --   ':Neotree source=git_status position=float toggle=true reveal=true<CR>',
+    --   'Open git status Neotree in a float',
+    -- },
   }, {
     prefix = '<Leader>',
   })
