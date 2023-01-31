@@ -4,7 +4,7 @@ return {
     'nvim-lualine/lualine.nvim',
     event = "VeryLazy",
     opts = function(plugin)
-      local components = require('plugins_new.lualine.components')
+      local components = require('plugins.lualine.components')
       return {
         options = {
           icons_enabled = true,

@@ -9,7 +9,7 @@ function M.config()
     return
   end
 
-  local lsp_config = require('plugins_new.lsp.nvim-lspconfig')
+  local lsp_config = require('plugins.lsp.nvim-lspconfig')
   local default_opts = lsp_config.get_common_opts()
   null_ls.setup(vim.tbl_deep_extend('force', default_opts, {}))
 end
@@ -28,8 +28,8 @@ function M.setup(options)
     return
   end
 
-  local formatters = require('plugins_new.lsp.null-ls.formatters')
-  local linters = require('plugins_new.lsp.null-ls.linters')
+  local formatters = require('plugins.lsp.null-ls.formatters')
+  local linters = require('plugins.lsp.null-ls.linters')
 
   -- THIS STUFF WORKS ON HOME PC:
   formatters.setup({

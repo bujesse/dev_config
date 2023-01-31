@@ -39,20 +39,6 @@ return {
     }
   },
 
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      { 'windwp/nvim-autopairs', config = true }
-    },
-    config = function() require('plugins_new.nvim-cmp').config() end,
-  },
-
   -- surround
   {
     'kylechui/nvim-surround',
@@ -109,15 +95,4 @@ return {
     end,
   },
 
-  -- better folds
-  {
-    'kevinhwang91/nvim-ufo',
-    dependencies = {
-      'kevinhwang91/promise-async',
-      'luukvbaal/statuscol.nvim',
-    },
-    config = function()
-      require('plugins_new.nvim-ufo').config()
-    end,
-  },
 }

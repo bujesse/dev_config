@@ -4,7 +4,7 @@ local Log = require('core.log')
 
 local function find_ts_root()
   local util = require('lspconfig/util')
-  local lsp_utils = require('plugins_new.lsp.utils')
+  local lsp_utils = require('plugins.lsp.utils')
 
   local status_ok, ts_client = lsp_utils.is_client_active('typescript')
   if status_ok then
@@ -65,42 +65,54 @@ function M.register_custom_sources()
   local null_ls = require('null-ls')
   local helpers = require('null-ls.helpers')
 
-  local darker = {
-    name = 'darker',
-    filetypes = { 'python' },
-    method = { null_ls.methods.FORMATTING },
-    meta = {
-      url = 'https://github.com/akaihola/darker',
-      description = [[
+  local custom_sources = {
+    {
+      enabled = false,
+      name = 'darker',
+      filetypes = { 'python' },
+      method = { null_ls.methods.FORMATTING },
+      meta = {
+        url = 'https://github.com/akaihola/darker',
+        description = [[
         Re-format Python source files by using
         - `isort` to sort Python import definitions alphabetically within logical sections
         - `black` to re-format code changed since the last Git commit
-
         Please run `pip install darker[isort]` to enable sorting of import definitions
-      ]],
-    },
-    generator = helpers.formatter_factory({
-      command = M.find_command('darker'),
-      args = {
-        '--quiet',
-        '--isort',
-        '--skip-string-normalization',
-        '--stdout',
-        '--line-length',
-        '120',
-        '$FILENAME',
+      ]] ,
       },
-      to_stdin = false,
-      from_stderr = true,
-      -- to_temp_file = false,
-      -- from_temp_file = true,
-    }),
+      generator = helpers.formatter_factory({
+        command = M.find_command('darker'),
+        args = {
+          '--quiet',
+          '--isort',
+          '--skip-string-normalization',
+          '--stdout',
+          '--line-length',
+          '120',
+          '$FILENAME',
+        },
+        to_stdin = false,
+        from_stderr = true,
+        -- to_temp_file = false,
+        -- from_temp_file = true,
+      }),
+    },
+    {
+      name = 'ts-node-actions',
+      filetypes = { '_all' },
+      method = { null_ls.methods.CODE_ACTION },
+      generator = {
+        fn = require('ts-node-action').available_actions
+      },
+    }
   }
 
-  -- local is_registered = require('null-ls.sources').is_registered
-  -- if not is_registered({ name = darker.name }) then
-  --   null_ls.register(darker)
-  -- end
+  local is_registered = require('null-ls.sources').is_registered
+  for _, source in ipairs(custom_sources) do
+    if source.enabled ~= false and not is_registered({ name = source.name }) then
+      null_ls.register(source)
+    end
+  end
 end
 
 function M.list_registered_providers_names(filetype)

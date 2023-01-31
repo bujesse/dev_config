@@ -1,12 +1,4 @@
 return {
-  -- dashboard
-  {
-    'mhinz/vim-startify',
-    config = function()
-      require('plugins_new.startify').config()
-    end,
-  },
-
   -- file explorer
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -393,15 +385,6 @@ return {
       { '<Leader>m8', ':lua require("harpoon.ui").nav_file(8)<CR>' },
       { '<Leader>m9', ':lua require("harpoon.ui").nav_file(9)<CR>' },
     },
-  },
-
-  -- terminal
-  {
-    'akinsho/toggleterm.nvim',
-    version = '*',
-    config = function()
-      require('plugins_new.toggleterm').config()
-    end,
   },
 
   -- better quickfix

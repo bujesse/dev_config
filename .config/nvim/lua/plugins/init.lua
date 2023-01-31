@@ -45,7 +45,7 @@ return {
     'neovim/nvim-lspconfig',
     event = "BufReadPre",
     config = function()
-      require('plugins_new.lsp.nvim-lspconfig').config()
+      require('plugins.lsp.nvim-lspconfig').config()
     end,
     dependencies = {
       {

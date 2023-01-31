@@ -237,8 +237,7 @@ return {
       { desc = 'Commands' }
     )
 
-    vim.keymap.set('x', '<Space>f', '<cmd>lua require("plugins_new.telescope").grep_string_visual()<CR>',
-      { desc = 'Search Visual String' })
+    vim.keymap.set('x', '<Space>f', M.grep_string_visual, { desc = 'Search Visual String' })
 
     -- which-key mappings (used less often, so put behind a 3-char input)
     require('which-key').register({

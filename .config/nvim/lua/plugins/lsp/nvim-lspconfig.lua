@@ -67,11 +67,11 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
 
   -- Setup formatters and linters
-  require('plugins_new.lsp.null-ls').setup()
+  require('plugins.lsp.null-ls').setup()
   M.select_default_formater(client)
 
   -- Setup UI configuration
-  require('plugins_new.lsp.ui').setup()
+  require('plugins.lsp.ui').setup()
 
   -- Diagnostic virutal text
   if M.first_setup then
@@ -177,7 +177,7 @@ function M.select_default_formater(client)
     return
   end
   Log:debug('Checking for formatter overriding for ' .. client.name)
-  local formatters = require('plugins_new.lsp.null-ls.formatters')
+  local formatters = require('plugins.lsp.null-ls.formatters')
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
     if #vim.tbl_keys(formatters.list_registered(filetype)) > 0 then
@@ -220,7 +220,7 @@ function M.get_common_opts()
 end
 
 function M.make_config(server_name)
-  local ok, config = pcall(require, 'plugins_new.lsp.lsp-configs.' .. server_name)
+  local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. server_name)
   if ok and config.lsp and config.lsp.setup then
     config = config.lsp.setup
     if not config.capabilities then
@@ -277,7 +277,7 @@ function M.config()
     -- },
   })
   require('lspconfig')
-  require('plugins_new.lsp.null-ls').config()
+  require('plugins.lsp.null-ls').config()
   M.setup_servers()
 end
 

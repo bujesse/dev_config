@@ -1,4 +1,4 @@
-local conditions = require('plugins_new.lualine.conditions')
+local conditions = require('plugins.lualine.conditions')
 local utils = require('core.utils')
 
 local function env_cleanup(venv)
@@ -103,14 +103,14 @@ return {
       local buf_ft = vim.bo.filetype
 
       -- add formatter
-      local formatters = require('plugins_new.lsp.null-ls.formatters')
+      local formatters = require('plugins.lsp.null-ls.formatters')
       local supported_formatters = utils.map(formatters.list_registered(buf_ft), function(item)
         return ' ' .. item
       end)
       vim.list_extend(buf_client_names, supported_formatters)
 
       -- -- add linter
-      local linters = require('plugins_new.lsp.null-ls.linters')
+      local linters = require('plugins.lsp.null-ls.linters')
       local supported_linters = utils.map(linters.list_registered(buf_ft), function(item)
         return ' ' .. item
       end)
