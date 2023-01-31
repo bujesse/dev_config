@@ -16,7 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 local core_modules = {
   'core.options',
   'core.globals',
-  'plugins',
+  'core.lazy',
   'core.commands',
   'core.autocommands',
   'core.keymappings',

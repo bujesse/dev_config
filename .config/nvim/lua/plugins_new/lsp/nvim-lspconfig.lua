@@ -267,15 +267,6 @@ function M.config()
   M.diagnostics_visible = not GLOBAL_CONFIG.diagnostics_visible
   M.formatting_on = not GLOBAL_CONFIG.format_on_save
 
-
-  -- This must run first
-  require('neodev').setup({
-    -- library = {
-    --   -- buildtime = false,
-    --   -- types = false,
-    plugins = { 'plenary.nvim', 'telescope.nvim' }, -- this one makes it slow; probably because i have too many i guess. Can use a table here if i want access to certain plugins. In fact it's probably just a few bad plugins making it slow
-    -- },
-  })
   require('lspconfig')
   require('plugins_new.lsp.null-ls').config()
   M.setup_servers()

@@ -106,7 +106,7 @@ function M.config()
   -- No auto-newline
   opt.textwidth = 0
   opt.wrapmargin = 0
-  opt.timeoutlen = 500
+  opt.timeoutlen = 300
   opt.ttimeoutlen = 10
 
   -- opt.the persistent undo directory on temporary private fast storage.
