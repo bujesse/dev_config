@@ -41,11 +41,6 @@ return {
     end,
   },
 
-  -- Buffers are not automatically shared between tabs
-  {
-    'tiagovla/scope.nvim',
-  },
-
   -- bufferline
   {
     'akinsho/bufferline.nvim',
@@ -59,16 +54,21 @@ return {
           { "X", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
         },
       },
+      {
+        -- Keep buffers in their own tabs
+        'tiagovla/scope.nvim',
+        config = true,
+      }
     },
     keys = {
       { 'L', ':BufferLineCycleNext<CR>', desc = 'Next buffer' },
       { 'H', ':BufferLineCyclePrev<CR>', desc = 'Prev buffer' },
       { '<C-Left>', ':BufferLineMovePrev<CR>', desc = 'Move buffer prev' },
       { '<C-Right>', ':BufferLineMoveNext<CR>', desc = 'Move buffer next' },
-      { 'gb', ':BufferLinePick<CR>', desc = '[G]o to [B]uffer' },
+      { 'gb', ':BufferLinePick<CR>', desc = 'Go to Buffer' },
       { '<Leader>bl', ':BufferLineCloseRight<CR>', desc = 'Close all buffers right' },
       { '<Leader>bh', ':BufferLineCloseLeft<CR>', desc = 'Close all buffers left' },
-      { '<Leader>bp', ':BufferLineTogglePin<CR>', desc = '[P]in buffer' },
+      { '<Leader>bp', ':BufferLineTogglePin<CR>', desc = 'Pin buffer' },
     },
     opts = {
       options = {
@@ -145,4 +145,9 @@ return {
     end
   },
 
+  -- colorizer
+  {
+    'NvChad/nvim-colorizer.lua',
+    config = true,
+  },
 }

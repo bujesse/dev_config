@@ -13,6 +13,8 @@ if status is-interactive
     fish_add_path /home/vagrant/.cargo/bin
     fish_add_path /home/vagrant/dev_config/scripts
 
+    fish_add_path /home/vagrant/python_envs/nvim/bin/
+
     set fzf_dir_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 
     # load pyenv automatically

@@ -113,9 +113,6 @@ function M.config()
   opt.undofile = true
   opt.updatetime = 150
 
-  -- Defines the trigger for 'wildmenu' in mappings
-  -- opt.wildcharm = '<Tab>'
-
   -- Ignore certain files and folders when globing
   cmd([[
   set wildignore+=*.o,*.obj,*.bin,*.dll,*.exe
@@ -132,8 +129,13 @@ function M.config()
   -- Nice command completions
   opt.wildmenu = true
 
+  opt.wildoptions:append('fuzzy')
+
   -- Complete the next full match
   opt.wildmode = 'full'
+
+  -- Defines the trigger for 'wildmenu' in mappings
+  -- opt.wildchar = '<Tab>'
 end
 
 return M

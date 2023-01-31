@@ -11,11 +11,7 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     dependencies = {
-      {
-        's1n7ax/nvim-window-picker',
-        version = 'v1.*',
-        config = true,
-      },
+      's1n7ax/nvim-window-picker',
     },
     branch = 'v2.x',
     opts = {
@@ -67,8 +63,10 @@ return {
             'toggle_node',
             nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
           },
-          -- ['l'] = 'open_node',
           ['h'] = 'close_node',
+          ['<C-v>'] = 'open_vsplit',
+          ['<C-x>'] = 'open_split',
+          ['<C-t>'] = 'open_tabnew',
           -- ['/'] = 'filter_on_submit',
           -- ['f'] = 'fuzzy_finder',
         },
@@ -121,15 +119,6 @@ return {
     end,
   },
 
-  -- fuzzy finder
-  {
-    'nvim-telescope/telescope.nvim',
-    config = function()
-      -- TODO: move to navigation
-      require('plugins_new.telescope').config()
-    end,
-  },
-
   -- easily jump to any location and enhanced f/t motions for Leap
   {
     'ggandor/leap.nvim',
@@ -137,14 +126,6 @@ return {
       { 's', ":lua require('leap').leap({ target_windows = { vim.fn.win_getid() } })<CR>", mode = { 'n', 'x' } }
     },
     event = "VeryLazy",
-    dependencies = {
-      {
-        "ggandor/flit.nvim",
-        opts = {
-          labeled_modes = "nv",
-        },
-      },
-    },
     opts = {
       safe_labels = {},
       labels = {
@@ -324,9 +305,9 @@ return {
           view = {},
           file_panel = {
             { 'n', 'x', actions.help('file_panel'), { desc = 'Open the help panel' } },
-            { 'n', 'r', actions.refresh_files, { desc = '[R]efresh files' } },
+            { 'n', 'r', actions.refresh_files, { desc = 'Refresh files' } },
             { 'n', '<Space>', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry.' } },
-            { 'n', 'e', actions.goto_file, { desc = '[E]dit the file in a new split in the previous tabpage' } },
+            { 'n', 'e', actions.goto_file, { desc = 'Edit the file in a new split in the previous tabpage' } },
           },
         },
       }
@@ -384,6 +365,12 @@ return {
     keys = {
       { '<Leader>2', '<Cmd>SymbolsOutline<CR>', desc = 'Symbols Outline' }
     },
+    init = function()
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+        pattern = 'Outline',
+        command = 'set foldcolumn=0',
+      })
+    end
   },
 
   -- harpoon

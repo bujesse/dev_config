@@ -83,6 +83,9 @@ function M.config_keys()
 
       -- save all
       ['<C-s>'] = '<C-o>:wa<cr>',
+
+      -- Undo while in insert_mode
+      ['<C-z>'] = '<C-o>:u<cr>',
     },
 
     ---@usage change or add keymappings for normal mode
@@ -164,6 +167,8 @@ function M.config_keys()
       [']t'] = ':tabn<CR>',
       ['[t'] = ':tabp<CR>,',
 
+      ['<C-t>'] = '<C-w>T',
+
       -- TODO: probably need better space mapping here
       -- ['<space>'] = ':',
       -- ['<space><space>'] = ':w<CR>,',
@@ -198,6 +203,9 @@ function M.config_keys()
 
     ---@usage change or add keymappings for visual mode
     visual_mode = {
+      ['j'] = "<cmd>call bu#jump_direction('j')<CR>",
+      ['k'] = "<cmd>call bu#jump_direction('k')<CR>",
+
       -- Better indenting
       ['<'] = '<gv',
       ['>'] = '>gv',

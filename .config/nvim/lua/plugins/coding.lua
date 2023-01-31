@@ -83,19 +83,12 @@ return {
   -- better text-objects
   {
     "echasnovski/mini.ai",
+    lazy = false,
     keys = {
       { "a", mode = { "x", "o" } },
       { "i", mode = { "x", "o" } },
     },
-    dependencies = {
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        init = function()
-          -- no need to load the plugin, since we only need its queries
-          require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
-        end,
-      },
-    },
+    dependencies = { 'nvim-treesitter-textobjects' },
     opts = function()
       local ai = require("mini.ai")
       return {
@@ -116,25 +109,15 @@ return {
     end,
   },
 
-  {
-    'kevinhwang91/promise-async',
-    dependencies = {
-      'kevinhwang91/nvim-ufo',
-    }
-  },
-
-  {
-    'luukvbaal/statuscol.nvim',
-    dependencies = {
-      'kevinhwang91/nvim-ufo',
-    }
-  },
-
+  -- better folds
   {
     'kevinhwang91/nvim-ufo',
+    dependencies = {
+      'kevinhwang91/promise-async',
+      'luukvbaal/statuscol.nvim',
+    },
     config = function()
       require('plugins_new.nvim-ufo').config()
     end,
   },
-
 }

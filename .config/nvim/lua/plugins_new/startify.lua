@@ -52,6 +52,7 @@ function M.config()
     'silent! Neotree action=close',
     'silent! AerialCloseAll',
     'silent! cclose',
+    'silent! SymbolsOutlineClose',
     'silent! tabdo DiffviewClose'
   }
 

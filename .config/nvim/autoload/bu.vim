@@ -1,3 +1,6 @@
+"   PERSONAL VIM GLOBALS
+
+
 "   For wrapped lines, does gj/gk
 "   For large jumps, adds a spot on the jump list
 function! bu#jump_direction(letter)
@@ -23,4 +26,10 @@ function! bu#float_up(letter)
         \ || getline(".")[col(".") - 1] =~ '\s')
     call execute(printf('normal! g%s', a:letter))
   endwhile
+endfunction
+
+" Return list of acceptable 'rg' types for '-t' argument for filemask
+function! bu#get_rg_type_list(ArgLead, CmdLine, CursorPos)
+  let rg_types = split(system("rg -inHC 1 --type-list | sed 's/:.*//'"), '\n')
+  return filter(rg_types, 'v:val =~ "^'. a:ArgLead .'"')
 endfunction
