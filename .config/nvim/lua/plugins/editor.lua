@@ -264,9 +264,20 @@ return {
     },
   },
 
+  -- fugitive
+  {
+    'tpope/vim-fugitive',
+    keys = {
+      { '<Leader>B', 'Git blame', desc = 'Git Blame' },
+      { '<Leader>g', '<Cmd>tab G<Cr>', 'Open Fugitive Status' },
+    },
+    cmd = { 'Git' }
+  },
+
   -- diff view
   {
     'sindrets/diffview.nvim',
+    enabled = false,
     opts = function()
       local actions = require('diffview.actions')
       return {

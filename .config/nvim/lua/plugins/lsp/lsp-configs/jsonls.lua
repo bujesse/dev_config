@@ -1,22 +1,11 @@
-local schemas = nil
-local status_ok, jsonls_settings = pcall(require, 'nlspsettings.jsonls')
-if status_ok then
-  schemas = jsonls_settings.get_default_schemas()
-end
-
 local config = {
   lsp = {
     provider = 'jsonls',
     setup = {
       settings = {
         json = {
-          schemas = schemas,
-          --   = {
-          --   {
-          --     fileMatch = { "package.json" },
-          --     url = "https://json.schemastore.org/package.json",
-          --   },
-          -- },
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
         },
       },
       commands = {

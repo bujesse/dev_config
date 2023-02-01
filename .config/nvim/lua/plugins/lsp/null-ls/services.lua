@@ -104,7 +104,8 @@ function M.register_custom_sources()
       generator = {
         fn = require('ts-node-action').available_actions
       },
-    }
+    },
+    require('typescript.extensions.null-ls.code-actions'),
   }
 
   local is_registered = require('null-ls.sources').is_registered

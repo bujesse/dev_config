@@ -145,6 +145,9 @@ function M.config_keys()
       ['<C-k>'] = { '<Plug>WinMoveUp', { noremap = false } },
       ['<C-l>'] = { '<Plug>WinMoveRight', { noremap = false } },
 
+      -- Zoom in to a buffer. Toggle again to put it back
+      ['<Leader>z'] = { '<Plug>Zoom', { noremap = false } },
+
       -- Source
       -- ['<Leader>.'] = { ':source ~/.config/nvim/init.vim<CR>', { noremap = false, silent = true } },
 

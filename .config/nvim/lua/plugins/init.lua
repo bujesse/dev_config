@@ -66,6 +66,8 @@ return {
       },
       'RRethy/vim-illuminate',
       'jose-elias-alvarez/null-ls.nvim',
+      'b0o/schemastore.nvim',
+      'jose-elias-alvarez/typescript.nvim',
     },
   },
 

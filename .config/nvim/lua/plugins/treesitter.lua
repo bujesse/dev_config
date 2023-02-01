@@ -19,7 +19,14 @@ return {
 
   {
     'nvim-treesitter/nvim-treesitter',
-    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      {
+        -- shows the context of the currently visible buffer contents
+        'nvim-treesitter/nvim-treesitter-context',
+        opts = { enable = true }
+      }
+    },
     version = false,
     event = 'BufReadPost',
     build = ':TSUpdate',

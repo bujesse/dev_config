@@ -219,45 +219,49 @@ function M.get_common_opts()
 end
 
 function M.make_config(server_name)
-  local ok, config = pcall(require, 'plugins.lsp.lsp-configs.' .. server_name)
-  if ok and config.lsp and config.lsp.setup then
-    config = config.lsp.setup
-    if not config.capabilities then
-      config.capabilities = M.common_capabilities()
+  local config = {
+    capabilities = M.common_capabilities(),
+    on_attach = function(client, bufnr)
+      M.common_on_attach(client, bufnr)
     end
-  else
-    config = {}
-  end
-
-  config.on_attach = function(client, bufnr)
-    if config.before_on_attach then
-      config.before_on_attach(client, bufnr)
-    end
-    M.common_on_attach(client, bufnr)
-    if config.after_on_attach then
-      config.after_on_attach(client, bufnr)
-    end
-  end
-
+  }
   return config
 end
 
--- lsp-install
+-- mason-lspconfig
 function M.setup_servers()
+  local lspconfig = require('lspconfig')
   require('mason-lspconfig').setup_handlers({
     -- The first entry (without a key) will be the default handler
     -- and will be called for each installed server that doesn't have
     -- a dedicated handler.
     function(server_name) -- default handler (optional)
       local config = M.make_config(server_name)
-      require('lspconfig')[server_name].setup(config)
-      -- vim.cmd([[ do User LspAttach ]])
+      lspconfig[server_name].setup(config)
     end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
-    -- ['pyright'] = function()
-    --   P('Hello')
-    -- end,
+    ['tsserver'] = function()
+      require('typescript').setup({
+        disable_commands = false, -- prevent the plugin from creating Vim commands
+        go_to_source_definition = {
+          fallback = true, -- fall back to standard LSP definition on failure
+        },
+        server = M.make_config(),
+      })
+    end,
+    ['jsonls'] = function()
+      local config = M.make_config()
+      config = vim.tbl_deep_extend('force', config, {
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+          },
+        },
+      })
+      lspconfig.jsonls.setup(config)
+    end
   })
 end
 
