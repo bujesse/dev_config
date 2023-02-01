@@ -54,7 +54,11 @@ return {
           library = {
             -- buildtime = false,
             -- types = false,
-            plugins = { 'plenary.nvim', 'telescope.nvim' }, -- this one makes it slow; probably because i have too many i guess. Can use a table here if i want access to certain plugins. In fact it's probably just a few bad plugins making it slow
+            plugins = {
+              'plenary.nvim',
+              'telescope.nvim',
+              'null-ls',
+            }, -- this one makes it slow; probably because i have too many i guess. Can use a table here if i want access to certain plugins. In fact it's probably just a few bad plugins making it slow
           },
           pathStrict = true,
           experimental = { pathStrict = true },

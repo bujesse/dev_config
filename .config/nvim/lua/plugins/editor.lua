@@ -111,28 +111,6 @@ return {
     end,
   },
 
-  -- easily jump to any location and enhanced f/t motions for Leap
-  {
-    'ggandor/leap.nvim',
-    keys = {
-      { 's', ":lua require('leap').leap({ target_windows = { vim.fn.win_getid() } })<CR>", mode = { 'n', 'x' } }
-    },
-    event = "VeryLazy",
-    opts = {
-      safe_labels = {},
-      labels = {
-        'j', 'f', 'k', 'd', 'l', 's', ';', 'a', 'e', 'w', 'o', 'u', 'r', 'n', 'v', 'm', 'c', 'x', 'z', '/', 'p', 'q', 'g',
-        'h', 'J', 'F', 'K', 'D', 'L', 'S', 'A'
-      },
-    },
-    config = function(_, opts)
-      local leap = require("leap")
-      for k, v in pairs(opts) do
-        leap.opts[k] = v
-      end
-    end,
-  },
-
   -- which-key
   {
     'folke/which-key.nvim',

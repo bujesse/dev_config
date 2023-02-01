@@ -51,6 +51,18 @@ function M.define_augroups(definitions) -- {{{1
   --    3. Text
   -- just like how they would normally be defined from Vim itself
   for group_name, definition in pairs(definitions) do
+    -- TODO: convert to nvim_create_autocmd
+    -- for _, parts in ipairs(definition) do
+    -- P(parts[1])
+    -- end
+    -- vim.api.nvim_create_autocmd('BufWritePost', {
+    --   group = group_name,
+    --   callback = function()
+    --     vim.defer_fn(function()
+    --       vim.cmd('checktime')
+    --     end, 1500)
+    --   end,
+    -- })
     vim.cmd('augroup ' .. group_name)
     vim.cmd('autocmd!')
 

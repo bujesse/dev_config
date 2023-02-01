@@ -12,15 +12,17 @@ function M.config()
   local lsp_config = require('plugins.lsp.nvim-lspconfig')
   local default_opts = lsp_config.get_common_opts()
   null_ls.setup(vim.tbl_deep_extend('force', default_opts, {}))
+
+  M.setup()
 end
 
 function M.setup(options)
   options = options
-    or {
-      diagnostics_format = '[#{s}] #{m} (#{s})',
-      debounce = 250,
-      default_timeout = 5000,
-    }
+      or {
+        diagnostics_format = '[#{s}] #{m} (#{s})',
+        debounce = 250,
+        default_timeout = 5000,
+      }
 
   local ok, _ = pcall(require, 'null-ls')
   if not ok then
