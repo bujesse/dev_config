@@ -206,6 +206,8 @@ return {
     vim.keymap.set('n', "<Space>S", '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
       { desc = 'Lsp Workspace Symbols' })
 
+    vim.keymap.set('n', '<Space>h', '<cmd>lua require("telescope.builtin").help_tags()<CR>', { desc = 'Help Tags' })
+
     -- Custom
     vim.keymap.set(
       'n',
@@ -254,7 +256,6 @@ return {
       },
       r = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Regex Search' },
       u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String ([u]nder cursor)' },
-      h = { '<cmd>lua require("telescope.builtin").help_tags()<CR>', 'Help Tags' },
       v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
       s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
       k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },

@@ -16,6 +16,7 @@ function M.common_on_attach(client, bufnr)
   local opts = {
     noremap = true,
     silent = true,
+    buffer = true,
   }
 
   vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
@@ -54,6 +55,20 @@ function M.common_on_attach(client, bufnr)
     )
   else
     vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+    -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
+    -- vim.keymap.set('n', '<Leader>f', function()
+    --   local clients = vim.lsp.get_active_clients({ buffer = vim.api.nvim_buf_get_number(0) })
+    --   if clients ~= nil then
+    --     for _, c in ipairs(clients) do
+    --       if c ~= nil and c.supports_method("textDocument/formatting") then
+    --         P(c)
+    --         vim.lsp.buf.format()
+    --         return
+    --       end
+    --     end
+    --   end
+    --   vim.cmd([[norm! gg=G<C-o>]])
+    -- end, opts)
   end
 
   -- Enable vim-illuminate

@@ -59,10 +59,21 @@ return {
             end
           end, { 'i', 's' }),
 
-          ['<CR>'] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-          }),
+          ['<CR>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              local utils = require('core.utils')
+              local last_char = utils.get_cursor_prev_char()
+              -- Don't do completion for opening tags
+              local BLACKLIST = { '{', '[', '(', '>' }
+              if not utils.table_contains(BLACKLIST, last_char) then
+                cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true })
+              else
+                fallback()
+              end
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
         },
 
         sources = cmp.config.sources({

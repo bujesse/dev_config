@@ -271,7 +271,10 @@ return {
       { '<Leader>B', 'Git blame', desc = 'Git Blame' },
       { '<Leader>g', '<Cmd>tab G<Cr>', 'Open Fugitive Status' },
     },
-    cmd = { 'Git' }
+    cmd = { 'Git' },
+    init = function()
+      vim.cmd([[command BuCloseFugitive silent call CloseAllTabsWithFiletype('fugitive')]])
+    end
   },
 
   -- diff view
@@ -347,7 +350,9 @@ return {
       { '<Leader>2', '<Cmd>SymbolsOutline<CR>', desc = 'Symbols Outline' }
     },
     init = function()
+      local augroup = vim.api.nvim_create_augroup('CustomSymbolsOutline', { clear = true })
       vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+        group = augroup,
         pattern = 'Outline',
         command = 'set foldcolumn=0',
       })

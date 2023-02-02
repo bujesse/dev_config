@@ -79,7 +79,9 @@ function M.config()
   M.define_augroups(M.autocommands)
 
   -- This is needed on VAGRANT
+  local augroup = vim.api.nvim_create_augroup('CustomVagrant', { clear = true })
   vim.api.nvim_create_autocmd('BufWritePost', {
+    group = augroup,
     callback = function()
       vim.defer_fn(function()
         vim.cmd('checktime')

@@ -47,4 +47,22 @@ M.sep = (function()
   end
 end)()
 
+---Get the character directly behind the current cursor
+function M.get_cursor_prev_char()
+  local col = vim.api.nvim_win_get_cursor(0)[2]
+  return string.sub(vim.api.nvim_get_current_line(), col, col)
+end
+
+---@param table table
+---@param val any
+---@return boolean
+function M.table_contains(table, val)
+  for _, value in ipairs(table) do
+    if value == val then
+      return true
+    end
+  end
+  return false
+end
+
 return M
