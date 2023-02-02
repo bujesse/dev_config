@@ -82,6 +82,17 @@ local opts_vertical = {
   },
 }
 
+-- Run a command starting with ':'
+local function run_selection(prompt_bufnr, map)
+  local actions = require('telescope.actions')
+  local action_state = require('telescope.actions.state')
+  local selection = action_state.get_selected_entry()
+  if (string.sub(selection.display, 1, 1) == ':') then
+    actions.close(prompt_bufnr)
+    vim.cmd(selection.display)
+  end
+end
+
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
@@ -173,6 +184,14 @@ return {
             return {}
           end,
         },
+        help_tags = {
+          prompt_title = 'Help Tags (<C-i> to run a command starting with :)',
+          mappings = {
+            i = {
+              ['<C-i>'] = run_selection,
+            },
+          },
+        }
       },
       extensions = {},
     })

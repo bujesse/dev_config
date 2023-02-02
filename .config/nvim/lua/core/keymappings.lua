@@ -167,14 +167,11 @@ function M.config_keys()
       ['<Leader>c'] = '"_ciw<C-r>-<Esc>',
 
       -- Next/Prev Tab
-      [']t'] = ':tabn<CR>',
-      ['[t'] = ':tabp<CR>',
+      [']t'] = '<Cmd>tabn<CR>',
+      ['[t'] = '<Cmd>tabp<CR>',
 
-      ['<C-t>'] = '<C-w>T',
+      ['<C-t>'] = '<Cmd>tabe<Cr>',
 
-      -- TODO: probably need better space mapping here
-      -- ['<space>'] = ':',
-      -- ['<space><space>'] = ':w<CR>,',
       ['<space>;'] = ':<Up><CR>',
 
       -- system yank
