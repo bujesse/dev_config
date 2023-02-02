@@ -33,3 +33,17 @@ function! bu#get_rg_type_list(ArgLead, CmdLine, CursorPos)
   let rg_types = split(system("rg -inHC 1 --type-list | sed 's/:.*//'"), '\n')
   return filter(rg_types, 'v:val =~ "^'. a:ArgLead .'"')
 endfunction
+
+function! TrimWhitespace()
+  let l:save = winsaveview()
+  keeppatterns %s/\s\+$//e
+  call winrestview(l:save)
+endfun
+
+function! QuickFixToggle()
+  if empty(filter(getwininfo(), 'v:val.quickfix'))
+    copen
+  else
+    cclose
+  endif
+endfunction

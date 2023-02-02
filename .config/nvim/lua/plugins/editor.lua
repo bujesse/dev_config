@@ -424,7 +424,8 @@ return {
     "windwp/nvim-spectre",
     -- stylua: ignore
     keys = {
-      { "<leader>r", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
+      { "<leader>r", function() require("spectre").open({ is_insert_mode = true, })
+      end, desc = "Replace in files (Spectre)" },
     },
   },
 }

@@ -168,7 +168,7 @@ function M.config_keys()
 
       -- Next/Prev Tab
       [']t'] = ':tabn<CR>',
-      ['[t'] = ':tabp<CR>,',
+      ['[t'] = ':tabp<CR>',
 
       ['<C-t>'] = '<C-w>T',
 

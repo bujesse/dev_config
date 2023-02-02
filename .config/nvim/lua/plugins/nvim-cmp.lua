@@ -10,7 +10,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
-      { 'windwp/nvim-autopairs', config = true }
+      { 'windwp/nvim-autopairs', config = true },
     },
     config = function()
       local cmp = require('cmp')
