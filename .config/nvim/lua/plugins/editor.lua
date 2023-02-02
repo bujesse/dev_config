@@ -235,23 +235,23 @@ return {
         })
 
         -- Actions
-        map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>', 'Stage Hunk')
-        -- map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>', '')
-        map('n', '<leader>hS', gs.stage_buffer, 'Stage Buffer')
-        map('n', '<leader>hu', gs.undo_stage_hunk, 'Undo Stage Hunk')
-        map('n', '<leader>hR', gs.reset_buffer, 'Reset Buffer')
-        -- map('n', '<leader>hp', gs.preview_hunk, '')
-        map('n', '<leader>hb', function()
+        map({ 'n', 'v' }, '<leader>gs', ':Gitsigns stage_hunk<CR>', 'Stage Hunk')
+        -- map({'n', 'v'}, '<leader>gr', ':Gitsigns reset_hunk<CR>', '')
+        map('n', '<leader>gS', gs.stage_buffer, 'Stage Buffer')
+        map('n', '<leader>gu', gs.undo_stage_hunk, 'Undo Stage Hunk')
+        map('n', '<leader>gR', gs.reset_buffer, 'Reset Buffer')
+        -- map('n', '<leader>gp', gs.preview_hunk, '')
+        map('n', '<leader>gb', function()
           gs.blame_line({ full = true })
         end, 'Blame full')
-        map('n', '<leader>hd', gs.diffthis, 'Diff')
-        -- map('n', '<leader>hD', function() gs.diffthis('~') end, '')
+        map('n', '<leader>gd', gs.diffthis, 'Diff')
+        -- map('n', '<leader>gD', function() gs.diffthis('~') end, '')
 
         -- toggles
-        map('n', '<leader>htd', gs.toggle_deleted, 'Toggle Deleted')
-        map('n', '<leader>htw', gs.toggle_word_diff, 'Toggle Word Diff')
-        map('n', '<leader>htl', gs.toggle_linehl, 'Toggle Line Diff HL')
-        map('n', '<leader>htb', gs.toggle_current_line_blame, 'Toggle Current Line Blame')
+        map('n', '<leader>gtd', gs.toggle_deleted, 'Toggle Deleted')
+        map('n', '<leader>gtw', gs.toggle_word_diff, 'Toggle Word Diff')
+        map('n', '<leader>gtl', gs.toggle_linehl, 'Toggle Line Diff HL')
+        map('n', '<leader>gtb', gs.toggle_current_line_blame, 'Toggle Current Line Blame')
         map('n', 'yog', toggle_line_diffs, 'Toggle Line, Word, and Deleted')
 
         -- from ideavim
@@ -269,9 +269,9 @@ return {
     'tpope/vim-fugitive',
     keys = {
       { '<Leader>B', 'Git blame', desc = 'Git Blame' },
-      { '<Leader>g', '<Cmd>tab G<Cr>', 'Open Fugitive Status' },
+      { '<Leader>G', '<Cmd>tab G<Cr>', desc = 'Open Fugitive Status' },
     },
-    cmd = { 'Git' },
+    cmd = { 'Git', 'G' },
     init = function()
       vim.cmd([[command BuCloseFugitive silent call CloseAllTabsWithFiletype('fugitive')]])
     end
@@ -280,7 +280,6 @@ return {
   -- diff view
   {
     'sindrets/diffview.nvim',
-    enabled = false,
     opts = function()
       local actions = require('diffview.actions')
       return {
@@ -288,16 +287,25 @@ return {
         keymaps = {
           view = {},
           file_panel = {
-            { 'n', 'x', actions.help('file_panel'), { desc = 'Open the help panel' } },
+            { 'n', '?', actions.help('file_panel'), { desc = 'Open the help panel' } },
             { 'n', 'r', actions.refresh_files, { desc = 'Refresh files' } },
             { 'n', '<Space>', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry.' } },
             { 'n', 'e', actions.goto_file, { desc = 'Edit the file in a new split in the previous tabpage' } },
           },
         },
+        hooks = {
+          diff_buf_read = function(bufnr)
+            vim.opt_local.cursorline = false
+          end
+        }
       }
     end,
+    init = function()
+      vim.cmd([[command BuCloseDiffview silent tabdo DiffviewClose]])
+    end,
+    cmd = { 'DiffviewOpen' },
     keys = {
-      { '<Leader>gg', '<Cmd>DiffviewOpen<Cr>' }
+      { '<Leader>D', '<Cmd>DiffviewOpen<Cr>', desc = 'Open DiffView' }
     },
   },
 

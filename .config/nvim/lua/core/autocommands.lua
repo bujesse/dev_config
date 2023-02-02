@@ -33,6 +33,12 @@ M.autocommands = {
   _general_lsp = {
     { event = 'FileType', opts = { pattern = 'lspinfo', command = 'nnoremap <silent> <buffer> q :q<CR>' } },
   },
+  _help = {
+    { event = 'FileType', opts = { pattern = 'help', callback = function()
+      vim.keymap.set('n', '<CR>', '<C-]>', { buffer = true })
+      vim.keymap.set('n', '<BS>', '<C-T>', { buffer = true })
+    end, } },
+  },
   _vagrant = {
     {
       event = 'BufWritePost',

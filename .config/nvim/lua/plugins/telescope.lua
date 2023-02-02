@@ -129,8 +129,8 @@ return {
         layout_strategy = 'horizontal',
         winblend = 15,
         file_ignore_patterns = {
-          -- specific files
-          'lazy-lock*',
+          -- lock files
+          '*-lock.*',
 
           '*.git/*',
           '*/tmp/*',
@@ -246,6 +246,13 @@ return {
       '<Space>d',
       '<cmd>lua require("telescope.builtin").live_grep({cwd = require("telescope.utils").buffer_dir()})<CR>',
       { desc = 'Search in Buffer Directory' }
+    )
+
+    vim.keymap.set(
+      'n',
+      '<Space>j',
+      '<cmd>lua require("telescope.builtin").jumplist()<CR>',
+      { desc = 'Jumplist' }
     )
 
     -- This will allow easy access to hard-to-remember, obscure commands through mappings

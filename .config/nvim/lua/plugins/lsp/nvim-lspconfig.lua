@@ -20,7 +20,7 @@ function M.common_on_attach(client, bufnr)
   }
 
   vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  vim.keymap.set('n', 'K', '<cmd>cmd vim.lsp.buf.hover()<CR>', opts)
+  vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
   vim.keymap.set('n', 'gK', function()
     require('core.utils').hover()
   end, opts)

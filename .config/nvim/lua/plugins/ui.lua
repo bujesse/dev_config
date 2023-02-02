@@ -69,6 +69,11 @@ return {
       { '<Leader>bl', ':BufferLineCloseRight<CR>', desc = 'Close all buffers right' },
       { '<Leader>bh', ':BufferLineCloseLeft<CR>', desc = 'Close all buffers left' },
       { '<Leader>bp', ':BufferLineTogglePin<CR>', desc = 'Pin buffer' },
+      { '<Leader>bo', function()
+        vim.cmd('BufferLineCloseRight')
+        vim.cmd('BufferLineCloseLeft')
+        vim.cmd('silent! only')
+      end, desc = 'Close Other buffers' },
     },
     opts = {
       options = {

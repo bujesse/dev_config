@@ -24,11 +24,13 @@ return {
       }
 
       vim.g.startify_commands = {
-        -- { f = { '  Find Files', 'Telescope find_files' } },
-        { w = { '  Find Word', 'Telescope live_grep' } },
+        { f = { '  Find Word', 'Telescope live_grep' } },
+        { o = { '  Find File', 'Telescope find_files' } },
         { lc = { '  Check Plugins', 'Lazy check' } },
         { ls = { '  Sync Plugins (Lazy install, clean, update)', 'Lazy sync' } },
-        { ts = { '  Update Treesitter', 'TSUpdate' } },
+        { ts = { '  Update Treesitter', 'TSUpdateSync' } },
+        { D = { '  Diff View', 'DiffviewOpen' } },
+        { G = { '  Git (Fugitive)', 'G' } },
         { ch = { '  Check Health', 'checkhealth' } },
       }
 
@@ -48,10 +50,10 @@ return {
       vim.g.startify_session_before_save = {
         'silent! helpclose',
         'silent! Neotree action=close',
-        'silent! AerialCloseAll',
         'silent! cclose',
         'silent! SymbolsOutlineClose',
-        'silent! tabdo DiffviewClose'
+        'silent! BuCloseDiffview',
+        'silent! BuCloseFugitive',
       }
 
       -- barbar doesn't load immediately because it
