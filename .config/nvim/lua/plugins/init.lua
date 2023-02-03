@@ -10,7 +10,7 @@ return {
         icons = {
           package_installed = '✓',
           package_pending = '➜',
-          package_uninstalled = '✗'
+          package_uninstalled = '✗',
         },
         keymaps = {
           toggle_package_expand = '<CR>',
@@ -23,11 +23,11 @@ return {
           cancel_installation = '<C-c>',
           apply_language_filter = '<C-f>',
         },
-      }
+      },
     },
     dependencies = {
-      'williamboman/mason-lspconfig.nvim'
-    }
+      'williamboman/mason-lspconfig.nvim',
+    },
   },
 
   {
@@ -37,37 +37,41 @@ return {
     end,
     dependencies = {
       'neovim/nvim-lspconfig',
-    }
+    },
   },
 
   -- TODO
   {
     'neovim/nvim-lspconfig',
-    event = "BufReadPre",
+    event = 'BufReadPre',
     config = function()
       require('plugins.lsp.nvim-lspconfig').config()
     end,
     dependencies = {
-      {
-        "folke/neodev.nvim",
-        opts = {
-          library = {
-            -- buildtime = false,
-            -- types = false,
-            plugins = {
-              'plenary.nvim',
-              'telescope.nvim',
-              'null-ls',
-            }, -- this one makes it slow; probably because i have too many i guess. Can use a table here if i want access to certain plugins. In fact it's probably just a few bad plugins making it slow
-          },
-          pathStrict = true,
-          experimental = { pathStrict = true },
-        }
-      },
+      'neodev.nvim',
       'RRethy/vim-illuminate',
       'jose-elias-alvarez/null-ls.nvim',
       'b0o/schemastore.nvim',
       'jose-elias-alvarez/typescript.nvim',
+    },
+  },
+
+  {
+    'folke/neodev.nvim',
+    opts = {
+      library = {
+        enabled = true,
+        runtime = true,
+        types = true,
+        plugins = true,
+        -- plugins = {
+        --   'neotest',
+        --   'plenary.nvim',
+        --   'telescope.nvim',
+        -- }, -- Was slow because the lsp was doing the formatting
+      },
+      lspconfig = true,
+      pathStrict = true,
     },
   },
 
@@ -78,5 +82,4 @@ return {
       require('fidget').setup({})
     end,
   },
-
 }

@@ -87,7 +87,7 @@ local function run_selection(prompt_bufnr, map)
   local actions = require('telescope.actions')
   local action_state = require('telescope.actions.state')
   local selection = action_state.get_selected_entry()
-  if (string.sub(selection.display, 1, 1) == ':') then
+  if string.sub(selection.display, 1, 1) == ':' then
     actions.close(prompt_bufnr)
     vim.cmd(selection.display)
   end
@@ -191,7 +191,7 @@ return {
               ['<C-i>'] = run_selection,
             },
           },
-        }
+        },
       },
       extensions = {},
     })
@@ -207,8 +207,12 @@ return {
       '<cmd>lua require("telescope.builtin").live_grep({ additional_args = { "--fixed-strings" } })<CR>',
       { desc = 'Global Search (Fixed Strings)' }
     )
-    vim.keymap.set('n', '<Space>g', '<cmd>lua require("telescope.builtin").git_status()<CR>',
-      { desc = 'Telescope Git Status' })
+    vim.keymap.set(
+      'n',
+      '<Space>g',
+      '<cmd>lua require("telescope.builtin").git_status()<CR>',
+      { desc = 'Telescope Git Status' }
+    )
     vim.keymap.set(
       'n',
       '<Space>m',
@@ -216,14 +220,31 @@ return {
       { desc = 'Old Files' }
     )
     vim.keymap.set('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', { desc = 'Lsp References' })
-    vim.keymap.set('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', { desc = 'Lsp Definitions' })
-    vim.keymap.set('n', 'gy', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>',
-      { desc = 'Lsp Type Definitions' })
+    vim.keymap.set(
+      'n',
+      'gd',
+      '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
+      { desc = 'Lsp Definitions' }
+    )
+    vim.keymap.set(
+      'n',
+      'gy',
+      '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>',
+      { desc = 'Lsp Type Definitions' }
+    )
 
-    vim.keymap.set('n', "<Space>s", '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
-      { desc = 'Lsp Document Symbols' })
-    vim.keymap.set('n', "<Space>S", '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
-      { desc = 'Lsp Workspace Symbols' })
+    vim.keymap.set(
+      'n',
+      '<Space>s',
+      '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
+      { desc = 'Lsp Document Symbols' }
+    )
+    vim.keymap.set(
+      'n',
+      '<Space>S',
+      '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
+      { desc = 'Lsp Workspace Symbols' }
+    )
 
     vim.keymap.set('n', '<Space>h', '<cmd>lua require("telescope.builtin").help_tags()<CR>', { desc = 'Help Tags' })
 
@@ -241,27 +262,14 @@ return {
       { desc = 'Global Search (Filetype Mask)' }
     )
 
-    vim.keymap.set(
-      'n',
-      '<Space>d',
-      '<cmd>lua require("telescope.builtin").live_grep({cwd = require("telescope.utils").buffer_dir()})<CR>',
-      { desc = 'Search in Buffer Directory' }
-    )
-
-    vim.keymap.set(
-      'n',
-      '<Space>j',
-      '<cmd>lua require("telescope.builtin").jumplist()<CR>',
-      { desc = 'Jumplist' }
-    )
+    vim.keymap.set('n', '<Space>j', '<cmd>lua require("telescope.builtin").jumplist()<CR>', { desc = 'Jumplist' })
 
     -- This will allow easy access to hard-to-remember, obscure commands through mappings
     -- TODO: this needs work, as just the commands aren't good enough for <space><space>
     vim.keymap.set(
       'n',
       '<Space><Space>',
-      [[<cmd>lua require("telescope.builtin").commands(require("telescope.themes").get_dropdown({ layout_config = { width = 0.7, height = 0.7, } }))<cr>]]
-      ,
+      [[<cmd>lua require("telescope.builtin").commands(require("telescope.themes").get_dropdown({ layout_config = { width = 0.7, height = 0.7, } }))<cr>]],
       { desc = 'Commands' }
     )
 

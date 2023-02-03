@@ -2,9 +2,9 @@ return {
 
   -- session management
   {
-    "folke/persistence.nvim",
-    event = "BufReadPre",
-    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help" } },
+    'folke/persistence.nvim',
+    event = 'BufReadPre',
+    opts = { options = { 'buffers', 'curdir', 'tabpages', 'winsize', 'help' } },
     -- stylua: ignore
     keys = {
       { "<leader>sr", function() require("persistence").load() end, desc = "Restore Session" },
@@ -15,12 +15,12 @@ return {
 
   -- library used by other plugins
   {
-    "nvim-lua/plenary.nvim",
-    lazy = true,
+    'nvim-lua/plenary.nvim',
+    lazy = false,
   },
 
   -- makes some plugins dot-repeatable like leap
-  { "tpope/vim-repeat", event = "VeryLazy" },
+  { 'tpope/vim-repeat', event = 'VeryLazy' },
 
   -- window picker
   {
@@ -35,12 +35,11 @@ return {
         -- filter using buffer options
         bo = {
           -- if the file type is one of following, the window will be ignored
-          filetype = { 'neo-tree', "neo-tree-popup", "notify" },
+          filetype = { 'neo-tree', 'neo-tree-popup', 'notify' },
           -- if the buffer type is one of following, the window will be ignored
-          buftype = { 'terminal', "quickfix" },
+          buftype = { 'terminal', 'quickfix' },
         },
       },
     },
   },
-
 }
