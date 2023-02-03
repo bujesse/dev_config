@@ -140,10 +140,16 @@ function M.config_keys()
       ['<Leader>;'] = { 'q:k', { silent = false } },
 
       -- Move to or create split
-      ['<C-h>'] = { '<Plug>WinMoveLeft', { noremap = false } },
-      ['<C-j>'] = { '<Plug>WinMoveDown', { noremap = false } },
-      ['<C-k>'] = { '<Plug>WinMoveUp', { noremap = false } },
-      ['<C-l>'] = { '<Plug>WinMoveRight', { noremap = false } },
+      ['<C-w><C-h>'] = { '<Plug>WinMoveLeft', { noremap = false } },
+      ['<C-w><C-j>'] = { '<Plug>WinMoveDown', { noremap = false } },
+      ['<C-w><C-k>'] = { '<Plug>WinMoveUp', { noremap = false } },
+      ['<C-w><C-l>'] = { '<Plug>WinMoveRight', { noremap = false } },
+
+      -- Only move splits
+      ['<C-h>'] = { '<C-w><C-h>', { noremap = true } },
+      ['<C-j>'] = { '<C-w><C-j>', { noremap = true } },
+      ['<C-k>'] = { '<C-w><C-k>', { noremap = true } },
+      ['<C-l>'] = { '<C-w><C-l>', { noremap = true } },
 
       -- Zoom in to a buffer. Toggle again to put it back
       ['<Leader>z'] = { '<Plug>Zoom', { noremap = false } },
@@ -247,6 +253,10 @@ function M.config_keys()
       -- runs conditionally
       ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
       ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
+
+      ['<Down>'] = { 'pumvisible() ? "\\<C-n>" : "\\<Down>"', { expr = true, noremap = true } },
+      ['<Up>'] = { 'pumvisible() ? "\\<C-p>" : "\\<Up>"', { expr = true, noremap = true } },
+
     },
   }
 
