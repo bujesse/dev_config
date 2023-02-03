@@ -61,14 +61,14 @@ return {
       }
     },
     keys = {
-      { 'L', ':BufferLineCycleNext<CR>', desc = 'Next buffer' },
-      { 'H', ':BufferLineCyclePrev<CR>', desc = 'Prev buffer' },
-      { '<C-Left>', ':BufferLineMovePrev<CR>', desc = 'Move buffer prev' },
-      { '<C-Right>', ':BufferLineMoveNext<CR>', desc = 'Move buffer next' },
-      { 'gb', ':BufferLinePick<CR>', desc = 'Go to Buffer' },
-      { '<Leader>bl', ':BufferLineCloseRight<CR>', desc = 'Close all buffers right' },
-      { '<Leader>bh', ':BufferLineCloseLeft<CR>', desc = 'Close all buffers left' },
-      { '<Leader>bp', ':BufferLineTogglePin<CR>', desc = 'Pin buffer' },
+      { 'L', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next buffer' },
+      { 'H', '<Cmd>BufferLineCyclePrev<CR>', desc = 'Prev buffer' },
+      { '<C-Left>', '<Cmd>BufferLineMovePrev<CR>', desc = 'Move buffer prev' },
+      { '<C-Right>', '<Cmd>BufferLineMoveNext<CR>', desc = 'Move buffer next' },
+      { 'gb', '<Cmd>BufferLinePick<CR>', desc = 'Go to Buffer' },
+      { '<Leader>bl', '<Cmd>BufferLineCloseRight<CR>', desc = 'Close all buffers right' },
+      { '<Leader>bh', '<Cmd>BufferLineCloseLeft<CR>', desc = 'Close all buffers left' },
+      { '<Leader>bp', '<Cmd>BufferLineTogglePin<CR>', desc = 'Pin buffer' },
       { '<Leader>bo', function()
         vim.cmd('BufferLineCloseRight')
         vim.cmd('BufferLineCloseLeft')
