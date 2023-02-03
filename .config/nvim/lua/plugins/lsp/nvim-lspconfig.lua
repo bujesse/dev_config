@@ -2,6 +2,16 @@ local Log = require('core.log')
 
 M = {}
 
+local function lsp_formatting(bufnr)
+  vim.lsp.buf.format({
+    filter = function(client)
+      -- apply whatever logic you want (in this example, we'll only use null-ls)
+      return client.name == 'null-ls'
+    end,
+    bufnr = bufnr or vim.api.nvim_get_current_buf(),
+  })
+end
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 function M.common_on_attach(client, bufnr)
@@ -20,7 +30,9 @@ function M.common_on_attach(client, bufnr)
   }
 
   vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+  vim.keymap.set('n', 'K', function()
+    vim.lsp.buf.hover()
+  end, opts)
   vim.keymap.set('n', 'gK', function()
     require('core.utils').hover()
   end, opts)
@@ -41,23 +53,20 @@ function M.common_on_attach(client, bufnr)
 
   if vim.bo.filetype == 'python' then
     -- Specific to darker only; it doesn't play nicely with null-ls
-    vim.keymap.set(
-      'n',
-      '<Leader>f',
-      function()
-        vim.cmd.write()
-        vim.cmd([[silent !darker --isort --skip-string-normalization -l 120 %]])
+    vim.keymap.set('n', '<Leader>f', function()
+      vim.cmd.write()
+      vim.cmd([[silent !darker --isort --skip-string-normalization -l 120 %]])
 
-        -- VAGRANT
-        vim.defer_fn(function()
-          vim.cmd('checktime')
-        end, 1500)
-        -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
-      end,
-      { buffer = true }
-    )
+      -- VAGRANT
+      vim.defer_fn(function()
+        vim.cmd('checktime')
+      end, 1500)
+      -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
+    end, { buffer = true })
   else
-    vim.keymap.set('n', '<Leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+    vim.keymap.set('n', '<Leader>f', function()
+      lsp_formatting()
+    end, opts)
     -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
     -- vim.keymap.set('n', '<Leader>f', function()
     --   local clients = vim.lsp.get_active_clients({ buffer = vim.api.nvim_buf_get_number(0) })
@@ -83,9 +92,6 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set('x', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
   vim.keymap.set('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
   vim.keymap.set('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
-
-  -- Setup formatters and linters
-  M.select_default_formater(client)
 
   -- Setup UI configuration
   require('plugins.lsp.ui').setup()
@@ -120,7 +126,7 @@ function M.turn_autoformat_on(augroup, bufnr)
     buffer = bufnr,
     group = augroup,
     callback = function()
-      vim.lsp.buf.format({ bufnr = bufnr })
+      lsp_formatting(bufnr)
       -- vim.lsp.buf.format({ bufnr = bufnr })
       -- M.async_formatting(bufnr)
     end,
@@ -205,10 +211,6 @@ function M.select_default_formater(client)
   end
 end
 
-M.common_on_init = function(client, bufnr)
-  M.select_default_formater(client)
-end
-
 M.common_capabilities = function()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -241,7 +243,7 @@ function M.make_config(server_name)
     capabilities = M.common_capabilities(),
     on_attach = function(client, bufnr)
       M.common_on_attach(client, bufnr)
-    end
+    end,
   }
   return config
 end
@@ -279,7 +281,7 @@ function M.setup_servers()
         },
       })
       lspconfig.jsonls.setup(config)
-    end
+    end,
   })
 end
 

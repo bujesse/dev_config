@@ -102,7 +102,7 @@ function M.register_custom_sources()
       filetypes = { '_all' },
       method = { null_ls.methods.CODE_ACTION },
       generator = {
-        fn = require('ts-node-action').available_actions
+        fn = require('ts-node-action').available_actions,
       },
     },
     require('typescript.extensions.null-ls.code-actions'),
