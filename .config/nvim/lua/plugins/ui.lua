@@ -2,14 +2,14 @@ return {
 
   -- Better `vim.notify()`
   {
-    "rcarriga/nvim-notify",
+    'rcarriga/nvim-notify',
     keys = {
       {
-        "<leader>un",
+        '<leader>un',
         function()
-          require("notify").dismiss({ silent = true, pending = true })
+          require('notify').dismiss({ silent = true, pending = true })
         end,
-        desc = "Delete all Notifications",
+        desc = 'Delete all Notifications',
       },
     },
     opts = {
@@ -25,17 +25,17 @@ return {
 
   -- better vim.ui
   {
-    "stevearc/dressing.nvim",
+    'stevearc/dressing.nvim',
     lazy = true,
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
+        require('lazy').load({ plugins = { 'dressing.nvim' } })
         return vim.ui.select(...)
       end
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
+        require('lazy').load({ plugins = { 'dressing.nvim' } })
         return vim.ui.input(...)
       end
     end,
@@ -44,11 +44,11 @@ return {
   -- bufferline
   {
     'akinsho/bufferline.nvim',
-    event = "VeryLazy",
+    event = 'VeryLazy',
     dependencies = {
       -- buffer remove
       {
-        "echasnovski/mini.bufremove",
+        'echasnovski/mini.bufremove',
         -- stylua: ignore
         keys = {
           { "X", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
@@ -58,7 +58,7 @@ return {
         -- Keep buffers in their own tabs
         'tiagovla/scope.nvim',
         config = true,
-      }
+      },
     },
     keys = {
       { 'L', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next buffer' },
@@ -119,7 +119,7 @@ return {
         'Trouble',
         'text',
       },
-    }
+    },
   },
 
   -- icons
@@ -128,7 +128,7 @@ return {
     lazy = true,
     opts = {
       default = true,
-    }
+    },
   },
 
   -- ui components
@@ -147,7 +147,7 @@ return {
       t['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '55', 'sine' } }
       t['<C-d>'] = { 'scroll', { 'vim.wo.scroll', 'true', '55', 'sine' } }
       require('neoscroll.config').set_mappings(t)
-    end
+    end,
   },
 
   -- colorizer

@@ -32,11 +32,17 @@ return {
   {
     'smjonas/inc-rename.nvim',
     keys = {
-      { 'gR', function() return ":IncRename " .. vim.fn.expand("<cword>") end, expr = true },
+      {
+        'gR',
+        function()
+          return ':IncRename ' .. vim.fn.expand('<cword>')
+        end,
+        expr = true,
+      },
     },
     config = function()
-      require("inc_rename").setup()
-    end
+      require('inc_rename').setup()
+    end,
   },
 
   -- Text objects
@@ -85,14 +91,16 @@ return {
     },
     keys = {
       { 'y', '<Plug>(YankyYank)', mode = { 'n', 'x' } },
-      { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' } },
-      { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' } },
-      { ']p', '<Plug>(YankyPutIndentAfterLinewise)', mode = { 'n', 'x' } },
-      { '[p', '<Plug>(YankyPutIndentBeforeLinewise)', mode = { 'n', 'x' } },
+      { 'p', '<Plug>(YankyPutAfter)==', mode = { 'n', 'x' } },
+      { 'P', '<Plug>(YankyPutBefore)==', mode = { 'n', 'x' } },
+      { ']p', '<Plug>(YankyPutIndentAfterLinewise)==', mode = { 'n', 'x' } },
+      { '[p', '<Plug>(YankyPutIndentBeforeLinewise)==', mode = { 'n', 'x' } },
       { '[y', '<Plug>(YankyCycleForward)' },
       { ']y', '<Plug>(YankyCycleBackward)' },
-      { '<Space>y',
-        ':lua require("telescope").extensions.yank_history.yank_history({ sorting_strategy = "ascending", layout_strategy = "cursor", results_title = false, layout_config = { width = 0.8, height = 0.4, } })<cr>' },
+      {
+        '<Space>y',
+        ':lua require("telescope").extensions.yank_history.yank_history({ sorting_strategy = "ascending", layout_strategy = "cursor", results_title = false, layout_config = { width = 0.8, height = 0.4, } })<cr>',
+      },
     },
     opts = function()
       local utils = require('yanky.utils')
@@ -107,19 +115,18 @@ return {
           sync_with_ring = false,
         },
         preserve_cursor_position = {
-          enabled = true
+          enabled = true,
         },
         picker = {
           telescope = {
             mappings = {
               default = mapping.set_register(utils.get_default_register()),
-            }
-          }
-        }
+            },
+          },
+        },
       }
     end,
   },
-
 
   -- search macros
   {
@@ -130,9 +137,10 @@ return {
       'kkharji/sqlite.lua',
     },
     keys = {
-      { '<Space>y',
-        [[:lua require("telescope").extensions.neoclip.default({ sorting_strategy = "ascending", layout_strategy = "cursor", results_title = false, layout_config = { width = 0.8, height = 0.4, } })<CR>]] }
+      {
+        '<Space>y',
+        [[:lua require("telescope").extensions.neoclip.default({ sorting_strategy = "ascending", layout_strategy = "cursor", results_title = false, layout_config = { width = 0.8, height = 0.4, } })<CR>]],
+      },
     },
   },
-
 }

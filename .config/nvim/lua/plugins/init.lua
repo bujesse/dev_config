@@ -73,6 +73,7 @@ return {
       lspconfig = true,
       pathStrict = true,
     },
+    config = function() end,
   },
 
   -- UI for nvim-lsp
