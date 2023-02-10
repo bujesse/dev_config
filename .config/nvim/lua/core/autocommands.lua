@@ -5,10 +5,12 @@ M.autocommands = {
     {
       -- Load lua files in ftplugin
       event = 'Filetype',
-      opts = { pattern = '*', command = 'lua require(\'core.ft\').do_filetype(vim.fn.expand("<amatch>"))', }
+      opts = { pattern = '*', command = 'lua require(\'core.ft\').do_filetype(vim.fn.expand("<amatch>"))' },
     },
-    { event = 'TextYankPost',
-      opts = { pattern = '*', command = "lua require('vim.highlight').on_yank({higroup = 'IncSearch', timeout = 300})" } },
+    {
+      event = 'TextYankPost',
+      opts = { pattern = '*', command = "lua require('vim.highlight').on_yank({higroup = 'IncSearch', timeout = 300})" },
+    },
     { event = 'FileType', opts = { pattern = 'qf', command = 'set nobuflisted' } },
     -- {
     --   'BufWritePre',
@@ -34,17 +36,31 @@ M.autocommands = {
     { event = 'FileType', opts = { pattern = 'lspinfo', command = 'nnoremap <silent> <buffer> q :q<CR>' } },
   },
   _help = {
-    { event = 'FileType', opts = { pattern = 'help', callback = function()
-      vim.keymap.set('n', '<CR>', '<C-]>', { buffer = true })
-      vim.keymap.set('n', '<BS>', '<C-T>', { buffer = true })
-    end, } },
+    {
+      event = 'FileType',
+      opts = {
+        pattern = 'help',
+        callback = function()
+          vim.keymap.set('n', '<CR>', '<C-]>', { buffer = true })
+          vim.keymap.set('n', '<BS>', '<C-T>', { buffer = true })
+        end,
+      },
+    },
+    {
+      event = 'BufEnter',
+      opts = { pattern = '*', command = "if &buftype == 'help' && winwidth(0) == &columns | wincmd L | endif" },
+    },
   },
   _vagrant = {
     {
       event = 'BufWritePost',
       opts = {
         pattern = '*',
-        callback = function() vim.defer_fn(function() vim.cmd('checktime') end, 1500) end,
+        callback = function()
+          vim.defer_fn(function()
+            vim.cmd('checktime')
+          end, 1500)
+        end,
       },
     },
   },
