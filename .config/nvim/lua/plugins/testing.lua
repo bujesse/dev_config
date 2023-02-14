@@ -47,7 +47,8 @@ return {
 
       { '<Space>rn', '<Cmd>lua require("neotest").run.run()<Cr>', desc = 'Run Nearest Test' },
       { '<Space>rl', '<Cmd>lua require("neotest").run.run_last()<Cr>', desc = 'Run Last Test' },
-      { '<Space>rf', '<Cmd>lua require("neotest").run.run(vim.fn.expand("%"))<Cr>', desc = 'Run File' },
+      -- { '<Space>rf', '<Cmd>lua require("neotest").run.run(vim.fn.expand("%"))<Cr>', desc = 'Run File' },
+      { '<Space>rf', '<Plug>PlenaryTestFile', desc = 'Run File' },
       { '<Space>rs', '<Cmd>lua require("neotest").run.stop()<Cr>', desc = 'Stop Nearest Test' },
       { '<Space>ro', '<Cmd>lua require("neotest").output.open({ enter = true })<cr>', desc = 'Test Output' },
       { '<Space>dn', '<Cmd>lua require("neotest").run.run({strategy = "dap"})<Cr>', desc = 'Debug Nearest Test' },
