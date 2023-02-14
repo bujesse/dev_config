@@ -22,7 +22,7 @@ return {
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       {
-        -- shows the context of the currently visible buffer contents
+        -- shows the code context of the currently visible buffer contents
         'nvim-treesitter/nvim-treesitter-context',
         opts = { enable = true }
       }

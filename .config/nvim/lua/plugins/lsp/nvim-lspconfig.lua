@@ -44,13 +44,6 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   vim.keymap.set('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
-  vim.keymap.set('n', '<Space>wa', vim.lsp.buf.add_workspace_folder, opts)
-  vim.keymap.set('n', '<Space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-  vim.keymap.set('n', '<Space>wl', function()
-    P(vim.lsp.buf.list_workspace_folders())
-  end, opts)
-  -- See `:help vim.lsp.*` for documentation on functions
-
   if vim.bo.filetype == 'python' then
     -- Specific to darker only; it doesn't play nicely with null-ls
     vim.keymap.set('n', '<Leader>f', function()
