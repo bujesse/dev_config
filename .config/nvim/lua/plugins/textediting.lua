@@ -37,6 +37,7 @@ return {
         function()
           return ':IncRename ' .. vim.fn.expand('<cword>')
         end,
+        desc = 'Rename Symbol',
         expr = true,
       },
     },
@@ -61,7 +62,7 @@ return {
       max_join_length = 150,
     },
     keys = {
-      { 'gs', ':TSJToggle<cr>' },
+      { 'gs', ':TSJToggle<cr>', desc = 'Split/Join toggle' },
     },
   },
 
@@ -100,6 +101,7 @@ return {
       {
         '<Space>y',
         ':lua require("telescope").extensions.yank_history.yank_history({ sorting_strategy = "ascending", layout_strategy = "cursor", results_title = false, layout_config = { width = 0.8, height = 0.4, } })<cr>',
+        desc = 'Yank History',
       },
     },
     opts = function()

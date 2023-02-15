@@ -94,8 +94,8 @@ return {
       },
     },
     keys = {
-      { '<Leader>n', ':Neotree source=filesystem toggle=true<CR>', 'Open Neotree' },
-      { '<Leader>N', ':Neotree source=filesystem reveal=true<CR>', 'Open Neotree and find file' },
+      { '<Leader>n', ':Neotree source=filesystem toggle=true<CR>', desc = 'Open Neotree' },
+      { '<Leader>N', ':Neotree source=filesystem reveal=true<CR>', desc = 'Open Neotree and find file' },
     },
     deactivate = function()
       vim.cmd([[Neotree close]])
@@ -104,8 +104,8 @@ return {
       vim.g.neo_tree_remove_legacy_commands = 1
       if vim.fn.argc() == 1 then
         local stat = vim.loop.fs_stat(vim.fn.argv(0))
-        if stat and stat.type == "directory" then
-          require("neo-tree")
+        if stat and stat.type == 'directory' then
+          require('neo-tree')
         end
       end
     end,
@@ -114,7 +114,7 @@ return {
   -- which-key
   {
     'folke/which-key.nvim',
-    event = "VeryLazy",
+    event = 'VeryLazy',
     opts = {
       plugins = {
         marks = true, -- shows a list of your marks on ' and `
@@ -145,27 +145,24 @@ return {
       },
     },
     config = function(_, opts)
-      local wk = require("which-key")
+      local wk = require('which-key')
       wk.setup(opts)
       wk.register({
-        mode = { "n", "v" },
-        ["g"] = { name = "+goto" },
-        ["]"] = { name = "+next" },
-        ["["] = { name = "+prev" },
-        ["cr"] = { name = '+abolish coerce word', },
-        -- ["ys"] = { name = "+surround" },
-        -- ["<leader><tab>"] = { name = "+tabs" },
-        -- ["<leader>b"] = { name = "+buffer" },
-        -- ["<leader>c"] = { name = "+code" },
-        -- ["<leader>f"] = { name = "+file/find" },
-        -- ["<leader>g"] = { name = "+git" },
-        -- ["<leader>gh"] = { name = "+hunks" },
-        -- ["<leader>q"] = { name = "+quit/session" },
-        -- ["<leader>s"] = { name = "+search" },
-        -- ["<leader>sn"] = { name = "+noice" },
-        -- ["<leader>u"] = { name = "+ui" },
-        -- ["<leader>w"] = { name = "+windows" },
-        -- ["<leader>x"] = { name = "+diagnostics/quickfix" },
+        mode = { 'n', 'v' },
+        ['g'] = { name = '+Goto' },
+        [']'] = { name = '+Next' },
+        ['['] = { name = '+Prev' },
+        ['cr'] = { name = '+Abolish coerce word' },
+        ['yo'] = { name = '+Toggle' },
+        ['<leader>x'] = { name = '+tODO/Trouble/FIX' },
+        ['<leader>g'] = { name = '+Gitsigns' },
+        ['<leader>.'] = { name = '+Source/reload' },
+        ['<leader>b'] = { name = '+Buffer' },
+        ['<leader>e'] = { name = '+Edit' },
+        ['<leader>m'] = { name = '+Harpoon' },
+        ['<leader>s'] = { name = '+Session' },
+        ['<space>d'] = { name = '+Debug' },
+        ['<space>r'] = { name = '+Run' },
       })
     end,
   },
@@ -177,20 +174,20 @@ return {
       {
         'petertriho/nvim-scrollbar',
         config = function()
-          require("scrollbar").setup()
-          require("scrollbar.handlers.gitsigns").setup()
+          require('scrollbar').setup()
+          require('scrollbar.handlers.gitsigns').setup()
         end,
       },
     },
-    event = "BufReadPre",
+    event = 'BufReadPre',
     opts = {
       signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "契" },
-        topdelete = { text = "契" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
+        add = { text = '▎' },
+        change = { text = '▎' },
+        delete = { text = '契' },
+        topdelete = { text = '契' },
+        changedelete = { text = '▎' },
+        untracked = { text = '▎' },
       },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
@@ -274,7 +271,7 @@ return {
     cmd = { 'Git', 'G' },
     init = function()
       vim.cmd([[command BuCloseFugitive silent call CloseAllTabsWithFiletype('fugitive')]])
-    end
+    end,
   },
 
   -- diff view
@@ -296,8 +293,8 @@ return {
         hooks = {
           diff_buf_read = function(bufnr)
             vim.opt_local.cursorline = false
-          end
-        }
+          end,
+        },
       }
     end,
     init = function()
@@ -305,26 +302,27 @@ return {
     end,
     cmd = { 'DiffviewOpen' },
     keys = {
-      { '<Leader>D', '<Cmd>DiffviewOpen<Cr>', desc = 'Open DiffView' }
+      { '<Leader>D', '<Cmd>DiffviewOpen<Cr>', desc = 'Open DiffView' },
     },
   },
 
   -- better diagnostics list and others
   {
-    "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
+    'folke/trouble.nvim',
+    cmd = { 'TroubleToggle', 'Trouble' },
     opts = { use_diagnostic_signs = true },
     keys = {
-      { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-      { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+      { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document Diagnostics (Trouble)' },
+      { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
     },
   },
 
   -- todo comments
   {
-    "folke/todo-comments.nvim",
-    cmd = { "TodoTrouble", "TodoTelescope" },
-    event = "BufReadPost",
+    'folke/todo-comments.nvim',
+    dependencies = { 'numToStr/Comment.nvim' },
+    cmd = { 'TodoTrouble', 'TodoTelescope' },
+    event = 'BufReadPost',
     config = true,
     -- stylua: ignore
     keys = {
@@ -332,6 +330,10 @@ return {
       { "[x", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
       { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
       { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+      { "<leader>xT", 'gcOTODO: ', desc = "Open TODO above", remap = true },
+      { "<leader>xt", 'gcoTODO: ', desc = "Open TODO below", remap = true },
+      { "<leader>xF", 'gcOFIXME: ', desc = "Open FIXME above", remap = true },
+      { "<leader>xf", 'gcoFIXME: ', desc = "Open FIXME below", remap = true },
     },
   },
 
@@ -355,7 +357,7 @@ return {
       },
     },
     keys = {
-      { '<Leader>2', '<Cmd>SymbolsOutline<CR>', desc = 'Symbols Outline' }
+      { '<Leader>2', '<Cmd>SymbolsOutline<CR>', desc = 'Symbols Outline' },
     },
     init = function()
       local augroup = vim.api.nvim_create_augroup('CustomSymbolsOutline', { clear = true })
@@ -364,18 +366,21 @@ return {
         pattern = 'Outline',
         command = 'set foldcolumn=0',
       })
-    end
+    end,
   },
 
   -- harpoon
   {
     'ThePrimeagen/harpoon',
     keys = {
-      { '<Leader>ma', function()
-        require("harpoon.mark").add_file()
-        local filename = vim.api.nvim_buf_get_name(0)
-        print('Harpoon Add: ' .. filename)
-      end },
+      {
+        '<Leader>ma',
+        function()
+          require('harpoon.mark').add_file()
+          local filename = vim.api.nvim_buf_get_name(0)
+          print('Harpoon Add: ' .. filename)
+        end,
+      },
       { '<Leader>mm', ':lua require("harpoon.ui").toggle_quick_menu()<CR>' },
       { '<Leader>m1', ':lua require("harpoon.ui").nav_file(1)<CR>' },
       { '<Leader>m2', ':lua require("harpoon.ui").nav_file(2)<CR>' },
@@ -421,15 +426,15 @@ return {
           action_for = {
             ['enter'] = 'signtoggle',
           },
-          extra_opts = { '--bind', 'ctrl-o:toggle-all', '--prompt', '> ' }
-        }
-      }
+          extra_opts = { '--bind', 'ctrl-o:toggle-all', '--prompt', '> ' },
+        },
+      },
     },
   },
 
   -- search/replace in multiple files
   {
-    "windwp/nvim-spectre",
+    'windwp/nvim-spectre',
     -- stylua: ignore
     keys = {
       { "<leader>r", function() require("spectre").open({ is_insert_mode = true, })

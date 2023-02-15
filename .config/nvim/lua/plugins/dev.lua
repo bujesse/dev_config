@@ -6,7 +6,7 @@ return {
     dev = true,
     cmd = { 'WhatKeyToggle', 'WhatKeyShow' },
     keys = {
-      { '<Space>w', "<Cmd>lua require('what-key.view').toggle()<Cr>" },
+      { '<Space>w', "<Cmd>lua require('what-key.view').toggle()<Cr>", desc = 'WhatKeyToggle' },
     },
     config = function()
       -- vim.keymap.set('n', '<M-a>', ':echo hello<cr>')

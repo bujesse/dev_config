@@ -292,10 +292,11 @@ return {
 
     -- which-key mappings (used less often, so put behind a 3-char input)
     require('which-key').register({
-      name = '+telescope',
+      name = '+Telescope',
       -- f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
       j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
       a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
+      m = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
       l = { '<cmd>lua require("telescope.builtin").highlights()<CR>', 'HighLights' },
       b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
       h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },

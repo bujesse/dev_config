@@ -35,9 +35,8 @@ function M.common_on_attach(client, bufnr)
   end, opts)
   vim.keymap.set('n', 'gK', function()
     require('core.utils').hover()
-  end, opts)
-  vim.keymap.set('i', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.keymap.set('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  end, vim.tbl_deep_extend('force', opts, { desc = 'Hover in new window' }))
+  vim.keymap.set({ 'i', 'n' }, '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   vim.keymap.set('n', 'gp', '<cmd>lua require"plugins.lsp.peek".Peek("definition")<CR>', opts)
   vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -55,11 +54,11 @@ function M.common_on_attach(client, bufnr)
         vim.cmd('checktime')
       end, 1500)
       -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
-    end, { buffer = true })
+    end, vim.tbl_deep_extend('force', opts, { desc = 'Format file', buffer = true }))
   else
     vim.keymap.set('n', '<Leader>f', function()
       lsp_formatting()
-    end, opts)
+    end, vim.tbl_deep_extend('force', opts, { desc = 'Format file' }))
     -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
     -- vim.keymap.set('n', '<Leader>f', function()
     --   local clients = vim.lsp.get_active_clients({ buffer = vim.api.nvim_buf_get_number(0) })
@@ -96,7 +95,7 @@ function M.common_on_attach(client, bufnr)
 
   vim.keymap.set('n', 'yod', function()
     M.toggle_diagnostics(true)
-  end, { noremap = true, silent = true })
+  end, { desc = 'Toggle Diagnostics', noremap = true, silent = true })
 
   -- Setup auto format on save
   if client.supports_method('textDocument/formatting') then
@@ -108,7 +107,7 @@ function M.common_on_attach(client, bufnr)
 
     vim.keymap.set('n', 'yoa', function()
       M.toggle_autoformat(augroup, bufnr, true)
-    end, { noremap = true, silent = true })
+    end, { desc = 'Toggle Autoformat', noremap = true, silent = true })
   end
 
   M.first_setup = false

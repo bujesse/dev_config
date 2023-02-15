@@ -68,7 +68,12 @@ return {
       end
 
       vim.api.nvim_set_keymap('n', '<leader>l', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>hx', '<cmd>lua _helix_toggle()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap(
+        'n',
+        '<leader>h',
+        '<cmd>lua _helix_toggle()<CR>',
+        { desc = 'Helix editor', noremap = true, silent = true }
+      )
 
       -- only want these mappings for toggle term
       vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')

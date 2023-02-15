@@ -31,7 +31,7 @@ function M.set_keymaps(mode, key, val)
     opt = val[2]
     val = val[1]
   end
-  vim.api.nvim_set_keymap(mode, key, val, opt)
+  vim.keymap.set(mode, key, val, opt)
 end
 
 -- Load key mappings for a given mode
@@ -178,7 +178,7 @@ function M.config_keys()
 
       ['<C-t>'] = '<Cmd>tabe<Cr>',
 
-      ['<space>;'] = ':<Up><CR>',
+      ['<space>;'] = { ':<Up><CR>', { desc = 'Run last command' } },
 
       -- system yank
       ['<C-y>'] = '"+y',
@@ -256,7 +256,6 @@ function M.config_keys()
 
       ['<Down>'] = { 'pumvisible() ? "\\<C-n>" : "\\<Down>"', { expr = true, noremap = true } },
       ['<Up>'] = { 'pumvisible() ? "\\<C-p>" : "\\<Up>"', { expr = true, noremap = true } },
-
     },
   }
 
