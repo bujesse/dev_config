@@ -77,7 +77,7 @@ return {
         },
 
         sources = cmp.config.sources({
-          { name = 'nvim_lsp', priority = 8 },
+          { name = 'nvim_lsp', priority = 9 },
           { name = 'luasnip', priority = 7 },
           { name = 'buffer', priority = 7 },
           { name = 'nvim_lua', priority = 5 },
@@ -89,7 +89,10 @@ return {
           priority_weight = 1.0,
           comparators = {
             -- compare.score_offset, -- not good at all
-            cmp.config.compare.locality,
+            function(...)
+              return require('cmp_buffer'):compare_locality(...)
+            end,
+            -- cmp.config.compare.locality,
             cmp.config.compare.recently_used,
             cmp.config.compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
             cmp.config.compare.offset,
@@ -150,5 +153,4 @@ return {
       cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
     end,
   },
-
 }
