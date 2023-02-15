@@ -42,12 +42,10 @@ return {
       vim.o.foldenable = true
       vim.o.numberwidth = 4
 
-      -- Option 3: treesitter as a main provider instead
-      -- Only depend on `nvim-treesitter/queries/filetype/folds.scm`,
-      -- performance and stability are better than `foldmethod=nvim_treesitter#foldexpr()`
       require('ufo').setup({
         provider_selector = function(bufnr, filetype, buftype)
-          return { 'treesitter', 'indent' }
+          return { 'lsp', 'indent' }
+          -- return { 'treesitter', 'indent' }
         end,
         fold_virt_text_handler = virtual_text_handler,
         open_fold_hl_timeout = 150,
@@ -72,29 +70,12 @@ return {
       vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
       vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
       vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
-      vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith)
-      vim.keymap.set('n', 'zp', require('ufo').peekFoldedLinesUnderCursor) -- closeAllFolds == closeFoldsWith(0)
+      vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- Usage: 1zm 2zm 3zm ...
+      vim.keymap.set('n', 'zp', require('ufo').peekFoldedLinesUnderCursor)
       vim.keymap.set('n', '[z', require('ufo').goPreviousClosedFold)
       vim.keymap.set('n', ']z', require('ufo').goNextClosedFold)
       vim.keymap.set('n', 'zk', require('ufo').goPreviousStartFold) -- zj goes to next start fold, and is built in
-      vim.keymap.set('n', 'zo', 'zO')
-
-      -- Option 2: nvim lsp as LSP client
-      -- Tell the server the capability of foldingRange,
-      -- Neovim hasn't added foldingRange to default capabilities, users must add it manually
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities.textDocument.foldingRange = {
-      --   dynamicRegistration = false,
-      --   lineFoldingOnly = true
-      -- }
-      -- local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-      -- for _, ls in ipairs(language_servers) do
-      --   require('lspconfig')[ls].setup({
-      --     capabilities = capabilities
-      --     -- you can add other fields for setting up lsp server in this table
-      --   })
-      -- end
-      -- require('ufo').setup()
+      -- vim.keymap.set('n', 'zo', 'zO')
     end,
   },
 }

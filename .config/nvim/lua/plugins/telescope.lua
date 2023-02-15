@@ -124,6 +124,21 @@ return {
             ['<C-v>'] = actions.select_vertical,
             ['<C-x>'] = actions.select_horizontal,
             ['<C-t>'] = actions.select_tab,
+            ['<C-g>'] = function(prompt_bufnr)
+              -- Use nvim-window-picker to choose the window by dynamically attaching a function
+              local action_set = require('telescope.actions.set')
+              local action_state = require('telescope.actions.state')
+
+              local picker = action_state.get_current_picker(prompt_bufnr)
+              picker.get_selection_window = function(picker, entry)
+                local picked_window_id = require('window-picker').pick_window() or vim.api.nvim_get_current_win()
+                -- Unbind after using so next instance of the picker acts normally
+                picker.get_selection_window = nil
+                return picked_window_id
+              end
+
+              return action_set.edit(prompt_bufnr, 'edit')
+            end,
           },
         },
         layout_strategy = 'horizontal',
@@ -283,6 +298,7 @@ return {
       a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
       l = { '<cmd>lua require("telescope.builtin").highlights()<CR>', 'HighLights' },
       b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
+      h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
       p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
       i = {
         '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>',
