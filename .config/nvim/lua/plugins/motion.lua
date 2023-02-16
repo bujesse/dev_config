@@ -3,18 +3,46 @@ return {
   {
     'ggandor/leap.nvim',
     keys = {
-      { 's', ":lua require('leap').leap({ target_windows = { vim.fn.win_getid() } })<CR>", mode = { 'n', 'x' } }
+      { 's', ":lua require('leap').leap({ target_windows = { vim.fn.win_getid() } })<CR>", mode = { 'n', 'x' } },
     },
-    event = "VeryLazy",
+    event = 'VeryLazy',
     opts = {
-      safe_labels = {},
+      -- safe_labels = {},
       labels = {
-        'j', 'f', 'k', 'd', 'l', 's', ';', 'a', 'e', 'w', 'o', 'u', 'r', 'n', 'v', 'm', 'c', 'x', 'z', '/', 'p', 'q', 'g',
-        'h', 'J', 'F', 'K', 'D', 'L', 'S', 'A'
+        'j',
+        'f',
+        'k',
+        'd',
+        'l',
+        's',
+        'a',
+        'e',
+        'w',
+        'o',
+        'u',
+        'r',
+        'n',
+        'v',
+        'm',
+        'c',
+        'x',
+        'z',
+        '/',
+        'p',
+        'q',
+        'g',
+        'h',
+        'J',
+        'F',
+        'K',
+        'D',
+        'L',
+        'S',
+        'A',
       },
     },
     config = function(_, opts)
-      local leap = require("leap")
+      local leap = require('leap')
       for k, v in pairs(opts) do
         leap.opts[k] = v
       end
@@ -28,7 +56,7 @@ return {
     opts = {
       delay = {
         highlight = 0,
-      }
+      },
     },
     config = function(_, opts)
       require('mini.jump').setup(opts)

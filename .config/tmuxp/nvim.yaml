@@ -1,0 +1,8 @@
+session_name: nvim
+windows:
+  - window_name: nvim
+    layout: tiled
+    shell_command_before:
+      - cd ~/.config/nvim/
+      - source ~/python_envs/nvim/bin/activate.fish
+      - n -S ~/.cache/nvim/sessions/nvim
