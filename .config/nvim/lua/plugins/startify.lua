@@ -66,8 +66,8 @@ return {
       vim.g.startify_custom_header = 'startify#pad(g:ascii + startify#fortune#boxed())'
 
       -- Save and load sessions
-      vim.api.nvim_set_keymap('n', '<F5>', ':SSave!<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<F8>', ':SLoad<CR>', { noremap = true, silent = true })
+      -- vim.api.nvim_set_keymap('n', '<F5>', ':SSave!<CR>', { noremap = true, silent = true })
+      -- vim.api.nvim_set_keymap('n', '<F8>', ':SLoad<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<Leader>ss', ':Startify<CR>', { noremap = true, silent = true })
 
       -- require('core.autocommands').define_augroups({
@@ -87,5 +87,4 @@ return {
       -- })
     end,
   },
-
 }

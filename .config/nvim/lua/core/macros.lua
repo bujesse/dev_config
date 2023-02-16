@@ -18,7 +18,7 @@ function M.config()
     vim.tbl_deep_extend('force', opts, { desc = 'Source lua' })
   )
 
-  vim.keymap.set({ 'n' }, '<Leader>p', [[mj<esc>Iprint(<esc>A)<esc>`j6l]], { desc = 'surround with print' })
+  -- vim.keymap.set({ 'n' }, "<Leader>p", [[mj<esc>Iprint(<esc>A)<esc>`j6l]], { desc = 'surround with print' })
 end
 
 return M
