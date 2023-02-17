@@ -41,5 +41,20 @@ return {
         },
       },
     },
+    keys = {
+      {
+        '<C-g>',
+        function()
+          local current_buf = vim.api.nvim_get_current_buf()
+          local picked_window_id = require('window-picker').pick_window()
+          if picked_window_id then
+            vim.api.nvim_win_close(0, true)
+            vim.api.nvim_set_current_win(picked_window_id)
+            vim.api.nvim_set_current_buf(current_buf)
+          end
+        end,
+        desc = 'Window Picker',
+      },
+    },
   },
 }

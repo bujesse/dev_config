@@ -20,4 +20,9 @@ fonts/
 .config/fish/fish_plugins
 .config/fish/fish_variables
 .config/fish/fishd.tmp.F3tGza
+
+.config/fish/fish_variables
+.config/nextjs-nodejs/config.json
+lazygit
+lazygit.tar.gz
 .config/tmux/plugins

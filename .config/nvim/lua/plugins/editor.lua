@@ -59,6 +59,7 @@ return {
           ['<C-v>'] = 'open_vsplit',
           ['<C-x>'] = 'open_split',
           ['<C-t>'] = 'open_tabnew',
+          ['<C-g>'] = 'open_with_window_picker',
           -- ['/'] = 'filter_on_submit',
           -- ['f'] = 'fuzzy_finder',
         },
@@ -165,6 +166,7 @@ return {
       }, {
         mode = { 'n' },
         ['yo'] = { name = '+Toggle' },
+        ['<leader>d'] = { name = '+Insert' },
       })
     end,
   },

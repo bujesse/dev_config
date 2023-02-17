@@ -15,12 +15,14 @@ return {
       }
 
       vim.g.startify_bookmarks = {
-        { n = '~/dev_config/.config/nvim/init.lua' },
-        { i = '~/.ideavimrc' },
-        { z = '~/.zshrc' },
-        { h = '~/dev_config/mac_to_windows.ahk' },
-        { a = '/mnt/c/Users/Jesse/AppData/Roaming/alacritty/alacritty.yml' },
-        { f = '~/dev_config/.config/fish/config.fish' },
+        { gn = '~/dev_config/.config/nvim/init.lua' },
+        { gi = '~/.ideavimrc' },
+        { gz = '~/.zshrc' },
+        { gh = '~/dev_config/mac_to_windows.ahk' },
+        { ga = '/mnt/c/Users/Jesse/AppData/Roaming/alacritty/alacritty.yml' },
+        { gf = '~/dev_config/.config/fish/config.fish' },
+        { gr = '~/dev_config/README.md' },
+        { gt = '~/dev_config/.config/tmux/tmux.conf' },
       }
 
       vim.g.startify_commands = {

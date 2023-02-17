@@ -12,6 +12,25 @@ local function lsp_formatting(bufnr)
   })
 end
 
+-- TODO: try this later; think it's broken
+-- vim.keymap.set('n', 'gD', function()
+--   vim.lsp.buf_request(0, 'definition', { foo = 'bar' }, lsp_location_handler('tabnew'))
+-- end, opts)
+local function lsp_location_handler(command)
+  return function(err, result, ctx, config)
+    if
+      vim.tbl_islist(result)
+      and #result >= 1
+      and type(result[1]) == 'string'
+      and result[1].uri:gsub('file://', '') ~= vim.fn.expand('%:p')
+    then
+      -- split, vsplit, tabnew, etc
+      vim.api.nvim_command(command)
+    end
+    return vim.lsp.handlers['textDocument/definition'](err, result, ctx, config)
+  end
+end
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 function M.common_on_attach(client, bufnr)
@@ -287,26 +306,6 @@ function M.config()
   M.diagnostics_visible = not GLOBAL_CONFIG.diagnostics_visible
   M.formatting_on = not GLOBAL_CONFIG.format_on_save
 
-  require('neodev').setup({
-    override = function(root_dir, library)
-      -- Always have these on
-      library.enabled = true
-      library.plugins = true
-    end,
-    library = {
-      enabled = true,
-      runtime = true,
-      types = true,
-      plugins = true,
-      -- plugins = {
-      --   'neotest',
-      --   'plenary.nvim',
-      --   'telescope.nvim',
-      -- }, -- Was slow because the lsp was doing the formatting
-    },
-    lspconfig = true,
-    pathStrict = true,
-  })
   require('lspconfig')
   require('plugins.lsp.null-ls').config()
   M.setup_servers()

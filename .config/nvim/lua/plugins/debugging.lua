@@ -4,69 +4,8 @@ return {
     'mfussenegger/nvim-dap',
     event = 'VeryLazy',
     dependencies = {
-      {
-        'mfussenegger/nvim-dap-python',
-        config = function()
-          require('dap-python').setup(vim.g.python3_host_prog)
-          require('dap-python').test_runner = 'pytest'
-          table.insert(require('dap').configurations.python, {
-            type = 'python',
-            request = 'attach',
-            name = 'Attach Execution',
-            justMyCode = false,
-            -- subProcess = true,
-            redirectOutput = true,
-            variablePresentation = {
-              ['function'] = 'hide',
-              special = 'hide',
-              class = 'group',
-              protected = 'group',
-              -- "all": "inline",
-            },
-            connect = {
-              host = '127.0.0.1',
-              port = 5678,
-            },
-          })
-          --[[ 
-            This seems to work. Key takeaways:
-            - Flask spawns 2 processes when it's hot-reloading because one of them is a file watcher. The debugger seems to attach to the wrong process in this case.
-            - variablePresentation is very helpful to hide fluff
-            - one could set up their own watcher using inotifywait tools, and just do attaches
-          ]]
-          table.insert(require('dap').configurations.python, {
-            type = 'python',
-            request = 'launch',
-            name = 'Launch Execution',
-            -- program = 'app.py',
-            -- stopOnEntry = true,
-            justMyCode = false,
-            variablePresentation = {
-              ['function'] = 'hide',
-              special = 'hide',
-              class = 'group',
-              protected = 'group',
-              -- "all": "inline",
-            },
-            -- subProcess = true,
-            module = 'flask',
-            args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
-            -- cwd = '${workspaceFolder}',
-            -- python = '${workspaceFolder}/venv/bin/python',
-            -- pathMappings = {
-            --   {
-            --     localRoot = '${workspaceFolder}',
-            --     remoteRoot = '${workspaceFolder}',
-            --   },
-            -- },
-            -- env = {
-            --   FLASK_ENV = 'development',
-            --   FLASK_DEBUG = 1,
-            --   FLASK_APP = 'execution:create_app()',
-            -- },
-          })
-        end,
-      },
+      'mason-nvim-dap.nvim',
+      'mfussenegger/nvim-dap-python',
       {
         'ofirgall/goto-breakpoints.nvim',
         keys = {
@@ -100,18 +39,23 @@ return {
         desc = 'Toggle Breakpoint',
       },
 
-      { '<F5>', "<cmd>lua require'dap'.step_over()<cr>", desc = 'Step Over' },
-      { '<F4>', "<cmd>lua require'dap'.step_into()<cr>", desc = 'Step Into' },
+      { '<F5>', "<cmd>lua require'dap'.step_into()<cr>", desc = 'Step Into' },
+      { '<F4>', "<cmd>lua require'dap'.step_over()<cr>", desc = 'Step Over' },
       { '<F3>', "<cmd>lua require'dap'.step_out()<cr>", desc = 'Step Out' },
       { '<F2>', "<cmd>lua require'dap'.run_to_cursor()<cr>", desc = 'Run To Cursor' },
       { '<F1>', "<cmd>lua require'dap'.continue()<cr>", desc = 'Continue' },
 
       { '<Space>db', "<cmd>lua require'dap'.step_back()<cr>", desc = 'Step Back' },
-      { '<Space>dd', "<cmd>lua require'dap'.disconnect()<cr>", desc = 'Disconnect' },
-      { '<Space>dg', "<cmd>lua require'dap'.session()<cr>", desc = 'Get Session' },
+      {
+        '<Space>ds',
+        "<cmd>lua require'dap'.disconnect({restart = true, terminateDebuggee = false})<cr>",
+        desc = 'Disconnect',
+      },
       { '<Space>dp', "<cmd>lua require'dap'.pause()<cr>", desc = 'Pause' },
       { '<Space>dr', "<cmd>lua require'dap'.repl.toggle()<cr>", desc = 'Toggle Repl' },
       { '<Space>dq', "<cmd>lua require'dap'.close()<cr>", desc = 'Quit' },
+      { '<Space>dd', "<cmd>lua require'dap'.run_last()<cr>", desc = 'DAP Last' },
+      { '<Space>d-', "<cmd>lua require'dap'.clear_breakpoints<cr>", desc = 'Clear Breakpoints' },
       { '<Space>du', "<cmd>lua require'dapui'.toggle({reset = true})<cr>", desc = 'Toggle UI' },
     },
     config = function(_, opts)
@@ -128,6 +72,79 @@ return {
         linehl = 'Visual',
         numhl = 'DiagnosticSignWarn',
       })
+
+      require('mason-nvim-dap').setup({
+        ensure_installed = { 'python' },
+      })
+
+      local dap = require('dap')
+      require('mason-nvim-dap').setup_handlers({
+        function(source_name)
+          -- all sources with no handler get passed here
+          -- Keep original functionality of `automatic_setup = true`
+          require('mason-nvim-dap.automatic_setup')(source_name)
+        end,
+        python = function(source_name)
+          require('dap-python').setup(vim.g.python3_host_prog)
+          require('dap-python').test_runner = 'pytest'
+          table.insert(dap.configurations.python, 1, {
+            type = 'python',
+            request = 'attach',
+            name = 'Debugpy',
+            justMyCode = false,
+            -- subProcess = true,
+            redirectOutput = true,
+            variablePresentation = {
+              ['function'] = 'hide',
+              special = 'hide',
+              class = 'group',
+              protected = 'group',
+              -- "all": "inline",
+            },
+            connect = {
+              host = '127.0.0.1',
+              port = 5678,
+            },
+          })
+          --[[ 
+            This seems to work. Key takeaways:
+            - Flask spawns 2 processes when it's hot-reloading because one of them is a file watcher. The debugger seems to attach to the wrong process in this case.
+            - variablePresentation is very helpful to hide fluff
+            - one could set up their own watcher using inotifywait tools, and just do attaches
+          ]]
+          table.insert(dap.configurations.python, 2, {
+            type = 'python',
+            request = 'launch',
+            name = 'Launch Execution',
+            -- program = 'app.py',
+            -- stopOnEntry = true,
+            justMyCode = false,
+            variablePresentation = {
+              ['function'] = 'hide',
+              special = 'hide',
+              class = 'group',
+              protected = 'group',
+              -- "all": "inline",
+            },
+            -- subProcess = true,
+            module = 'flask',
+            args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
+            -- cwd = '${workspaceFolder}',
+            -- python = '${workspaceFolder}/venv/bin/python',
+            -- pathMappings = {
+            --   {
+            --     localRoot = '${workspaceFolder}',
+            --     remoteRoot = '${workspaceFolder}',
+            --   },
+            -- },
+            -- env = {
+            --   FLASK_ENV = 'development',
+            --   FLASK_DEBUG = 1,
+            --   FLASK_APP = 'execution:create_app()',
+            -- },
+          })
+        end,
+      })
     end,
   },
 
@@ -136,19 +153,7 @@ return {
     event = 'VeryLazy',
     opts = {
       controls = {
-        element = 'repl',
-        enabled = true,
-        icons = {
-          disconnect = '',
-          pause = '',
-          play = '',
-          run_last = '',
-          step_back = '',
-          step_into = '<F4>',
-          step_out = '<F3>',
-          step_over = '<F5>',
-          terminate = '<Space>',
-        },
+        enabled = false,
       },
       element_mappings = {},
       expand_lines = true,
@@ -191,11 +196,7 @@ return {
           elements = {
             {
               id = 'repl',
-              size = 0.5,
-            },
-            {
-              id = 'console',
-              size = 0.5,
+              size = 1,
             },
           },
           position = 'bottom',
@@ -216,13 +217,38 @@ return {
       },
     },
     config = function(_, opts)
+      local augroup = vim.api.nvim_create_augroup('dap_ui', { clear = true })
       local dap, dapui = require('dap'), require('dapui')
       dapui.setup(opts)
+
       dap.listeners.after.event_initialized['dapui_config'] = function()
         dapui.open()
+
+        -- Try to rerun if the termination was because of a save
+        vim.api.nvim_create_autocmd('BufWritePost', {
+          group = augroup,
+          callback = function()
+            vim.defer_fn(function()
+              if vim.tbl_isempty(require('dap').sessions()) then
+                local lsof_output = vim.fn.system('lsof -i -P -n | grep 5678')
+                if string.match(lsof_output, '5678') then
+                  -- print('Debugger on port 5678 found. Restarting DAP...')
+                  dap.run_last()
+                else
+                  dapui.close()
+                end
+              end
+            end, 1000)
+          end,
+        })
       end
-      dap.listeners.before.event_terminated['dapui_config'] = function()
-        dapui.close()
+      dap.listeners.after.event_terminated['dapui_config'] = function(session, body)
+        vim.defer_fn(function()
+          if vim.tbl_isempty(require('dap').sessions()) then
+            dapui.close()
+            vim.api.nvim_clear_autocmds({ group = augroup })
+          end
+        end, 2000)
       end
       dap.listeners.before.event_exited['dapui_config'] = function()
         dapui.close()
@@ -246,7 +272,7 @@ return {
     },
     keys = {
       {
-        '<Leader>dd',
+        '<Leader>dp',
         function()
           return require('debugprint').debugprint()
         end,
@@ -254,7 +280,7 @@ return {
         desc = 'Debug print string',
       },
       {
-        '<Leader>dv',
+        '<Leader>dd',
         function()
           return require('debugprint').debugprint({ variable = true })
         end,
@@ -263,7 +289,7 @@ return {
         desc = 'Debug print variable',
       },
       {
-        '<Leader>do',
+        '<Leader>d',
         function()
           return require('debugprint').debugprint({ motion = true })
         end,

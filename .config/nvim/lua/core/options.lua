@@ -5,6 +5,7 @@ function M.config()
   local opt = vim.opt
 
   vim.g.mapleader = ','
+  vim.g.maplocalleader = ','
 
   -- scriptencoding utf-8
 

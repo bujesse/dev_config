@@ -18,6 +18,13 @@ function M.config()
     vim.tbl_deep_extend('force', opts, { desc = 'Source lua' })
   )
 
+  vim.keymap.set(
+    'n',
+    '<Leader>dt',
+    [[:put =strftime('(%Y-%m-%d %H:%M)')<CR>kJ]],
+    vim.tbl_deep_extend('force', opts, { desc = 'Insert timestamp' })
+  )
+
   -- vim.keymap.set({ 'n' }, "<Leader>p", [[mj<esc>Iprint(<esc>A)<esc>`j6l]], { desc = 'surround with print' })
 end
 

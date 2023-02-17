@@ -111,6 +111,19 @@ function M.config_keys()
       -- U feels like a more natural companion to u
       ['U'] = '<C-r>',
 
+      -- If jump to undo is more than 10, then don't actually undo
+      ['u'] = {
+        function()
+          local _, last_line_num = unpack(vim.fn.getcurpos())
+          vim.cmd.undo()
+          local _, curr_line_num = unpack(vim.fn.getcurpos())
+          if math.abs(last_line_num - curr_line_num) > 15 then
+            vim.cmd.redo()
+          end
+        end,
+        { desc = 'Jetbrains undo' },
+      },
+
       -- Quickly replay the macro at q register
       ['Q'] = '@q',
 
@@ -202,6 +215,8 @@ function M.config_keys()
       ['<Leader>.k'] = ':lua R("core.keymappings").config()<CR>',
 
       ['<Leader>.,'] = ':wa<CR>:lua R("what-key").setup()<CR>',
+
+      ['yor'] = { '<Cmd>set rnu!<Cr>F', { desc = 'Toggle Relative Line #' } },
     },
 
     ---@usage change or add keymappings for terminal mode

@@ -2,7 +2,7 @@ return {
   -- statusline
   {
     'nvim-lualine/lualine.nvim',
-    event = "VeryLazy",
+    event = 'VeryLazy',
     opts = function(plugin)
       local components = require('plugins.lualine.components')
       return {
@@ -40,7 +40,8 @@ return {
             'location',
           },
           lualine_z = {
-            components.treesitter,
+            components.dap_status,
+            components.treesitter_missing,
             components.lsp,
             components.python_env,
           },
@@ -55,10 +56,13 @@ return {
         },
         tabline = {},
         extensions = {
-          'nvim-tree',
+          'neo-tree',
           'quickfix',
+          'nvim-dap-ui',
+          'symbols-outline',
+          'toggleterm',
         },
       }
-    end
+    end,
   },
 }

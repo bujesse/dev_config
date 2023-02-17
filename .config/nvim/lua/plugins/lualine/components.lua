@@ -73,10 +73,10 @@ return {
     -- color = {},
     cond = conditions.hide_in_width,
   },
-  treesitter = {
+  treesitter_missing = {
     function()
-      if next(vim.treesitter.highlighter.active) then
-        return '滑'
+      if vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] == nil then
+        return 'No 滑'
       end
       return ''
     end,
@@ -119,7 +119,7 @@ return {
       return table.concat(buf_client_names, '  ')
     end,
     -- color = { gui = "bold" },
-    cond = conditions.hide_in_width,
+    cond = conditions.hide_in_min_width(90),
   },
   location = {
     'location',
@@ -164,5 +164,15 @@ return {
     end,
     padding = { left = 0, right = 0 },
     cond = nil,
+  },
+  dap_status = {
+    function()
+      if require('dap').status() ~= '' then
+        return require('dap').status()
+      else
+        return ''
+      end
+    end,
+    cond = conditions.hide_in_min_width(60),
   },
 }

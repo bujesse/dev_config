@@ -62,10 +62,10 @@ return {
       incremental_selection = {
         enable = true,
         keymaps = {
-          init_selection = "<Cr>",
-          node_incremental = "<Cr>",
-          scope_incremental = "<nop>",
-          node_decremental = "<bs>",
+          init_selection = '<C-A-o>',
+          node_incremental = '<C-A-o>',
+          scope_incremental = '<nop>',
+          node_decremental = '<C-A-i>',
         },
         is_supported = function()
           -- disable for command history window
@@ -116,6 +116,63 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
       require('nvim-treesitter.install').compilers = { "clang" }
+    end,
+  },
+
+  {
+    'ziontee113/SelectEase',
+    enabled = false, -- This isn't ready yet as of (2023-02-18 14:54)
+    config = function()
+      local select_ease = require('SelectEase')
+
+      local lua_query = [[
+            ;; query
+            ((identifier) @cap)
+            ("string_content" @cap)
+            ((true) @cap)
+            ((false) @cap)
+        ]]
+      local python_query = [[
+            ;; query
+            ((identifier) @cap)
+            ((string) @cap)
+        ]]
+
+      local queries = {
+        lua = lua_query,
+        python = python_query,
+      }
+
+      vim.keymap.set({ 'n', 'x', 's', 'i' }, '<C-A-k>', function()
+        select_ease.select_node({
+          queries = queries,
+          direction = 'previous',
+          vertical_drill_jump = true,
+          visual_mode = true, -- if you want Visual Mode instead of Select Mode
+        })
+      end, {})
+      vim.keymap.set({ 'n', 'x', 's', 'i' }, '<C-A-j>', function()
+        select_ease.select_node({
+          queries = queries,
+          direction = 'next',
+          vertical_drill_jump = true,
+          visual_mode = true, -- if you want Visual Mode instead of Select Mode
+        })
+      end, {})
+      vim.keymap.set({ 'n', 'x', 's', 'i' }, '<C-A-h>', function()
+        select_ease.select_node({
+          queries = queries,
+          direction = 'previous',
+          visual_mode = true, -- if you want Visual Mode instead of Select Mode
+        })
+      end, {})
+      vim.keymap.set({ 'n', 'x', 's', 'i' }, '<C-A-l>', function()
+        select_ease.select_node({
+          queries = queries,
+          direction = 'next',
+          visual_mode = true, -- if you want Visual Mode instead of Select Mode
+        })
+      end, {})
     end,
   },
 }

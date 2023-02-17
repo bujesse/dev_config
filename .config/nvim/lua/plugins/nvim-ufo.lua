@@ -41,10 +41,14 @@ return {
       vim.o.foldlevelstart = 99
       vim.o.foldenable = true
       vim.o.numberwidth = 4
+      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
+      local ft_map = {
+        Outline = '',
+      }
       require('ufo').setup({
         provider_selector = function(bufnr, filetype, buftype)
-          return { 'lsp', 'indent' }
+          return ft_map[filetype] or { 'lsp', 'indent' }
           -- return { 'treesitter', 'indent' }
         end,
         fold_virt_text_handler = virtual_text_handler,
