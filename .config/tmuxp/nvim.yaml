@@ -1,4 +1,5 @@
 session_name: nvim
+suppress_history: false
 windows:
   - window_name: nvim
     layout: tiled
@@ -6,3 +7,9 @@ windows:
       - cd ~/.config/nvim/
       - source ~/python_envs/nvim/bin/activate.fish
       - n -S ~/.cache/nvim/sessions/nvim
+  - window_name: tmux
+    layout: tiled
+    shell_command_before:
+      - cd ~/.config/
+      - source ~/python_envs/nvim/bin/activate.fish
+      - n ~/.config/tmux/tmux.conf

@@ -18,11 +18,11 @@ end
 
 function M.setup(options)
   options = options
-      or {
-        diagnostics_format = '[#{s}] #{m} (#{s})',
-        debounce = 250,
-        default_timeout = 5000,
-      }
+    or {
+      diagnostics_format = '[#{s}] #{m} (#{s})',
+      debounce = 250,
+      default_timeout = 5000,
+    }
 
   local ok, _ = pcall(require, 'null-ls')
   if not ok then
@@ -52,10 +52,15 @@ function M.setup(options)
   })
 
   linters.setup({
+    -- {
+    --   exe = 'flake8',
+    --   filetypes = { 'python' },
+    --   diagnostics_format = '[flake8] #{m} (#{c})',
+    -- },
     {
-      exe = 'flake8',
+      exe = 'ruff',
       filetypes = { 'python' },
-      diagnostics_format = '[flake8] #{m} (#{c})',
+      diagnostics_format = '[ruff] #{m} (#{c})',
     },
     {
       exe = 'eslint',

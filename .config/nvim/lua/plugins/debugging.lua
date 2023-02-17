@@ -9,6 +9,62 @@ return {
         config = function()
           require('dap-python').setup(vim.g.python3_host_prog)
           require('dap-python').test_runner = 'pytest'
+          table.insert(require('dap').configurations.python, {
+            type = 'python',
+            request = 'attach',
+            name = 'Attach Execution',
+            justMyCode = false,
+            -- subProcess = true,
+            redirectOutput = true,
+            variablePresentation = {
+              ['function'] = 'hide',
+              special = 'hide',
+              class = 'group',
+              protected = 'group',
+              -- "all": "inline",
+            },
+            connect = {
+              host = '127.0.0.1',
+              port = 5678,
+            },
+          })
+          --[[ 
+            This seems to work. Key takeaways:
+            - Flask spawns 2 processes when it's hot-reloading because one of them is a file watcher. The debugger seems to attach to the wrong process in this case.
+            - variablePresentation is very helpful to hide fluff
+            - one could set up their own watcher using inotifywait tools, and just do attaches
+          ]]
+          table.insert(require('dap').configurations.python, {
+            type = 'python',
+            request = 'launch',
+            name = 'Launch Execution',
+            -- program = 'app.py',
+            -- stopOnEntry = true,
+            justMyCode = false,
+            variablePresentation = {
+              ['function'] = 'hide',
+              special = 'hide',
+              class = 'group',
+              protected = 'group',
+              -- "all": "inline",
+            },
+            -- subProcess = true,
+            module = 'flask',
+            args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
+            -- cwd = '${workspaceFolder}',
+            -- python = '${workspaceFolder}/venv/bin/python',
+            -- pathMappings = {
+            --   {
+            --     localRoot = '${workspaceFolder}',
+            --     remoteRoot = '${workspaceFolder}',
+            --   },
+            -- },
+            -- env = {
+            --   FLASK_ENV = 'development',
+            --   FLASK_DEBUG = 1,
+            --   FLASK_APP = 'execution:create_app()',
+            -- },
+          })
         end,
       },
       {

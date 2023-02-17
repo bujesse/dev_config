@@ -153,7 +153,6 @@ return {
         [']'] = { name = '+Next' },
         ['['] = { name = '+Prev' },
         ['cr'] = { name = '+Abolish coerce word' },
-        ['yo'] = { name = '+Toggle' },
         ['<leader>x'] = { name = '+tODO/Trouble/FIX' },
         ['<leader>g'] = { name = '+Gitsigns' },
         ['<leader>.'] = { name = '+Source/reload' },
@@ -163,6 +162,9 @@ return {
         ['<leader>s'] = { name = '+Session' },
         ['<space>d'] = { name = '+Debug' },
         ['<space>r'] = { name = '+Run' },
+      }, {
+        mode = { 'n' },
+        ['yo'] = { name = '+Toggle' },
       })
     end,
   },

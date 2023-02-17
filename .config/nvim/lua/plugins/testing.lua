@@ -5,12 +5,30 @@ return {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/neotest-plenary',
+      'nvim-neotest/neotest-python',
     },
     lazy = false,
     config = function()
       require('neotest').setup({
         adapters = {
           require('neotest-plenary'),
+          require('neotest-python')({
+            -- Extra arguments for nvim-dap configuration
+            -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for values
+            dap = {
+              justMyCode = false,
+              -- Hide extra variable info don't need
+              variablePresentation = {
+                ['function'] = 'hide',
+                special = 'hide',
+              },
+            },
+            -- args = { '--log-level', 'DEBUG' },
+            runner = 'pytest',
+            python = 'venv/bin/python',
+            -- Returns if a given file path is a test file.
+            -- is_test_file = function(file_path) end,
+          }),
         },
         icons = {
           failed = '❌',

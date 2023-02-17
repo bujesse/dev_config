@@ -253,9 +253,6 @@ function M.config_keys()
       -- runs conditionally
       ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
       ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
-
-      ['<Down>'] = { 'pumvisible() ? "\\<C-n>" : "\\<Down>"', { expr = true, noremap = true } },
-      ['<Up>'] = { 'pumvisible() ? "\\<C-p>" : "\\<Up>"', { expr = true, noremap = true } },
     },
   }
 
