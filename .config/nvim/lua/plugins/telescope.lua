@@ -234,19 +234,21 @@ return {
       '<cmd>lua require("telescope.builtin").oldfiles({include_current_session = true})<CR>',
       { desc = 'Old Files' }
     )
-    vim.keymap.set('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', { desc = 'Lsp References' })
-    vim.keymap.set(
-      'n',
-      'gd',
-      '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
-      { desc = 'Lsp Definitions' }
-    )
-    vim.keymap.set(
-      'n',
-      'gy',
-      '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>',
-      { desc = 'Lsp Type Definitions' }
-    )
+
+    -- Currently using Glance for goto lsp
+    -- vim.keymap.set('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', { desc = 'Lsp References' })
+    -- vim.keymap.set(
+    --   'n',
+    --   'gd',
+    --   '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
+    --   { desc = 'Lsp Definitions' }
+    -- )
+    -- vim.keymap.set(
+    --   'n',
+    --   'gy',
+    --   '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>',
+    --   { desc = 'Lsp Type Definitions' }
+    -- )
 
     vim.keymap.set(
       'n',

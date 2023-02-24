@@ -3,7 +3,24 @@ return {
   {
     'ggandor/leap.nvim',
     keys = {
-      { 's', ":lua require('leap').leap({ target_windows = { vim.fn.win_getid() } })<CR>", mode = { 'n', 'x' } },
+      {
+        's',
+        ":lua require('leap').leap({ target_windows = { vim.fn.win_getid() } })<CR>",
+        mode = { 'n', 'x' },
+        desc = 'Leap in current window',
+      },
+      {
+        'S',
+        function()
+          require('leap').leap({
+            target_windows = vim.tbl_filter(function(win)
+              return vim.api.nvim_win_get_config(win).focusable
+            end, vim.api.nvim_tabpage_list_wins(0)),
+          })
+        end,
+        mode = { 'n', 'x' },
+        desc = 'Leap in all windows',
+      },
     },
     event = 'VeryLazy',
     opts = {
@@ -62,20 +79,5 @@ return {
       require('mini.jump').setup(opts)
     end,
     version = '*',
-  },
-
-  -- readline mappings for insert, command and search modes
-  {
-    'linty-org/readline.nvim',
-    keys = function()
-      local readline = require 'readline'
-      return {
-        { '<C-a>', '<C-o>I', mode = 'i' },
-        { '<C-a>', readline.beginning_of_line, mode = '!' },
-        { '<C-e>', readline.end_of_line, mode = '!' },
-        { '<C-k>', readline.kill_line, mode = '!' },
-        { '<C-u>', readline.backward_kill_line, mode = '!' }
-      }
-    end
   },
 }

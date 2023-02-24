@@ -86,6 +86,9 @@ function M.config_keys()
 
       -- Undo while in insert_mode
       ['<C-z>'] = '<C-o>:u<cr>',
+
+      -- correct last spelling
+      ['<C-l>'] = '<C-G>u<Esc>[s1z=`]a<C-G>u',
     },
 
     ---@usage change or add keymappings for normal mode
@@ -216,7 +219,9 @@ function M.config_keys()
 
       ['<Leader>.,'] = ':wa<CR>:lua R("what-key").setup()<CR>',
 
-      ['yor'] = { '<Cmd>set rnu!<Cr>F', { desc = 'Toggle Relative Line #' } },
+      ['yor'] = { '<Cmd>set rnu!<Cr>', { desc = 'Toggle Relative Line #' } },
+
+      ['yos'] = { '<Cmd>set invspell<Cr>', { desc = 'Toggle Spelling' } },
     },
 
     ---@usage change or add keymappings for terminal mode

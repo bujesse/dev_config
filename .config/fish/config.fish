@@ -14,6 +14,7 @@ if status is-interactive
     fish_add_path /home/vagrant/dev_config/scripts
 
     fish_add_path /home/vagrant/python_envs/nvim/bin/
+    fish_add_path ~/.local/bin
 
     set fzf_dir_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 

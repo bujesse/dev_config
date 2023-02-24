@@ -62,8 +62,8 @@ return {
       },
     },
     keys = {
-      { 'L', '<Cmd>BufferLineCycleNext<CR>', desc = 'Next buffer' },
-      { 'H', '<Cmd>BufferLineCyclePrev<CR>', desc = 'Prev buffer' },
+      { 'L', '<Cmd>keepjumps BufferLineCycleNext<CR>', desc = 'Next buffer' },
+      { 'H', '<Cmd>keepjumps BufferLineCyclePrev<CR>', desc = 'Prev buffer' },
       { '<C-Left>', '<Cmd>BufferLineMovePrev<CR>', desc = 'Move buffer prev' },
       { '<C-Right>', '<Cmd>BufferLineMoveNext<CR>', desc = 'Move buffer next' },
       { 'gb', '<Cmd>BufferLinePick<CR>', desc = 'Go to Buffer' },
@@ -94,6 +94,7 @@ return {
             text_align = 'left',
           },
         },
+        separator_style = 'slope',
         persist_buffer_sort = true,
         max_name_length = 25,
         max_prefix_length = 20, -- prefix used when a buffer is de-duplicated

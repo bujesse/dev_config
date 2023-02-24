@@ -79,19 +79,20 @@ return {
       require('neodev').setup({
         override = function(root_dir, library)
           -- TODO: Configure to turn these on when in lua development; doesn't work for plugin dirs
-          library.enabled = true
-          library.plugins = true
+          -- library.enabled = true
+          -- library.plugins = true
         end,
         library = {
           enabled = true,
           runtime = true,
           types = true,
-          plugins = true,
-          -- plugins = {
-          --   'neotest',
-          --   'plenary.nvim',
-          --   'telescope.nvim',
-          -- }, -- Was slow because the lsp was doing the formatting
+          -- plugins = false,
+          plugins = {
+            'neotest',
+            'plenary.nvim',
+            'null-ls',
+            'telescope.nvim',
+          }, -- Was slow because the lsp was doing the formatting
         },
         lspconfig = true,
         pathStrict = true,
@@ -107,6 +108,43 @@ return {
       'jose-elias-alvarez/null-ls.nvim',
       'b0o/schemastore.nvim',
       'jose-elias-alvarez/typescript.nvim',
+    },
+  },
+
+  {
+    'dnlhc/glance.nvim',
+    opts = {
+      hooks = {
+        before_open = function(results, open, jump, method)
+          if method == 'references' and #results == 2 then
+            -- If 2 references, then jump to the other reference
+            local curr_line = unpack(vim.api.nvim_win_get_cursor(0))
+            for i, ref in ipairs(results) do
+              if ref.range.start.line + 1 == curr_line then
+                jump(results[i % 2 + 1])
+                return
+              end
+            end
+            open(results)
+          elseif method == 'definitions' and #results == 2 then
+            -- If 2 definitions on the same line, then jump to first one
+            if results[1].targetRange.start.line == results[2].targetRange.start.line then
+              jump(results[1])
+              return
+            end
+          elseif #results == 1 then
+            jump(results[1])
+            return
+          end
+          open(results)
+        end,
+      },
+    },
+    keys = {
+      { 'gd', '<CMD>Glance definitions<CR>', desc = 'Glance definitions' },
+      { 'gr', '<CMD>Glance references<CR>', desc = 'Glance references' },
+      { 'gy', '<CMD>Glance type_definitions<CR>', desc = 'Glance type_definitions' },
+      { 'gm', '<CMD>Glance implementations<CR>', desc = 'Glance implementations' },
     },
   },
 
