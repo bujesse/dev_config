@@ -36,10 +36,7 @@ return {
     },
     ---@type TSConfig
     opts = {
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = { 'markdown' },
-      },
+      highlight = { enable = true },
       indent = { enable = true },
       context_commentstring = { enable = true, enable_autocmd = false },
       ensure_installed = {

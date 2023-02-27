@@ -38,6 +38,7 @@
       - [zoxide](https://github.com/ajeetdsouza/zoxide) better `cd`
       - [rip](https://github.com/nivekuil/rip) better `rm`
       - [watchexec](https://github.com/watchexec/watchexec) - Executes commands in response to file modifications
+        - `cargo install watchexec-cli`
       - [gitui](https://github.com/extrawurst/gitui) - Blazing terminal-ui for git written in rust
       - [procs](https://github.com/dalance/procs) - A modern replacement for ps written in Rust
       - [bottom](https://github.com/ClementTsang/bottom) - Yet another cross-platform graphical process/system monitor.
@@ -46,6 +47,7 @@
       - [grex](https://github.com/pemistahl/grex) - A command-line tool and Rust library for generating regular expressions from user-provided test cases
       - [git-cliff](https://github.com/orhun/git-cliff) - A highly customizable Changelog Generator that follows Conventional Commit specifications ⛰️
       - [just](https://github.com/casey/just) - Just a command runner
+      - [gitoxide](https://github.com/Byron/gitoxide) - An idiomatic, lean, fast & safe pure Rust implementation of Git
 - Other shell tools
   - [fzf](https://github.com/junegunn/fzf) fuzzy finder for shell and integrates with other tools
   - [helix editor](https://docs.helix-editor.com/install.html) nice multi-cursor editing; useful inside neovim
