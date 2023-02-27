@@ -50,3 +50,10 @@
   - [fzf](https://github.com/junegunn/fzf) fuzzy finder for shell and integrates with other tools
   - [helix editor](https://docs.helix-editor.com/install.html) nice multi-cursor editing; useful inside neovim
   - [lazygit](https://github.com/jesseduffield/lazygit) TUI for git interaction
+
+2. Desktop:
+
+- [Obsidian](https://obsidian.md/download)
+  - [Syncthing (for Obsidian)](https://syncthing.net/downloads/)
+    - [SyncTrayzor (Windows system tray)](https://github.com/canton7/SyncTrayzor/releases)
+      - If the latest version of syncthing is desired, just copy the .exe to `%APPDATA%/SyncTrayzor/`
