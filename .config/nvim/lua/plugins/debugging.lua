@@ -60,14 +60,14 @@ return {
     },
     config = function(_, opts)
       vim.fn.sign_define('DapBreakpoint', {
-        text = '🔴',
+        text = 'B',
         texthl = 'DiagnosticSignError',
         linehl = '',
         numhl = '',
       })
       -- vim.fn.sign_define('DapBreakpointRejected', lvim.builtin.dap.breakpoint_rejected)
       vim.fn.sign_define('DapStopped', {
-        text = '👉',
+        text = '>',
         texthl = 'DiagnosticSignWarn',
         linehl = 'Visual',
         numhl = 'DiagnosticSignWarn',

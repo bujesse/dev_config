@@ -2,7 +2,7 @@ return {
   {
     'epwalsh/obsidian.nvim',
     opts = {
-      dir = '/mnt/c/Users/Jesse/obsidian-vault/home-vault/',
+      dir = '/projects/obsidian-vault/home-vault/',
       note_id_func = function(title)
         -- Create note IDs in a Zettelkasten format with a timestamp and a suffix.
         local suffix = ''

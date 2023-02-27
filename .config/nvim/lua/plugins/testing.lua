@@ -31,12 +31,12 @@ return {
           }),
         },
         icons = {
-          failed = '❌',
-          passed = '✔️',
-          running = '🕘',
-          running_animated = { '🕐', '🕒', '🕔', '🕖', '🕘', '🕚', '🕛' },
-          skipped = '💤',
-          unknown = '❔',
+          failed = '',
+          passed = '',
+          running = '',
+          running_animated = { '/', '|', '\\', '-', '/', '|', '\\', '-' },
+          skipped = '鈴',
+          unknown = '',
         },
         quickfix = {
           enabled = false,

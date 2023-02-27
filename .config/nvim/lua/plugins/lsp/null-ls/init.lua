@@ -60,17 +60,17 @@ function M.setup_null_ls()
 
   -- THIS STUFF WORKS ON HOME PC:
   formatters.setup({
-    -- {
-    --   exe = 'stylua',
-    --   args = {
-    --     '--indent-type',
-    --     'Spaces',
-    --     '--indent-width',
-    --     '2',
-    --     '--quote-style',
-    --     'AutoPreferSingle',
-    --   },
-    -- },
+    {
+      exe = 'stylua',
+      args = {
+        '--indent-type',
+        'Spaces',
+        '--indent-width',
+        '2',
+        '--quote-style',
+        'AutoPreferSingle',
+      },
+    },
     -- {
     --   exe = 'prettier',
     -- },

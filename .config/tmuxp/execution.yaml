@@ -15,7 +15,8 @@ windows:
           - source venv/bin/activate.fish
           # - flask run execution:create_app() --host=0.0.0.0 --port=5010 --without-threads
           # - python -m debugpy --listen localhost:5678 -m flask run execution:create_app() --host=0.0.0.0 --port=5010 --without-threads --no-reload
-          - watchexec -r -e py -- python -m debugpy --listen localhost:5678 -m flask run execution:create_app() --host=0.0.0.0 --port=5010 --without-threads --no-reload
+          # - watchexec -r -e py -- python -m debugpy --listen localhost:5678 -m flask run execution:create_app() --host=0.0.0.0 --port=5010 --without-threads --no-reload
+          - fd -e py | entr -r python -m debugpy --listen localhost:5678 -m flask run execution:create_app() --host=0.0.0.0 --port=5010 --without-threads --no-reload
         environment:
           FLASK_ENV: development
           FLASK_DEBUG: "1"

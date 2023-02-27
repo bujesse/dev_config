@@ -69,10 +69,10 @@ return {
 
       require('mason-null-ls').setup({
         ensure_installed = {
-          'stylua',
-          'ruff',
+          -- 'stylua',
+          -- 'ruff',
           'prettier',
-          'yamllint',
+          -- 'yamllint',
         },
       })
 
