@@ -69,14 +69,9 @@ function M.config_keys()
       ['KJ'] = '<ESC>',
 
       -- Move current line / block with Alt-j/k ala vscode.
-      -- ['<A-j>'] = '<Esc>:m .+1<CR>==gi',
-      -- Move current line / block with Alt-j/k ala vscode.
-      -- ['<A-k>'] = '<Esc>:m .-2<CR>==gi',
-      -- navigation
-      -- ['<A-Up>'] = '<C-\\><C-N><C-w>k',
-      -- ['<A-Down>'] = '<C-\\><C-N><C-w>j',
-      -- ['<A-Left>'] = '<C-\\><C-N><C-w>h',
-      -- ['<A-Right>'] = '<C-\\><C-N><C-w>l',
+      ['<A-j>'] = '<C-o>:call MoveLineDown()<CR>',
+      ['<A-k>'] = '<C-o>:call MoveLineUp()<CR>',
+
       -- runs conditionally
       ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
       ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
@@ -88,7 +83,7 @@ function M.config_keys()
       ['<C-z>'] = '<C-o>:u<cr>',
 
       -- correct last spelling
-      ['<C-l>'] = '<C-G>u<Esc>[s1z=`]a<C-G>u',
+      ['<C-u>'] = '<C-G>u<Esc>[s1z=`]a<C-G>u',
     },
 
     ---@usage change or add keymappings for normal mode
@@ -200,8 +195,8 @@ function M.config_keys()
       ['<C-y>'] = '"+y',
 
       -- Move current line / block with Alt-j/k a la vscode.
-      -- ['<A-j>'] = ':m .+1<CR>==',
-      -- ['<A-k>'] = ':m .-2<CR>==',
+      ['<A-j>'] = ':<C-u>call MoveLineDown()<CR>',
+      ['<A-k>'] = ':<C-u>call MoveLineUp()<CR>',
 
       -- QuickFix
       -- [']q'] = ':cnext<CR>',
@@ -252,6 +247,10 @@ function M.config_keys()
       ['<C-s>'] = '<C-c>:wa<cr>gv',
 
       ['<Leader>;'] = { 'q:k', { silent = false } },
+
+      -- Move current line / block with Alt-j/k ala vscode.
+      ['<A-j>'] = ':<C-u>call MoveVisualDown()<CR>',
+      ['<A-k>'] = ':<C-u>call MoveVisualUp()<CR>',
 
       -- ["p"] = '"0p',
       -- ["P"] = '"0P',

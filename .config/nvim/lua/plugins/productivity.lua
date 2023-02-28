@@ -40,6 +40,18 @@ return {
           end, { buffer = true })
         end,
       })
+      vim.api.nvim_create_autocmd('InsertLeave', {
+        group = augroup,
+        pattern = '*.md',
+        callback = function()
+          local row = vim.api.nvim_win_get_cursor(0)[1]
+          local line = vim.api.nvim_buf_get_lines(0, row - 1, row, false)[1]
+          local in_table = require('mkdnflow.tables').isPartOfTable(line)
+          if in_table then
+            vim.cmd([[MkdnTableFormat]])
+          end
+        end,
+      })
     end,
   },
 
@@ -55,12 +67,15 @@ return {
         MkdnFoldSection = { { 'n' }, 'zC' },
         MkdnUnfoldSection = { { 'n' }, 'zO' },
         MkdnNewListItem = { 'i', '<CR>' }, -- only want <CR> in insert mode to add a new list item (and behave as usual outside of lists).
-        MkdnTab = { { 'n', 'i' }, '<Tab>' },
-        MkdnSTab = { { 'n', 'i' }, '<S-Tab>' },
+        -- MkdnEnter = { { 'i' }, '<CR>' }, -- only want <CR> in insert mode to add a new list item (and behave as usual outside of lists).
+        MkdnEnter = false,
+        MkdnTab = { { 'i' }, '<C-l>' },
+        MkdnSTab = { { 'i' }, '<C-h>' },
+        MkdnTablePrevRow = { 'i', '<C-k>' },
+        MkdnTableNextRow = { 'i', '<C-j>' },
         MkdnTableNextCell = false,
         MkdnTablePrevCell = false,
         MkdnFollowLink = false,
-        MkdnEnter = false,
       },
     },
   },

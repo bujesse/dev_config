@@ -34,11 +34,13 @@ M.autocommands = {
   _markdown = {
     {
       event = 'FileType',
-      opts = { pattern = 'markdown', command = 'setlocal conceallevel=2' },
-    },
-    {
-      event = 'FileType',
-      opts = { pattern = 'markdown', command = 'setlocal spell' },
+      opts = {
+        pattern = 'markdown',
+        callback = function()
+          vim.cmd([[setlocal conceallevel=2]])
+          vim.cmd([[setlocal spell]])
+        end,
+      },
     },
   },
   _auto_resize = {
@@ -83,8 +85,8 @@ M.autocommands = {
 ---@param definitions table<string, table<string, any>>
 function M.define_augroups(definitions)
   for group_name, commands in pairs(definitions) do
+    local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
     for _, command in ipairs(commands) do
-      local augroup = vim.api.nvim_create_augroup(group_name, { clear = true })
       vim.tbl_deep_extend('force', command.opts, { group = augroup })
       vim.api.nvim_create_autocmd(command.event, command.opts)
     end

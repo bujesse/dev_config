@@ -38,6 +38,15 @@ function M.config()
     end,
   })
 
+  vim.api.nvim_create_user_command('NullLsToggle', function()
+    require('null-ls').toggle({})
+  end, {})
+
+  vim.api.nvim_create_user_command('NullLsRestart', function()
+    require('null-ls').toggle({})
+    require('null-ls').toggle({})
+  end, {})
+
   -- Then, anything not supported by mason-null-ls, use null-ls
   local lsp_config = require('plugins.lsp.nvim-lspconfig')
   local default_opts = lsp_config.get_common_opts()

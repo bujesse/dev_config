@@ -2,33 +2,13 @@ local Log = require('core.log')
 
 M = {}
 
-local function lsp_formatting(bufnr)
+M.lsp_formatting = function(bufnr)
   vim.lsp.buf.format({
     filter = function(client)
-      -- apply whatever logic you want (in this example, we'll only use null-ls)
       return client.name == 'null-ls'
     end,
     bufnr = bufnr or vim.api.nvim_get_current_buf(),
   })
-end
-
--- TODO: try this later; think it's broken
--- vim.keymap.set('n', 'gD', function()
---   vim.lsp.buf_request(0, 'definition', { foo = 'bar' }, lsp_location_handler('tabnew'))
--- end, opts)
-local function lsp_location_handler(command)
-  return function(err, result, ctx, config)
-    if
-      vim.tbl_islist(result)
-      and #result >= 1
-      and type(result[1]) == 'string'
-      and result[1].uri:gsub('file://', '') ~= vim.fn.expand('%:p')
-    then
-      -- split, vsplit, tabnew, etc
-      vim.api.nvim_command(command)
-    end
-    return vim.lsp.handlers['textDocument/definition'](err, result, ctx, config)
-  end
 end
 
 -- Use an on_attach function to only map the following keys
@@ -76,7 +56,7 @@ function M.common_on_attach(client, bufnr)
     end, vim.tbl_deep_extend('force', opts, { desc = 'Format file', buffer = true }))
   else
     vim.keymap.set('n', '<Leader>f', function()
-      lsp_formatting()
+      M.lsp_formatting()
     end, vim.tbl_deep_extend('force', opts, { desc = 'Format file' }))
     -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
     -- vim.keymap.set('n', '<Leader>f', function()
@@ -137,7 +117,7 @@ function M.turn_autoformat_on(augroup, bufnr)
     buffer = bufnr,
     group = augroup,
     callback = function()
-      lsp_formatting(bufnr)
+      M.lsp_formatting(bufnr)
       -- vim.lsp.buf.format({ bufnr = bufnr })
       -- M.async_formatting(bufnr)
     end,
