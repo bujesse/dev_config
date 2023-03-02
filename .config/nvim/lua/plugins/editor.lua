@@ -269,7 +269,7 @@ return {
   {
     'tpope/vim-fugitive',
     keys = {
-      { '<Leader>B', 'Git blame', desc = 'Git Blame' },
+      { '<Leader>B', '<CMD>Git blame<CR>', desc = 'Git Blame' },
       { '<Leader>G', '<Cmd>tab G<Cr>', desc = 'Open Fugitive Status' },
     },
     cmd = { 'Git', 'G' },
@@ -443,6 +443,21 @@ return {
     keys = {
       { "<leader>r", function() require("spectre").open({ is_insert_mode = true, })
       end, desc = "Replace in files (Spectre)" },
+    },
+  },
+
+  -- better visuals for diagnostics
+  {
+    'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    opts = {},
+    keys = {
+      {
+        'yod',
+        function()
+          require('lsp_lines').toggle()
+        end,
+        desc = 'Toggle lsp_lines',
+      },
     },
   },
 }

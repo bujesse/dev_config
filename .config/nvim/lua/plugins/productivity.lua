@@ -69,8 +69,8 @@ return {
         MkdnNewListItem = { 'i', '<CR>' }, -- only want <CR> in insert mode to add a new list item (and behave as usual outside of lists).
         -- MkdnEnter = { { 'i' }, '<CR>' }, -- only want <CR> in insert mode to add a new list item (and behave as usual outside of lists).
         MkdnEnter = false,
-        MkdnTab = { { 'i' }, '<C-l>' },
-        MkdnSTab = { { 'i' }, '<C-h>' },
+        MkdnTab = { { 'i' }, '<Tab>' },
+        MkdnSTab = { { 'i' }, '<S-Tab>' },
         MkdnTablePrevRow = { 'i', '<C-k>' },
         MkdnTableNextRow = { 'i', '<C-j>' },
         MkdnTableNextCell = false,

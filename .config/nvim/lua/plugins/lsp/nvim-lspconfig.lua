@@ -92,9 +92,10 @@ function M.common_on_attach(client, bufnr)
     M.toggle_diagnostics(false)
   end
 
-  vim.keymap.set('n', 'yod', function()
-    M.toggle_diagnostics(true)
-  end, { desc = 'Toggle Diagnostics', noremap = true, silent = true })
+  -- Using lsp_lines.nvim
+  -- vim.keymap.set('n', 'yod', function()
+  --   M.toggle_diagnostics(true)
+  -- end, { desc = 'Toggle Diagnostics', noremap = true, silent = true })
 
   -- Setup auto format on save
   if client.supports_method('textDocument/formatting') then
@@ -145,6 +146,7 @@ function M.toggle_diagnostics(should_log)
 
   local conf = {
     virtual_text = M.diagnostics_visible,
+    virtual_lines = false,
     signs = true,
     underline = true,
     update_in_insert = false,

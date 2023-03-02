@@ -141,6 +141,12 @@ function M.config_keys()
       [']e'] = { '<Plug>unimpairedMoveDown', { noremap = false } },
       ['[e'] = { '<Plug>unimpairedMoveUp', { noremap = false } },
 
+      [']q'] = '<CMD>cnext<CR>',
+      ['[q'] = '<CMD>cprev<CR>',
+
+      [']Q'] = '<CMD>clast<CR>',
+      ['[Q'] = '<CMD>cfirst<CR>',
+
       -- Resize with arrows
       ['<Up>'] = '<C-W>5+',
       ['<Down>'] = '<C-W>5-',

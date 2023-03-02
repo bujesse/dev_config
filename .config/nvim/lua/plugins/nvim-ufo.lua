@@ -33,7 +33,24 @@ return {
     'kevinhwang91/nvim-ufo',
     dependencies = {
       'kevinhwang91/promise-async',
-      'luukvbaal/statuscol.nvim',
+      {
+        'luukvbaal/statuscol.nvim',
+        config = function()
+          local builtin = require('statuscol.builtin')
+          vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+          require('statuscol').setup({
+            foldfunc = 'builtin',
+            order = 'SFNs',
+            setopt = true,
+            relculright = true,
+            segments = {
+              { text = { '%s' }, click = 'v:lua.ScSa' },
+              { text = { builtin.lnumfunc }, click = 'v:lua.ScLa' },
+              { text = { ' ', builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+            },
+          })
+        end,
+      },
     },
     config = function()
       vim.o.foldcolumn = '1'
@@ -41,7 +58,6 @@ return {
       vim.o.foldlevelstart = 99
       vim.o.foldenable = true
       vim.o.numberwidth = 4
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
 
       local ft_map = {
         Outline = '',
@@ -60,14 +76,6 @@ return {
             scrollD = '<C-d>',
           },
         },
-      })
-
-      -- Allows configurinig the fold stuff in the column
-      -- Can also configure clicking (like DAP breakpoints, folds, etc)
-      require('statuscol').setup({
-        foldfunc = 'builtin',
-        order = 'SFNs',
-        setopt = true,
       })
 
       -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
