@@ -66,19 +66,6 @@ M.autocommands = {
       opts = { pattern = '*', command = "if &buftype == 'help' && winwidth(0) == &columns | wincmd L | endif" },
     },
   },
-  _vagrant = {
-    {
-      event = 'BufWritePost',
-      opts = {
-        pattern = '*',
-        callback = function()
-          vim.defer_fn(function()
-            vim.cmd('checktime')
-          end, 1500)
-        end,
-      },
-    },
-  },
 }
 
 ---Simple way to bulk define augroup/commands

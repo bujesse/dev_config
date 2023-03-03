@@ -1,6 +1,6 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    set -gx EDITOR /home/bujesse/dev/nvim-linux64/bin/nvim
+    set -gx EDITOR /home/vagrant/dev/nvim-linux64/bin/nvim
     set -g fish_greeting
 
     fish_vi_key_bindings

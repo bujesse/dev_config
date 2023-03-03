@@ -45,13 +45,8 @@ function M.common_on_attach(client, bufnr)
   if vim.bo.filetype == 'python' then
     -- Specific to darker only; it doesn't play nicely with null-ls
     vim.keymap.set('n', '<Leader>f', function()
-      vim.cmd.write()
+      vim.cmd([[write!]])
       vim.cmd([[silent !darker --isort --skip-string-normalization -l 120 %]])
-
-      -- VAGRANT
-      vim.defer_fn(function()
-        vim.cmd('checktime')
-      end, 1500)
       -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
     end, vim.tbl_deep_extend('force', opts, { desc = 'Format file', buffer = true }))
   else
