@@ -67,15 +67,6 @@ return {
         },
       })
 
-      require('mason-null-ls').setup({
-        ensure_installed = {
-          -- 'stylua',
-          -- 'ruff',
-          'prettier',
-          -- 'yamllint',
-        },
-      })
-
       require('neodev').setup({
         override = function(root_dir, library)
           -- TODO: Configure to turn these on when in lua development; doesn't work for plugin dirs
@@ -128,7 +119,7 @@ return {
             open(results)
           elseif method == 'definitions' and #results == 2 then
             -- If 2 definitions on the same line, then jump to first one
-            if results[1].targetRange.start.line == results[2].targetRange.start.line then
+            if results[1].range.start.line == results[2].range.start.line then
               jump(results[1])
               return
             end

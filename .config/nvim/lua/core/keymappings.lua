@@ -77,7 +77,7 @@ function M.config_keys()
       ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
 
       -- save all
-      ['<C-s>'] = '<C-o>:wa<cr>',
+      ['<C-s>'] = '<C-o>:wa!<cr>',
 
       -- Undo while in insert_mode
       ['<C-z>'] = '<C-o>:u<cr>',
@@ -126,7 +126,7 @@ function M.config_keys()
       ['Q'] = '@q',
 
       -- save all
-      ['<C-s>'] = ':<C-u>wa<cr>',
+      ['<C-s>'] = ':<C-u>wa!<cr>',
 
       -- Center after search
       -- ['n'] = 'nzzzv',
@@ -250,7 +250,7 @@ function M.config_keys()
       ['Q'] = ":'<,'>:norm @q<CR>",
 
       -- save all
-      ['<C-s>'] = '<C-c>:wa<cr>gv',
+      ['<C-s>'] = '<C-c>:wa!<cr>gv',
 
       ['<Leader>;'] = { 'q:k', { silent = false } },
 
@@ -269,7 +269,7 @@ function M.config_keys()
       ['[e'] = { '<Plug>unimpairedMoveSelectionUp', { noremap = false } },
 
       -- save all
-      ['<C-s>'] = '<C-c>:wa<cr>gv',
+      ['<C-s>'] = '<C-c>:wa!<cr>gv',
     },
 
     ---@usage change or add keymappings for command mode

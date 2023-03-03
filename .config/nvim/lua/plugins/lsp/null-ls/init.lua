@@ -9,6 +9,16 @@ function M.config()
     return
   end
 
+  require('mason-null-ls').setup({
+    ensure_installed = {
+      'markdownlint',
+      -- 'stylua',
+      -- 'ruff',
+      -- 'prettier',
+      -- 'yamllint',
+    },
+  })
+
   -- Try to use Mason first, as source of truth
   require('mason-null-ls').setup_handlers({
     function(source_name, methods)
@@ -26,6 +36,11 @@ function M.config()
           '--quote-style',
           'AutoPreferSingle',
         },
+      }))
+    end,
+    prettier = function(source_name, methods)
+      null_ls.register(null_ls.builtins.formatting.prettier.with({
+        disabled_filetypes = { 'markdown' },
       }))
     end,
     yamllint = function(source_name, methods)

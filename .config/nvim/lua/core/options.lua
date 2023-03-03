@@ -137,6 +137,9 @@ function M.config()
 
   -- Defines the trigger for 'wildmenu' in mappings
   -- opt.wildchar = '<Tab>'
+
+  -- Don't overwrite a readonly file.  When omitted, ":w!" overwrites a readonly file, if possible.
+  opt.cpoptions:append('W')
 end
 
 return M
