@@ -28,7 +28,6 @@ function M.common_on_attach(client, bufnr)
     buffer = true,
   }
 
-  vim.keymap.set('n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   vim.keymap.set('n', 'K', function()
     vim.lsp.buf.hover()
   end, opts)
@@ -41,6 +40,10 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   vim.keymap.set('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+
+  -- Useful to add references to quickfix
+  vim.keymap.set('n', 'gqd', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
+  vim.keymap.set('n', 'gqr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 
   if vim.bo.filetype == 'python' then
     -- Specific to darker only; it doesn't play nicely with null-ls

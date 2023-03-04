@@ -151,6 +151,7 @@ return {
       wk.register({
         mode = { 'n', 'v' },
         ['g'] = { name = '+Goto' },
+        ['gq'] = { name = '+Quickfix' },
         [']'] = { name = '+Next' },
         ['['] = { name = '+Prev' },
         ['cr'] = { name = '+Abolish coerce word' },
