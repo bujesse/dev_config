@@ -94,7 +94,7 @@ return {
             text_align = 'left',
           },
         },
-        separator_style = 'slope',
+        separator_style = 'slant',
         persist_buffer_sort = true,
         max_name_length = 25,
         max_prefix_length = 20, -- prefix used when a buffer is de-duplicated
