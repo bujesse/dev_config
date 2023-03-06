@@ -55,15 +55,19 @@ return {
   -- comments
   {
     'numToStr/Comment.nvim',
-    opts = {
-      ignore = '^$',
-      toggler = {
-        block = 'gC',
-      },
-      opleader = {
-        block = 'gC',
-      },
-    },
+    config = function()
+      require('Comment').setup({
+        -- Required for nvim-ts-context-commentstring
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        ignore = '^$',
+        toggler = {
+          block = 'gC',
+        },
+        opleader = {
+          block = 'gC',
+        },
+      })
+    end,
   },
 
   -- better text-objects

@@ -4,17 +4,17 @@ return {
   -- Treesitter actions. Toggle booleans, quotes, conditionals,
   {
     'ckolkey/ts-node-action',
-    dependencies = { 'nvim-treesitter', },
+    dependencies = { 'nvim-treesitter' },
     config = true,
     keys = {
       {
         'ga',
         function()
-          require("ts-node-action").node_action()
+          require('ts-node-action').node_action()
         end,
         desc = 'Trigger Node Action',
       },
-    }
+    },
   },
 
   {
@@ -24,15 +24,16 @@ return {
       {
         -- shows the code context of the currently visible buffer contents
         'nvim-treesitter/nvim-treesitter-context',
-        opts = { enable = true }
-      }
+        opts = { enable = true },
+      },
+      { 'windwp/nvim-ts-autotag', opts = {} },
     },
     version = false,
     event = 'BufReadPost',
     build = ':TSUpdate',
     keys = {
-      { "<Cr>", desc = "Increment selection" },
-      { "<bs>", desc = "Schrink selection", mode = "x" },
+      { '<Cr>', desc = 'Increment selection' },
+      { '<bs>', desc = 'Schrink selection', mode = 'x' },
     },
     ---@type TSConfig
     opts = {
@@ -53,7 +54,7 @@ return {
 
         'toml',
         'rust',
-        "regex",
+        'regex',
 
         'javascript',
         'typescript',
@@ -73,52 +74,52 @@ return {
         is_supported = function()
           -- disable for command history window
           local mode = vim.api.nvim_get_mode().mode
-          if mode == "c" then
+          if mode == 'c' then
             return false
           end
           return true
-        end
+        end,
       },
       textobjects = {
         move = {
           enable = true,
           set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
-            ["]m"] = { query = "@function.outer", desc = "Next Method start" },
-            ["]]"] = { query = "@class.outer", desc = "Next Class start" },
+            [']m'] = { query = '@function.outer', desc = 'Next Method start' },
+            [']]'] = { query = '@class.outer', desc = 'Next Class start' },
             --
             -- You can use regex matching and/or pass a list in a "query" key to group multiple queires.
-            ["]o"] = "@loop.*",
+            [']o'] = '@loop.*',
             -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
           },
           goto_next_end = {
-            ["]M"] = { query = "@function.outer", desc = "Next Method end" },
-            ["]["] = { query = "@class.outer", desc = "Next Class end" },
+            [']M'] = { query = '@function.outer', desc = 'Next Method end' },
+            [']['] = { query = '@class.outer', desc = 'Next Class end' },
           },
           goto_previous_start = {
-            ["[m"] = { query = "@function.outer", desc = "Prev Method start" },
-            ["[["] = { query = "@class.outer", desc = "Prev Class start" },
+            ['[m'] = { query = '@function.outer', desc = 'Prev Method start' },
+            ['[['] = { query = '@class.outer', desc = 'Prev Class start' },
           },
           goto_previous_end = {
-            ["[M"] = { query = "@function.outer", desc = "Prev Method end" },
-            ["[]"] = { query = "@class.outer", desc = "Prev Class end" },
+            ['[M'] = { query = '@function.outer', desc = 'Prev Method end' },
+            ['[]'] = { query = '@class.outer', desc = 'Prev Class end' },
           },
           -- Below will go to either the start or the end, whichever is closer.
           -- Use if you want more granular movements
           -- Make it even more gradual by adding multiple queries and regex.
           goto_next = {
-            ["]o"] = { query = { "@block.outer", "@conditional.outer", "@loop.outer" }, desc = "Next block" },
+            [']o'] = { query = { '@block.outer', '@conditional.outer', '@loop.outer' }, desc = 'Next block' },
           },
           goto_previous = {
-            ["[o"] = { query = { "@block.outer", "@conditional.outer", "@loop.outer" }, desc = "Prev block" },
-          }
+            ['[o'] = { query = { '@block.outer', '@conditional.outer', '@loop.outer' }, desc = 'Prev block' },
+          },
         },
       },
     },
     ---@param opts TSConfig
     config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-      require('nvim-treesitter.install').compilers = { "clang" }
+      require('nvim-treesitter.configs').setup(opts)
+      require('nvim-treesitter.install').compilers = { 'clang' }
     end,
   },
 
