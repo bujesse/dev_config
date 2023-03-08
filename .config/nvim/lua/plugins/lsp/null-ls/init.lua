@@ -106,11 +106,11 @@ function M.setup_null_ls()
     --   filetypes = { 'python' },
     --   diagnostics_format = '[flake8] #{m} (#{c})',
     -- },
-    -- {
-    --   exe = 'ruff',
-    --   filetypes = { 'python' },
-    --   diagnostics_format = '[ruff] #{m} (#{c})',
-    -- },
+    {
+      exe = 'ruff',
+      filetypes = { 'python' },
+      diagnostics_format = '[ruff] #{m} (#{c})',
+    },
     -- {
     --   exe = 'eslint',
     -- },

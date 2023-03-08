@@ -18,6 +18,7 @@ fonts/
 .config/fish/completions
 .config/fish/conf.d
 !.config/fish/conf.d/abbr.fish
+!.config/fish/functions/n.fish
 .config/fish/fish_plugins
 .config/fish/fish_variables
 .config/fish/fishd.tmp.F3tGza

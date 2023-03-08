@@ -1,3 +1,6 @@
 neovim-remote
 pynvim
 debugpy
+darker[isort]
+ruff
+tmuxp
