@@ -4,7 +4,8 @@ function M.grep_string_visual()
   local visual_selection = require('core.utils').selected_text()
   print('Search string: ' .. visual_selection)
   -- Treat the pattern as a literal string instead of a regular expression.
-  require('telescope.builtin').grep_string({ search = visual_selection, use_regex = false })
+  -- require('telescope.builtin').grep_string({ search = visual_selection, use_regex = false })
+  require('telescope').extensions.menufacture.grep_string({ search = visual_selection, use_regex = false })
 end
 
 function M.print_visual()
@@ -98,6 +99,7 @@ return {
   dependencies = {
     'plenary.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    'molecule-man/telescope-menufacture',
   },
   config = function()
     local actions = require('telescope.actions')
@@ -208,18 +210,30 @@ return {
           },
         },
       },
-      extensions = {},
+      extensions = {
+        menufacture = {
+          mappings = {
+            main_menu = { [{ 'i', 'n' }] = '<C-m>' },
+          },
+        },
+      },
     })
 
     require('telescope').load_extension('fzf')
+    require('telescope').load_extension('menufacture')
 
     -- Essential
     vim.keymap.set('n', "<Space>'", '<cmd>lua require("telescope.builtin").resume()<CR>', { desc = 'Telescope Resume' })
-    vim.keymap.set('n', '<Space>o', '<cmd>lua require("telescope.builtin").find_files()<CR>', { desc = 'Find Files' })
+    vim.keymap.set(
+      'n',
+      '<Space>o',
+      '<cmd>lua require("telescope").extensions.menufacture.find_files()<CR>',
+      { desc = 'Find Files' }
+    )
     vim.keymap.set(
       'n',
       '<Space>f',
-      '<cmd>lua require("telescope.builtin").live_grep({ additional_args = { "--fixed-strings" } })<CR>',
+      '<cmd>lua require("telescope").extensions.menufacture.live_grep({ additional_args = { "--fixed-strings" } })<CR>',
       { desc = 'Global Search (Fixed Strings)' }
     )
     vim.keymap.set(
@@ -269,13 +283,13 @@ return {
     vim.keymap.set(
       'n',
       '<Space>O',
-      '<cmd>lua require("telescope.builtin").find_files({ hidden = true })<CR>',
+      '<cmd>lua require("telescope").extensions.menufacture.find_files({ hidden = true })<CR>',
       { desc = 'Find Files (Hidden)' }
     )
     vim.keymap.set(
       'n',
       '<Space>F',
-      '<cmd>lua require("telescope.builtin").live_grep({mode = "filetype_mask"})<CR>',
+      '<cmd>lua require("telescope").extensions.menufacture.live_grep({mode = "filetype_mask"})<CR>',
       { desc = 'Global Search (Filetype Mask)' }
     )
 
@@ -304,11 +318,11 @@ return {
       h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
       p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
       i = {
-        '<cmd>lua require("telescope.builtin").live_grep({mode = "ignore"})<CR>',
-        'Grep ([i]nclude ignore and hidden)',
+        '<cmd>lua require("telescope").extensions.menufacture.live_grep({mode = "ignore"})<CR>',
+        'Grep (include ignore and hidden)',
       },
-      r = { '<cmd>lua require("telescope.builtin").live_grep()<CR>', 'Regex Search' },
-      u = { '<cmd>lua require("telescope.builtin").grep_string()<CR>', 'Grep String ([u]nder cursor)' },
+      r = { '<cmd>lua require("telescope").extensions.menufacture.live_grep()<CR>', 'Regex Search' },
+      u = { '<cmd>lua require("telescope").extensions.menufacture.grep_string()<CR>', 'Grep String' },
       v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
       s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
       k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },

@@ -287,12 +287,15 @@ return {
       return {
         enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
         keymaps = {
-          view = {},
+          view = {
+            ['q'] = actions.close,
+          },
           file_panel = {
             { 'n', '?', actions.help('file_panel'), { desc = 'Open the help panel' } },
             { 'n', 'r', actions.refresh_files, { desc = 'Refresh files' } },
             { 'n', '<Space>', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry.' } },
             { 'n', 'e', actions.goto_file, { desc = 'Edit the file in a new split in the previous tabpage' } },
+            { 'n', 'q', '<Cmd>DiffviewClose<CR>', { desc = 'Close Diffview' } },
           },
         },
         hooks = {
@@ -305,9 +308,12 @@ return {
     init = function()
       vim.cmd([[command BuCloseDiffview silent tabdo DiffviewClose]])
     end,
-    cmd = { 'DiffviewOpen' },
+    cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
     keys = {
       { '<Leader>D', '<Cmd>DiffviewOpen<Cr>', desc = 'Open DiffView' },
+      { '<Leader>gc', ':DiffviewOpen ', desc = 'Compare branch:' },
+      { '<Leader>gH', '<Cmd>DiffviewFileHistory<Cr>', desc = 'Branch History' },
+      { '<Leader>gh', '<Cmd>DiffviewFileHistory %<Cr>', desc = 'Current File History' },
     },
   },
 
