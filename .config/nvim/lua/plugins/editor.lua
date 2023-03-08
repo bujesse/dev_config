@@ -310,8 +310,22 @@ return {
     end,
     cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
     keys = {
-      { '<Leader>D', '<Cmd>DiffviewOpen<Cr>', desc = 'Open DiffView' },
-      { '<Leader>gc', ':DiffviewOpen ', desc = 'Compare branch:' },
+      {
+        '<Leader>D',
+        function()
+          if next(require('diffview.lib').views) == nil then
+            vim.cmd('DiffviewOpen')
+          else
+            vim.cmd('DiffviewClose')
+          end
+        end,
+        desc = 'Toggle DiffView',
+      },
+      {
+        '<Leader>gc',
+        ':DiffviewOpen origin/',
+        desc = 'Compare branch:',
+      },
       { '<Leader>gH', '<Cmd>DiffviewFileHistory<Cr>', desc = 'Branch History' },
       { '<Leader>gh', '<Cmd>DiffviewFileHistory %<Cr>', desc = 'Current File History' },
     },
@@ -362,8 +376,8 @@ return {
         code_actions = 'a',
         fold = 'h',
         unfold = 'l',
-        fold_all = 'W',
-        unfold_all = 'E',
+        fold_all = 'zM',
+        unfold_all = 'zR',
         fold_reset = 'R',
       },
     },

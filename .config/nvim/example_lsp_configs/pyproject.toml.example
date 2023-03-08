@@ -1,0 +1,16 @@
+[tool.pyright]
+# https://microsoft.github.io/pyright/#/configuration?id=main-configuration-options
+reportOptionalMemberAccess = 'information'
+reportOptionalIterable = false
+
+pythonVersion = "3.8"
+
+[tool.ruff]
+# Enable Pyflakes `E` and `F` codes by default.
+select = ["E", "F"]
+ignore = []
+
+line-length = 120
+
+target-version = "py38"
+

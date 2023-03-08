@@ -105,6 +105,9 @@ return {
   {
     'dnlhc/glance.nvim',
     opts = {
+      folds = {
+        folded = false, -- Automatically unfold list on startup
+      },
       hooks = {
         before_open = function(results, open, jump, method)
           if method == 'references' and #results == 2 then
