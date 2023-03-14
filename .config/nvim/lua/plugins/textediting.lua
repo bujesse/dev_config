@@ -62,7 +62,7 @@ return {
       max_join_length = 150,
     },
     keys = {
-      { 'gs', ':TSJToggle<cr>', desc = 'Split/Join toggle' },
+      { 'gs', ':lua require("treesj").toggle()<CR>', desc = 'Split/Join toggle' },
     },
   },
 

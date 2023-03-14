@@ -23,6 +23,15 @@ return {
           end,
         },
       },
+      source_selector = {
+        winbar = true,
+        content_layout = 'center',
+        tab_labels = {
+          filesystem = 'Files',
+          buffers = 'Bufs',
+          git_status = 'Git',
+        },
+      },
       default_component_configs = {
         modified = {
           symbol = '[+]',
@@ -348,7 +357,18 @@ return {
     dependencies = { 'numToStr/Comment.nvim' },
     cmd = { 'TodoTrouble', 'TodoTelescope' },
     event = 'BufReadPost',
-    config = true,
+    opts = {
+      keywords = {
+        todo = { icon = ' ', color = 'info' },
+      },
+    },
+    config = function(_, opts)
+      -- Add lowercase versions of each keyword
+      for key, val in pairs(opts.keywords) do
+        opts.keywords[key:lower()] = val
+      end
+      require('todo-comments').setup(opts)
+    end,
     -- stylua: ignore
     keys = {
       { "]x", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },

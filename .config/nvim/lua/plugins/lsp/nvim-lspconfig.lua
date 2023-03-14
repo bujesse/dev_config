@@ -34,11 +34,23 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set('n', 'gK', function()
     require('core.utils').hover()
   end, vim.tbl_deep_extend('force', opts, { desc = 'Hover in new window' }))
-  vim.keymap.set({ 'i', 'n' }, '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  vim.keymap.set('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   vim.keymap.set('n', 'gp', '<cmd>lua require"plugins.lsp.peek".Peek("definition")<CR>', opts)
   vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  vim.keymap.set(
+    'n',
+    '[D',
+    '<cmd>lua vim.diagnostic.goto_prev({severity = { min = vim.diagnostic.severity.WARN } })<CR>',
+    opts
+  )
+  vim.keymap.set(
+    'n',
+    ']D',
+    '<cmd>lua vim.diagnostic.goto_next({severity = { min = vim.diagnostic.severity.WARN } })<CR>',
+    opts
+  )
   vim.keymap.set('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
   -- Useful to add references to quickfix
@@ -82,8 +94,22 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
   vim.keymap.set('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
 
+  -- Enable lsp_signature.nvim
+  require('lsp_signature').on_attach({
+    bind = true, -- This is mandatory, otherwise border config won't get registered.
+    handler_opts = {
+      border = 'rounded',
+    },
+    floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
+    hint_enable = true, -- virtual hint enable
+    hint_prefix = '',
+    toggle_key = '<C-_>',
+  }, bufnr)
+
   -- Setup UI configuration
   require('plugins.lsp.ui').setup()
+  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
 
   -- Diagnostic virutal text
   if M.first_setup then

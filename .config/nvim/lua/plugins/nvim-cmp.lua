@@ -17,6 +17,11 @@ return {
       local luasnip = require('luasnip')
       local lspkind = require('lspkind')
 
+      local border_opts = {
+        border = 'single',
+        winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+      }
+
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
@@ -86,12 +91,17 @@ return {
           end, { 'i', 's' }),
         },
 
+        window = {
+          completion = cmp.config.window.bordered(border_opts),
+          documentation = cmp.config.window.bordered(border_opts),
+        },
+
         sources = cmp.config.sources({
-          { name = 'nvim_lsp', priority = 8 },
-          { name = 'luasnip', priority = 7 },
-          { name = 'buffer', priority = 7 },
-          { name = 'nvim_lua', priority = 5 },
-          { name = 'path', priority = 4 },
+          { name = 'nvim_lsp', priority = 1000 },
+          { name = 'luasnip', priority = 750 },
+          { name = 'buffer', priority = 500 },
+          -- { name = 'nvim_lua', priority = 5 },
+          { name = 'path', priority = 250 },
           -- { name = 'treesitter', priority = 4 },
         }),
 
@@ -113,6 +123,14 @@ return {
             -- compare.kind,
             -- compare.length, -- useless
           },
+        },
+
+        duplicates = {
+          nvim_lsp = 1,
+          luasnip = 1,
+          cmp_tabnine = 1,
+          buffer = 1,
+          path = 1,
         },
 
         formatting = {

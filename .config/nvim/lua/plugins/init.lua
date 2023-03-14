@@ -99,6 +99,7 @@ return {
       'jose-elias-alvarez/null-ls.nvim',
       'b0o/schemastore.nvim',
       'jose-elias-alvarez/typescript.nvim',
+      'ray-x/lsp_signature.nvim',
     },
   },
 
