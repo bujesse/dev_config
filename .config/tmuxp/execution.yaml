@@ -11,16 +11,23 @@ windows:
       - cd /projects/execution/
       - source venv/bin/activate.fish
       - n -S ~/.cache/nvim/sessions/execution
-  - window_name: flask-logs
-    layout: tiled
-    shell_command_before:
-      - cd /projects/execution/
-      - touch output.log
-      - lnav output.log
   - window_name: flask-proc
-    layout: 4ca9,252x57,0,0{174x57,0,0,2,77x57,175,0[77x28,175,0,18,77x28,175,29,19]}
+    layout: 134d,252x57,0,0{174x57,0,0,2,77x57,175,0[77x11,175,0,3,77x11,175,12,4,77x16,175,24,24,77x16,175,41,25]}
     panes:
-      - shell_command_before:
+      - shell_command:
+          - cd /projects/execution/
+          - touch output.log
+          - lnav output.log
+      - shell_command:
+          # Watch for debugpy processes
+          - watch --color -n 2 "ps aux | rg -inH [d]ebugpy"
+      - shell_command:
+          # Watch for ports 5678
+          - watch -c -n 2 "sudo lsof -i -P -n | rg 5678"
+      - shell_command:
+          - cd /projects/execution/
+          - source venv/bin/activate.fish
+      - shell_command:
           - cd /projects/execution/
           - source venv/bin/activate.fish
           # - flask run execution:create_app() --host=0.0.0.0 --port=5010 --without-threads
@@ -31,12 +38,6 @@ windows:
           FLASK_ENV: development
           FLASK_DEBUG: "1"
           LOG_LEVEL: debug
-      - shell_command:
-          # Watch for debugpy processes
-          - watch --color -n 2 "ps aux | rg -inH [d]ebugpy"
-      - shell_command:
-          # Watch for ports 5678
-          - watch -c -n 2 "sudo lsof -i -P -n | rg 5678"
   - window_name: execution-tests
     layout: tiled
     shell_command_before:

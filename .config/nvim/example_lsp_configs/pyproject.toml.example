@@ -1,6 +1,10 @@
 [tool.pyright]
 # https://microsoft.github.io/pyright/#/configuration?id=main-configuration-options
+
+typeCheckingMode = 'basic'
+
 reportOptionalMemberAccess = 'information'
+reportGeneralTypeIssues = 'warning'
 reportOptionalIterable = false
 
 pythonVersion = "3.8"

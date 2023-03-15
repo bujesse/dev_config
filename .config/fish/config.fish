@@ -1,5 +1,5 @@
-set -gx XDG_CONFIG_HOME /home/bujesse/.config
-set -gx EDITOR /home/bujesse/bin/nvim.appimage
+set -gx XDG_CONFIG_HOME /home/vagrant/.config
+set -gx EDITOR /home/vagrant/bin/nvim.appimage
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
