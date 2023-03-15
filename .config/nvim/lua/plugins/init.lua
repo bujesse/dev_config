@@ -121,12 +121,6 @@ return {
               end
             end
             open(results)
-          elseif method == 'definitions' and #results == 2 then
-            -- If 2 definitions on the same line, then jump to first one
-            if results[1].range.start.line == results[2].range.start.line then
-              jump(results[1])
-              return
-            end
           elseif #results == 1 then
             jump(results[1])
             return

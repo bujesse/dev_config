@@ -67,7 +67,7 @@ end
 
 -- Move hover docs to new buffer
 M.hover = function()
-  local vim_util = require "vim.lsp.util"
+  local vim_util = require('vim.lsp.util')
   vim.lsp.buf_request(0, 'textDocument/hover', vim_util.make_position_params(), function(_, result, ctx, config)
     config = config or {}
     config.focus_id = ctx.method
@@ -85,12 +85,17 @@ M.hover = function()
     local ft = vim.bo.filetype
 
     -- print(dump(markdown_lines))
-    vim.api.nvim_command [[ new ]]
+    vim.api.nvim_command([[ new ]])
     vim.api.nvim_buf_set_lines(0, 0, 1, false, markdown_lines)
     vim.api.nvim_command('setlocal ft=' .. ft .. ' buftype+=nofile nobl conceallevel=2 concealcursor+=n')
-    vim.api.nvim_command [[ nnoremap <buffer>q <C-W>c ]]
+    vim.api.nvim_command([[ nnoremap <buffer>q <C-W>c ]])
     -- vim.api.nvim_command [[ setlocal ft=lsp_markdown ]]
   end)
+end
+
+-- Return the directory of the current buffer
+M.get_buffer_dir = function()
+  return vim.api.nvim_buf_get_name(0):match('(.*/)')
 end
 
 return M

@@ -1,6 +1,8 @@
+set -gx XDG_CONFIG_HOME /home/bujesse/.config
+set -gx EDITOR /home/bujesse/bin/nvim.appimage
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    set -gx EDITOR /home/vagrant/bin/nvim.appimage
     set -g fish_greeting
 
     fish_vi_key_bindings

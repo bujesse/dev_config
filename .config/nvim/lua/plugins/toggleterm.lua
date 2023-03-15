@@ -75,6 +75,16 @@ return {
         { desc = 'Helix editor', noremap = true, silent = true }
       )
 
+      vim.api.nvim_create_user_command('ToggleTermCurrentDir', function()
+        local buf_dir = require('core.utils').get_buffer_dir()
+        Terminal:new({
+          dir = buf_dir,
+          on_open = function(term)
+            vim.cmd('startinsert!')
+          end,
+        }):toggle()
+      end, {})
+
       -- only want these mappings for toggle term
       vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
     end,
