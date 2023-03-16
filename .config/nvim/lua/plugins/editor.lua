@@ -6,103 +6,173 @@ return {
       's1n7ax/nvim-window-picker',
     },
     branch = 'v2.x',
-    opts = {
-      popup_border_style = 'NC',
-      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-      nesting_rules = {},
-      buffers = {
-        follow_current_file = false, -- This will find and focus the file in the active buffer every time the current file is changed while the tree is open.
-      },
-      event_handlers = {
-        {
-          -- Auto close on Open File
-          event = 'file_opened',
-          handler = function(file_path)
-            --auto close
-            require('neo-tree').close_all()
-          end,
+    opts = function()
+      local global_commands = {
+        telescope_grep = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          P(path)
+          require('telescope.builtin').live_grep({ cwd = path })
+        end,
+        -- These are all from AstroNvim https://github.com/AstroNvim/AstroNvim/blob/1e815bb2c4dd4f8991a760b6d1e7e5d253364465/lua/plugins/neo-tree.lua#L10
+        system_open = function(state)
+          require('astronvim.utils').system_open(state.tree:get_node():get_id())
+        end,
+        parent_or_close = function(state)
+          local node = state.tree:get_node()
+          if (node.type == 'directory' or node:has_children()) and node:is_expanded() then
+            state.commands.toggle_node(state)
+          else
+            require('neo-tree.ui.renderer').focus_node(state, node:get_parent_id())
+          end
+        end,
+        child_or_open = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'directory' or node:has_children() then
+            if not node:is_expanded() then -- if unexpanded, expand
+              state.commands.toggle_node(state)
+            else -- if expanded and has children, seleect the next child
+              require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
+            end
+          else -- if not a directory just open it
+            state.commands.open(state)
+          end
+        end,
+        copy_selector = function(state)
+          local node = state.tree:get_node()
+          local filepath = node:get_id()
+          local filename = node.name
+          local modify = vim.fn.fnamemodify
+
+          local results = {
+            e = { val = modify(filename, ':e'), msg = 'Extension only' },
+            f = { val = filename, msg = 'Filename' },
+            F = { val = modify(filename, ':r'), msg = 'Filename w/o extension' },
+            h = { val = modify(filepath, ':~'), msg = 'Path relative to Home' },
+            p = { val = modify(filepath, ':.'), msg = 'Path relative to CWD' },
+            P = { val = filepath, msg = 'Absolute path' },
+          }
+
+          local messages = {
+            { '\nChoose to copy to clipboard:\n', 'Normal' },
+          }
+          for i, result in pairs(results) do
+            if result.val and result.val ~= '' then
+              vim.list_extend(messages, {
+                { ('%s.'):format(i), 'Identifier' },
+                { (' %s: '):format(result.msg) },
+                { result.val, 'String' },
+                { '\n' },
+              })
+            end
+          end
+          vim.api.nvim_echo(messages, false, {})
+          local result = results[vim.fn.getcharstr()]
+          if result and result.val and result.val ~= '' then
+            vim.notify('Copied: ' .. result.val)
+            vim.fn.setreg('+', result.val)
+          end
+        end,
+      }
+      return {
+        popup_border_style = 'NC',
+        close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+        nesting_rules = {},
+        buffers = {
+          follow_current_file = false, -- This will find and focus the file in the active buffer every time the current file is changed while the tree is open.
+          commands = global_commands,
         },
-      },
-      source_selector = {
-        winbar = true,
-        content_layout = 'center',
-        tab_labels = {
-          filesystem = 'Files',
-          buffers = 'Bufs',
-          git_status = 'Git',
+        event_handlers = {
+          {
+            -- Auto close on Open File
+            event = 'file_opened',
+            handler = function(file_path)
+              --auto close
+              require('neo-tree').close_all()
+            end,
+          },
+          {
+            event = 'neo_tree_buffer_enter',
+            handler = function(_)
+              vim.opt_local.signcolumn = 'auto'
+            end,
+          },
         },
-      },
-      default_component_configs = {
-        modified = {
-          symbol = '[+]',
-          highlight = 'NeoTreeModified',
+        source_selector = {
+          winbar = true,
+          content_layout = 'center',
+          tab_labels = {
+            filesystem = 'Files',
+            buffers = 'Bufs',
+            git_status = 'Git',
+          },
         },
-        name = {
-          trailing_slash = false,
-          use_git_status_colors = true,
-          highlight = 'NeoTreeFileName',
+        default_component_configs = {
+          modified = {
+            symbol = '[+]',
+            highlight = 'NeoTreeModified',
+          },
+          name = {
+            trailing_slash = false,
+            use_git_status_colors = true,
+            highlight = 'NeoTreeFileName',
+          },
+          git_status = {
+            symbols = {
+              -- Change type
+              added = '', -- or "✚", but this is redundant info if you use git_status_colors on the name
+              modified = '', -- or "", but this is redundant info if you use git_status_colors on the name
+              deleted = '✖', -- this can only be used in the git_status source
+              renamed = '', -- this can only be used in the git_status source
+              -- Status type
+              untracked = '',
+              ignored = '',
+              unstaged = '',
+              staged = '',
+              conflict = '',
+            },
+          },
         },
+        window = {
+          mappings = {
+            ['l'] = 'child_or_open',
+            ['h'] = 'parent_or_close',
+            ['Y'] = 'copy_selector',
+            ['<C-v>'] = 'open_vsplit',
+            ['<C-x>'] = 'open_split',
+            ['<C-t>'] = 'open_tabnew',
+            ['<C-g>'] = 'open_with_window_picker',
+            -- ['/'] = 'filter_on_submit',
+            -- ['f'] = 'fuzzy_finder',
+          },
+        },
+        filesystem = {
+          window = {
+            mappings = {
+              ['<space>f'] = 'telescope_grep', -- Override mapping to search only in the current directory or file highlighted in neo-tree
+            },
+          },
+          hijack_netrw_behavior = 'open_current',
+          commands = global_commands,
+        },
+        diagnostics = { commands = global_commands },
         git_status = {
-          symbols = {
-            -- Change type
-            added = '', -- or "✚", but this is redundant info if you use git_status_colors on the name
-            modified = '', -- or "", but this is redundant info if you use git_status_colors on the name
-            deleted = '✖', -- this can only be used in the git_status source
-            renamed = '', -- this can only be used in the git_status source
-            -- Status type
-            untracked = '',
-            ignored = '',
-            unstaged = '',
-            staged = '',
-            conflict = '',
+          commands = global_commands,
+          window = {
+            position = 'float',
+            mappings = {
+              ['A'] = 'git_add_all',
+              ['gu'] = 'git_unstage_file',
+              ['ga'] = 'git_add_file',
+              ['gr'] = 'git_revert_file',
+              ['gc'] = 'git_commit',
+              ['gp'] = 'git_push',
+              ['gg'] = 'git_commit_and_push',
+            },
           },
         },
-      },
-      window = {
-        mappings = {
-          ['l'] = {
-            'toggle_node',
-            nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
-          },
-          ['h'] = 'close_node',
-          ['<C-v>'] = 'open_vsplit',
-          ['<C-x>'] = 'open_split',
-          ['<C-t>'] = 'open_tabnew',
-          ['<C-g>'] = 'open_with_window_picker',
-          -- ['/'] = 'filter_on_submit',
-          -- ['f'] = 'fuzzy_finder',
-        },
-      },
-      filesystem = {
-        window = {
-          mappings = {
-            ['<space>f'] = 'telescope_grep', -- Override mapping to search only in the current directory or file highlighted in neo-tree
-          },
-        },
-        commands = {
-          telescope_grep = function(state)
-            local node = state.tree:get_node()
-            local path = node:get_id()
-            P(path)
-            require('telescope.builtin').live_grep({ cwd = path })
-          end,
-        },
-      },
-      git_status = {
-        window = {
-          position = 'float',
-          mappings = {
-            ['A'] = 'git_add_all',
-            ['gu'] = 'git_unstage_file',
-            ['ga'] = 'git_add_file',
-            ['gr'] = 'git_revert_file',
-            ['gc'] = 'git_commit',
-            ['gp'] = 'git_push',
-            ['gg'] = 'git_commit_and_push',
-          },
-        },
-      },
-    },
+      }
+    end,
     keys = {
       { '<Leader>n', ':Neotree source=filesystem toggle=true<CR>', desc = 'Open Neotree' },
       { '<Leader>N', ':Neotree source=filesystem reveal=true<CR>', desc = 'Open Neotree and find file' },
