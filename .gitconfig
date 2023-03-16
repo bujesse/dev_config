@@ -1,6 +1,9 @@
 [user]
-    name = bujesse
-    email = bu.jesse@gmail.com
+	name = Jesse Bu
+	email = jesse.bu@partners-cap.com
+
+[credential "https://partnerscap@dev.azure.com/partnerscap"]
+	provider = generic
 
 [filter "lfs"]
     clean = git-lfs clean -- %f
@@ -21,8 +24,27 @@
     diffFilter = delta --color-only
 
 [delta]
+    features = side-by-side unobtrusive-line-numbers decorations
+    colorMoved = default # Recent versions of Git (≥ v2.17, April 2018) are able to detect moved blocks of code and style them differently from the usual removed/added lines
     navigate = true    # use n and N to move between diff sections
     light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    whitespace-error-style = 22 reverse
+
+[delta "unobtrusive-line-numbers"]
+    line-numbers = true
+    line-numbers-left-format = "{nm:>4}│"
+    line-numbers-right-format = "{np:>4}│"
+    line-numbers-left-style = blue
+    line-numbers-right-style = blue
+
+[delta "decorations"]
+    syntax-theme = Dracula
+    plus-style = syntax "#003800"
+    minus-style = syntax "#3f0001"
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-decoration-style = yellow box
 
 [merge]
     conflictstyle = diff3
