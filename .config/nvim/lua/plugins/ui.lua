@@ -159,6 +159,10 @@ return {
   -- colorizer
   {
     'NvChad/nvim-colorizer.lua',
-    config = true,
+    cmd = { 'ColorizerToggle' },
+    keys = {
+      { 'yoc', '<CMD>ColorizerToggle<CR>' },
+    },
+    opts = {},
   },
 }

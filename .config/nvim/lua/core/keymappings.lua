@@ -204,6 +204,9 @@ function M.config_keys()
       ['<A-j>'] = ':<C-u>call MoveLineDown()<CR>',
       ['<A-k>'] = ':<C-u>call MoveLineUp()<CR>',
 
+      -- Undo all unsaved changes
+      ['<A-u>'] = ':earlier 1f<CR>',
+
       -- QuickFix
       -- [']q'] = ':cnext<CR>',
       -- ['[q'] = ':cprev<CR>',

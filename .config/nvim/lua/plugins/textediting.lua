@@ -59,7 +59,7 @@ return {
     dependencies = { 'nvim-treesitter' },
     opts = {
       use_default_keymaps = false,
-      max_join_length = 150,
+      max_join_length = 1500,
     },
     keys = {
       { 'gs', ':lua require("treesj").toggle()<CR>', desc = 'Split/Join toggle' },

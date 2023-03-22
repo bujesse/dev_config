@@ -16,7 +16,6 @@ fonts/
 !.config/lazygit/config.yml
 .config/composer
 .config/fish/functions
-.config/fish/completions
 .config/fish/conf.d
 !.config/fish/conf.d/abbr.fish
 !.config/fish/functions/n.fish

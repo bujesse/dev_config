@@ -126,6 +126,7 @@ return {
             ['<C-v>'] = actions.select_vertical,
             ['<C-x>'] = actions.select_horizontal,
             ['<C-t>'] = actions.select_tab,
+            ['<C-f>'] = actions.to_fuzzy_refine, -- Very useful
             ['<C-g>'] = function(prompt_bufnr)
               -- Use nvim-window-picker to choose the window by dynamically attaching a function
               local action_set = require('telescope.actions.set')
@@ -266,12 +267,6 @@ return {
 
     vim.keymap.set(
       'n',
-      '<Space>s',
-      '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
-      { desc = 'Lsp Document Symbols' }
-    )
-    vim.keymap.set(
-      'n',
       '<Space>S',
       '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
       { desc = 'Lsp Workspace Symbols' }
@@ -324,7 +319,8 @@ return {
       r = { '<cmd>lua require("telescope").extensions.menufacture.live_grep()<CR>', 'Regex Search' },
       u = { '<cmd>lua require("telescope").extensions.menufacture.grep_string()<CR>', 'Grep String' },
       v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
-      s = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
+      s = { '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'Lsp Document Symbols' },
+      S = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
       k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
       t = { '<cmd>TodoTelescope<cr>', 'Todo' },
       g = {
