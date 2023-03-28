@@ -1,4 +1,3 @@
-function n --wraps=/home/vagrant/dev_config/bin/nvim.appimage --description 'alias n /home/vagrant/dev_config/bin/nvim.appimage'
-  /home/vagrant/dev_config/bin/nvim.appimage $argv
-        
+function n --wraps=/usr/local/bin/nvim --description 'alias n /usr/local/bin/nvim'
+  /usr/local/bin/nvim $argv
 end
