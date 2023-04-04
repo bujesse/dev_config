@@ -12,6 +12,7 @@ function M.config()
   require('mason-null-ls').setup({
     ensure_installed = {
       'markdownlint',
+      'sqlfluff',
       -- 'stylua',
       -- 'ruff',
       -- 'prettier',
@@ -49,6 +50,16 @@ function M.config()
           '-d',
           [[{extends: relaxed, rules: {line-length: {max: 120}}}]],
         },
+      }))
+    end,
+    sqlfluff = function(source_name, methods)
+      local dialect = 'mysql'
+      null_ls.register(null_ls.builtins.diagnostics.sqlfluff.with({
+        extra_args = { '--dialect', dialect },
+      }))
+      null_ls.register(null_ls.builtins.formatting.sqlfluff.with({
+        extra_args = { '--dialect', dialect },
+        timeout = 3000, -- this one's a bit slow
       }))
     end,
   })

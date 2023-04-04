@@ -26,7 +26,12 @@ return {
         'nvim-treesitter/nvim-treesitter-context',
         opts = { enable = true },
       },
-      { 'windwp/nvim-ts-autotag', opts = {} },
+      {
+        'windwp/nvim-ts-autotag',
+        config = function()
+          require('nvim-ts-autotag').setup()
+        end,
+      },
     },
     version = false,
     event = 'BufReadPost',
