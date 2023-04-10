@@ -73,77 +73,77 @@ return {
         numhl = 'DiagnosticSignWarn',
       })
 
+      local dap = require('dap')
       require('mason-nvim-dap').setup({
         ensure_installed = { 'python' },
-      })
-
-      local dap = require('dap')
-      require('mason-nvim-dap').setup_handlers({
-        function(source_name)
-          -- all sources with no handler get passed here
-          -- Keep original functionality of `automatic_setup = true`
-          require('mason-nvim-dap.automatic_setup')(source_name)
-        end,
-        python = function(source_name)
-          require('dap-python').setup(vim.g.python3_host_prog)
-          require('dap-python').test_runner = 'pytest'
-          table.insert(dap.configurations.python, 1, {
-            type = 'python',
-            request = 'attach',
-            name = 'Debugpy',
-            justMyCode = false,
-            -- subProcess = true,
-            redirectOutput = true,
-            variablePresentation = {
-              ['function'] = 'hide',
-              special = 'hide',
-              class = 'group',
-              protected = 'group',
-              -- "all": "inline",
-            },
-            connect = {
-              host = '127.0.0.1',
-              port = 5678,
-            },
-          })
-          --[[ 
+        handlers = {
+          function(config)
+            -- all sources with no handler get passed here
+            -- Keep original functionality of `automatic_setup = true`
+            require('mason-nvim-dap').default_setup(config)
+          end,
+          python = function(config)
+            require('dap-python').setup(vim.g.python3_host_prog)
+            require('dap-python').test_runner = 'pytest'
+            table.insert(dap.configurations.python, 1, {
+              type = 'python',
+              request = 'attach',
+              name = 'Debugpy',
+              justMyCode = false,
+              -- subProcess = true,
+              redirectOutput = true,
+              variablePresentation = {
+                ['function'] = 'hide',
+                special = 'hide',
+                class = 'group',
+                protected = 'group',
+                -- "all": "inline",
+              },
+              connect = {
+                host = '127.0.0.1',
+                port = 5678,
+              },
+            })
+            --[[ 
             This seems to work. Key takeaways:
             - Flask spawns 2 processes when it's hot-reloading because one of them is a file watcher. The debugger seems to attach to the wrong process in this case.
             - variablePresentation is very helpful to hide fluff
             - one could set up their own watcher using inotifywait tools, and just do attaches
           ]]
-          table.insert(dap.configurations.python, 2, {
-            type = 'python',
-            request = 'launch',
-            name = 'Launch Execution',
-            -- program = 'app.py',
-            -- stopOnEntry = true,
-            justMyCode = false,
-            variablePresentation = {
-              ['function'] = 'hide',
-              special = 'hide',
-              class = 'group',
-              protected = 'group',
-              -- "all": "inline",
-            },
-            -- subProcess = true,
-            module = 'flask',
-            args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
-            -- cwd = '${workspaceFolder}',
-            -- python = '${workspaceFolder}/venv/bin/python',
-            -- pathMappings = {
-            --   {
-            --     localRoot = '${workspaceFolder}',
-            --     remoteRoot = '${workspaceFolder}',
-            --   },
-            -- },
-            -- env = {
-            --   FLASK_ENV = 'development',
-            --   FLASK_DEBUG = 1,
-            --   FLASK_APP = 'execution:create_app()',
-            -- },
-          })
-        end,
+            table.insert(dap.configurations.python, 2, {
+              type = 'python',
+              request = 'launch',
+              name = 'Launch Execution',
+              -- program = 'app.py',
+              -- stopOnEntry = true,
+              justMyCode = false,
+              variablePresentation = {
+                ['function'] = 'hide',
+                special = 'hide',
+                class = 'group',
+                protected = 'group',
+                -- "all": "inline",
+              },
+              -- subProcess = true,
+              module = 'flask',
+              args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
+              -- cwd = '${workspaceFolder}',
+              -- python = '${workspaceFolder}/venv/bin/python',
+              -- pathMappings = {
+              --   {
+              --     localRoot = '${workspaceFolder}',
+              --     remoteRoot = '${workspaceFolder}',
+              --   },
+              -- },
+              -- env = {
+              --   FLASK_ENV = 'development',
+              --   FLASK_DEBUG = 1,
+              --   FLASK_APP = 'execution:create_app()',
+              -- },
+            })
+            require('mason-nvim-dap').default_setup(config)
+          end,
+        },
       })
     end,
   },
@@ -177,10 +177,6 @@ return {
               size = 0.35,
             },
             {
-              id = 'watches',
-              size = 0.35,
-            },
-            {
               id = 'breakpoints',
               size = 0.15,
             },
@@ -196,7 +192,11 @@ return {
           elements = {
             {
               id = 'repl',
-              size = 1,
+              size = 0.5,
+            },
+            {
+              id = 'watches',
+              size = 0.5,
             },
           },
           position = 'bottom',

@@ -18,50 +18,43 @@ function M.config()
       -- 'prettier',
       -- 'yamllint',
     },
-  })
-
-  -- Try to use Mason first, as source of truth
-  require('mason-null-ls').setup_handlers({
-    function(source_name, methods)
-      -- all sources with no handler get passed here
-      -- keep the original functionality of `automatic_setup = true`,
-      require('mason-null-ls.automatic_setup')(source_name, methods)
-    end,
-    stylua = function(source_name, methods)
-      null_ls.register(null_ls.builtins.formatting.stylua.with({
-        extra_args = {
-          '--indent-type',
-          'Spaces',
-          '--indent-width',
-          '2',
-          '--quote-style',
-          'AutoPreferSingle',
-        },
-      }))
-    end,
-    prettier = function(source_name, methods)
-      null_ls.register(null_ls.builtins.formatting.prettier.with({
-        disabled_filetypes = { 'markdown' },
-      }))
-    end,
-    yamllint = function(source_name, methods)
-      null_ls.register(null_ls.builtins.diagnostics.yamllint.with({
-        extra_args = {
-          '-d',
-          [[{extends: relaxed, rules: {line-length: {max: 120}}}]],
-        },
-      }))
-    end,
-    sqlfluff = function(source_name, methods)
-      local dialect = 'mysql'
-      null_ls.register(null_ls.builtins.diagnostics.sqlfluff.with({
-        extra_args = { '--dialect', dialect },
-      }))
-      null_ls.register(null_ls.builtins.formatting.sqlfluff.with({
-        extra_args = { '--dialect', dialect },
-        timeout = 3000, -- this one's a bit slow
-      }))
-    end,
+    handlers = {
+      stylua = function(source_name, methods)
+        null_ls.register(null_ls.builtins.formatting.stylua.with({
+          extra_args = {
+            '--indent-type',
+            'Spaces',
+            '--indent-width',
+            '2',
+            '--quote-style',
+            'AutoPreferSingle',
+          },
+        }))
+      end,
+      prettier = function(source_name, methods)
+        null_ls.register(null_ls.builtins.formatting.prettier.with({
+          disabled_filetypes = { 'markdown' },
+        }))
+      end,
+      yamllint = function(source_name, methods)
+        null_ls.register(null_ls.builtins.diagnostics.yamllint.with({
+          extra_args = {
+            '-d',
+            [[{extends: relaxed, rules: {line-length: {max: 120}}}]],
+          },
+        }))
+      end,
+      sqlfluff = function(source_name, methods)
+        local dialect = 'mysql'
+        null_ls.register(null_ls.builtins.diagnostics.sqlfluff.with({
+          extra_args = { '--dialect', dialect },
+        }))
+        null_ls.register(null_ls.builtins.formatting.sqlfluff.with({
+          extra_args = { '--dialect', dialect },
+          timeout = 3000, -- this one's a bit slow
+        }))
+      end,
+    },
   })
 
   vim.api.nvim_create_user_command('NullLsToggle', function()

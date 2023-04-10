@@ -72,12 +72,23 @@ return {
     lazy = false,
     opts = {
       delay = {
-        highlight = 0,
+        -- Effectivley disable the highlight
+        highlight = 10 ^ 7,
       },
     },
     config = function(_, opts)
       require('mini.jump').setup(opts)
     end,
     version = '*',
+  },
+
+  -- quick-scope
+  {
+    'unblevable/quick-scope',
+    enabled = false,
+    init = function()
+      -- vim.g.qs_highlight_on_keys = { 'f', 'F', 't', 'T' }
+      -- vim.cmd("let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']")
+    end,
   },
 }
