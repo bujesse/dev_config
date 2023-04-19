@@ -45,6 +45,7 @@ return {
   -- bufferline
   {
     'akinsho/bufferline.nvim',
+    enabled = false,
     event = 'VeryLazy',
     dependencies = {
       -- buffer remove
@@ -98,6 +99,59 @@ return {
         persist_buffer_sort = true,
         max_name_length = 25,
         max_prefix_length = 20, -- prefix used when a buffer is de-duplicated
+      },
+    },
+  },
+
+  {
+    'romgrk/barbar.nvim',
+    lazy = false,
+    dependencies = {
+      'kyazdani42/nvim-web-devicons',
+      {
+        -- Keep buffers in their own tabs
+        'tiagovla/scope.nvim',
+        config = true,
+      },
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false
+    end,
+    opts = {
+      animation = true,
+      focus_on_close = 'right',
+      icons = {
+        diagnostics = {
+          enabled = false,
+        },
+        -- modified = { separator = '⋄' },
+        pinned = { button = '車', filename = true },
+      },
+      sidebar_filetypes = {
+        ['neo-tree'] = { event = 'BufWipeout' },
+        Outline = { event = 'BufWinLeave', text = 'symbols-outline' },
+      },
+    },
+    keys = {
+      { 'L', '<Cmd>keepjumps BufferNext<CR>', desc = 'Next buffer' },
+      { 'H', '<Cmd>keepjumps BufferPrevious<CR>', desc = 'Prev buffer' },
+      { '<C-Left>', '<Cmd>BufferMovePrevious<CR>', desc = 'Move buffer prev' },
+      { '<C-Right>', '<Cmd>BufferMoveNext<CR>', desc = 'Move buffer next' },
+      { 'X', '<Cmd>BufferClose<CR>', desc = 'Close Buffer' },
+      { '<Leader>br', '<Cmd>BufferRestore<CR>', desc = 'Restore Buffer' },
+      { 'gb', '<Cmd>BufferPick<CR>', desc = 'Go to Buffer' },
+      { '<Leader>bl', '<Cmd>BufferCloseBuffersRight<CR>', desc = 'Close all buffers right' },
+      { '<Leader>bh', '<Cmd>BufferCloseBuffersLeft<CR>', desc = 'Close all buffers left' },
+      { '<Leader>bp', '<Cmd>BufferPin<CR>', desc = 'Pin buffer' },
+      {
+        '<Leader>bo',
+        '<Cmd>BufferCloseAllButVisible<CR>',
+        desc = 'Close all but visible buffers',
+      },
+      {
+        '<Leader>bO',
+        '<Cmd>BufferCloseAllButCurrentOrPinned<CR>',
+        desc = 'Close all but current/pinned',
       },
     },
   },

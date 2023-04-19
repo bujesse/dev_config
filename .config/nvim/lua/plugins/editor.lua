@@ -456,6 +456,7 @@ return {
   {
     'simrat39/symbols-outline.nvim',
     opts = {
+      autofold_depth = 1,
       keymaps = {
         close = { '<Esc>', 'q' },
         goto_location = '<Cr>',

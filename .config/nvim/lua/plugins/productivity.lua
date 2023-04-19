@@ -1,6 +1,7 @@
 return {
   {
     'epwalsh/obsidian.nvim',
+    enabled = false,
     opts = {
       dir = '/projects/obsidian-vault/home-vault/',
       note_id_func = function(title)
@@ -58,6 +59,7 @@ return {
   {
     'jakewvincent/mkdnflow.nvim',
     -- rocks = 'luautf8', -- Ensures optional luautf8 dependency is installed
+    enabled = false,
     opts = {
       to_do = {
         symbols = { ' ', 'x', '-' },

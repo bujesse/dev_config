@@ -34,7 +34,6 @@ return {
         { D = { '  Diff View', 'DiffviewOpen' } },
         { G = { '  Git (Fugitive)', 'G' } },
         { ch = { '  Check Health', 'checkhealth' } },
-        { O = { '  Obsidian Today', 'ObsidianToday' } },
       }
 
       vim.g.startify_lists = {
