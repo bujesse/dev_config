@@ -553,16 +553,6 @@ return {
     },
   },
 
-  -- search/replace in multiple files
-  {
-    'windwp/nvim-spectre',
-    -- stylua: ignore
-    keys = {
-      { "<leader>r", function() require("spectre").open({ is_insert_mode = true, })
-      end, desc = "Replace in files (Spectre)" },
-    },
-  },
-
   -- better visuals for diagnostics
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',

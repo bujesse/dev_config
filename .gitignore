@@ -30,3 +30,4 @@ lazygit.tar.gz
 .config/tmux/plugins
 .config/helix/runtime
 .config/github-copilot
+.config/nvim/lua/.luarc.json

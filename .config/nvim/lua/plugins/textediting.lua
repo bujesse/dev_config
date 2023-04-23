@@ -145,4 +145,28 @@ return {
       },
     },
   },
+
+  -- search/replace in multiple files
+  {
+    'windwp/nvim-spectre',
+    -- stylua: ignore
+    keys = {
+      { "<leader>R", function() require("spectre").open({ is_insert_mode = true, })
+      end, desc = "Replace in files (Spectre)" },
+    },
+  },
+
+  -- Interactive Replacements
+  {
+    'AckslD/muren.nvim',
+    opts = {
+      patterns_width = 50,
+      patterns_height = 20,
+      options_width = 35,
+      preview_height = 22,
+    },
+    keys = {
+      { '<leader>r', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
+    },
+  },
 }
