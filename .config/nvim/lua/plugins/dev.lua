@@ -3,7 +3,7 @@
 return {
   {
     'bujesse/what-key.nvim',
-    dev = true,
+    -- dev = true,
     cmd = { 'WhatKeyToggle', 'WhatKeyShow' },
     keys = {
       { '<Space>w', "<Cmd>lua require('what-key.view').toggle()<Cr>", desc = 'WhatKeyToggle' },
