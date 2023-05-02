@@ -101,10 +101,20 @@ return {
         source_selector = {
           winbar = true,
           content_layout = 'center',
-          tab_labels = {
-            filesystem = 'Files',
-            buffers = 'Bufs',
-            git_status = 'Git',
+          show_scrolled_off_parent_node = true,
+          sources = {
+            {
+              source = 'filesystem',
+              display_name = '  Files ',
+            },
+            {
+              source = 'buffers',
+              display_name = '  Buffers',
+            },
+            {
+              source = 'git_status',
+              display_name = '  Git ',
+            },
           },
         },
         default_component_configs = {

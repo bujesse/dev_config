@@ -216,7 +216,7 @@ function M.config_keys()
       ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
 
       -- Open definition in vertial split
-      ['<C-w>gd'] = '<C-w>]<C-w>L',
+      ['gD'] = '<C-w>o<C-w>]<C-w>L',
 
       -- Reload keymappings
       ['<Leader>.k'] = ':lua R("core.keymappings").config()<CR>',

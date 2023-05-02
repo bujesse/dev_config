@@ -119,7 +119,7 @@ return {
     end,
     opts = {
       animation = true,
-      focus_on_close = 'right',
+      focus_on_close = 'left',
       icons = {
         diagnostics = {
           enabled = false,
