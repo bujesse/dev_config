@@ -73,7 +73,7 @@ return {
         keymaps = {
           init_selection = '<C-A-o>',
           node_incremental = '<C-A-o>',
-          scope_incremental = '<nop>',
+          -- scope_incremental = '<nop>',
           node_decremental = '<C-A-i>',
         },
         is_supported = function()

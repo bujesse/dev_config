@@ -1,0 +1,32 @@
+session_name: execution-dev
+windows:
+  - layout: cae1,252x57,0,0,4
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: n -S ~/.cache/nvim/sessions/execution-ui
+    start_directory: /home/vagrant/dev/execution-ui
+    window_name: ui
+  - layout: cae2,252x57,0,0,5
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: n -S ~/.cache/nvim/sessions/execution
+    start_directory: /home/vagrant/dev/execution
+    window_name: ex
+  - layout: 0cc8,252x57,0,0{174x57,0,0,6,77x57,175,0[77x28,175,0,7,77x28,175,29,8]}
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: just run-dev
+      - shell_command: just watch-debugpy
+      - shell_command: just listen-debugpy
+    start_directory: /home/vagrant/dev/execution
+    window_name: flask
+  - layout: cae6,252x57,0,0,9
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: just sync
+    start_directory: /home/vagrant/dev/execution-ui
+    window_name: ui-sync

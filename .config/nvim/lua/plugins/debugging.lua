@@ -141,7 +141,7 @@ return {
               --   FLASK_APP = 'execution:create_app()',
               -- },
             })
-            require('mason-nvim-dap').default_setup(config)
+            -- require('mason-nvim-dap').default_setup(config)
           end,
         },
       })
