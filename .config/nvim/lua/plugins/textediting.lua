@@ -164,6 +164,9 @@ return {
       patterns_height = 20,
       options_width = 35,
       preview_height = 22,
+      keys = {
+        toggle_options_focus = '<C-e>',
+      },
     },
     keys = {
       { '<leader>r', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },

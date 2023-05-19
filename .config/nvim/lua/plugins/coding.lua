@@ -29,7 +29,6 @@ return {
     end,
   },
 
-  -- TODO: implmemnt lazyvim
   -- auto completion
   {
     'onsails/lspkind-nvim',
@@ -50,6 +49,11 @@ return {
       },
       -- move_cursor = false,
     },
+    config = function(_, opts)
+      require('nvim-surround').setup(opts)
+      vim.api.nvim_del_keymap('i', '<C-g>s')
+      vim.api.nvim_del_keymap('i', '<C-g>S')
+    end,
   },
 
   -- comments

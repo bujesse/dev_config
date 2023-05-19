@@ -84,6 +84,9 @@ function M.config_keys()
 
       -- correct last spelling
       ['<C-u>'] = '<C-G>u<Esc>[s1z=`]a<C-G>u',
+
+      -- Change go next
+      ['<C-g>'] = '<Esc>cgn',
     },
 
     ---@usage change or add keymappings for normal mode
@@ -226,6 +229,9 @@ function M.config_keys()
       ['yor'] = { '<Cmd>set rnu!<Cr>', { desc = 'Toggle Relative Line #' } },
 
       ['yos'] = { '<Cmd>set invspell<Cr>', { desc = 'Toggle Spelling' } },
+
+      -- Change go next
+      ['<C-g>'] = '<Esc>cgn',
     },
 
     ---@usage change or add keymappings for terminal mode
