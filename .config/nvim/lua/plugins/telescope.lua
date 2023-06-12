@@ -292,6 +292,8 @@ return {
 
     vim.keymap.set('n', '<Space>j', '<cmd>lua require("telescope.builtin").jumplist()<CR>', { desc = 'Jumplist' })
 
+    vim.keymap.set('n', '<Space>p', '<cmd>lua require("telescope.builtin").pickers()<CR>', { desc = 'Pickers' })
+
     -- This will allow easy access to hard-to-remember, obscure commands through mappings
     -- TODO: this needs work, as just the commands aren't good enough for <space><space>
     vim.keymap.set(
@@ -309,11 +311,9 @@ return {
       -- f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
       j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
       a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
-      m = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
       l = { '<cmd>lua require("telescope.builtin").highlights()<CR>', 'HighLights' },
       b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
       h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
-      p = { '<cmd>lua require("telescope.builtin").pickers()<CR>', 'Pickers' },
       i = {
         '<cmd>lua require("telescope").extensions.menufacture.live_grep({mode = "ignore"})<CR>',
         'Grep (include ignore and hidden)',

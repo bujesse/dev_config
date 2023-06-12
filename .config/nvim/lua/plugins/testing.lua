@@ -25,7 +25,7 @@ return {
             },
             -- args = { '--log-level', 'DEBUG' },
             runner = 'pytest',
-            python = 'venv/bin/python',
+            -- python = 'venv/bin/python',
             -- Returns if a given file path is a test file.
             -- is_test_file = function(file_path) end,
           }),
@@ -71,6 +71,11 @@ return {
       { '<Space>ro', '<Cmd>lua require("neotest").output_panel.open({ enter = true })<cr>', desc = 'Test Output' },
       { '<Space>rs', '<Cmd>lua require("neotest").summary.open()<cr>', desc = 'Open Test Summary View' },
       { '<Space>dn', '<Cmd>lua require("neotest").run.run({strategy = "dap"})<Cr>', desc = 'Debug Nearest Test' },
+      {
+        '<Space>df',
+        '<Cmd>lua require("neotest").run.run({vim.fn.expand("%"), strategy = "dap"})<Cr>',
+        desc = 'Debug File',
+      },
       { '<Space>dl', '<Cmd>lua require("neotest").run.run_last({strategy = "dap"})<Cr>', desc = 'Debug Last Test' },
       { '[n', '<cmd>lua require("neotest").jump.prev({ status = "failed" })<CR>', desc = 'Next failing test' },
       { ']n', '<cmd>lua require("neotest").jump.next({ status = "failed" })<CR>', desc = 'Next failing test' },

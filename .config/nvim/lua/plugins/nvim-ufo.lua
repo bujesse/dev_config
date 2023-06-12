@@ -37,16 +37,64 @@ return {
         'luukvbaal/statuscol.nvim',
         config = function()
           local builtin = require('statuscol.builtin')
-          vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+          -- vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
           require('statuscol').setup({
-            foldfunc = 'builtin',
-            order = 'SFNs',
+            -- foldfunc = 'builtin',
+            -- order = 'SFNs',
             setopt = true,
             relculright = true,
+            -- segments = {
+            --   { text = { '%s' }, click = 'v:lua.ScSa' },
+            --   { text = { builtin.lnumfunc }, click = 'v:lua.ScLa' },
+            --   { text = { ' ', builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+            -- },
             segments = {
-              { text = { '%s' }, click = 'v:lua.ScSa' },
+              {
+                sign = {
+                  name = {
+                    'Diagnostic',
+                  },
+                  maxwidth = 1,
+                  colwidth = 1,
+                  auto = false,
+                },
+                click = 'v:lua.ScSa',
+              },
+              {
+                sign = {
+                  name = {
+                    'Dap',
+                    'neotest',
+                  },
+                  maxwidth = 1,
+                  colwidth = 1,
+                  auto = false,
+                },
+                click = 'v:lua.ScLa',
+              },
               { text = { builtin.lnumfunc }, click = 'v:lua.ScLa' },
-              { text = { ' ', builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+              {
+                sign = {
+                  name = { 'GitSigns' },
+                  maxwidth = 1,
+                  colwidth = 1,
+                  auto = false,
+                  fillchar = '│',
+                  fillcharhl = 'StatusColumnSeparator',
+                },
+                click = 'v:lua.ScSa',
+              },
+            },
+            ft_ignore = {
+              'help',
+              'vim',
+              'alpha',
+              'dashboard',
+              'neo-tree',
+              'Trouble',
+              'noice',
+              'lazy',
+              'toggleterm',
             },
           })
         end,

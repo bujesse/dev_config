@@ -141,6 +141,7 @@ return {
               --   FLASK_APP = 'execution:create_app()',
               -- },
             })
+            -- FIXME: This line is needed for neotest debugging to work, but makes regular debugging not work
             -- require('mason-nvim-dap').default_setup(config)
           end,
         },
@@ -174,7 +175,7 @@ return {
           elements = {
             {
               id = 'scopes',
-              size = 0.35,
+              size = 0.70,
             },
             {
               id = 'breakpoints',
