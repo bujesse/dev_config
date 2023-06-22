@@ -78,7 +78,7 @@ function M.register_custom_sources()
         - `isort` to sort Python import definitions alphabetically within logical sections
         - `black` to re-format code changed since the last Git commit
         Please run `pip install darker[isort]` to enable sorting of import definitions
-      ]] ,
+      ]],
       },
       generator = helpers.formatter_factory({
         command = M.find_command('darker'),

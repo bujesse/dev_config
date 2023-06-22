@@ -292,15 +292,15 @@ function M.setup_servers()
     end,
     -- Next, you can provide a dedicated handler for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
-    ['tsserver'] = function()
-      require('typescript').setup({
-        disable_commands = false, -- prevent the plugin from creating Vim commands
-        go_to_source_definition = {
-          fallback = true, -- fall back to standard LSP definition on failure
-        },
-        server = M.make_config(),
-      })
-    end,
+    -- ['tsserver'] = function()
+    --   require('typescript').setup({
+    --     disable_commands = false, -- prevent the plugin from creating Vim commands
+    --     go_to_source_definition = {
+    --       fallback = true, -- fall back to standard LSP definition on failure
+    --     },
+    --     server = M.make_config(),
+    --   })
+    -- end,
     ['jsonls'] = function()
       local config = M.make_config()
       config = vim.tbl_deep_extend('force', config, {
@@ -312,6 +312,20 @@ function M.setup_servers()
         },
       })
       lspconfig.jsonls.setup(config)
+    end,
+    ['lua_ls'] = function()
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            hint = {
+              enable = true,
+            },
+            diagnostics = {
+              globals = { 'vim' },
+            },
+          },
+        },
+      })
     end,
   })
 end
