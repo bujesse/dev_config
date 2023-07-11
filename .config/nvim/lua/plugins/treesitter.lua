@@ -56,6 +56,7 @@ return {
         'yaml',
         'html',
         'scss',
+        'css',
 
         'toml',
         'rust',

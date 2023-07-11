@@ -1,94 +1,69 @@
 return {
   -- easily jump to any location and enhanced f/t motions for Leap
   {
-    'ggandor/leap.nvim',
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    ---@type Flash.Config
+    opts = {
+      modes = {
+        char = {
+          enabled = true,
+          -- by default all keymaps are enabled, but you can disable some of them,
+          -- by removing them from the list.
+          keys = { 'f', 'F', 't', 'T', ';' },
+          search = { wrap = false },
+          highlight = { backdrop = false },
+          jump = { register = false },
+        },
+        search = {
+          enabled = false, -- enable flash for search
+          highlight = { backdrop = false },
+          jump = { history = true, register = true, nohlsearch = true },
+          search = {
+            -- `forward` will be automatically set to the search direction
+            -- `mode` is always set to `search`
+            -- `incremental` is set to `true` when `incsearch` is enabled
+          },
+        },
+      },
+    },
     keys = {
       {
         's',
-        ":lua require('leap').leap({ target_windows = { vim.fn.win_getid() } })<CR>",
-        mode = { 'n', 'x' },
-        desc = 'Leap in current window',
+        mode = { 'n', 'x', 'o' },
+        function()
+          -- default options: exact mode, multi window, all directions, with a backdrop
+          require('flash').jump()
+        end,
+        desc = 'Flash',
       },
       {
         'S',
+        mode = { 'n', 'o', 'x' },
         function()
-          require('leap').leap({
-            target_windows = vim.tbl_filter(function(win)
-              return vim.api.nvim_win_get_config(win).focusable
-            end, vim.api.nvim_tabpage_list_wins(0)),
-          })
+          -- show labeled treesitter nodes around the cursor
+          require('flash').treesitter()
         end,
-        mode = { 'n', 'x' },
-        desc = 'Leap in all windows',
+        desc = 'Flash Treesitter',
       },
-    },
-    event = 'VeryLazy',
-    opts = {
-      -- safe_labels = {},
-      labels = {
-        'j',
-        'f',
-        'k',
-        'd',
-        'l',
-        's',
-        'a',
-        'e',
-        'w',
-        'o',
-        'u',
+      {
         'r',
-        'n',
-        'v',
-        'm',
-        'c',
-        'x',
-        'z',
-        '/',
-        'p',
-        'q',
-        'g',
-        'h',
-        'J',
-        'F',
-        'K',
-        'D',
-        'L',
-        'S',
-        'A',
+        mode = 'o',
+        function()
+          -- jump to a remote location to execute the operator
+          require('flash').remote()
+        end,
+        desc = 'Remote Flash',
+      },
+      {
+        '<C-R>',
+        mode = { 'n', 'o', 'x' },
+        function()
+          -- show labeled treesitter nodes around the search matches
+          require('flash').treesitter_search()
+        end,
+        desc = 'Treesitter Search',
       },
     },
-    config = function(_, opts)
-      local leap = require('leap')
-      for k, v in pairs(opts) do
-        leap.opts[k] = v
-      end
-    end,
-  },
-
-  -- better f/t
-  {
-    'echasnovski/mini.jump',
-    lazy = false,
-    opts = {
-      delay = {
-        -- Effectivley disable the highlight
-        highlight = 10 ^ 7,
-      },
-    },
-    config = function(_, opts)
-      require('mini.jump').setup(opts)
-    end,
-    version = '*',
-  },
-
-  -- quick-scope
-  {
-    'unblevable/quick-scope',
-    enabled = false,
-    init = function()
-      -- vim.g.qs_highlight_on_keys = { 'f', 'F', 't', 'T' }
-      -- vim.cmd("let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']")
-    end,
   },
 }
