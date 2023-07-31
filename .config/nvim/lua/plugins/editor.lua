@@ -5,7 +5,7 @@ return {
     dependencies = {
       's1n7ax/nvim-window-picker',
     },
-    branch = 'v2.x',
+    branch = 'v3.x',
     opts = function()
       local global_commands = {
         telescope_grep = function(state)
@@ -79,7 +79,9 @@ return {
         close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
         nesting_rules = {},
         buffers = {
-          follow_current_file = false, -- This will find and focus the file in the active buffer every time the current file is changed while the tree is open.
+          follow_current_file = {
+            enabled = false,
+          },
           commands = global_commands,
         },
         event_handlers = {
@@ -88,7 +90,7 @@ return {
             event = 'file_opened',
             handler = function(file_path)
               --auto close
-              require('neo-tree').close_all()
+              vim.cmd([[Neotree close]])
             end,
           },
           {

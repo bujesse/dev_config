@@ -118,7 +118,7 @@ return {
       vim.g.barbar_auto_setup = false
     end,
     opts = {
-      animation = true,
+      animation = false,
       focus_on_close = 'left',
       icons = {
         diagnostics = {

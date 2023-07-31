@@ -51,6 +51,11 @@ return {
         "<cmd>lua require'dap'.disconnect({restart = true, terminateDebuggee = false})<cr>",
         desc = 'Disconnect',
       },
+      {
+        '<Space>dS',
+        "<cmd>lua require'dap'.terminate()<cr>",
+        desc = 'Stop Debuggee',
+      },
       { '<Space>dp', "<cmd>lua require'dap'.pause()<cr>", desc = 'Pause' },
       { '<Space>dr', "<cmd>lua require'dap'.repl.toggle()<cr>", desc = 'Toggle Repl' },
       { '<Space>dq', "<cmd>lua require'dap'.close()<cr>", desc = 'Quit' },
