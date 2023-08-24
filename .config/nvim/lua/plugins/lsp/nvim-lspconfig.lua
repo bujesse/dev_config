@@ -93,16 +93,6 @@ function M.common_on_attach(client, bufnr)
     -- end, opts)
   end
 
-  -- Enable vim-illuminate
-  require('illuminate').on_attach(client)
-  vim.api.nvim_command([[ hi def link LspReferenceText CursorLine ]])
-  vim.api.nvim_command([[ hi def link LspReferenceWrite CursorLine ]])
-  vim.api.nvim_command([[ hi def link LspReferenceRead CursorLine ]])
-  vim.keymap.set('x', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-  vim.keymap.set('x', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
-  vim.keymap.set('n', ']r', 'm\'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', opts)
-  vim.keymap.set('n', '[r', 'm\'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', opts)
-
   -- Enable lsp_signature.nvim
   require('lsp_signature').on_attach({
     bind = true, -- This is mandatory, otherwise border config won't get registered.

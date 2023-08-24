@@ -95,7 +95,20 @@ return {
     dependencies = {
       'mason-lspconfig.nvim',
       'neodev.nvim',
-      'RRethy/vim-illuminate',
+      {
+        'RRethy/vim-illuminate',
+        keys = {
+          { ']r', '<CMD>lua require("illuminate").goto_next_reference(true)<CR>', mode = { 'n', 'x' } },
+          { '[r', '<CMD>lua require("illuminate").goto_prev_reference(true)<CR>', mode = { 'n', 'x' } },
+        },
+        config = function()
+          require('illuminate').configure()
+          -- katagawa.nvim sumiInk6
+          vim.api.nvim_command([[ hi IlluminatedWordText gui=NONE guibg='#54546D']])
+          vim.api.nvim_command([[ hi IlluminatedWordRead gui=NONE guibg='#54546D']])
+          vim.api.nvim_command([[ hi IlluminatedWordWrite gui=NONE guibg='#54546D']])
+        end,
+      },
       'jose-elias-alvarez/null-ls.nvim',
       'b0o/schemastore.nvim',
       'jose-elias-alvarez/typescript.nvim',

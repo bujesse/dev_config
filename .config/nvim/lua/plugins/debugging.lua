@@ -198,11 +198,11 @@ return {
           elements = {
             {
               id = 'repl',
-              size = 0.5,
+              size = 0.2,
             },
             {
               id = 'watches',
-              size = 0.5,
+              size = 0.8,
             },
           },
           position = 'bottom',

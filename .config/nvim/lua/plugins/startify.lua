@@ -34,6 +34,7 @@ return {
         { D = { '  Diff View', 'DiffviewOpen' } },
         { G = { '  Git (Fugitive)', 'G' } },
         { ch = { '  Check Health', 'checkhealth' } },
+        { m = { '  Mason', 'Mason' } },
       }
 
       vim.g.startify_lists = {

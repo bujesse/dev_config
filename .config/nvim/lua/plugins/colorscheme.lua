@@ -17,6 +17,11 @@ return {
           },
         },
       },
+      overrides = function(colors) -- add/modify highlights
+        return {
+          CursorLine = { bg = '#504945' },
+        }
+      end,
     },
     config = function(_, opts)
       require('kanagawa').setup(opts)

@@ -303,7 +303,7 @@ return {
         end
 
         -- Navigation
-        map('n', ']g', function()
+        vim.keymap.set('n', ']g', function()
           if vim.wo.diff then
             return ']c'
           end
@@ -312,10 +312,12 @@ return {
           end)
           return '<Ignore>'
         end, {
+          buffer = bufnr,
           expr = true,
+          desc = 'Next Hunk',
         })
 
-        map('n', '[g', function()
+        vim.keymap.set('n', '[g', function()
           if vim.wo.diff then
             return '[c'
           end
@@ -324,7 +326,9 @@ return {
           end)
           return '<Ignore>'
         end, {
+          buffer = bufnr,
           expr = true,
+          desc = 'Prev Hunk',
         })
 
         -- Actions
