@@ -102,4 +102,33 @@ return {
       ai.setup(opts)
     end,
   },
+
+  -- autopair
+  {
+    'altermo/ultimate-autopair.nvim',
+    event = { 'InsertEnter', 'CmdlineEnter' },
+    branch = 'v0.6',
+    opts = {
+      fastwarp = {
+        faster = true,
+        map = '<A-;>',
+        rmap = '<A-:>',
+        cmap = '<C-A-l>',
+        rcmap = '<C-A-h>',
+      },
+      tabout = {
+        enable = true,
+        map = "<A-'>", --string or table
+        cmap = "<A-'>", --string or table
+        hopout = true,
+        -- (|) > tabout > ()|
+      },
+    },
+  },
+
+  -- guess indent
+  {
+    'nmac427/guess-indent.nvim',
+    opts = {},
+  },
 }

@@ -10,7 +10,7 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
-      { 'windwp/nvim-autopairs', config = true },
+      -- { 'windwp/nvim-autopairs', config = true },
     },
     config = function()
       local cmp = require('cmp')
@@ -185,8 +185,8 @@ return {
       --   }),
       -- })
 
-      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+      -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
     end,
   },
 }
