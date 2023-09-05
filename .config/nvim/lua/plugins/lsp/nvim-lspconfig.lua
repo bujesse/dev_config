@@ -8,6 +8,7 @@ M.lsp_formatting = function(bufnr)
       return client.name == 'null-ls'
     end,
     bufnr = bufnr or vim.api.nvim_get_current_buf(),
+    timeout_ms = 10000, -- Let null-ls decide on timeouts
   })
 end
 
@@ -66,32 +67,32 @@ function M.common_on_attach(client, bufnr)
     vim.tbl_deep_extend('force', opts, { desc = 'LSP References to qf' })
   )
 
-  if vim.bo.filetype == 'python' then
-    -- Specific to darker only; it doesn't play nicely with null-ls
-    vim.keymap.set('n', '<Leader>f', function()
-      vim.cmd([[write!]])
-      vim.cmd([[silent !darker --isort --skip-string-normalization -l 120 %]])
-      -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
-    end, vim.tbl_deep_extend('force', opts, { desc = 'Format file', buffer = true }))
-  else
-    vim.keymap.set('n', '<Leader>f', function()
-      M.lsp_formatting()
-    end, vim.tbl_deep_extend('force', opts, { desc = 'Format file' }))
-    -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
-    -- vim.keymap.set('n', '<Leader>f', function()
-    --   local clients = vim.lsp.get_active_clients({ buffer = vim.api.nvim_buf_get_number(0) })
-    --   if clients ~= nil then
-    --     for _, c in ipairs(clients) do
-    --       if c ~= nil and c.supports_method("textDocument/formatting") then
-    --         P(c)
-    --         vim.lsp.buf.format()
-    --         return
-    --       end
-    --     end
-    --   end
-    --   vim.cmd([[norm! gg=G<C-o>]])
-    -- end, opts)
-  end
+  -- if vim.bo.filetype == 'python' then
+  -- Specific to darker only; it doesn't play nicely with null-ls
+  -- vim.keymap.set('n', '<Leader>f', function()
+  --   vim.cmd([[write!]])
+  --   vim.cmd([[silent !darker --isort --skip-string-normalization -l 120 %]])
+  --   -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
+  -- end, vim.tbl_deep_extend('force', opts, { desc = 'Format file', buffer = true }))
+  -- else
+  vim.keymap.set('n', '<Leader>f', function()
+    M.lsp_formatting()
+  end, vim.tbl_deep_extend('force', opts, { desc = 'Format file' }))
+  -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
+  -- vim.keymap.set('n', '<Leader>f', function()
+  --   local clients = vim.lsp.get_active_clients({ buffer = vim.api.nvim_buf_get_number(0) })
+  --   if clients ~= nil then
+  --     for _, c in ipairs(clients) do
+  --       if c ~= nil and c.supports_method("textDocument/formatting") then
+  --         P(c)
+  --         vim.lsp.buf.format()
+  --         return
+  --       end
+  --     end
+  --   end
+  --   vim.cmd([[norm! gg=G<C-o>]])
+  -- end, opts)
+  -- end
 
   -- Enable lsp_signature.nvim
   require('lsp_signature').on_attach({

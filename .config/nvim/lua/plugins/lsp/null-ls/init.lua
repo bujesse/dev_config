@@ -49,10 +49,9 @@ function M.config()
         null_ls.register(null_ls.builtins.diagnostics.sqlfluff.with({
           extra_args = { '--dialect', dialect },
         }))
-        null_ls.register(null_ls.builtins.formatting.sqlfluff.with({
-          extra_args = { '--dialect', dialect },
-          timeout = 3000, -- this one's a bit slow
-        }))
+      end,
+      ['sql-formatter'] = function(source_name, methods)
+        require('mason-null-ls').default_setup(source_name, methods) -- to maintain default behavior
       end,
     },
   })
@@ -86,8 +85,15 @@ function M.setup_null_ls()
   local formatters = require('plugins.lsp.null-ls.formatters')
   local linters = require('plugins.lsp.null-ls.linters')
 
-  -- THIS STUFF WORKS ON HOME PC:
+  -- use this for null-ls builtins only
   formatters.setup({
+    -- {
+    --   exe = 'black',
+    --   timeout = 10000,
+    --   args = {
+    --     '--fast',
+    --   },
+    -- },
     {
       exe = 'stylua',
       args = {

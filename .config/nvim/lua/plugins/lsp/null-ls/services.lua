@@ -30,6 +30,10 @@ function M.from_node_modules(command)
   return root_dir .. '/node_modules/.bin/' .. command
 end
 
+function M.from_rust(command)
+  return '~/.cargo/bin/' .. command
+end
+
 local local_providers = {
   -- js, ts, json
   prettier = { find = M.from_node_modules },
@@ -43,8 +47,8 @@ local local_providers = {
   black = { find = M.from_nvim_venv },
   flake8 = { find = M.from_nvim_venv },
 
-  -- Custom
-  darker = { find = M.from_nvim_venv },
+  -- rust
+  ['blackd-client'] = { find = M.from_rust },
 }
 
 function M.find_command(command)
@@ -95,6 +99,22 @@ function M.register_custom_sources()
         from_stderr = true,
         -- to_temp_file = false,
         -- from_temp_file = true,
+      }),
+    },
+    {
+      name = 'blackd_client',
+      filetypes = { 'python' },
+      method = { null_ls.methods.FORMATTING },
+      meta = {
+        url = 'https://github.com/disrupted/blackd-client',
+        description = [[
+        Needs blackd to be running
+      ]],
+      },
+      generator = helpers.formatter_factory({
+        command = M.find_command('blackd-client'),
+        args = {},
+        to_stdin = true,
       }),
     },
     {

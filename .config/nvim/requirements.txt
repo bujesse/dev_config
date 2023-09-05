@@ -1,6 +1,7 @@
 neovim-remote
 pynvim
 debugpy
-darker[isort]
+black
+black[d]
 ruff
 tmuxp

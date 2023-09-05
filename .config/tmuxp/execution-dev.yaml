@@ -16,13 +16,14 @@ windows:
           - n -S ~/.cache/nvim/sessions/execution
     start_directory: /home/vagrant/dev/execution
     window_name: ex
-  - layout: 0cc8,252x57,0,0{174x57,0,0,6,77x57,175,0[77x28,175,0,7,77x28,175,29,8]}
+  - layout: dd82,252x57,0,0{174x57,0,0,3,77x57,175,0[77x28,175,0,4,77x14,175,29,5,77x13,175,44,18]}
     options: {}
     panes:
       - focus: "true"
         shell_command: just run-dev
       - shell_command: just watch-debugpy
       - shell_command: just listen-debugpy
+      - shell_command: just blackd
     start_directory: /home/vagrant/dev/execution
     window_name: flask
   - layout: cae6,252x57,0,0,9
