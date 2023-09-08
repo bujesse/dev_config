@@ -102,7 +102,7 @@ function M.register_custom_sources()
       }),
     },
     {
-      name = 'blackd_client',
+      name = 'black',
       filetypes = { 'python' },
       method = { null_ls.methods.FORMATTING },
       meta = {

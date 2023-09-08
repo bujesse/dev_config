@@ -70,7 +70,7 @@ return {
         'markdown_inline',
       },
       incremental_selection = {
-        enable = true,
+        enable = false,
         keymaps = {
           init_selection = '<C-A-o>',
           node_incremental = '<C-A-o>',
@@ -183,6 +183,15 @@ return {
           visual_mode = true, -- if you want Visual Mode instead of Select Mode
         })
       end, {})
+    end,
+  },
+
+  {
+    'sustech-data/wildfire.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('wildfire').setup()
     end,
   },
 }
