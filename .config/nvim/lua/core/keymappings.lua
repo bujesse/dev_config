@@ -184,7 +184,7 @@ function M.config_keys()
       ['<C-q>'] = '<C-w>q',
 
       -- Replace word with last yank (repeatable)
-      ['<Leader>v'] = 'ciw<C-r>0<Esc>',
+      -- ['<Leader>v'] = 'ciw<C-r>0<Esc>',
 
       -- Replace word with last cut (repeatable)
       ['<Leader>c'] = '"_ciw<C-r>-<Esc>',
@@ -244,7 +244,7 @@ function M.config_keys()
       ['<C-y>'] = '"+y',
 
       -- Replace word with last yank (repeatable)
-      ['<Leader>v'] = 'c<C-r>0<Esc>',
+      -- ['<Leader>v'] = 'c<C-r>0<Esc>',
 
       -- Replace word with last cut (repeatable)
       ['<Leader>c'] = '"_c<C-r>-<Esc>',

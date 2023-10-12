@@ -19,13 +19,49 @@ return {
     end,
   },
 
+  -- REPLACED WITH SUBSTITUTE.NVIM
+  -- {
+  --   'vim-scripts/ReplaceWithRegister',
+  --   keys = {
+  --     { 'R', '<Plug>ReplaceWithRegisterOperator' },
+  --     { 'RR', '<Plug>ReplaceWithRegisterLine' },
+  --     { 'R', '<Plug>ReplaceWithRegisterVisual', mode = 'v' },
+  --   },
+  -- },
+  -- { 'tommcdo/vim-exchange' },
+
   {
-    'vim-scripts/ReplaceWithRegister',
+    'gbprod/substitute.nvim',
+    lazy = false,
+    dependencies = { 'yanky.nvim' },
     keys = {
-      { 'R', '<Plug>ReplaceWithRegisterOperator' },
-      { 'RR', '<Plug>ReplaceWithRegisterLine' },
-      { 'R', '<Plug>ReplaceWithRegisterVisual', mode = 'v' },
+      { 'R', '<CMD>lua require("substitute").operator()<CR>' },
+      { 'RR', '<CMD>lua require("substitute").line()<CR>' },
+      -- { 'R$', '<CMD>lua require("substitute").eol()<CR>', mode = 'n' },
+      { 'R', '<CMD>lua require("substitute").visual()<CR>', mode = 'x' },
+
+      { 'cx', '<CMD>lua require("substitute.exchange").operator()<CR>' },
+      { 'cxx', '<CMD>lua require("substitute.exchange").line()<CR>' },
+      { 'X', '<CMD>lua require("substitute.exchange").visual()<CR>', mode = 'x' },
+      { 'cxc', '<CMD>lua require("substitute.exchange").cancel()<CR>' },
     },
+    config = function()
+      require('substitute').setup({
+        on_substitute = require('yanky.integration').substitute(),
+        range = {
+          prefix = 'R',
+        },
+      })
+      vim.keymap.set('n', '<Leader>v', function()
+        require('substitute').operator({
+          count = 1,
+          register = '0',
+          motion = 'iw',
+        })
+      end)
+
+      vim.api.nvim_set_hl(0, 'SubstituteExchange', { link = 'IncSearch' })
+    end,
   },
 
   -- instant feedback on lsp rename
@@ -49,8 +85,6 @@ return {
   -- Text objects
   { 'michaeljsmith/vim-indent-object' },
   { 'dbakker/vim-paragraph-motion' },
-
-  { 'tommcdo/vim-exchange' },
 
   -- { 'mg979/vim-visual-multi' },
 
