@@ -115,13 +115,42 @@ return {
             - variablePresentation is very helpful to hide fluff
             - one could set up their own watcher using inotifywait tools, and just do attaches
           ]]
-            table.insert(dap.configurations.python, 2, {
+            -- table.insert(dap.configurations.python, 2, {
+            --   type = 'python',
+            --   request = 'launch',
+            --   name = 'Launch Execution',
+            --   -- program = 'app.py',
+            --   -- stopOnEntry = true,
+            --   justMyCode = false,
+            --   variablePresentation = {
+            --     ['function'] = 'hide',
+            --     special = 'hide',
+            --     class = 'group',
+            --     protected = 'group',
+            --     -- "all": "inline",
+            --   },
+            --   -- subProcess = true,
+            --   module = 'flask',
+            --   args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
+            --   -- cwd = '${workspaceFolder}',
+            --   -- python = '${workspaceFolder}/venv/bin/python',
+            --   -- pathMappings = {
+            --   --   {
+            --   --     localRoot = '${workspaceFolder}',
+            --   --     remoteRoot = '${workspaceFolder}',
+            --   --   },
+            --   -- },
+            --   -- env = {
+            --   --   FLASK_ENV = 'development',
+            --   --   FLASK_DEBUG = 1,
+            --   --   FLASK_APP = 'execution:create_app()',
+            --   -- },
+            -- })
+            local base_script_config = {
               type = 'python',
+              python = '${workspaceFolder}/venv/bin/python',
               request = 'launch',
-              name = 'Launch Execution',
-              -- program = 'app.py',
-              -- stopOnEntry = true,
-              justMyCode = false,
+              name = 'Debug execution script',
               variablePresentation = {
                 ['function'] = 'hide',
                 special = 'hide',
@@ -129,25 +158,18 @@ return {
                 protected = 'group',
                 -- "all": "inline",
               },
-              -- subProcess = true,
-              module = 'flask',
-              args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
-              -- cwd = '${workspaceFolder}',
-              -- python = '${workspaceFolder}/venv/bin/python',
-              -- pathMappings = {
-              --   {
-              --     localRoot = '${workspaceFolder}',
-              --     remoteRoot = '${workspaceFolder}',
-              --   },
-              -- },
-              -- env = {
-              --   FLASK_ENV = 'development',
-              --   FLASK_DEBUG = 1,
-              --   FLASK_APP = 'execution:create_app()',
-              -- },
-            })
+              program = '${workspaceFolder}/execution/scripts/run_with_app_context.py',
+            }
+            table.insert(
+              dap.configurations.python,
+              1,
+              vim.tbl_extend('force', base_script_config, {
+                name = 'Debug bulk_cancel_transactions',
+                args = { 'bulk_cancel_txns' },
+              })
+            )
             -- FIXME: This line is needed for neotest debugging to work, but makes regular debugging not work
-            -- require('mason-nvim-dap').default_setup(config)
+            require('mason-nvim-dap').default_setup(config)
           end,
         },
       })
@@ -192,17 +214,17 @@ return {
             },
           },
           position = 'left',
-          size = 40,
+          size = 30,
         },
         {
           elements = {
             {
-              id = 'repl',
-              size = 0.2,
+              id = 'watches',
+              size = 0.5,
             },
             {
-              id = 'watches',
-              size = 0.8,
+              id = 'repl',
+              size = 0.5,
             },
           },
           position = 'bottom',

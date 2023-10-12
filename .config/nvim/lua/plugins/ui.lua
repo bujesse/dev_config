@@ -159,25 +159,29 @@ return {
   -- indent guides
   {
     'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
     event = 'BufReadPost',
     opts = {
-      buftype_exclude = { 'dashboard', 'terminal', 'nofile' },
-      -- char_list = { '│', '¦' },
-      -- char = '▏',
-      -- context_char = '▏',
-      show_trailing_blankline_indent = false,
-      show_first_indent_level = false,
-      show_current_context = true,
-      show_current_context_start = false,
-      filetype_exclude = {
-        'help',
-        'startify',
-        'dashboard',
-        'lazy',
-        'neogitstatus',
-        'NvimTree',
-        'Trouble',
-        'text',
+      exclude = {
+        buftypes = { 'dashboard', 'terminal', 'nofile' },
+        filetypes = {
+          'help',
+          'startify',
+          'dashboard',
+          'lazy',
+          'neogitstatus',
+          'NvimTree',
+          'Trouble',
+          'text',
+        },
+      },
+      indent = {
+        char = { '│', '¦' },
+      },
+      scope = {
+        enabled = true,
+        char = '▎',
+        show_start = false,
       },
     },
   },
