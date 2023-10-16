@@ -39,7 +39,7 @@ return {
       },
       {
         'S',
-        mode = { 'n', 'o', 'x' },
+        mode = { 'n', 'o' },
         function()
           -- show labeled treesitter nodes around the cursor
           require('flash').treesitter()

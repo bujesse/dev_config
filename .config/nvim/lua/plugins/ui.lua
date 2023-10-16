@@ -182,6 +182,7 @@ return {
         enabled = true,
         char = '▎',
         show_start = false,
+        show_end = false,
       },
     },
   },
@@ -208,8 +209,8 @@ return {
         mappings = {},
       })
       local t = {}
-      t['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '55', 'sine' } }
-      t['<C-d>'] = { 'scroll', { 'vim.wo.scroll', 'true', '55', 'sine' } }
+      t['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '35', 'sine' } }
+      t['<C-d>'] = { 'scroll', { 'vim.wo.scroll', 'true', '35', 'sine' } }
       require('neoscroll.config').set_mappings(t)
     end,
   },
@@ -219,7 +220,7 @@ return {
     'NvChad/nvim-colorizer.lua',
     cmd = { 'ColorizerToggle' },
     keys = {
-      { 'yoC', '<CMD>ColorizerToggle<CR>' },
+      { 'yoC', '<CMD>ColorizerToggle<CR>', desc = 'Toggle Colorizer' },
     },
     opts = {},
   },

@@ -103,15 +103,10 @@ return {
   {
     'haya14busa/vim-asterisk',
     keys = {
-      { '*', '<Plug>(asterisk-*)', mode = { 'n', 'x' } },
-      { '#', '<Plug>(asterisk-#)', mode = { 'n', 'x' } },
-      { 'g*', '<Plug>(asterisk-g*)', mode = { 'n', 'x' } },
-      { 'g#', '<Plug>(asterisk-g#)', mode = { 'n', 'x' } },
-      { 'z*', '<Plug>(asterisk-z*)', mode = { 'n', 'x' } },
-      { 'gz*', '<Plug>(asterisk-gz*)', mode = { 'n', 'x' } },
-      { 'z#', '<Plug>(asterisk-z#)', mode = { 'n', 'x' } },
-      { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
-      { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
+      { '*', '<Plug>(asterisk-z*)', mode = { 'n', 'x' } },
+      { 'g*', '<Plug>(asterisk-gz*)', mode = { 'n', 'x' } },
+      { '#', '<Plug>(asterisk-z#)', mode = { 'n', 'x' } },
+      { 'g#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
     },
     init = function()
       vim.g['asterisk#keeppos'] = 1

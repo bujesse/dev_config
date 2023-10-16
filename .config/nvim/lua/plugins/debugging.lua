@@ -164,8 +164,24 @@ return {
               dap.configurations.python,
               1,
               vim.tbl_extend('force', base_script_config, {
-                name = 'Debug bulk_cancel_transactions',
-                args = { 'bulk_cancel_txns' },
+                name = 'Debug create_txn_step_generation_migration',
+                args = { 'create_txn_step_generation_migration' },
+              })
+            )
+            table.insert(
+              dap.configurations.python,
+              2,
+              vim.tbl_extend('force', base_script_config, {
+                name = 'Debug initialize_txn_step_generation',
+                args = { 'initialize_txn_step_generation' },
+              })
+            )
+            table.insert(
+              dap.configurations.python,
+              3,
+              vim.tbl_extend('force', base_script_config, {
+                name = 'Debug validate_step_generation_logic',
+                args = { 'validate_step_generation_logic' },
               })
             )
             -- FIXME: This line is needed for neotest debugging to work, but makes regular debugging not work
