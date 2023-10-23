@@ -103,10 +103,15 @@ return {
   {
     'haya14busa/vim-asterisk',
     keys = {
-      { '*', '<Plug>(asterisk-z*)', mode = { 'n', 'x' } },
-      { 'g*', '<Plug>(asterisk-gz*)', mode = { 'n', 'x' } },
-      { '#', '<Plug>(asterisk-z#)', mode = { 'n', 'x' } },
-      { 'g#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
+      { '*', '<Plug>(asterisk-*)', mode = { 'n', 'x' } },
+      { '#', '<Plug>(asterisk-#)', mode = { 'n', 'x' } },
+      { 'g*', '<Plug>(asterisk-g*)', mode = { 'n', 'x' } },
+      { 'g#', '<Plug>(asterisk-g#)', mode = { 'n', 'x' } },
+      { 'z*', '<Plug>(asterisk-z*)', mode = { 'n', 'x' } },
+      { 'gz*', '<Plug>(asterisk-gz*)', mode = { 'n', 'x' } },
+      { 'z#', '<Plug>(asterisk-z#)', mode = { 'n', 'x' } },
+      { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
+      { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
     },
     init = function()
       vim.g['asterisk#keeppos'] = 1
@@ -180,7 +185,7 @@ return {
     'windwp/nvim-spectre',
     -- stylua: ignore
     keys = {
-      { "<leader>R", function() require("spectre").open({ is_insert_mode = true, })
+      { "<leader>RR", function() require("spectre").open({ is_insert_mode = true, })
       end, desc = "Replace in files (Spectre)" },
     },
   },
@@ -198,7 +203,7 @@ return {
       },
     },
     keys = {
-      { '<leader>r', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
+      { '<leader>Rr', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
     },
   },
 }

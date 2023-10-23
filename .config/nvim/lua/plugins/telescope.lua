@@ -100,6 +100,7 @@ return {
     'plenary.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'molecule-man/telescope-menufacture',
+    { 'nvim-telescope/telescope-frecency.nvim' },
   },
   config = function()
     local actions = require('telescope.actions')
@@ -219,11 +220,23 @@ return {
             main_menu = { [{ 'i', 'n' }] = '<C-e>' },
           },
         },
+        frecency = {
+          show_scores = true,
+          show_unindexed = true,
+          ignore_patterns = { '*.git/*', '*/tmp/*' },
+          disable_devicons = false,
+          workspaces = {
+            ['execution'] = '/home/vagrant/dev/execution',
+            ['execution-ui'] = '/home/vagrant/dev/execution-ui',
+            ['nvim'] = '/home/vagrant/dev_config/.config/nvim',
+          },
+        },
       },
     })
 
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('menufacture')
+    require('telescope').load_extension('frecency')
 
     -- Essential
     vim.keymap.set('n', "<Space>'", '<cmd>lua require("telescope.builtin").resume()<CR>', { desc = 'Telescope Resume' })
@@ -245,12 +258,7 @@ return {
       '<cmd>lua require("telescope.builtin").git_status()<CR>',
       { desc = 'Telescope Git Status' }
     )
-    vim.keymap.set(
-      'n',
-      '<Space>m',
-      '<cmd>lua require("telescope.builtin").oldfiles({include_current_session = true})<CR>',
-      { desc = 'Old Files' }
-    )
+    vim.keymap.set('n', '<Space>m', '<Cmd>Telescope frecency workspace=CWD<CR>', { desc = 'Frecency' })
 
     -- Currently using Glance for goto lsp
     -- vim.keymap.set('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', { desc = 'Lsp References' })
