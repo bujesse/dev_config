@@ -2,7 +2,11 @@ set shell := ["fish", "-c"]
 
 # serve flask (without threads) on port 5010. On python filechange, will reload server. debugpy listening on port 5678. output stdout to output.log
 run-dev:
+  fd -e py | entr -r venv/bin/python -m debugpy --listen localhost:5678 -m flask run execution:create_app() --host=0.0.0.0 --port=5010 --no-reload | tee -a output.log
+
+run-dev-no-threads:
   fd -e py | entr -r venv/bin/python -m debugpy --listen localhost:5678 -m flask run execution:create_app() --host=0.0.0.0 --port=5010 --without-threads --no-reload | tee -a output.log
+
 
 # watch and run unit tests
 test-unit:
@@ -11,6 +15,10 @@ test-unit:
 # watch and run integration tests
 test-int:
   fd -e py | entr -r venv/bin/python -m pytest -vv --disable-warnings tests/integration
+
+# update snapshots
+test-snap-update:
+  venv/bin/python -m pytest -vv --disable-warnings tests/integration --snapshot-update
 
 # watch and run all tests
 test-all:
@@ -26,3 +34,9 @@ watch-debugpy:
 
 darker:
   ~/python_envs/nvim/bin/darker --isort --skip-string-normalization -l 120 .
+
+blackd:
+  ~/python_envs/nvim/bin/blackd --bind-host 127.0.0.1
+
+run-app-context module:
+  venv/bin/python execution/scripts/run_with_app_context.py {{module}}
