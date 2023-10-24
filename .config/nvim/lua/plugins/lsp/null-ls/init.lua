@@ -13,6 +13,7 @@ function M.config()
     ensure_installed = {
       'markdownlint',
       'sqlfluff',
+      'ruff-lsp',
       -- 'stylua',
       -- 'ruff',
       -- 'prettier',
@@ -116,11 +117,11 @@ function M.setup_null_ls()
     --   filetypes = { 'python' },
     --   diagnostics_format = '[flake8] #{m} (#{c})',
     -- },
-    {
-      exe = 'ruff',
-      filetypes = { 'python' },
-      diagnostics_format = '[ruff] #{m} (#{c})',
-    },
+    -- {
+    --   exe = 'ruff',
+    --   filetypes = { 'python' },
+    --   diagnostics_format = '[ruff] #{m} (#{c})',
+    -- },
     -- {
     --   exe = 'eslint',
     -- },

@@ -185,7 +185,7 @@ return {
     'windwp/nvim-spectre',
     -- stylua: ignore
     keys = {
-      { "<leader>RR", function() require("spectre").open({ is_insert_mode = true, })
+      { "<leader>rR", function() require("spectre").open({ is_insert_mode = true, })
       end, desc = "Replace in files (Spectre)" },
     },
   },
@@ -203,7 +203,7 @@ return {
       },
     },
     keys = {
-      { '<leader>Rr', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
+      { '<leader>rr', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
     },
   },
 }

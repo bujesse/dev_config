@@ -318,6 +318,9 @@ function M.setup_servers()
         },
       })
     end,
+    ['ruff_lsp'] = function()
+      lspconfig.ruff_lsp.setup({})
+    end,
   })
 end
 
