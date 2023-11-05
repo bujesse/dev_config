@@ -2,7 +2,7 @@
 Profile := 1 ; default
 Count := 2
 
-^Tab:: ; Ctrl+Tab to cycle through the profiles
+!^Tab:: ; Ctrl+Tab to cycle through the profiles
 	Profile := Profile = Count ? 1 : Profile + 1
 	ToolTip, % "Profile " Profile
 	SetTimer, ToolTipOff, -1000
@@ -12,6 +12,14 @@ ToolTipOff:
 	ToolTip
 return
 
+
+; === hyper shortcuts (actually alt+win+ctrl)
+$!^#1::
+IfWinNotExist ahk_exe chrome.exe
+    run, "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+WinWait, ahk_exe chrome.exe
+winactivate, ahk_exe chrome.exe
+Return
 
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -120,6 +128,7 @@ if (A_PriorKey = "RAlt") {
 return
 */
 
+/*
 ; Search google for highlighted text (Usage:ctrl+shift+S)
 ^+s::
 {
@@ -127,63 +136,53 @@ return
    Sleep 15
    Run, http://www.google.com/search?q=%Clipboard%
 Return
-
 }
-
-/*
-; === hhkb start ===
-
-; === Ctrl/Esc ===
-~*LControl::
-if !State {
-  State := (GetKeyState("Alt", "P") || GetKeyState("Shift", "P") || GetKeyState("LWin", "P") || GetKeyState("RWin", "P"))
-  ; For some reason, this code block gets called repeatedly when LControl is kept pressed.
-  ; Hence, we need a guard around StartTime to ensure that it doesn't keep getting reset.
-  ; Upon startup, StartTime does not exist thus this if-condition is also satisfied when StartTime doesn't exist.
-  if (StartTime = "") {
-    StartTime := A_TickCount
-  }
-}
-return
-
-$~LControl Up::
-elapsedTime := A_TickCount - StartTime
-if (  !State
-   && (A_PriorKey = "LControl")
-   && (elapsedTime <= 200)) {
-  Send {Esc}
-}
-State     := 0
-; We can reset StartTime to 0. However, setting it to an empty string allows it to be used right after first run
-StartTime := ""
-return
-
-$`::Send {Delete}
-$^`::Send {Ctrl Down}{Delete}{Ctrl Up}
-$Esc::`
-$!Esc::Send {Alt Down}{Shift Down}{Tab}{Shift Up}
-
-; RAlt hjkl
-$>!h::Send, {Left}
-$>!j::Send, {Down}
-$>!k::Send, {Up}
-$>!l::Send, {Right}
-$^>!h::Send, {Ctrl Down}{Left}{Ctrl Up}
-$^>!j::Send, {Ctrl Down}{Down}{Ctrl Up}
-$^>!k::Send, {Ctrl Down}{Up}{Ctrl Up}
-$^>!l::Send, {Ctrl Down}{Right}{Ctrl Up}
-$<!>!h::Send, {Home}
-$<!>!j::Send, {Lctrl down}{End}{Lctrl up}
-$<!>!k::Send, {Lctrl down}{Home}{Lctrl up}
-$<!>!l::Send, {End}
-$^+>!h::Send, {Ctrl Down}{Shift Down}{Left}{Ctrl Up}{Shift Up}
-$^+>!j::Send, {Ctrl Down}{Shift Down}{Down}{Ctrl Up}{Shift Up}
-$^+>!k::Send, {Ctrl Down}{Shift Down}{Up}{Ctrl Up}{Shift Up}
-$^+>!l::Send, {Ctrl Down}{Shift Down}{Right}{Ctrl Up}{Shift Up}
-
-; === hhkb end ===
 */
 
+; copy and paste text into new chrome tab
+^+g::
+{
+Send, ^c
+Sleep 15
+IfWinNotExist, ahk_exe chrome.exe
+    Run, "C:\Program Files\Google\Chrome\Application\chrome.exe"
+WinWaitActive, ahk_exe chrome.exe
+Send, ^t ; Open a new tab
+Sleep 100 ; Sleep for a moment to ensure the new tab is ready
+Send, ^v ; Paste the copied text into the new tab
+Send, {Enter}
+Return
+}
+
+; Implement mac's cmd+` to switch between windows of same app
+!Esc::
+WinGet, ActiveProcessName, ProcessName, A
+WinGet, WinClassCount, List, ahk_exe %ActiveProcessName%
+
+if (WinClassCount = 1)
+    return
+
+if (NextWindow = "")
+    NextWindow := 2
+
+element := % WinClassCount%NextWindow%
+
+WinSet, Top,, ahk_id %element%
+WinActivate, ahk_id %element%
+
+NextWindow += 1
+
+if (NextWindow > WinClassCount || !getKeyState("Alt"))
+    NextWindow := 2
+
+return
+
+
+;SHIFT + Wheel = fast scroll
+$+WheelDown::send, {WheelDown 5}
+$+WheelUp::send, {WheelUp 5}
+$+WheelRight::send, {WheelRight 10}
+$+WheelLeft::send, {WheelLeft 10}
 
 ; === App specific ===
 
@@ -314,4 +313,3 @@ $+>!k::Send, {Shift Down}{Up}{Shift Up}
 $>!p::Send, A4oharuftms{!}
 
 ; === hhkb end ===
-
