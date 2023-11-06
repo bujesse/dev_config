@@ -109,7 +109,8 @@ return {
           vim.api.nvim_command([[ hi IlluminatedWordWrite gui=NONE guibg='#54546D']])
         end,
       },
-      'jose-elias-alvarez/null-ls.nvim',
+      -- 'jose-elias-alvarez/null-ls.nvim',
+      'nvimtools/none-ls.nvim',
       'b0o/schemastore.nvim',
       'jose-elias-alvarez/typescript.nvim',
       'ray-x/lsp_signature.nvim',

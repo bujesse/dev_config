@@ -186,8 +186,11 @@ function M.config_keys()
       -- Replace word with last yank (repeatable)
       -- ['<Leader>v'] = 'ciw<C-r>0<Esc>',
 
-      -- Replace word with last cut (repeatable)
-      ['<Leader>c'] = '"_ciw<C-r>-<Esc>',
+      -- Copy file and line number
+      ['<Leader>c'] = {
+        ":let @+ = expand('%') . ':' . line('.') | echo expand('%') . ':' . line('.')<CR>",
+        { desc = 'Copy reference' },
+      },
 
       -- Next/Prev Tab
       [']t'] = '<Cmd>tabn<CR>',
@@ -245,9 +248,6 @@ function M.config_keys()
 
       -- Replace word with last yank (repeatable)
       -- ['<Leader>v'] = 'c<C-r>0<Esc>',
-
-      -- Replace word with last cut (repeatable)
-      ['<Leader>c'] = '"_c<C-r>-<Esc>',
 
       -- Apply the 'q' register macro to the visual selection
       ['Q'] = ":'<,'>:norm @q<CR>",

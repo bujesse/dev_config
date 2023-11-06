@@ -313,3 +313,35 @@ $+>!k::Send, {Shift Down}{Up}{Shift Up}
 $>!p::Send, A4oharuftms{!}
 
 ; === hhkb end ===
+
+; === Alt Layout ===
+#If Profile = 3
+q::y
+w::c
+e::l
+r::k
+t::x
+y::z
+u::f
+i::u
+o::q
+p::`;
+`;::o
+
+a::i
+s::s
+d::r
+f::t
+g::g
+h::b
+j::n
+k::e
+l::a
+
+z::v
+x::w
+c::d
+v::m
+b::j
+n::p
+m::h

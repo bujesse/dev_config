@@ -184,6 +184,14 @@ return {
                 args = { 'validate_step_generation_logic' },
               })
             )
+            table.insert(
+              dap.configurations.python,
+              4,
+              vim.tbl_extend('force', base_script_config, {
+                name = 'Debug modify_txn_step_generation_map',
+                args = { 'modify_txn_step_generation_map' },
+              })
+            )
             -- FIXME: This line is needed for neotest debugging to work, but makes regular debugging not work
             require('mason-nvim-dap').default_setup(config)
           end,
