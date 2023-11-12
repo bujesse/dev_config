@@ -25,20 +25,20 @@ function M.config()
   -- vim.cmd([[set shell=/usr/local/bin/fish]])
 
   -- This is necesary for copying to a clipboard outside of VAGRANT
-  vim.cmd([[
-    let g:clipboard = {
-          \   'name': 'cbcopy',
-          \   'copy': {
-          \      '+': ['/home/vagrant/.config/nvim/scripts/copy.sh'],
-          \      '*': ['/home/vagrant/.config/nvim/scripts/copy.sh'],
-          \    },
-          \   'paste': {
-          \      '+': 'echo',
-          \      '*': 'echo',
-          \   },
-          \   'cache_enabled': 1,
-          \ }
-  ]])
+  -- vim.cmd([[
+  --   let g:clipboard = {
+  --         \   'name': 'cbcopy',
+  --         \   'copy': {
+  --         \      '+': ['/home/vagrant/.config/nvim/scripts/copy.sh'],
+  --         \      '*': ['/home/vagrant/.config/nvim/scripts/copy.sh'],
+  --         \    },
+  --         \   'paste': {
+  --         \      '+': 'echo',
+  --         \      '*': 'echo',
+  --         \   },
+  --         \   'cache_enabled': 1,
+  --         \ }
+  -- ]])
 end
 
 return M
