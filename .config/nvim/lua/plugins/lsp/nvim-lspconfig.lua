@@ -332,6 +332,8 @@ function M.config()
   require('lspconfig')
   require('plugins.lsp.null-ls').config()
   M.setup_servers()
+  vim.cmd([[highlight DiagnosticUnderlineError cterm=undercurl gui=undercurl guisp=Red]])
+  vim.cmd([[highlight DiagnosticUnderlineWarn cterm=undercurl gui=undercurl guisp=Yellow]])
 end
 
 return M

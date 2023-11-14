@@ -4,7 +4,6 @@ return {
     'mfussenegger/nvim-dap',
     event = 'VeryLazy',
     dependencies = {
-      'mason-nvim-dap.nvim',
       'mfussenegger/nvim-dap-python',
       {
         'ofirgall/goto-breakpoints.nvim',
@@ -62,6 +61,8 @@ return {
       { '<Space>dd', "<cmd>lua require'dap'.run_last()<cr>", desc = 'DAP Last' },
       { '<Space>d-', "<cmd>lua require'dap'.clear_breakpoints<cr>", desc = 'Clear Breakpoints' },
       { '<Space>du', "<cmd>lua require'dapui'.toggle({reset = true})<cr>", desc = 'Toggle UI' },
+      { '<Space>dN', '<Cmd>lua require("dap-python").test_method()<Cr>', desc = 'Debug Nearest Test (dap-python)' },
+      { '<Space>dc', '<Cmd>lua require("dap-python").test_class()<Cr>', desc = 'Debug Class (dap-python)' },
     },
     config = function(_, opts)
       vim.fn.sign_define('DapBreakpoint', {
@@ -78,125 +79,54 @@ return {
         numhl = 'DiagnosticSignWarn',
       })
 
-      local dap = require('dap')
-      require('mason-nvim-dap').setup({
-        ensure_installed = { 'python' },
-        handlers = {
-          function(config)
-            -- all sources with no handler get passed here
-            -- Keep original functionality of `automatic_setup = true`
-            require('mason-nvim-dap').default_setup(config)
-          end,
-          python = function(config)
-            require('dap-python').setup(vim.g.python3_host_prog)
-            require('dap-python').test_runner = 'pytest'
-            table.insert(dap.configurations.python, 1, {
-              type = 'python',
-              request = 'attach',
-              name = 'Debugpy',
-              justMyCode = false,
-              -- subProcess = true,
-              redirectOutput = true,
-              variablePresentation = {
-                ['function'] = 'hide',
-                special = 'hide',
-                class = 'group',
-                protected = 'group',
-                -- "all": "inline",
-              },
-              connect = {
-                host = '127.0.0.1',
-                port = 5678,
-              },
-            })
-            --[[ 
-            This seems to work. Key takeaways:
-            - Flask spawns 2 processes when it's hot-reloading because one of them is a file watcher. The debugger seems to attach to the wrong process in this case.
-            - variablePresentation is very helpful to hide fluff
-            - one could set up their own watcher using inotifywait tools, and just do attaches
-          ]]
-            -- table.insert(dap.configurations.python, 2, {
-            --   type = 'python',
-            --   request = 'launch',
-            --   name = 'Launch Execution',
-            --   -- program = 'app.py',
-            --   -- stopOnEntry = true,
-            --   justMyCode = false,
-            --   variablePresentation = {
-            --     ['function'] = 'hide',
-            --     special = 'hide',
-            --     class = 'group',
-            --     protected = 'group',
-            --     -- "all": "inline",
-            --   },
-            --   -- subProcess = true,
-            --   module = 'flask',
-            --   args = { 'run', '--host=0.0.0.0', '--port=5010', '--without-threads', '--no-reload' },
-            --   -- cwd = '${workspaceFolder}',
-            --   -- python = '${workspaceFolder}/venv/bin/python',
-            --   -- pathMappings = {
-            --   --   {
-            --   --     localRoot = '${workspaceFolder}',
-            --   --     remoteRoot = '${workspaceFolder}',
-            --   --   },
-            --   -- },
-            --   -- env = {
-            --   --   FLASK_ENV = 'development',
-            --   --   FLASK_DEBUG = 1,
-            --   --   FLASK_APP = 'execution:create_app()',
-            --   -- },
-            -- })
-            local base_script_config = {
-              type = 'python',
-              python = '${workspaceFolder}/venv/bin/python',
-              request = 'launch',
-              name = 'Debug execution script',
-              variablePresentation = {
-                ['function'] = 'hide',
-                special = 'hide',
-                class = 'group',
-                protected = 'group',
-                -- "all": "inline",
-              },
-              program = '${workspaceFolder}/execution/scripts/run_with_app_context.py',
-            }
-            table.insert(
-              dap.configurations.python,
-              1,
-              vim.tbl_extend('force', base_script_config, {
-                name = 'Debug create_txn_step_generation_migration',
-                args = { 'create_txn_step_generation_migration' },
-              })
-            )
-            table.insert(
-              dap.configurations.python,
-              2,
-              vim.tbl_extend('force', base_script_config, {
-                name = 'Debug initialize_txn_step_generation',
-                args = { 'initialize_txn_step_generation' },
-              })
-            )
-            table.insert(
-              dap.configurations.python,
-              3,
-              vim.tbl_extend('force', base_script_config, {
-                name = 'Debug validate_step_generation_logic',
-                args = { 'validate_step_generation_logic' },
-              })
-            )
-            table.insert(
-              dap.configurations.python,
-              4,
-              vim.tbl_extend('force', base_script_config, {
-                name = 'Debug modify_txn_step_generation_map',
-                args = { 'modify_txn_step_generation_map' },
-              })
-            )
-            -- FIXME: This line is needed for neotest debugging to work, but makes regular debugging not work
-            require('mason-nvim-dap').default_setup(config)
-          end,
+      require('dap-python').setup()
+      require('dap-python').test_runner = 'pytest'
+      require('dap-python').resolve_python = function()
+        return '/home/vagrant/dev/execution/venv/bin/python'
+      end
+
+      local base_script_config = {
+        type = 'python',
+        python = '${workspaceFolder}/venv/bin/python',
+        request = 'launch',
+        name = 'Debug execution script',
+        variablePresentation = {
+          ['function'] = 'hide',
+          special = 'hide',
+          class = 'group',
+          protected = 'group',
+          -- "all": "inline",
+        },
+        program = '${workspaceFolder}/execution/scripts/run_with_app_context.py',
+      }
+
+      table.insert(require('dap').configurations.python, 1, {
+        type = 'python',
+        request = 'attach',
+        name = 'Debugpy',
+        justMyCode = false,
+        -- subProcess = true,
+        redirectOutput = true,
+        variablePresentation = {
+          ['function'] = 'hide',
+          special = 'hide',
+          class = 'group',
+          protected = 'group',
+          -- "all": "inline",
+        },
+        connect = {
+          host = '127.0.0.1',
+          port = 5678,
         },
       })
+      table.insert(
+        require('dap').configurations.python,
+        2,
+        vim.tbl_extend('force', base_script_config, {
+          name = 'Debug create_txn_step_generation_migration',
+          args = { 'create_txn_step_generation_migration' },
+        })
+      )
     end,
   },
 
