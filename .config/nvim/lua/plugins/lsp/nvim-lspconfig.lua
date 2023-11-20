@@ -15,13 +15,6 @@ end
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 function M.common_on_attach(client, bufnr)
-  local function buf_set_option(...)
-    vim.api.nvim_buf_set_option(bufnr, ...)
-  end
-
-  -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   -- Mappings.
   local opts = {
     noremap = true,
@@ -75,9 +68,16 @@ function M.common_on_attach(client, bufnr)
   --   -- ':silent w<cr> :silent !source ~/python_envs/nvim/bin/activate.fish && darker --isort --skip-string-normalization -l 120 %<Cr>',
   -- end, vim.tbl_deep_extend('force', opts, { desc = 'Format file', buffer = true }))
   -- else
-  vim.keymap.set('n', '<Leader>f', function()
-    M.lsp_formatting()
-  end, vim.tbl_deep_extend('force', opts, { desc = 'Format file' }))
+  -- Use custom formatting
+  if vim.bo.filetype == 'rust' then
+    vim.keymap.set('n', '<Leader>f', '<cmd>RustFmt<CR>', { desc = 'Format file' })
+    vim.api.nvim_command([[autocmd BufWritePre *.rs :RustFmt]])
+  else
+    -- Use lsp formatting
+    vim.keymap.set('n', '<Leader>f', function()
+      M.lsp_formatting()
+    end, vim.tbl_deep_extend('force', opts, { desc = 'Format file' }))
+  end
   -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
   -- vim.keymap.set('n', '<Leader>f', function()
   --   local clients = vim.lsp.get_active_clients({ buffer = vim.api.nvim_buf_get_number(0) })
@@ -320,6 +320,19 @@ function M.setup_servers()
     end,
     ['ruff_lsp'] = function()
       lspconfig.ruff_lsp.setup({})
+    end,
+    ['rust_analyzer'] = function()
+      local config = M.make_config()
+      config = vim.tbl_deep_extend('force', config, {
+        settings = {
+          ['rust-analyzer'] = {
+            checkOnSave = {
+              command = 'clippy',
+            },
+          },
+        },
+      })
+      lspconfig.rust_analyzer.setup(config)
     end,
   })
 end
