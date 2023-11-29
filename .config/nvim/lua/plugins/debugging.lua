@@ -127,6 +127,14 @@ return {
           args = { 'create_txn_step_generation_migration' },
         })
       )
+      table.insert(
+        require('dap').configurations.python,
+        2,
+        vim.tbl_extend('force', base_script_config, {
+          name = 'Debug validate_step_generation_logic',
+          args = { 'validate_step_generation_logic' },
+        })
+      )
     end,
   },
 
