@@ -263,6 +263,10 @@ function M.config_keys()
       ['<C-A-j>'] = ':<C-u>call MoveVisualDown()<CR>',
       ['<C-A-k>'] = ':<C-u>call MoveVisualUp()<CR>',
 
+      -- fast up and down
+      ['<A-j>'] = '5j',
+      ['<A-k>'] = '5k',
+
       -- ["p"] = '"0p',
       -- ["P"] = '"0P',
     },

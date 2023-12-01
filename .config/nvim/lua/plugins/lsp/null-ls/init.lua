@@ -20,6 +20,9 @@ function M.config()
       -- 'yamllint',
     },
     handlers = {
+      -- ruff_lsp = function(source_name, methods)
+      --   null_ls.register(null_ls.builtins.diagnostics.ruff)
+      -- end,
       stylua = function(source_name, methods)
         null_ls.register(null_ls.builtins.formatting.stylua.with({
           extra_args = {

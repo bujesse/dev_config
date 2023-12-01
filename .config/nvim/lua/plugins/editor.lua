@@ -421,6 +421,11 @@ return {
         ':DiffviewOpen origin/',
         desc = 'Compare branch:',
       },
+      {
+        '<Leader>gm',
+        '<CMD>DiffviewOpen origin/master<CR>',
+        desc = 'Compare with master',
+      },
       { '<Leader>gH', '<Cmd>DiffviewFileHistory<Cr>', desc = 'Branch History' },
       { '<Leader>gh', '<Cmd>DiffviewFileHistory %<Cr>', desc = 'Current File History' },
     },
