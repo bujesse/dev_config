@@ -130,8 +130,8 @@ return {
       { 'P', '<Plug>(YankyPutBefore)==', mode = { 'n', 'x' } },
       { ']p', '<Plug>(YankyPutIndentAfterLinewise)==', mode = { 'n', 'x' } },
       { '[p', '<Plug>(YankyPutIndentBeforeLinewise)==', mode = { 'n', 'x' } },
-      { '[y', '<Plug>(YankyCycleForward)' },
-      { ']y', '<Plug>(YankyCycleBackward)' },
+      { '<A-y>', '<Plug>(YankyCycleForward)' },
+      { '<C-A-y>', '<Plug>(YankyCycleBackward)' },
       {
         '<Space>y',
         ':lua require("telescope").extensions.yank_history.yank_history({ sorting_strategy = "ascending", layout_strategy = "cursor", results_title = false, layout_config = { width = 0.8, height = 0.4, } })<cr>',

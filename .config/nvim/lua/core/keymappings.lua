@@ -128,18 +128,8 @@ function M.config_keys()
       -- save all
       ['<C-s>'] = ':<C-u>wa!<cr>',
 
-      -- Center after search
-      -- ['n'] = 'nzzzv',
-      -- ['N'] = 'Nzzzv',
-
-      [']p'] = { '<Plug>unimpairedPutBelow', { noremap = false } },
-      ['[p'] = { '<Plug>unimpairedPutAbove', { noremap = false } },
-
       [']<Space>'] = { '<Plug>unimpairedBlankDown', { noremap = false } },
       ['[<Space>'] = { '<Plug>unimpairedBlankUp', { noremap = false } },
-
-      [']e'] = { '<Plug>unimpairedMoveDown', { noremap = false } },
-      ['[e'] = { '<Plug>unimpairedMoveUp', { noremap = false } },
 
       [']q'] = '<CMD>cnext<CR>',
       ['[q'] = '<CMD>cprev<CR>',
@@ -193,8 +183,9 @@ function M.config_keys()
       },
 
       -- Next/Prev Tab
-      [']t'] = '<Cmd>tabn<CR>',
-      ['[t'] = '<Cmd>tabp<CR>',
+      -- use gt/gT
+      -- [']t'] = '<Cmd>tabn<CR>',
+      -- ['[t'] = '<Cmd>tabp<CR>',
 
       ['<C-t>'] = '<Cmd>tabe<Cr>',
 
@@ -206,6 +197,8 @@ function M.config_keys()
       -- Move current line / block with Alt-j/k a la vscode.
       ['<C-A-j>'] = ':<C-u>call MoveLineDown()<CR>',
       ['<C-A-k>'] = ':<C-u>call MoveLineUp()<CR>',
+
+      -- fast up and down
       ['<A-j>'] = '5j',
       ['<A-k>'] = '5k',
 
@@ -274,9 +267,6 @@ function M.config_keys()
     ---@usage change or add keymappings for visual block mode
     visual_block_mode = {
       -- Move selected line / block of text in visual mode
-      [']e'] = { '<Plug>unimpairedMoveSelectionDown', { noremap = false } },
-      ['[e'] = { '<Plug>unimpairedMoveSelectionUp', { noremap = false } },
-
       -- save all
       ['<C-s>'] = '<C-c>:wa!<cr>gv',
     },

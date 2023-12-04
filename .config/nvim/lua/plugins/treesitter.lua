@@ -1,5 +1,11 @@
 return {
-  { 'JoosepAlviste/nvim-ts-context-commentstring', lazy = true },
+  {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+    config = function()
+      vim.g.skip_ts_context_commentstring_module = true
+      require('ts_context_commentstring').setup({})
+    end,
+  },
 
   -- Treesitter actions. Toggle booleans, quotes, conditionals,
   {
@@ -25,6 +31,16 @@ return {
         -- shows the code context of the currently visible buffer contents
         'nvim-treesitter/nvim-treesitter-context',
         opts = { enable = true },
+        keys = {
+          { 'yot', '<CMD>TSContextToggle<CR>', desc = 'Toggle Treesitter Context' },
+          {
+            '[c',
+            function()
+              require('treesitter-context').go_to_context()
+            end,
+            desc = 'Go to Context',
+          },
+        },
       },
       {
         'windwp/nvim-ts-autotag',
@@ -44,7 +60,6 @@ return {
     opts = {
       highlight = { enable = true },
       indent = { enable = true },
-      context_commentstring = { enable = true, enable_autocmd = false },
       ensure_installed = {
         'python',
         'bash',
@@ -125,7 +140,7 @@ return {
     ---@param opts TSConfig
     config = function(_, opts)
       require('nvim-treesitter.configs').setup(opts)
-      require('nvim-treesitter.install').compilers = { 'clang' }
+      -- require('nvim-treesitter.install').compilers = { 'clang' }
     end,
   },
 
