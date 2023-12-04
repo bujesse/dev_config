@@ -104,6 +104,7 @@ return {
   },
   config = function()
     local actions = require('telescope.actions')
+    local layout = require('plugins.telescope.fused_layout')
 
     require('telescope').setup({
       defaults = {
@@ -145,7 +146,28 @@ return {
             end,
           },
         },
-        layout_strategy = 'horizontal',
+        layout_strategy = 'flex',
+        layout_config = {
+          horizontal = {
+            size = {
+              width = '95%',
+              height = '70%',
+            },
+          },
+          cursor = {
+            size = {
+              width = 0.9,
+              height = 0.5,
+            },
+          },
+          vertical = {
+            size = {
+              width = '95%',
+              height = '95%',
+            },
+          },
+        },
+        create_layout = layout.fuse_layout,
         winblend = 15,
         file_ignore_patterns = {
           -- lock files
