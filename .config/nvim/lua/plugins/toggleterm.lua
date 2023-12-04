@@ -16,10 +16,18 @@ return {
     version = '*',
     config = function()
       require('toggleterm').setup({
-        shell = '/usr/local/bin/fish',
-        open_mapping = [[<c-\>]],
-        size = 20,
+        shell = '/usr/bin/fish',
+        open_mapping = [[<leader>tt]],
+        insert_mappings = false,
+        size = function(term)
+          if term.direction == 'horizontal' then
+            return 15
+          elseif term.direction == 'vertical' then
+            return vim.o.columns * 0.4
+          end
+        end,
         terminal_mappings = false,
+        close_on_exit = false,
       })
 
       local Terminal = require('toggleterm.terminal').Terminal
@@ -67,12 +75,30 @@ return {
         helix:toggle()
       end
 
+      local vertical = Terminal:new({
+        cmd = 'fish',
+        dir = 'git_dir',
+        hidden = true,
+        direction = 'vertical',
+        count = 97,
+      })
+
+      function _vertical_toggle()
+        vertical:toggle()
+      end
+
       vim.api.nvim_set_keymap('n', '<leader>l', '<cmd>lua _lazygit_toggle()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap(
         'n',
         '<leader>h',
         '<cmd>lua _helix_toggle()<CR>',
         { desc = 'Helix editor', noremap = true, silent = true }
+      )
+      vim.api.nvim_set_keymap(
+        'n',
+        '<leader>tv',
+        '<cmd>lua _vertical_toggle()<CR>',
+        { desc = 'Vertical terminal', noremap = true, silent = true }
       )
 
       vim.api.nvim_create_user_command('ToggleTermCurrentDir', function()

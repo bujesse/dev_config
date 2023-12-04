@@ -69,8 +69,8 @@ function M.config_keys()
       ['KJ'] = '<ESC>',
 
       -- Move current line / block with Alt-j/k ala vscode.
-      ['<A-j>'] = '<C-o>:call MoveLineDown()<CR>',
-      ['<A-k>'] = '<C-o>:call MoveLineUp()<CR>',
+      ['<C-A-j>'] = '<C-o>:call MoveLineDown()<CR>',
+      ['<C-A-k>'] = '<C-o>:call MoveLineUp()<CR>',
 
       -- runs conditionally
       ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
@@ -204,8 +204,10 @@ function M.config_keys()
       ['<C-y>'] = '"+y',
 
       -- Move current line / block with Alt-j/k a la vscode.
-      ['<A-j>'] = ':<C-u>call MoveLineDown()<CR>',
-      ['<A-k>'] = ':<C-u>call MoveLineUp()<CR>',
+      ['<C-A-j>'] = ':<C-u>call MoveLineDown()<CR>',
+      ['<C-A-k>'] = ':<C-u>call MoveLineUp()<CR>',
+      ['<A-j>'] = '5j',
+      ['<A-k>'] = '5k',
 
       -- Undo all unsaved changes
       ['<A-u>'] = ':earlier 1f<CR>',
@@ -258,8 +260,8 @@ function M.config_keys()
       ['<Leader>;'] = { 'q:k', { silent = false } },
 
       -- Move current line / block with Alt-j/k ala vscode.
-      ['<A-j>'] = ':<C-u>call MoveVisualDown()<CR>',
-      ['<A-k>'] = ':<C-u>call MoveVisualUp()<CR>',
+      ['<C-A-j>'] = ':<C-u>call MoveVisualDown()<CR>',
+      ['<C-A-k>'] = ':<C-u>call MoveVisualUp()<CR>',
 
       -- ["p"] = '"0p',
       -- ["P"] = '"0P',

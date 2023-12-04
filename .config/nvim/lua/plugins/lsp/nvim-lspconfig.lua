@@ -322,17 +322,7 @@ function M.setup_servers()
       lspconfig.ruff_lsp.setup({})
     end,
     ['rust_analyzer'] = function()
-      local config = M.make_config()
-      config = vim.tbl_deep_extend('force', config, {
-        settings = {
-          ['rust-analyzer'] = {
-            checkOnSave = {
-              command = 'clippy',
-            },
-          },
-        },
-      })
-      lspconfig.rust_analyzer.setup(config)
+      -- set up by rust-tools
     end,
   })
 end
