@@ -151,7 +151,7 @@ return {
           horizontal = {
             size = {
               width = '95%',
-              height = '70%',
+              height = '90%',
             },
           },
           cursor = {
@@ -163,7 +163,7 @@ return {
           vertical = {
             size = {
               width = '95%',
-              height = '95%',
+              height = '80%',
             },
           },
         },
