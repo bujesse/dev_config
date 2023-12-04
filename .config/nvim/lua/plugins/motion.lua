@@ -8,6 +8,8 @@ return {
       modes = {
         char = {
           enabled = true,
+          autohide = true,
+          jump_labels = true,
           -- by default all keymaps are enabled, but you can disable some of them,
           -- by removing them from the list.
           keys = { 'f', 'F', 't', 'T', ';' },
