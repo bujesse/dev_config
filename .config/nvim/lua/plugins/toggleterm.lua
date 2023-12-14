@@ -28,6 +28,7 @@ return {
         end,
         terminal_mappings = false,
         close_on_exit = false,
+        start_in_insert = true,
       })
 
       local Terminal = require('toggleterm.terminal').Terminal
@@ -113,6 +114,11 @@ return {
 
       -- only want these mappings for toggle term
       vim.cmd('autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()')
+
+      -- Always enter in insert mode, even when clicking
+      vim.api.nvim_command('augroup terminal_setup | au!')
+      vim.api.nvim_command('autocmd TermOpen * nnoremap <buffer><LeftRelease> <LeftRelease>i')
+      vim.api.nvim_command('augroup end')
     end,
   },
 
