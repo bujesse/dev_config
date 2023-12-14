@@ -1,0 +1,8 @@
+session_name: lingualab
+suppress_history: false
+windows:
+  - window_name: lingualab
+    layout: tiled
+    shell_command_before:
+      - cd ~/dev/lingualab/
+      - n -S ~/.cache/nvim/sessions/lingualab

@@ -275,7 +275,6 @@ return {
         end,
       },
     },
-    event = 'BufReadPre',
     opts = {
       signs = {
         add = { text = '▎' },

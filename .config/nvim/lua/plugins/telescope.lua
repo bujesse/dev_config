@@ -101,14 +101,9 @@ return {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'molecule-man/telescope-menufacture',
     { 'nvim-telescope/telescope-frecency.nvim' },
-    {
-      'piersolenski/telescope-import.nvim',
-      dev = true,
-    },
   },
   config = function()
     local actions = require('telescope.actions')
-    local layout = require('plugins.telescope.fused_layout')
 
     require('telescope').setup({
       defaults = {
@@ -235,18 +230,6 @@ return {
             ['execution-ui'] = '/home/vagrant/dev/execution-ui',
             ['nvim'] = '/home/vagrant/dev_config/.config/nvim',
           },
-        import = {
-          -- Support additional languages
-          custom_languages = {
-            {
-              -- The regex pattern for the import statement
-              regex = [[^(?:import(?:[\"'\s]*([\w*{}\n, ]+)from\s*)?[\"'\s](.*?)[\"'\s].*)]],
-              -- The Vim filetypes
-              filetypes = { 'lua' },
-              -- The filetypes that ripgrep supports (find these via `rg --type-list`)
-              extensions = { 'lua' },
-            },
-          },
         },
       },
     })
@@ -254,7 +237,6 @@ return {
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('menufacture')
     require('telescope').load_extension('frecency')
-    require('telescope').load_extension('import')
 
     -- Essential
     vim.keymap.set('n', "<Space>'", '<cmd>lua require("telescope.builtin").resume()<CR>', { desc = 'Telescope Resume' })
@@ -340,13 +322,9 @@ return {
       l = { '<cmd>lua require("telescope.builtin").highlights()<CR>', 'HighLights' },
       b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
       h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
-      I = {
+      i = {
         '<cmd>lua require("telescope").extensions.menufacture.live_grep({mode = "ignore"})<CR>',
         'Grep (include ignore and hidden)',
-      },
-      i = {
-        '<cmd>Telescope import<CR>',
-        'Imports',
       },
       r = { '<cmd>lua require("telescope").extensions.menufacture.live_grep()<CR>', 'Regex Search' },
       u = { '<cmd>lua require("telescope").extensions.menufacture.grep_string()<CR>', 'Grep String' },
