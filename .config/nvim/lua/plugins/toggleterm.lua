@@ -16,7 +16,7 @@ return {
     version = '*',
     config = function()
       require('toggleterm').setup({
-        shell = '/usr/local/bin/fish',
+        shell = '/usr/bin/fish',
         open_mapping = [[<leader>tt]],
         insert_mappings = false,
         size = function(term)
