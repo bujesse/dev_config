@@ -101,6 +101,9 @@ return {
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'molecule-man/telescope-menufacture',
     { 'nvim-telescope/telescope-frecency.nvim' },
+    {
+      'piersolenski/telescope-import.nvim',
+    },
   },
   config = function()
     local actions = require('telescope.actions')
@@ -253,12 +256,22 @@ return {
             ['nvim'] = '/home/vagrant/dev_config/.config/nvim',
           },
         },
+        import = {
+          custom_languages = {
+            {
+              regex = [[(?m)^(?:from[ ]+(\S+)[ ]+)?import[ ]+(\S+)[ ]*\$]],
+              filetypes = { 'python' },
+              extensions = { 'py' },
+            },
+          },
+        },
       },
     })
 
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('menufacture')
     require('telescope').load_extension('frecency')
+    require('telescope').load_extension('import')
 
     -- Essential
     vim.keymap.set('n', "<Space>'", '<cmd>lua require("telescope.builtin").resume()<CR>', { desc = 'Telescope Resume' })
@@ -310,7 +323,7 @@ return {
     vim.keymap.set(
       'n',
       '<Space>O',
-      '<cmd>lua require("telescope").extensions.menufacture.find_files({ hidden = true })<CR>',
+      '<cmd>lua require("telescope").extensions.menufacture.find_files({ hidden = true, no_ignore = true })<CR>',
       { desc = 'Find Files (Hidden)' }
     )
     vim.keymap.set(
@@ -344,7 +357,8 @@ return {
       l = { '<cmd>lua require("telescope.builtin").highlights()<CR>', 'HighLights' },
       b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
       h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
-      i = {
+      i = { '<cmd>Telescope import<CR>', 'Import' },
+      I = {
         '<cmd>lua require("telescope").extensions.menufacture.live_grep({mode = "ignore"})<CR>',
         'Grep (include ignore and hidden)',
       },
