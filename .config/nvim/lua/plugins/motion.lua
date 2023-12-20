@@ -12,7 +12,7 @@ return {
           jump_labels = true,
           -- by default all keymaps are enabled, but you can disable some of them,
           -- by removing them from the list.
-          keys = { 'f', 'F', 't', 'T', ';' },
+          keys = { ['f'] = '<C-f>', 'F', ['t'] = '<C-t>', 'T', ';' },
           search = { wrap = false },
           highlight = { backdrop = false },
           jump = { register = false },

@@ -187,7 +187,7 @@ function M.config_keys()
       -- [']t'] = '<Cmd>tabn<CR>',
       -- ['[t'] = '<Cmd>tabp<CR>',
 
-      ['<C-t>'] = '<Cmd>tabe<Cr>',
+      -- ['<C-t>'] = '<Cmd>tabe<Cr>',
 
       ['<space>;'] = { ':<Up><CR>', { desc = 'Run last command' } },
 
