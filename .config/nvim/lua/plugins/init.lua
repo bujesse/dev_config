@@ -64,6 +64,7 @@ return {
           -- 'pyright',
           'tsserver',
           'jsonls',
+          'bashls',
         },
       })
 

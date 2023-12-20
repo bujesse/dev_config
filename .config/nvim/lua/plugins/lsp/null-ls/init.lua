@@ -14,6 +14,8 @@ function M.config()
       'markdownlint',
       'sqlfluff',
       'ruff-lsp',
+      'shellcheck',
+      'shfmt',
       -- 'stylua',
       -- 'ruff',
       -- 'prettier',
