@@ -3,6 +3,7 @@ suppress_history: false
 windows:
   - window_name: nvim
     layout: tiled
+    focus: 'true'
     shell_command_before:
       - cd ~/.config/nvim/
       - source ~/python_envs/nvim/bin/activate.fish
@@ -14,3 +15,6 @@ windows:
       - cd ~/.config/
       - source ~/python_envs/nvim/bin/activate.fish
       - n ~/.config/tmux/tmux.conf
+  - window_name: btm
+    layout: tiled
+    shell_command: btm
