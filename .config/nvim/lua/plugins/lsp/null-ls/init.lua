@@ -55,9 +55,9 @@ function M.config()
         null_ls.register(null_ls.builtins.diagnostics.sqlfluff.with({
           extra_args = { '--dialect', dialect },
         }))
-      end,
-      ['sql-formatter'] = function(source_name, methods)
-        require('mason-null-ls').default_setup(source_name, methods) -- to maintain default behavior
+        null_ls.register(null_ls.builtins.formatting.sqlfluff.with({
+          extra_args = { '--dialect', dialect },
+        }))
       end,
     },
   })

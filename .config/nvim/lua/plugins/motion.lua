@@ -12,7 +12,8 @@ return {
           jump_labels = true,
           -- by default all keymaps are enabled, but you can disable some of them,
           -- by removing them from the list.
-          keys = { ['f'] = '<C-f>', 'F', ['t'] = '<C-t>', 'T', ';' },
+          -- keys = { ['f'] = '<C-f>', 'F', ['t'] = '<C-t>', 'T', ';' },
+          keys = { 'f', 'F', 't', 'T', ';' },
           search = { wrap = false },
           highlight = { backdrop = false },
           jump = { register = false },
@@ -57,15 +58,15 @@ return {
         end,
         desc = 'Remote Flash',
       },
-      {
-        '<C-R>',
-        mode = { 'n', 'o', 'x' },
-        function()
-          -- show labeled treesitter nodes around the search matches
-          require('flash').treesitter_search()
-        end,
-        desc = 'Treesitter Search',
-      },
+      -- {
+      --   '<C-R>',
+      --   mode = { 'n', 'o', 'x' },
+      --   function()
+      --     -- show labeled treesitter nodes around the search matches
+      --     require('flash').treesitter_search()
+      --   end,
+      --   desc = 'Treesitter Search',
+      -- },
     },
   },
 }

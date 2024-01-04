@@ -130,8 +130,8 @@ return {
       { 'P', '<Plug>(YankyPutBefore)==', mode = { 'n', 'x' } },
       { ']p', '<Plug>(YankyPutIndentAfterLinewise)==', mode = { 'n', 'x' } },
       { '[p', '<Plug>(YankyPutIndentBeforeLinewise)==', mode = { 'n', 'x' } },
-      { '<A-y>', '<Plug>(YankyCycleForward)' },
-      { '<C-A-y>', '<Plug>(YankyCycleBackward)' },
+      { '[y', '<Plug>(YankyCycleForward)' },
+      { ']y', '<Plug>(YankyCycleBackward)' },
       {
         '<Space>y',
         ':lua require("telescope").extensions.yank_history.yank_history({ sorting_strategy = "ascending", layout_strategy = "cursor", results_title = false, layout_config = { width = 0.8, height = 0.4, } })<cr>',
@@ -183,10 +183,34 @@ return {
   -- search/replace in multiple files
   {
     'windwp/nvim-spectre',
-    -- stylua: ignore
     keys = {
-      { "<leader>rR", function() require("spectre").open({ is_insert_mode = true, })
-      end, desc = "Replace in files (Spectre)" },
+      {
+        '<leader>RR',
+        '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
+        mode = 'n',
+        desc = 'Replace word in files (Spectre)',
+      },
+      {
+        '<leader>RR',
+        '<esc><cmd>lua require("spectre").open_visual()<CR>',
+        mode = 'v',
+        desc = 'Replace selection in files (Spectre)',
+      },
+      {
+        '<leader>Rf',
+        '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
+        mode = 'n',
+        desc = 'Replace in files (Spectre)',
+      },
+    },
+    opts = {
+      mapping = {
+        ['run_replace'] = {
+          map = '<leader><CR>',
+          cmd = '<cmd>lua require("spectre.actions").run_replace()<CR>',
+          desc = 'run_replace',
+        },
+      },
     },
   },
 

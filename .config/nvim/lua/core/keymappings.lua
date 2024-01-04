@@ -189,6 +189,9 @@ function M.config_keys()
 
       -- ['<C-t>'] = '<Cmd>tabe<Cr>',
 
+      -- this helps reset lsp, gitsigns, or other external things that have gone out of sync
+      ['<C-r>'] = '<cmd>e!<CR>',
+
       ['<space>;'] = { ':<Up><CR>', { desc = 'Run last command' } },
 
       -- system yank

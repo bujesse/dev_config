@@ -434,11 +434,24 @@ return {
   -- better diagnostics list and others
   {
     'folke/trouble.nvim',
-    cmd = { 'TroubleToggle', 'Trouble' },
     opts = { use_diagnostic_signs = true },
     keys = {
       { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document Diagnostics (Trouble)' },
       { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
+      {
+        ']x',
+        function()
+          require('trouble').next({ skip_groups = true, jump = true })
+        end,
+        desc = 'Next Trouble',
+      },
+      {
+        '[x',
+        function()
+          require('trouble').previous({ skip_groups = true, jump = true })
+        end,
+        desc = 'Previous Trouble',
+      },
     },
   },
 
@@ -462,8 +475,6 @@ return {
     end,
     -- stylua: ignore
     keys = {
-      { "]x", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-      { "[x", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
       { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
       { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
       { "<leader>xT", 'gcOTODO: ', desc = "Open TODO above", remap = true },
