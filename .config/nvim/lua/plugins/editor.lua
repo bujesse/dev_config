@@ -568,8 +568,8 @@ return {
         ptogglemode = 'zp',
         prevhist = '<',
         nexthist = '>',
-        stogglebuf = "'<Tab>", -- toggle signs for same buffers under the cursor
-        sclear = 'z<Tab>', -- clear the signs in current quickfix list
+        stogglebuf = 'gqt', -- toggle signs for same buffers under the cursor
+        sclear = 'gqT', -- clear the signs in current quickfix list
         fzffilter = '/',
         filter = 'f', -- create new list for signed items
         filterr = 'F', -- create new list for non-signed items
@@ -584,6 +584,9 @@ return {
       },
     },
   },
+
+  -- make quickfix editable
+  { 'itchyny/vim-qfedit' },
 
   -- better visuals for diagnostics
   {
