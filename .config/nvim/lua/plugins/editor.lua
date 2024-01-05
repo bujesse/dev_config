@@ -107,21 +107,21 @@ return {
           sources = {
             {
               source = 'filesystem',
-              display_name = '  Files ',
+              display_name = '  Files ',
             },
             {
               source = 'buffers',
-              display_name = '  Buffers',
+              display_name = '  Buffers',
             },
             {
               source = 'git_status',
-              display_name = '  Git ',
+              display_name = '  Git ',
             },
           },
         },
         default_component_configs = {
           modified = {
-            symbol = '[+]',
+            symbol = '',
             highlight = 'NeoTreeModified',
           },
           name = {
@@ -134,12 +134,12 @@ return {
               -- Change type
               added = '', -- or "✚", but this is redundant info if you use git_status_colors on the name
               modified = '', -- or "", but this is redundant info if you use git_status_colors on the name
-              deleted = '✖', -- this can only be used in the git_status source
-              renamed = '', -- this can only be used in the git_status source
+              deleted = '󰧧', -- this can only be used in the git_status source
+              renamed = '󰑕', -- this can only be used in the git_status source
               -- Status type
               untracked = '',
-              ignored = '',
-              unstaged = '',
+              ignored = '',
+              unstaged = '',
               staged = '',
               conflict = '',
             },
@@ -277,12 +277,12 @@ return {
     },
     opts = {
       signs = {
-        add = { text = '▎' },
-        change = { text = '▎' },
-        delete = { text = '契' },
-        topdelete = { text = '契' },
-        changedelete = { text = '▎' },
-        untracked = { text = '▎' },
+        add = { text = '┃' },
+        change = { text = '┃' },
+        delete = { text = '╇' },
+        topdelete = { text = '╈' },
+        changedelete = { text = '~' },
+        untracked = { text = '┆' },
       },
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns

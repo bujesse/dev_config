@@ -8,7 +8,7 @@ windows:
       - source ~/python_envs/nvim/bin/activate.fish
       - scl enable llvm-toolset-7 fish
       - n -S ~/.cache/nvim/sessions/nvim
-  - window_name: tmux
+  - window_name: configs
     layout: tiled
     shell_command_before:
       - cd ~/.config/
