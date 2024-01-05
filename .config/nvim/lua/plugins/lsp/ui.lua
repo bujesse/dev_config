@@ -1,7 +1,7 @@
 local M = {}
 
 M.symbols = function()
-  local signs = { Error = '', Warn = '', Hint = '', Info = '', Other = '﫠' }
+  local signs = { Error = '', Warn = '', Hint = '', Info = '', Other = '' }
 
   for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type

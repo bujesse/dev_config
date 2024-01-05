@@ -69,14 +69,14 @@ return {
   diagnostics = {
     'diagnostics',
     sources = { 'nvim_lsp' },
-    symbols = { error = '', warn = '', info = '', hint = '' },
+    symbols = { error = '', warn = '', info = '', hint = '' },
     -- color = {},
     cond = conditions.hide_in_width,
   },
   treesitter_missing = {
     function()
       if vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] == nil then
-        return 'No 滑'
+        return 'No '
       end
       return ''
     end,
@@ -84,7 +84,7 @@ return {
   },
   lsp = {
     function(msg)
-      local default_msg = '年'
+      local default_msg = '󰒏'
       local buf_clients = vim.lsp.get_active_clients()
       if next(buf_clients) == nil then
         return default_msg
@@ -94,9 +94,8 @@ return {
 
       -- add client
       for _, client in pairs(buf_clients) do
-        if client.name ~= 'null-ls' then
-          -- TODO: get the name of the language-server here
-          table.insert(buf_client_names, '力')
+        if client.name ~= 'null-ls' and client.name ~= 'copilot' then
+          table.insert(buf_client_names, '󰒋 ' .. string.sub(client.name, 1, 3))
         end
       end
 
@@ -105,14 +104,14 @@ return {
       -- add formatter
       local formatters = require('plugins.lsp.null-ls.formatters')
       local supported_formatters = utils.map(formatters.list_registered(buf_ft), function(item)
-        return ' ' .. item
+        return '󰉶 ' .. item
       end)
       vim.list_extend(buf_client_names, supported_formatters)
 
       -- -- add linter
       local linters = require('plugins.lsp.null-ls.linters')
       local supported_linters = utils.map(linters.list_registered(buf_ft), function(item)
-        return ' ' .. item
+        return '󰈖 ' .. item
       end)
       vim.list_extend(buf_client_names, supported_linters)
 
