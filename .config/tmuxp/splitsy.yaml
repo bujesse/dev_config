@@ -1,0 +1,26 @@
+session_name: nvim
+windows:
+- layout: bc5e,270x63,0,0,1
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev_config/.config/nvim
+  window_name: nvim
+- focus: 'true'
+  layout: bc5f,270x63,0,0,2
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev_config/.config
+  window_name: tmux
+- layout: bc60,270x63,0,0,3
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  start_directory: /home/bujesse
+  window_name: zsh

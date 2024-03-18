@@ -57,6 +57,10 @@ function M.config()
       ['sql-formatter'] = function(source_name, methods)
         require('mason-null-ls').default_setup(source_name, methods) -- to maintain default behavior
       end,
+      ['djlint'] = function(source_name, methods)
+        null_ls.register(null_ls.builtins.formatting.djlint)
+        null_ls.register(null_ls.builtins.diagnostics.djlint)
+      end,
     },
   })
 

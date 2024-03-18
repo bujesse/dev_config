@@ -10,12 +10,11 @@ return {
           enabled = true,
           autohide = true,
           jump_labels = true,
+          multi_line = true,
           -- by default all keymaps are enabled, but you can disable some of them,
           -- by removing them from the list.
           keys = { 'f', 'F', 't', 'T', ';' },
-          search = { wrap = false },
           highlight = { backdrop = false },
-          jump = { register = false },
         },
         search = {
           enabled = false, -- enable flash for search

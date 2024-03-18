@@ -113,7 +113,10 @@ function M.register_custom_sources()
       },
       generator = helpers.formatter_factory({
         command = M.find_command('blackd-client'),
-        args = {},
+        args = {
+          '--line-length',
+          '110',
+        },
         to_stdin = true,
       }),
     },

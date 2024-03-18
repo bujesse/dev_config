@@ -1,11 +1,8 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo/bin:/mnt/c/Windows:/mnt/c/Windows/System32:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo/bin:$PATH
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -23,20 +20,15 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
         docker-compose
 
         safe-paste # Preventing any code from actually running while pasting
-
-        zsh-vim-mode
-
+        vi-mode
         zsh-autosuggestions
+        zsh-fzf-history-search
+        zsh-history-substring-search 
     )
     setopt noincappendhistory
     setopt nosharehistory
 
-#    [[ -s /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh ]] && source /mnt/c/Users/Jesse/.autojump/etc/profile.d/autojump.sh
     autoload -U compinit && compinit -i
-
-# === PLUGIN CONFIG ===
-    # VIM_MODE_VICMD_KEY='jk'
-    # bindkey -s 'kj' 'jk'
 
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
@@ -60,12 +52,6 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
         source /usr/local/bin/virtualenvwrapper.sh
     fi
 
-    alias venv='workon .'
-
-# === PYTHON ===
-    alias bench_nvim_plugins="python <(curl -sSL https://raw.githubusercontent.com/hyiltiz/vim-plugins-profile/master/vim-plugins-profile.py) nvim"
-
-
 # === FZF ===
     FD_OPTIONS="--follow --exclude .git --exclude node_modules --exclude __pycache__"
     export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
@@ -73,6 +59,8 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
     export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS --no-ignore"
     export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS --no-ignore"
     export FZF_COMPLETION_TRIGGER='**'
+    # Enable fzf keybindings
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
     _fzf_compgen_path() {
         fd --hidden --follow --exclude ".git" . "$1"
     }
@@ -88,7 +76,7 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
             $EDITOR "$file"
         fi
     }
-    bindkey -s '^o' 'fzf_find_edit^M'
+    bindkey -s '^o' 'fzf_find_edit'
     bindkey '^j' fzf-cd-widget
 
 # === SOURCE ===
@@ -132,14 +120,14 @@ source $ZSH/oh-my-zsh.sh
 
     # Exa bindings
         # general use
-        #alias ls='exa'                                               # ls
-        #alias l='exa -lbF --git'                                     # list, size, type, git
-        #alias lt='exa -lbF --git --tree --level=2'                   # all list
-        #alias ll='exa -lbGF --git'                                   # long list
-        #alias la='exa -lbhgma --git --color-scale'                   # all list
-        #alias lat='exa -lbhgma --git --color-scale --tree --level=2' # all list
-        #alias lx='exa -lbhgma@ --git --color-scale'                  # all + extended list
-        #alias lS='exa -1'                                            # one column, just names
+        alias ls='exa'                                               # ls
+        alias l='exa -lbF'                                     # list, size, type, git
+        alias lt='exa -lbF --tree --level=2'                   # all list
+        alias ll='exa -lbGF'                                   # long list
+        alias la='exa -lbhgma --accessed --modified --created --color-scale'                   # all list
+        alias lat='exa -lbhgma --color-scale --tree --level=2' # all list
+        alias lx='exa -lbhgma@ --color-scale'                  # all + extended list
+        alias lS='exa -1'                                            # one column, just names
 
 # Remove highlighting on wsl2
 export LS_COLORS=$LS_COLORS:'ow=1;34:';
@@ -153,3 +141,11 @@ unset NPM_CONFIG_PREFIX
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+eval "$(zoxide init zsh)"
