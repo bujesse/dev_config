@@ -33,7 +33,7 @@ return {
     keys = {
       {
         's',
-        mode = { 'n', 'x', 'o' },
+        mode = { 'n', 'x' },
         function()
           -- default options: exact mode, multi window, all directions, with a backdrop
           require('flash').jump()
@@ -42,7 +42,7 @@ return {
       },
       {
         'S',
-        mode = { 'n', 'o' },
+        mode = { 'n' },
         function()
           -- show labeled treesitter nodes around the cursor
           require('flash').treesitter()
@@ -50,7 +50,7 @@ return {
         desc = 'Flash Treesitter',
       },
       {
-        'r',
+        'm',
         mode = 'o',
         function()
           -- jump to a remote location to execute the operator
@@ -58,15 +58,15 @@ return {
         end,
         desc = 'Remote Flash',
       },
-      -- {
-      --   '<C-R>',
-      --   mode = { 'n', 'o', 'x' },
-      --   function()
-      --     -- show labeled treesitter nodes around the search matches
-      --     require('flash').treesitter_search()
-      --   end,
-      --   desc = 'Treesitter Search',
-      -- },
+      {
+        'gt',
+        mode = { 'n', 'o', 'x' },
+        function()
+          -- show labeled treesitter nodes around the search matches
+          require('flash').treesitter_search()
+        end,
+        desc = 'Treesitter Search',
+      },
     },
   },
 }

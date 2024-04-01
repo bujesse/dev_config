@@ -547,6 +547,13 @@ return {
     },
   },
 
+  {
+    'carbon-steel/detour.nvim',
+    config = function()
+      vim.keymap.set('n', '<leader>d', ':Detour<cr>')
+    end,
+  },
+
   -- better quickfix
   {
     'kevinhwang91/nvim-bqf',

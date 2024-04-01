@@ -185,19 +185,19 @@ return {
     'windwp/nvim-spectre',
     keys = {
       {
-        '<leader>RR',
+        '<leader>rR',
         '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
         mode = 'n',
         desc = 'Replace word in files (Spectre)',
       },
       {
-        '<leader>RR',
+        '<leader>rR',
         '<esc><cmd>lua require("spectre").open_visual()<CR>',
         mode = 'v',
         desc = 'Replace selection in files (Spectre)',
       },
       {
-        '<leader>Rf',
+        '<leader>rf',
         '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
         mode = 'n',
         desc = 'Replace in files (Spectre)',
