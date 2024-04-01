@@ -55,7 +55,7 @@ return {
         "<cmd>lua require'dap'.terminate()<cr>",
         desc = 'Stop Debuggee',
       },
-      { '<Space>dp', "<cmd>lua require'dap'.pause()<cr>", desc = 'Pause' },
+      { '<Space>dP', "<cmd>lua require'dap'.pause()<cr>", desc = 'Pause' },
       { '<Space>dr', "<cmd>lua require'dap'.repl.toggle()<cr>", desc = 'Toggle Repl' },
       { '<Space>dq', "<cmd>lua require'dap'.close()<cr>", desc = 'Quit' },
       { '<Space>dd', "<cmd>lua require'dap'.run_last()<cr>", desc = 'DAP Last' },
@@ -253,16 +253,16 @@ return {
       move_to_debugline = true,
     },
     keys = {
+      -- {
+      --   '<Space>dp',
+      --   function()
+      --     return require('debugprint').debugprint()
+      --   end,
+      --   expr = true,
+      --   desc = 'Debug print string',
+      -- },
       {
-        '<Leader>dp',
-        function()
-          return require('debugprint').debugprint()
-        end,
-        expr = true,
-        desc = 'Debug print string',
-      },
-      {
-        '<Leader>dd',
+        '<Space>dp',
         function()
           return require('debugprint').debugprint({ variable = true })
         end,
@@ -271,15 +271,7 @@ return {
         desc = 'Debug print variable',
       },
       {
-        '<Leader>d',
-        function()
-          return require('debugprint').debugprint({ motion = true })
-        end,
-        expr = true,
-        desc = 'Debug print motion',
-      },
-      {
-        '<Leader>d-',
+        '<Space>d-',
         ':DeleteDebugPrints<CR>',
         desc = 'Delete debug prints',
       },
