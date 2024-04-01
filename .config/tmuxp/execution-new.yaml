@@ -1,0 +1,41 @@
+session_name: 'execution'
+windows:
+- layout: cae3,252x57,0,0,6
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev/execution-ui
+  window_name: ui
+- layout: cadf,252x57,0,0,2
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev/execution
+  window_name: api
+- layout: dd82,252x57,0,0{174x57,0,0,3,77x57,175,0[77x28,175,0,4,77x14,175,29,5,77x13,175,44,18]}
+  options: {}
+  panes:
+    - focus: "true"
+      shell_command: docker compose -f docker-compose.jbu.yml up
+    - shell_command: just watch-debugpy
+    - shell_command: just listen-debugpy
+    - shell_command: just blackd
+  start_directory: /home/bujesse/dev/execution
+  window_name: flask
+- layout: cadd,252x57,0,0,0
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: just sync
+  start_directory: /home/bujesse/dev/execution-ui
+  window_name: sync
+- focus: 'true'
+  layout: 65a0,252x57,0,0,11
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: python3.12
+  start_directory: /home/bujesse
+  window_name: zsh

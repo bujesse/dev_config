@@ -4,4 +4,6 @@ gui:
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never --no-gitconfig
+    # pager: delta --dark --paging=never --no-gitconfig
+    # externalDiffCommand: difft --color=always --display=inline
+    externalDiffCommand: difft --color=always

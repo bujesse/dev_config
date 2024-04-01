@@ -10,7 +10,7 @@
 
 1. Ubuntu setup:
   - `sudo apt install fzf libfuse2 exa gcc bat`
-  - `sudo apt-get install -y make build-essential ripgrep libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev`
+  - `sudo apt-get install -y make build-essential fd-find ripgrep libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev`
   - `curl https://pyenv.run | bash`
     - `pyenv install 3.12`
     - `pyenv virtualenv nvim` `pyenv activate nvim`

@@ -82,7 +82,7 @@ return {
       require('dap-python').setup()
       require('dap-python').test_runner = 'pytest'
       require('dap-python').resolve_python = function()
-        return '/home/vagrant/dev/execution/venv/bin/python'
+        return '/home/bujesse/dev/execution/venv/bin/python'
       end
 
       local base_script_config = {
@@ -113,6 +113,14 @@ return {
           class = 'group',
           protected = 'group',
           -- "all": "inline",
+        },
+        mode = 'remote',
+        cwd = vim.fn.getcwd(),
+        pathMappings = {
+          {
+            localRoot = vim.fn.getcwd(),
+            remoteRoot = '/home/webapp/app'
+          },
         },
         connect = {
           host = '127.0.0.1',

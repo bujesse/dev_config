@@ -166,8 +166,8 @@ return {
         cache_picker = {
           num_pickers = 5,
         },
-        file_previewer = require('telescope.previewers').cat.new,
-        grep_previewer = require('telescope.previewers').vimgrep.new,
+        file_previewer = require('telescope.previewers').vim_buffer_cat.new,
+        grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
       },
       pickers = {
         buffers = {

@@ -6,6 +6,7 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/neotest-plenary',
       'nvim-neotest/neotest-python',
+      'nvim-neotest/nvim-nio',
     },
     lazy = false,
     config = function()

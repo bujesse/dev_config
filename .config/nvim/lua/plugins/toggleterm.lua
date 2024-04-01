@@ -16,7 +16,7 @@ return {
     version = '*',
     config = function()
       require('toggleterm').setup({
-        shell = '/usr/bin/fish',
+        shell = '/usr/bin/zsh',
         open_mapping = [[<leader>tt]],
         insert_mappings = false,
         size = function(term)
@@ -77,7 +77,7 @@ return {
       end
 
       local vertical = Terminal:new({
-        cmd = 'fish',
+        cmd = 'zsh',
         dir = 'git_dir',
         hidden = true,
         direction = 'vertical',

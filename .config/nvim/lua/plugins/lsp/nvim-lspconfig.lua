@@ -35,13 +35,13 @@ function M.common_on_attach(client, bufnr)
   vim.keymap.set(
     'n',
     '[D',
-    '<cmd>lua vim.diagnostic.goto_prev({severity = { min = vim.diagnostic.severity.WARN } })<CR>',
+    '<cmd>lua vim.diagnostic.goto_prev({severity = { min = vim.diagnostic.severity.ERROR } })<CR>',
     opts
   )
   vim.keymap.set(
     'n',
     ']D',
-    '<cmd>lua vim.diagnostic.goto_next({severity = { min = vim.diagnostic.severity.WARN } })<CR>',
+    '<cmd>lua vim.diagnostic.goto_next({severity = { min = vim.diagnostic.severity.ERROR } })<CR>',
     opts
   )
   vim.keymap.set('n', '<Space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)

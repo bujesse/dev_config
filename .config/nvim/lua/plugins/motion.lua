@@ -7,7 +7,7 @@ return {
     opts = {
       modes = {
         char = {
-          enabled = true,
+          enabled = false,
           autohide = true,
           jump_labels = true,
           multi_line = true,

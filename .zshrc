@@ -1,8 +1,11 @@
+# zmodload zsh/zprof
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo/bin:$PATH
+
+zstyle ':omz:plugins:nvm' lazy yes
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -18,6 +21,8 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
         virtualenv
         docker
         docker-compose
+        colorize
+        nvm
 
         safe-paste # Preventing any code from actually running while pasting
         vi-mode
@@ -28,7 +33,12 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
     setopt noincappendhistory
     setopt nosharehistory
 
-    autoload -U compinit && compinit -i
+    autoload -Uz compinit
+
+    for dump in ~/.zcompdump(N.mh+24); do
+        compinit
+    done
+    compinit -C
 
 # === EXPORTS ===
     export ZSH="$HOME/.oh-my-zsh"
@@ -98,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
     alias n="nvim"
     alias tmux="tmux -2"
     alias lg="lazygit"
-    alias bat="/usr/local/bat/bat"
+    alias bat="/usr/bin/batcat"
     if [[ "$OSTYPE" != "darwin"* ]]; then
         alias open="explorer.exe"
         alias pbcopy="clip.exe"  # Windows version of pbcopy
@@ -136,12 +146,6 @@ export LS_COLORS=$LS_COLORS:'ow=1;34:';
 export GOPATH=~/go/
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
-# nvm
-unset NPM_CONFIG_PREFIX
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -149,3 +153,4 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 eval "$(zoxide init zsh)"
+# zprof
