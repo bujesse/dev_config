@@ -62,7 +62,7 @@ return {
         ensure_installed = {
           'lua_ls',
           -- 'pyright',
-          'tsserver',
+          -- 'tsserver',
           'jsonls',
         },
       })
@@ -138,9 +138,29 @@ return {
 
   {
     'dnlhc/glance.nvim',
+    dependencies = {
+      's1n7ax/nvim-window-picker',
+    },
     opts = {
       folds = {
         folded = false, -- Automatically unfold list on startup
+      },
+      detached = true,
+      mappings = {
+        list = {
+          ['<C-g>'] = function()
+            local actions = require('glance').actions
+            local win = require('window-picker').pick_window()
+            if not win or not vim.api.nvim_win_is_valid(win) then
+              return
+            end
+            actions.jump({
+              cmd = function()
+                vim.api.nvim_set_current_win(win)
+              end,
+            })
+          end,
+        },
       },
       hooks = {
         before_open = function(results, open, jump, method)

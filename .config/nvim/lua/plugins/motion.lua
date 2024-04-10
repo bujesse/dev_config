@@ -56,15 +56,33 @@ return {
         end,
         desc = 'Remote Flash',
       },
-      {
-        'gt',
-        mode = { 'n', 'o', 'x' },
-        function()
-          -- show labeled treesitter nodes around the search matches
-          require('flash').treesitter_search()
-        end,
-        desc = 'Treesitter Search',
-      },
+      -- {
+      --   'gt',
+      --   mode = { 'n', 'o', 'x' },
+      --   function()
+      --     -- show labeled treesitter nodes around the search matches
+      --     require('flash').treesitter_search()
+      --   end,
+      --   desc = 'Treesitter Search',
+      -- },
     },
+  },
+
+  {
+    'bloznelis/before.nvim',
+    dependencies = { 'telescope.nvim' },
+    config = function()
+      local before = require('before')
+      before.setup()
+
+      -- Jump to previous entry in the edit history
+      vim.keymap.set('n', '[e', before.jump_to_last_edit, { desc = 'Previous Edit' })
+
+      -- Jump to next entry in the edit history
+      vim.keymap.set('n', ']e', before.jump_to_next_edit, { desc = 'Next Edit' })
+
+      -- Look for previous edits in telescope (needs telescope, obviously)
+      vim.keymap.set('n', '<Space>te', before.show_edits_in_telescope, { desc = 'Edits' })
+    end,
   },
 }

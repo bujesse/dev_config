@@ -5,7 +5,7 @@ fi
 
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo/bin:$PATH
 
-zstyle ':omz:plugins:nvm' lazy yes
+# zstyle ':omz:plugins:nvm' lazy yes
 
 # === ZSH ===
     ZSH_THEME="powerlevel10k/powerlevel10k"

@@ -183,9 +183,8 @@ function M.config_keys()
       },
 
       -- Next/Prev Tab
-      -- use gt/gT
-      -- [']t'] = '<Cmd>tabn<CR>',
-      -- ['[t'] = '<Cmd>tabp<CR>',
+      [']t'] = '<Cmd>tabn<CR>',
+      ['[t'] = '<Cmd>tabp<CR>',
 
       ['<C-t>'] = '<Cmd>tabe<Cr>',
 

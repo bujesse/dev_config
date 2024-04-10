@@ -51,4 +51,29 @@ return {
       },
     },
   },
+
+  {
+    'CopilotC-Nvim/CopilotChat.nvim',
+    branch = 'canary',
+    dependencies = {
+      { 'zbirenbaum/copilot.lua' },
+      { 'nvim-lua/plenary.nvim' }, -- for curl, log wrapper
+    },
+    keys = {
+      { '<Space>cc', '<CMD>CopilotChatToggle<CR>', desc = 'Toggle Copilot Chat', mode = { 'n', 'v' } },
+      { '<Space>C', '<CMD>CopilotChatReset<CR>', desc = 'Toggle Copilot Chat', mode = { 'n', 'v' } },
+      { '<Space>ce', '<CMD>CopilotChatExplain<CR>', desc = 'Explain', mode = { 'n', 'v' } },
+      { '<Space>ct', '<CMD>CopilotChatTests<CR>', desc = 'Tests', mode = { 'n', 'v' } },
+      { '<Space>cf', '<CMD>CopilotChatFix<CR>', desc = 'Fix', mode = { 'n', 'v' } },
+      { '<Space>cr', '<CMD>CopilotChatOptimize<CR>', desc = 'Optimize', mode = { 'n', 'v' } },
+      { '<Space>cd', '<CMD>CopilotChatDocs<CR>', desc = 'Docs', mode = { 'n', 'v' } },
+      { '<Space>cF', '<CMD>CopilotChatFixDiagnostic<CR>', desc = 'Fix Diagnostic', mode = { 'n', 'v' } },
+      { '<Space>cm', '<CMD>CopilotChatCommitStaged<CR>', desc = 'Commit message for staged', mode = { 'n', 'v' } },
+    },
+    opts = {
+      debug = true, -- Enable debugging
+      -- See Configuration section for rest
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+  },
 }

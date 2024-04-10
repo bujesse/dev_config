@@ -27,7 +27,7 @@ return {
   -- window picker
   {
     's1n7ax/nvim-window-picker',
-    version = 'v1.*',
+    version = '2.*',
     opts = {
       selection_chars = 'HLFJDKSA;CMRUEIWOQP',
       fg_color = '#DCD7BA',
