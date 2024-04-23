@@ -59,7 +59,7 @@ return {
       { '<Space>dr', "<cmd>lua require'dap'.repl.toggle()<cr>", desc = 'Toggle Repl' },
       { '<Space>dq', "<cmd>lua require'dap'.close()<cr>", desc = 'Quit' },
       { '<Space>dd', "<cmd>lua require'dap'.run_last()<cr>", desc = 'DAP Last' },
-      { '<Space>d-', "<cmd>lua require'dap'.clear_breakpoints<cr>", desc = 'Clear Breakpoints' },
+      { '<Space>d-', "<cmd>lua require'dap'.clear_breakpoints()<cr>", desc = 'Clear Breakpoints' },
       { '<Space>du', "<cmd>lua require'dapui'.toggle({reset = true})<cr>", desc = 'Toggle UI' },
       { '<Space>dN', '<Cmd>lua require("dap-python").test_method()<Cr>', desc = 'Debug Nearest Test (dap-python)' },
       { '<Space>dc', '<Cmd>lua require("dap-python").test_class()<Cr>', desc = 'Debug Class (dap-python)' },
@@ -119,7 +119,7 @@ return {
         pathMappings = {
           {
             localRoot = vim.fn.getcwd(),
-            remoteRoot = '/home/webapp/app'
+            remoteRoot = '/home/webapp/app',
           },
         },
         connect = {
@@ -220,8 +220,9 @@ return {
           callback = function()
             vim.defer_fn(function()
               if vim.tbl_isempty(require('dap').sessions()) then
-                local lsof_output = vim.fn.system('lsof -i -P -n | grep 5678')
-                if string.match(lsof_output, '5678') then
+                -- local output = vim.fn.system('lsof -i -P -n | grep 5678')
+                local output = vim.fn.system('docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a')
+                if string.match(output, '5678') then
                   -- print('Debugger on port 5678 found. Restarting DAP...')
                   dap.run_last()
                 else

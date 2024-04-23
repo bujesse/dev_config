@@ -36,7 +36,7 @@ return {
           passed = '',
           running = '',
           running_animated = { '/', '|', '\\', '-', '/', '|', '\\', '-' },
-          skipped = '鈴',
+          skipped = '',
           unknown = '',
         },
         quickfix = {
@@ -66,10 +66,18 @@ return {
 
       { '<Space>rn', '<Cmd>lua require("neotest").run.run()<Cr>', desc = 'Run Nearest Test' },
       { '<Space>rl', '<Cmd>lua require("neotest").run.run_last()<Cr>', desc = 'Run Last Test' },
-      -- { '<Space>rf', '<Cmd>lua require("neotest").run.run(vim.fn.expand("%"))<Cr>', desc = 'Run File' },
-      { '<Space>rf', '<Plug>PlenaryTestFile', desc = 'Run File' },
+      { '<Space>rf', '<Cmd>lua require("neotest").run.run(vim.fn.expand("%"))<Cr>', desc = 'Run File' },
       { '<Space>rS', '<Cmd>lua require("neotest").run.stop()<Cr>', desc = 'Stop Nearest Test' },
-      { '<Space>ro', '<Cmd>lua require("neotest").output_panel.open({ enter = true })<cr>', desc = 'Test Output' },
+      {
+        '<Space>rO',
+        '<Cmd>lua require("neotest").output_panel.open({ enter = true })<cr>',
+        desc = 'Test Output Panel',
+      },
+      {
+        '<Space>ro',
+        '<Cmd>lua require("neotest").output.open({ enter = true, short = true })<cr>',
+        desc = 'Test Output',
+      },
       { '<Space>rs', '<Cmd>lua require("neotest").summary.open()<cr>', desc = 'Open Test Summary View' },
       {
         '<Space>dn',

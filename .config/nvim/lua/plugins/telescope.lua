@@ -104,6 +104,98 @@ return {
   },
   config = function()
     local actions = require('telescope.actions')
+    local builtin = require("telescope.builtin")
+
+    local get_total_buffers = function()
+    local bufnrs = {}
+    local i = 1
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.fn.buflisted(bufnr) == 1 then
+        bufnrs[i] = bufnr
+        i = i + 1
+      end
+    end
+    return #bufnrs
+  end
+
+  local in_git_repo = function()
+    vim.fn.system("git rev-parse --is-inside-work-tree")
+    if vim.v.shell_error == 0 then
+      return true
+    else
+      return false
+    end
+  end
+
+  local picker_map = {
+    ["Git Files"] = builtin.git_files,
+    ["Find Files"] = builtin.find_files,
+    ['Live Grep'] = function(opts)
+      -- spread opts into the live_grep function
+      opts = opts or {}
+      opts.additional_args = { '--fixed-strings' }
+      require("telescope").extensions.menufacture.live_grep(opts)
+    end
+  }
+
+  local get_pickers_to_cycle = function()
+    local ordered_pickers = {
+      -- "Git Files",
+      "Find Files",
+      "Live Grep",
+    }
+    local pickers_to_cycle = {}
+    local i = 1
+    for _, title in ipairs(ordered_pickers) do
+      if title == "Git Files" and not in_git_repo() then
+        goto continue
+      end
+      pickers_to_cycle[i] = title
+      i = i + 1
+      ::continue::
+    end
+    return pickers_to_cycle
+  end
+
+  local next_picker = function(prompt_bufnr)
+    local pickers_to_cycle = get_pickers_to_cycle()
+    local state = require("telescope.actions.state")
+    local current_picker = state.get_current_picker(prompt_bufnr)
+
+    local next_index = 1
+    for i, title in ipairs(pickers_to_cycle) do
+      if title == current_picker.prompt_title then
+        next_index = i + 1
+        if next_index > #pickers_to_cycle then
+          next_index = 1
+        end
+        break
+      end
+    end
+    local next_title = pickers_to_cycle[next_index]
+    local new_picker = picker_map[next_title]
+    return new_picker({ ["default_text"] = state.get_current_line() })
+  end
+
+  local prev_picker = function(prompt_bufnr)
+    local pickers_to_cycle = get_pickers_to_cycle()
+    local state = require("telescope.actions.state")
+    local current_picker = state.get_current_picker(prompt_bufnr)
+
+    local prev_index = 1
+    for i, title in ipairs(pickers_to_cycle) do
+      if title == current_picker.prompt_title then
+        prev_index = i - 1
+        if prev_index == 0 then
+          prev_index = #pickers_to_cycle
+        end
+        break
+      end
+    end
+    local prev_title = pickers_to_cycle[prev_index]
+    local new_picker = picker_map[prev_title]
+    return new_picker({ ["default_text"] = state.get_current_line() })
+  end
 
     require('telescope').setup({
       defaults = {
@@ -125,9 +217,11 @@ return {
             ['<C-p>'] = actions.cycle_history_prev,
             ['<esc>'] = actions.close,
             ['<C-v>'] = actions.select_vertical,
-            ['<C-x>'] = actions.select_horizontal,
+            ['<C-s>'] = actions.select_horizontal,
             ['<C-t>'] = actions.select_tab,
-            ['<C-f>'] = actions.to_fuzzy_refine, -- Very useful
+            ['<C-f>'] = actions.to_fuzzy_refine,
+            ['<A-n>'] = next_picker,
+            ['<A-p>'] = prev_picker,
             ['<C-g>'] = function(prompt_bufnr)
               -- Use nvim-window-picker to choose the window by dynamically attaching a function
               local action_set = require('telescope.actions.set')

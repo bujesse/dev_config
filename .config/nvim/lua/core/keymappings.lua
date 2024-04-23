@@ -186,6 +186,12 @@ function M.config_keys()
       [']t'] = '<Cmd>tabn<CR>',
       ['[t'] = '<Cmd>tabp<CR>',
 
+      -- Fix the last paste
+      ['gp'] = '`[v`]=',
+
+      -- Select last paste
+      ['gP'] = '`[v`]',
+
       ['<C-t>'] = '<Cmd>tabe<Cr>',
 
       ['<space>;'] = { ':<Up><CR>', { desc = 'Run last command' } },

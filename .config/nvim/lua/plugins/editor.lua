@@ -337,9 +337,9 @@ return {
         map('n', '<leader>gu', gs.undo_stage_hunk, 'Undo Stage Hunk')
         map('n', '<leader>gR', gs.reset_buffer, 'Reset Buffer')
         -- map('n', '<leader>gp', gs.preview_hunk, '')
-        map('n', '<leader>gb', function()
-          gs.blame_line({ full = true })
-        end, 'Blame full')
+        -- map('n', '<leader>gb', function()
+        --   gs.blame_line({ full = true })
+        -- end, 'Blame full')
         map('n', '<leader>gd', gs.diffthis, 'Diff')
         -- map('n', '<leader>gD', function() gs.diffthis('~') end, '')
 
@@ -361,16 +361,27 @@ return {
   },
 
   -- fugitive
+  -- {
+  --   'tpope/vim-fugitive',
+  --   keys = {
+  --     { '<Leader>B', '<CMD>Git blame<CR>', desc = 'Git Blame' },
+  --     { '<Leader>G', '<Cmd>tab G<Cr>', desc = 'Open Fugitive Status' },
+  --   },
+  --   cmd = { 'Git', 'G' },
+  --   init = function()
+  --     vim.cmd([[command BuCloseFugitive silent call CloseAllTabsWithFiletype('fugitive')]])
+  --   end,
+  -- },
+
+  -- git blame with stack
   {
-    'tpope/vim-fugitive',
+    'FabijanZulj/blame.nvim',
+    cmd = { 'BlameToggle' },
+    opts = {},
     keys = {
-      { '<Leader>B', '<CMD>Git blame<CR>', desc = 'Git Blame' },
-      { '<Leader>G', '<Cmd>tab G<Cr>', desc = 'Open Fugitive Status' },
+      { '<Leader>gb', '<CMD>BlameToggle virtual<CR>', desc = 'Blame virtual' },
+      { '<Leader>gB', '<CMD>BlameToggle window<CR>', desc = 'Blame window' },
     },
-    cmd = { 'Git', 'G' },
-    init = function()
-      vim.cmd([[command BuCloseFugitive silent call CloseAllTabsWithFiletype('fugitive')]])
-    end,
   },
 
   -- diff view
@@ -595,6 +606,19 @@ return {
         end,
         desc = 'Toggle lsp_lines',
       },
+    },
+  },
+
+  -- pretty code snapshots
+  {
+    'mistricky/codesnap.nvim',
+    cmd = { 'CodeSnap', 'CodeSnapSave' },
+    build = 'make',
+    opts = {
+      has_breadcrumbs = true,
+      watermark = '',
+      mac_window_bar = false,
+      save_path = '~/',
     },
   },
 }
