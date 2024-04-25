@@ -621,4 +621,16 @@ return {
       save_path = '~/',
     },
   },
+
+  -- auto-resizing splits
+  {
+    'nvim-focus/focus.nvim',
+    version = false,
+    lazy = false,
+    opts = {},
+    keys = {
+      { 'yof', '<Cmd>FocusToggle<CR>', desc = 'Toggle Focus' },
+      -- { '<Leader>=', '<Cmd>FocusSplitNicely<CR>', desc = 'Split window nicely' },
+    },
+  },
 }

@@ -43,6 +43,7 @@ return {
       { '<F3>', "<cmd>lua require'dap'.step_out()<cr>", desc = 'Step Out' },
       { '<F2>', "<cmd>lua require'dap'.run_to_cursor()<cr>", desc = 'Run To Cursor' },
       { '<F1>', "<cmd>lua require'dap'.continue()<cr>", desc = 'Continue' },
+      { '<Space>dg', "<cmd>lua require'dap'.continue()<cr>", desc = 'DAP Go' },
 
       { '<Space>db', "<cmd>lua require'dap'.step_back()<cr>", desc = 'Step Back' },
       {
@@ -252,6 +253,26 @@ return {
         require('dapui').elements.watches.add(visual_selection)
       end, { desc = 'Add to watches' })
     end,
+  },
+
+  {
+    'theHamsta/nvim-dap-virtual-text',
+    opts = {
+      clear_on_continue = true,
+      only_first_definition = false,
+    },
+    keys = {
+      {
+        'yov',
+        '<cmd>DapVirtualTextToggle<CR>',
+        desc = 'Toggle DAP Virtual Text',
+      },
+      {
+        'yov',
+        '<cmd>DapVirtualTextForceRefresh<CR>',
+        desc = 'Toggle DAP Virtual Text',
+      },
+    },
   },
 
   -- easy print statement insertions
