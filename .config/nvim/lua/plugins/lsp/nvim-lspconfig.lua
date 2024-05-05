@@ -324,6 +324,9 @@ function M.setup_servers()
     ['rust_analyzer'] = function()
       -- set up by rust-tools
     end,
+    ['basedpyright'] = function()
+      lspconfig.basedpyright.setup({})
+    end,
   })
 end
 

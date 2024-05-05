@@ -13,7 +13,7 @@ function M.config()
     ensure_installed = {
       'markdownlint',
       'sqlfluff',
-      'ruff-lsp',
+      -- 'ruff-lsp',
       -- 'stylua',
       -- 'ruff',
       -- 'prettier',

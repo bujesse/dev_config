@@ -3,7 +3,7 @@ local M = {}
 function M.config()
   -- vim.o.clipboard = 'unnamed'
 
-  vim.g.python3_host_prog = '~/python_envs/nvim/bin/python'
+  vim.g.python3_host_prog = '~/.pyenv/versions/nvim/bin/python'
 
   -- Disable python 2
   vim.g.loaded_python_provider = 0
