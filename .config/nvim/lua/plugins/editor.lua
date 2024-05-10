@@ -657,7 +657,7 @@ return {
   {
     'nvim-focus/focus.nvim',
     version = false,
-    lazy = false,
+    cmd = { 'FocusToggle' },
     opts = {},
     keys = {
       { 'yof', '<Cmd>FocusToggle<CR>', desc = 'Toggle Focus' },

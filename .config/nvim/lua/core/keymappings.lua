@@ -173,6 +173,9 @@ function M.config_keys()
       -- Close win
       ['<C-q>'] = '<C-w>q',
 
+      -- Reload file
+      ['<C-r>'] = '<CMD>e<CR>',
+
       -- Replace word with last yank (repeatable)
       -- ['<Leader>v'] = 'ciw<C-r>0<Esc>',
 
