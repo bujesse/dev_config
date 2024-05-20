@@ -89,12 +89,13 @@ return {
   {
     'mg979/vim-visual-multi',
     -- https://github.com/mg979/vim-visual-multi/blob/b84a6d42c1c10678928b0bf8327f378c8bc8af5a/autoload/vm/plugs.vim
+    lazy = false,
     keys = {
       { '<C-A-k>', '<Plug>(VM-Add-Cursor-Up)', desc = 'VM Add Cursor Up' },
       { '<C-A-j>', '<Plug>(VM-Add-Cursor-Down)', desc = 'VM Add Cursor Down' },
       { '<C-A-l>', '<Plug>(VM-Reselect-Last)', desc = 'VM Reselect' },
     },
-    config = function()
+    init = function()
       vim.g.VM_default_mappings = 0
     end,
   },

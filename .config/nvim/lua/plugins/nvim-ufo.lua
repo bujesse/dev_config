@@ -54,12 +54,10 @@ return {
             segments = {
               {
                 sign = {
-                  name = {
-                    'Diagnostic',
-                  },
+                  namespace = { 'diagnostic' },
                   maxwidth = 1,
                   colwidth = 1,
-                  auto = false,
+                  auto = true,
                 },
                 click = 'v:lua.ScSa',
               },
