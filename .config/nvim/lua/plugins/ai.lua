@@ -20,7 +20,7 @@ return {
       vim.g.copilot_no_tab_map = true
     end,
     keys = {
-      { 'yoc', '<CMD>Copilot enable<CR>', desc = 'Enable Copilot' },
+      { 'yoC', '<CMD>Copilot enable<CR>', desc = 'Enable Copilot' },
       { '<M-n>', '<Plug>(copilot-next)', mode = { 'i' } },
       { '<M-p>', '<Plug>(copilot-previous)', mode = { 'i' } },
       { '<C-Right>', accept_word, mode = { 'i' }, remap = false, expr = true },

@@ -216,12 +216,22 @@ return {
   },
 
   -- colorizer
+  -- {
+  --   'NvChad/nvim-colorizer.lua',
+  --   cmd = { 'ColorizerToggle' },
+  --   keys = {
+  --     { 'yoC', '<CMD>ColorizerToggle<CR>', desc = 'Toggle Colorizer' },
+  --   },
+  --   opts = {},
+  -- },
   {
-    'NvChad/nvim-colorizer.lua',
-    cmd = { 'ColorizerToggle' },
-    keys = {
-      { 'yoC', '<CMD>ColorizerToggle<CR>', desc = 'Toggle Colorizer' },
+    'brenoprata10/nvim-highlight-colors',
+    lazy = false,
+    opts = {
+      render = 'virtual',
     },
-    opts = {},
+    keys = {
+      { 'yoc', '<CMD>HighlightColors Toggle<CR>', desc = 'Toggle Colorizer' },
+    },
   },
 }
