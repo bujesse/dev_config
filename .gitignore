@@ -33,3 +33,6 @@ lazygit.tar.gz
 .config/helix/runtime
 .config/github-copilot
 .config/nvim/lua/.luarc.json
+.config/Cypress
+.config/gh
+.config/gh-copilot

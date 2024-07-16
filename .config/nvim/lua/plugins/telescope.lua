@@ -312,6 +312,8 @@ return {
         menufacture = {
           mappings = {
             main_menu = { [{ 'i', 'n' }] = '<C-e>' },
+            toggle_hidden = { i = '<C-h>' },
+            toggle_no_ignore = { i = '<C-i>' },
           },
         },
         frecency = {
