@@ -7,8 +7,12 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
 
 # zstyle ':omz:plugins:nvm' lazy yes
 
+# git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+source ~/.antidote/antidote.zsh
+antidote load
+
 # === ZSH ===
-    ZSH_THEME="powerlevel10k/powerlevel10k"
+    # ZSH_THEME="powerlevel10k/powerlevel10k"
     ENABLE_CORRECTION="true"
     COMPLETION_WAITING_DOTS="true"
     DISABLE_UNTRACKED_FILES_DIRTY="true"
@@ -21,14 +25,14 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
         virtualenv
         docker
         docker-compose
-        colorize
+        # colorize
         nvm
 
         safe-paste # Preventing any code from actually running while pasting
         vi-mode
-        zsh-autosuggestions
-        zsh-fzf-history-search
-        zsh-history-substring-search 
+        # zsh-autosuggestions
+        # zsh-fzf-history-search
+        # zsh-history-substring-search 
     )
     setopt noincappendhistory
     setopt nosharehistory
@@ -148,12 +152,12 @@ export GOPATH=~/go/
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 # Pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PYENV_VERSION="3.12"
+# export PYENV_ROOT="$HOME/.pyenv"
+# [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+# export PYENV_VERSION="3.12"
 
 eval "$(zoxide init zsh)"
 # zprof
-eval "$(gh copilot alias -- zsh)"
+# eval "$(gh copilot alias -- zsh)"

@@ -36,3 +36,4 @@ lazygit.tar.gz
 .config/Cypress
 .config/gh
 .config/gh-copilot
+.config/go/telemetry/local
