@@ -81,6 +81,38 @@ return {
       require('inc_rename').setup()
     end,
   },
+  -- {
+  --   'saecki/live-rename.nvim',
+  --   opts = {
+  --     prepare_rename = true,
+  --     request_timeout = 1500,
+  --     keys = {
+  --       submit = {
+  --         { 'n', '<cr>' },
+  --         { 'v', '<cr>' },
+  --         { 'i', '<cr>' },
+  --       },
+  --       cancel = {
+  --         { 'n', '<esc>' },
+  --         { 'n', 'q' },
+  --       },
+  --     },
+  --     hl = {
+  --       current = 'CurSearch',
+  --       others = 'Search',
+  --     },
+  --   },
+  --   keys = {
+  --     {
+  --       'gR',
+  --       function()
+  --         require('live-rename').rename({ insert = true })
+  --       end,
+  --       desc = 'Rename Symbol',
+  --       expr = true,
+  --     },
+  --   },
+  -- },
 
   -- Text objects
   { 'michaeljsmith/vim-indent-object' },

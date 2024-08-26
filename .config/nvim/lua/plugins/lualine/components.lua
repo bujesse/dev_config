@@ -85,7 +85,7 @@ return {
   lsp = {
     function(msg)
       local default_msg = '󰒏'
-      local buf_clients = vim.lsp.get_active_clients()
+      local buf_clients = vim.lsp.get_clients()
       if next(buf_clients) == nil then
         return default_msg
       end

@@ -258,38 +258,33 @@ return {
           g = true, -- bindings for prefixed with g
         },
       },
-      operators = { gc = 'Comments' },
-      triggers_blacklist = {
-        -- list of mode / prefixes that should never be hooked by WhichKey
-        -- this is mostly relevant for key maps that start with a native binding
-        -- most people should not need to change this
-        i = { 'j', 'k', 'J', 'K' },
-        v = { 'j', 'k' },
+      -- defer = { gc = 'Comments' },
+      triggers = {
+        { '<auto>', mode = 'nxsot' },
+        -- { 'j', mode = { 'i', 'v' } },
+        -- { 'k', mode = { 'i', 'v' } },
       },
     },
     config = function(_, opts)
       local wk = require('which-key')
       wk.setup(opts)
-      wk.register({
-        mode = { 'n', 'v' },
-        ['g'] = { name = '+Goto' },
-        ['gq'] = { name = '+Quickfix' },
-        [']'] = { name = '+Next' },
-        ['['] = { name = '+Prev' },
-        ['cr'] = { name = '+Abolish coerce word' },
-        ['<leader>x'] = { name = '+tODO/Trouble/FIX' },
-        ['<leader>g'] = { name = '+Gitsigns' },
-        ['<leader>.'] = { name = '+Source/reload' },
-        ['<leader>b'] = { name = '+Buffer' },
-        ['<leader>e'] = { name = '+Edit' },
-        ['<leader>m'] = { name = '+Harpoon' },
-        ['<leader>s'] = { name = '+Session' },
-        ['<space>d'] = { name = '+Debug' },
-        ['<space>r'] = { name = '+Run' },
-      }, {
-        mode = { 'n' },
-        ['yo'] = { name = '+Toggle' },
-        ['<leader>d'] = { name = '+Insert' },
+      wk.add({
+        { '<leader>.', group = 'Source/reload' },
+        { '<leader>b', group = 'Buffer' },
+        { '<leader>d', group = 'Insert' },
+        { '<leader>e', group = 'Edit' },
+        { '<leader>g', group = 'Gitsigns' },
+        { '<leader>m', group = 'Harpoon' },
+        { '<leader>s', group = 'Session' },
+        { '<leader>x', group = 'tODO/Trouble/FIX' },
+        { '<space>d', group = 'Debug' },
+        { '<space>r', group = 'Run' },
+        { '[', group = 'Prev' },
+        { ']', group = 'Next' },
+        { 'cr', group = 'Abolish coerce word' },
+        { 'g', group = 'Goto' },
+        { 'gq', group = 'Quickfix' },
+        { 'yo', group = 'Toggle' },
       })
     end,
   },
@@ -475,11 +470,29 @@ return {
   -- better diagnostics list and others
   {
     'folke/trouble.nvim',
-    cmd = { 'TroubleToggle', 'Trouble' },
+    cmd = { 'Trouble', 'Trouble' },
     opts = { use_diagnostic_signs = true },
     keys = {
-      { '<leader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', desc = 'Document Diagnostics (Trouble)' },
-      { '<leader>xX', '<cmd>TroubleToggle workspace_diagnostics<cr>', desc = 'Workspace Diagnostics (Trouble)' },
+      {
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
+      },
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
+      },
+      {
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
+      },
+      {
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
+      },
     },
   },
 

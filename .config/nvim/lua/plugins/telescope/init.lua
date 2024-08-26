@@ -22,7 +22,7 @@ function M.path_display(opts, file)
   local tail = tele_utils.path_tail(file)
   local path = tele_utils.path_smart(file)
   -- path = Path:new(path):shorten(3) -- how many chars to shorten to
-  path = vim.split(path, sep)
+  ath = vim.split(path, sep)
   table.remove(path)
   path = table.concat(path, sep)
   return string.format('%s (%s)', tail, path)
@@ -94,21 +94,92 @@ local function run_selection(prompt_bufnr, map)
   end
 end
 
+local in_git_repo = function()
+  vim.fn.system('git rev-parse --is-inside-work-tree')
+  if vim.v.shell_error == 0 then
+    return true
+  else
+    return false
+  end
+end
+
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
     'plenary.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'molecule-man/telescope-menufacture',
-    { 'nvim-telescope/telescope-frecency.nvim' },
-    {
-      'piersolenski/telescope-import.nvim',
-      dev = true,
-    },
+    -- { 'nvim-telescope/telescope-frecency.nvim' },
+    { 'smartpde/telescope-recent-files' },
   },
   config = function()
     local actions = require('telescope.actions')
-    local layout = require('plugins.telescope.fused_layout')
+    local builtin = require('telescope.builtin')
+
+    local picker_map = {
+      ['Git Files'] = builtin.git_files,
+      ['Find Files'] = builtin.find_files,
+      ['Live Grep'] = function(opts)
+        -- spread opts into the live_grep function
+        opts = opts or {}
+        opts.additional_args = { '--fixed-strings' }
+        require('telescope').extensions.menufacture.live_grep(opts)
+      end,
+    }
+
+    local get_pickers_to_cycle = function()
+      local ordered_pickers = {
+        'Find Files',
+        'Live Grep',
+      }
+      local pickers_to_cycle = {}
+      local i = 1
+      for _, title in ipairs(ordered_pickers) do
+        pickers_to_cycle[i] = title
+        i = i + 1
+      end
+      return pickers_to_cycle
+    end
+
+    local next_picker = function(prompt_bufnr)
+      local pickers_to_cycle = get_pickers_to_cycle()
+      local state = require('telescope.actions.state')
+      local current_picker = state.get_current_picker(prompt_bufnr)
+
+      local next_index = 1
+      for i, title in ipairs(pickers_to_cycle) do
+        if title == current_picker.prompt_title then
+          next_index = i + 1
+          if next_index > #pickers_to_cycle then
+            next_index = 1
+          end
+          break
+        end
+      end
+      local next_title = pickers_to_cycle[next_index]
+      local new_picker = picker_map[next_title]
+      return new_picker({ ['default_text'] = state.get_current_line() })
+    end
+
+    local prev_picker = function(prompt_bufnr)
+      local pickers_to_cycle = get_pickers_to_cycle()
+      local state = require('telescope.actions.state')
+      local current_picker = state.get_current_picker(prompt_bufnr)
+
+      local prev_index = 1
+      for i, title in ipairs(pickers_to_cycle) do
+        if title == current_picker.prompt_title then
+          prev_index = i - 1
+          if prev_index == 0 then
+            prev_index = #pickers_to_cycle
+          end
+          break
+        end
+      end
+      local prev_title = pickers_to_cycle[prev_index]
+      local new_picker = picker_map[prev_title]
+      return new_picker({ ['default_text'] = state.get_current_line() })
+    end
 
     require('telescope').setup({
       defaults = {
@@ -132,7 +203,9 @@ return {
             ['<C-v>'] = actions.select_vertical,
             ['<C-x>'] = actions.select_horizontal,
             ['<C-t>'] = actions.select_tab,
-            ['<C-f>'] = actions.to_fuzzy_refine, -- Very useful
+            ['<C-f>'] = actions.to_fuzzy_refine,
+            ['<A-n>'] = next_picker,
+            ['<A-p>'] = prev_picker,
             ['<C-g>'] = function(prompt_bufnr)
               -- Use nvim-window-picker to choose the window by dynamically attaching a function
               local action_set = require('telescope.actions.set')
@@ -171,8 +244,8 @@ return {
         cache_picker = {
           num_pickers = 5,
         },
-        file_previewer = require('telescope.previewers').cat.new,
-        grep_previewer = require('telescope.previewers').vimgrep.new,
+        -- file_previewer = require('telescope.previewers').cat.new,
+        -- grep_previewer = require('telescope.previewers').vimgrep.new,
       },
       pickers = {
         buffers = {
@@ -223,6 +296,8 @@ return {
         menufacture = {
           mappings = {
             main_menu = { [{ 'i', 'n' }] = '<C-e>' },
+            toggle_hidden = { i = '<C-h>' },
+            toggle_no_ignore = { i = '<C-i>' },
           },
         },
         frecency = {
@@ -235,26 +310,14 @@ return {
             ['execution-ui'] = '/home/vagrant/dev/execution-ui',
             ['nvim'] = '/home/vagrant/dev_config/.config/nvim',
           },
-        import = {
-          -- Support additional languages
-          custom_languages = {
-            {
-              -- The regex pattern for the import statement
-              regex = [[^(?:import(?:[\"'\s]*([\w*{}\n, ]+)from\s*)?[\"'\s](.*?)[\"'\s].*)]],
-              -- The Vim filetypes
-              filetypes = { 'lua' },
-              -- The filetypes that ripgrep supports (find these via `rg --type-list`)
-              extensions = { 'lua' },
-            },
-          },
         },
       },
     })
 
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('menufacture')
-    require('telescope').load_extension('frecency')
-    require('telescope').load_extension('import')
+    require('telescope').load_extension('recent_files')
+    -- require('telescope').load_extension('frecency')
 
     -- Essential
     vim.keymap.set('n', "<Space>'", '<cmd>lua require("telescope.builtin").resume()<CR>', { desc = 'Telescope Resume' })
@@ -276,7 +339,12 @@ return {
       '<cmd>lua require("telescope.builtin").git_status()<CR>',
       { desc = 'Telescope Git Status' }
     )
-    vim.keymap.set('n', '<Space>m', '<Cmd>Telescope frecency workspace=CWD<CR>', { desc = 'Frecency' })
+    vim.keymap.set(
+      'n',
+      '<Space>m',
+      '<Cmd>lua require("telescope").extensions.recent_files.pick({ only_cwd = true })<CR>',
+      { desc = 'Recent Files' }
+    )
 
     -- Currently using Glance for goto lsp
     -- vim.keymap.set('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', { desc = 'Lsp References' })
@@ -332,36 +400,38 @@ return {
     vim.keymap.set('x', '<Space>f', M.grep_string_visual, { desc = 'Search Visual String' })
 
     -- which-key mappings (used less often, so put behind a 3-char input)
-    require('which-key').register({
-      name = '+Telescope',
-      -- f = { '<cmd>lua require("telescope").extensions.frecency.frecency()<CR>', 'Frecency' },
-      j = { '<cmd>lua require("telescope.builtin").jumplist()<CR>', 'Jumplist' },
-      a = { '<cmd>lua require("telescope.builtin").autocommands()<CR>', 'Autocommands' },
-      l = { '<cmd>lua require("telescope.builtin").highlights()<CR>', 'HighLights' },
-      b = { '<cmd>lua require("telescope.builtin").buffers()<CR>', 'Buffers' },
-      h = { '<cmd>lua require("telescope.builtin").command_history()<CR>', 'Command History' },
-      I = {
+    require('which-key').add({
+      { '<Space>t', group = 'Telescope' },
+      {
+        '<Space>tS',
+        '<cmd>lua require("telescope.builtin").spell_suggest()<CR>',
+        desc = 'Spell Suggest (under cursor)',
+      },
+      { '<Space>ta', '<cmd>lua require("telescope.builtin").autocommands()<CR>', desc = 'Autocommands' },
+      { '<Space>tb', '<cmd>lua require("telescope.builtin").buffers()<CR>', desc = 'Buffers' },
+      { '<Space>tg', group = 'git' },
+      { '<Space>tgb', '<cmd>lua require("telescope.builtin").git_bcommits()<CR>', desc = 'Git Buffer Commits' },
+      { '<Space>tgc', '<cmd>lua require("telescope.builtin").git_commits()<CR>', desc = 'Git Commits' },
+      { '<Space>tgr', '<cmd>lua require("telescope.builtin").git_branches()<CR>', desc = 'Git Branches' },
+      { '<Space>tgs', '<cmd>lua require("telescope.builtin").git_status()<CR>', desc = 'Git Status' },
+      { '<Space>th', '<cmd>lua require("telescope.builtin").command_history()<CR>', desc = 'Command History' },
+      {
+        '<Space>ti',
         '<cmd>lua require("telescope").extensions.menufacture.live_grep({mode = "ignore"})<CR>',
-        'Grep (include ignore and hidden)',
+        desc = 'Grep (include ignore and hidden)',
       },
-      i = {
-        '<cmd>Telescope import<CR>',
-        'Imports',
+      { '<Space>tj', '<cmd>lua require("telescope.builtin").jumplist()<CR>', desc = 'Jumplist' },
+      { '<Space>tk', '<cmd>lua require("telescope.builtin").keymaps()<CR>', desc = 'Keymaps' },
+      { '<Space>tl', '<cmd>lua require("telescope.builtin").highlights()<CR>', desc = 'HighLights' },
+      { '<Space>tr', '<cmd>lua require("telescope").extensions.menufacture.live_grep()<CR>', desc = 'Regex Search' },
+      {
+        '<Space>ts',
+        '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
+        desc = 'Lsp Document Symbols',
       },
-      r = { '<cmd>lua require("telescope").extensions.menufacture.live_grep()<CR>', 'Regex Search' },
-      u = { '<cmd>lua require("telescope").extensions.menufacture.grep_string()<CR>', 'Grep String' },
-      v = { '<cmd>lua require("telescope.builtin").vim_options()<CR>', 'Vim Options' },
-      s = { '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'Lsp Document Symbols' },
-      S = { '<cmd>lua require("telescope.builtin").spell_suggest()<CR>', 'Spell Suggest (under cursor)' },
-      k = { '<cmd>lua require("telescope.builtin").keymaps()<CR>', 'Keymaps' },
-      t = { '<cmd>TodoTelescope<cr>', 'Todo' },
-      g = {
-        name = '+git',
-        c = { '<cmd>lua require("telescope.builtin").git_commits()<CR>', 'Git Commits' },
-        b = { '<cmd>lua require("telescope.builtin").git_bcommits()<CR>', 'Git Buffer Commits' },
-        r = { '<cmd>lua require("telescope.builtin").git_branches()<CR>', 'Git Branches' },
-        s = { '<cmd>lua require("telescope.builtin").git_status()<CR>', 'Git Status' },
-      },
+      { '<Space>tt', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
+      { '<Space>tu', '<cmd>lua require("telescope").extensions.menufacture.grep_string()<CR>', desc = 'Grep String' },
+      { '<Space>tv', '<cmd>lua require("telescope.builtin").vim_options()<CR>', desc = 'Vim Options' },
     }, {
       prefix = '<Space>t',
     })
