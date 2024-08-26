@@ -85,4 +85,60 @@ return {
       vim.keymap.set('n', '<Space>te', before.show_edits_in_telescope, { desc = 'Edits' })
     end,
   },
+
+  {
+    'haya14busa/vim-asterisk',
+    keys = {
+      -- { '*', '<Plug>(asterisk-*)', mode = { 'n', 'x' } },
+      -- { '#', '<Plug>(asterisk-#)', mode = { 'n', 'x' } },
+      -- { 'g*', '<Plug>(asterisk-g*)', mode = { 'n', 'x' } },
+      -- { 'g#', '<Plug>(asterisk-g#)', mode = { 'n', 'x' } },
+      -- { 'z*', '<Plug>(asterisk-z*)', mode = { 'n', 'x' } },
+      -- { 'gz*', '<Plug>(asterisk-gz*)', mode = { 'n', 'x' } },
+      -- { 'z#', '<Plug>(asterisk-z#)', mode = { 'n', 'x' } },
+      -- { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
+      -- { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
+    },
+    init = function()
+      vim.g['asterisk#keeppos'] = 1
+    end,
+  },
+
+  {
+    'petertriho/nvim-scrollbar',
+    config = function()
+      require('scrollbar').setup()
+      require('scrollbar.handlers.gitsigns').setup()
+      require('scrollbar.handlers.search').setup()
+    end,
+  },
+
+  {
+    'kevinhwang91/nvim-hlslens',
+    dependencies = {
+      'haya14busa/vim-asterisk',
+      'petertriho/nvim-scrollbar',
+    },
+    config = function(_, opts)
+      require('hlslens').setup({
+        build_position_cb = function(plist, _, _, _)
+          require('scrollbar.handlers.search').handler.show(plist.start_pos)
+        end,
+      })
+      vim.cmd([[
+        augroup scrollbar_search_hide
+            autocmd!
+            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
+        augroup END
+    ]])
+    end,
+    keys = {
+      { 'n', [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { 'N', [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]] },
+      { '*', [[<Plug>(asterisk-z*)<Cmd>lua require('hlslens').start()<CR>]], mode = { 'n', 'x' } },
+      { '#', [[<Plug>(asterisk-z#)<Cmd>lua require('hlslens').start()<CR>]], mode = { 'n', 'x' } },
+      { 'g*', [[<Plug>(asterisk-gz*)<Cmd>lua require('hlslens').start()<CR>]], mode = { 'n', 'x' } },
+      { 'g#', [[<Plug>(asterisk-gz#)<Cmd>lua require('hlslens').start()<CR>]], mode = { 'n', 'x' } },
+    },
+  },
 }

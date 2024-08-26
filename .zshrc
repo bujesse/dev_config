@@ -7,10 +7,6 @@ export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo
 
 # zstyle ':omz:plugins:nvm' lazy yes
 
-# git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
-source ~/.antidote/antidote.zsh
-antidote load
-
 # === ZSH ===
     # ZSH_THEME="powerlevel10k/powerlevel10k"
     ENABLE_CORRECTION="true"
@@ -30,9 +26,10 @@ antidote load
 
         safe-paste # Preventing any code from actually running while pasting
         vi-mode
+        # zsh-syntax-highlighting
         # zsh-autosuggestions
-        # zsh-fzf-history-search
         # zsh-history-substring-search 
+        # zsh-fzf-history-search
     )
     setopt noincappendhistory
     setopt nosharehistory
@@ -129,7 +126,6 @@ source $ZSH/oh-my-zsh.sh
     bindkey "${terminfo[kcuu1]}" up-line-or-history
     bindkey "${terminfo[kcud1]}" down-line-or-history
 
-
     # control+right right
     bindkey "^[[1;5C" forward-word
 
@@ -161,3 +157,7 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 eval "$(zoxide init zsh)"
 # zprof
 # eval "$(gh copilot alias -- zsh)"
+
+# git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+source ~/.antidote/antidote.zsh
+antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt

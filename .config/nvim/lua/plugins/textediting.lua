@@ -126,9 +126,24 @@ return {
       { '<C-A-k>', '<Plug>(VM-Add-Cursor-Up)', desc = 'VM Add Cursor Up' },
       { '<C-A-j>', '<Plug>(VM-Add-Cursor-Down)', desc = 'VM Add Cursor Down' },
       { '<C-A-l>', '<Plug>(VM-Reselect-Last)', desc = 'VM Reselect' },
+      { '<C-A-]>', '<Plug>(VM-Goto-Next)', desc = 'VM Next Cursor' },
+      { '<C-A-[>', '<Plug>(VM-Goto-Prev)', desc = 'VM Prev Cursor' },
+      -- Skip with q, Q <CA]> to go next cursor, and Tab to switch between extend mode and cursor mode
     },
     init = function()
       vim.g.VM_default_mappings = 0
+      vim.g.VM_silent_exit = 1
+      -- vim.cmd([[
+      --   function! VM_Start()
+      --   nmap <buffer> <C-C> <Esc>
+      --   imap <buffer> <C-C> <Esc>
+      --   endfunction
+
+      --   function! VM_Exit()
+      --   nunmap <buffer> <C-C>
+      --   iunmap <buffer> <C-C>
+      --   endfunction
+      -- ]])
     end,
   },
 
@@ -142,24 +157,6 @@ return {
     keys = {
       { 'gs', ':lua require("treesj").toggle()<CR>', desc = 'Split/Join toggle' },
     },
-  },
-
-  {
-    'haya14busa/vim-asterisk',
-    keys = {
-      { '*', '<Plug>(asterisk-*)', mode = { 'n', 'x' } },
-      { '#', '<Plug>(asterisk-#)', mode = { 'n', 'x' } },
-      { 'g*', '<Plug>(asterisk-g*)', mode = { 'n', 'x' } },
-      { 'g#', '<Plug>(asterisk-g#)', mode = { 'n', 'x' } },
-      { 'z*', '<Plug>(asterisk-z*)', mode = { 'n', 'x' } },
-      { 'gz*', '<Plug>(asterisk-gz*)', mode = { 'n', 'x' } },
-      { 'z#', '<Plug>(asterisk-z#)', mode = { 'n', 'x' } },
-      { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
-      { 'gz#', '<Plug>(asterisk-gz#)', mode = { 'n', 'x' } },
-    },
-    init = function()
-      vim.g['asterisk#keeppos'] = 1
-    end,
   },
 
   -- better yank management

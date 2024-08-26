@@ -1,7 +1,12 @@
+# Theme
 romkatv/powerlevel10k
+
+# Essential
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-history-substring-search
+joshskidmore/zsh-fzf-history-search
 
+# Extra
 Aloxaf/fzf-tab
 djui/alias-tips
