@@ -1,0 +1,23 @@
+session_name: "2"
+windows:
+  - layout: e59f,252x57,0,0,20
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: n -S ~/.cache/nvim/sessions/split
+    start_directory: /home/bujesse/dev/split
+    window_name: split
+  - focus: "true"
+    layout: 3309,252x57,0,0{126x57,0,0,21,125x57,127,0[125x28,127,0,22,125x28,127,29,23]}
+    options: {}
+    panes:
+      - shell_command:
+          - cd /home/bujesse/dev/split
+          - air
+      - shell_command:
+          - cd /home/bujesse/dev/split
+          - sqlitebrowser
+      - focus: "true"
+        shell_command:
+          - cd /home/bujesse/dev/split
+    window_name: air
