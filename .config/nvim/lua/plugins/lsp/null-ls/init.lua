@@ -13,8 +13,18 @@ function M.config()
     ensure_installed = {
       'markdownlint',
       'sqlfluff',
-      -- 'ruff-lsp',
-      -- 'stylua',
+
+      -- python
+      'basedpyright',
+      'debugpy',
+      'ruff_lsp',
+
+      -- golang
+      'delve', -- go debugger
+      'gopls',
+      'templ',
+
+      'stylua',
       -- 'ruff',
       -- 'prettier',
       -- 'yamllint',

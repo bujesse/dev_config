@@ -60,8 +60,8 @@ return {
 
       require('mason-lspconfig').setup({
         ensure_installed = {
+          -- lua
           'lua_ls',
-          -- 'pyright',
           -- 'tsserver',
           'jsonls',
         },

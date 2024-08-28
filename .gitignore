@@ -37,3 +37,5 @@ lazygit.tar.gz
 .config/gh
 .config/gh-copilot
 .config/go/telemetry/local
+.config/sqlitebrowser
+.config/QtProject.conf

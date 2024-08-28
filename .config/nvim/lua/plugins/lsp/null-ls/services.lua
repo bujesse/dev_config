@@ -129,6 +129,20 @@ function M.register_custom_sources()
       },
     },
     require('typescript.extensions.null-ls.code-actions'),
+    {
+      name = 'templ',
+      meta = {
+        url = 'https://templ.guide/commands-and-tools/cli/#formatting-templ-files',
+        description = 'Formats templ template files.',
+      },
+      method = { null_ls.methods.FORMATTING },
+      filetypes = { 'templ' },
+      generator = helpers.formatter_factory({
+        command = 'templ',
+        args = { 'fmt' },
+        to_stdin = true,
+      }),
+    },
   }
 
   local is_registered = require('null-ls.sources').is_registered

@@ -81,6 +81,12 @@ return {
         'typescript',
         'vue',
 
+        'go',
+        'gomod',
+        'gosum',
+        'gotmpl',
+        'templ',
+
         'markdown',
         'markdown_inline',
       },

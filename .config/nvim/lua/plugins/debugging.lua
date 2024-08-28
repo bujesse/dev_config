@@ -6,6 +6,20 @@ return {
     dependencies = {
       'mfussenegger/nvim-dap-python',
       {
+        'leoluz/nvim-dap-go',
+        opts = {
+          dap_configurations = {
+            {
+              -- Must be "go" or it will be ignored by the plugin
+              type = 'go',
+              name = 'Attach remote',
+              mode = 'remote',
+              request = 'attach',
+            },
+          },
+        },
+      },
+      {
         'ofirgall/goto-breakpoints.nvim',
         keys = {
           {
