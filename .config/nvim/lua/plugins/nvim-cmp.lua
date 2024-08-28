@@ -2,7 +2,9 @@ return {
 
   -- completion
   {
-    'hrsh7th/nvim-cmp',
+    -- 'hrsh7th/nvim-cmp',
+    'yioneko/nvim-cmp',
+    branch = 'perf',
     dependencies = {
       'LuaSnip',
       'saadparwaiz1/cmp_luasnip',
@@ -47,6 +49,13 @@ return {
           ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           ['<C-c>'] = cmp.mapping.close(),
           ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-A-s>'] = cmp.mapping.complete({
+            config = {
+              sources = {
+                { name = 'luasnip' },
+              },
+            },
+          }),
           ['<C-e>'] = cmp.mapping.close(),
 
           ['<Tab>'] = cmp.mapping(function(fallback)
@@ -99,7 +108,7 @@ return {
 
         sources = cmp.config.sources({
           { name = 'nvim_lsp', priority = 1000 },
-          { name = 'luasnip', priority = 750 },
+          -- { name = 'luasnip', priority = 750 },
           { name = 'buffer', priority = 500 },
           -- { name = 'nvim_lua', priority = 5 },
           { name = 'path', priority = 250 },
@@ -140,6 +149,14 @@ return {
           cmp_tabnine = 1,
           buffer = 1,
           path = 1,
+        },
+
+        matching = {
+          -- disallow_fuzzy_matching = true,
+          -- disallow_fullfuzzy_matching = true,
+          -- disallow_partial_fuzzy_matching = true,
+          -- disallow_partial_matching = false,
+          -- disallow_prefix_unmatching = true,
         },
 
         formatting = {
