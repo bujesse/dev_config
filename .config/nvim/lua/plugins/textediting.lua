@@ -4,6 +4,7 @@ return {
   {
     -- cr_ to change between cases
     'tpope/vim-abolish',
+    lazy = false,
     keys = {
       { 'crs', '<Plug>(abolish-coerce-word)s', desc = 'snake_case', mode = { 'n', 'x' } },
       { 'crm', '<Plug>(abolish-coerce-word)m', desc = 'MixedCase', mode = { 'n', 'x' } },
