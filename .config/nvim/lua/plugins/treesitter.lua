@@ -32,7 +32,7 @@ return {
         'nvim-treesitter/nvim-treesitter-context',
         opts = { enable = true },
         keys = {
-          { 'yot', '<CMD>TSContextToggle<CR>', desc = 'Toggle Treesitter Context' },
+          { 'yoc', '<CMD>TSContextToggle<CR>', desc = 'Toggle Treesitter Context' },
           {
             '[c',
             function()

@@ -74,6 +74,36 @@ return {
       'nvim-telescope/telescope.nvim', -- optional
       'neovim/nvim-lspconfig', -- optional
     },
-    opts = {}, -- your configuration
+    opts = {
+      server = {
+        override = false, -- setup the server from the plugin if true
+        settings = {}, -- shortcut for `settings.tailwindCSS`
+        on_attach = function(client, bufnr) end, -- callback triggered when the server attaches to a buffer
+      },
+      document_color = {
+        enabled = false, -- can be toggled by commands
+        kind = 'inline', -- "inline" | "foreground" | "background"
+        inline_symbol = '󰝤 ', -- only used in inline mode
+        debounce = 200, -- in milliseconds, only applied in insert mode
+      },
+      cmp = {
+        highlight = 'background', -- color preview style, "foreground" | "background"
+      },
+    }, -- your configuration
+    keys = {
+      { 'yot', '<cmd>TailwindConcealToggle<CR>', desc = 'Toggle TailwindCSS Concealer' },
+      { '<Space>tt', '<cmd>Telescope tailwind classes<CR>', desc = 'Search TailwindCSS classes' },
+    },
+  },
+
+  -- format tailwind css on save
+  {
+    'laytan/tailwind-sorter.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+    build = 'cd formatter && npm ci && npm run build',
+    opts = {
+      on_save_enabled = true,
+      on_save_pattern = { '*.templ' },
+    },
   },
 }

@@ -35,7 +35,7 @@ return {
     cmd = 'Copilot',
     event = 'InsertEnter',
     keys = {
-      { 'yoc', 'require("copilot.suggestion").toggle_auto_trigger()', desc = 'Toggle Copilot Auto-trigger' },
+      { 'yoC', 'require("copilot.suggestion").toggle_auto_trigger()', desc = 'Toggle Copilot Auto-trigger' },
     },
     opts = {
       suggestion = {

@@ -429,7 +429,6 @@ return {
         '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
         desc = 'Lsp Document Symbols',
       },
-      { '<Space>tt', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
       { '<Space>tu', '<cmd>lua require("telescope").extensions.menufacture.grep_string()<CR>', desc = 'Grep String' },
       { '<Space>tv', '<cmd>lua require("telescope.builtin").vim_options()<CR>', desc = 'Vim Options' },
     }, {
