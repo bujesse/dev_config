@@ -13,6 +13,8 @@ return {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
+      'luckasRanarison/tailwind-tools.nvim',
+      'onsails/lspkind-nvim',
       -- { 'windwp/nvim-autopairs', config = true },
     },
     config = function()
@@ -160,28 +162,23 @@ return {
         },
 
         formatting = {
-          format = function(entry, vim_item)
-            -- fancy icons from lspkind
-            vim_item.kind = lspkind.presets.default[vim_item.kind] .. ' ' .. vim_item.kind
-
-            -- vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
-
-            -- set a name for each source
-            vim_item.menu = ({
-              nvim_lsp = '[LSP]',
-              buffer = '[Buffer]',
-              path = '[Path]',
-              luasnip = '[LuaSnip]',
-              treesitter = '[TS]',
-              nvim_lua = '[NvimLua]',
-            })[entry.source.name]
-            vim_item.dup = ({
-              buffer = 1,
-              path = 1,
-              nvim_lsp = 0,
-            })[entry.source.name] or 0
-            return vim_item
-          end,
+          format = require('lspkind').cmp_format({
+            mode = 'symbol_text',
+            before = function(entry, vim_item)
+              vim_item = require('tailwind-tools.cmp').lspkind_format(entry, vim_item)
+              vim_item.kind = lspkind.presets.default[vim_item.kind] .. ' ' .. vim_item.kind
+              vim_item.abbr = string.sub(vim_item.abbr, 1, 30)
+              vim_item.menu = ({
+                nvim_lsp = '[LSP]',
+                buffer = '[Buffer]',
+                path = '[Path]',
+                luasnip = '[LuaSnip]',
+                treesitter = '[TS]',
+                nvim_lua = '[NvimLua]',
+              })[entry.source.name]
+              return vim_item
+            end,
+          }),
         },
       })
 

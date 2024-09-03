@@ -218,6 +218,14 @@ function M.config_keys()
       -- ['[q'] = ':cprev<CR>',
       ['<Leader>q'] = ':call QuickFixToggle()<CR>',
 
+      -- Quick Substitute (substitutes last search)
+      ['<Leader>rr'] = {
+        [[:%s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]],
+        { desc = 'Substitute in Buffer (Edit)' },
+      },
+      ['<Leader>rl'] = { [[:s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]], { desc = 'Substitute in Line (Edit)' } },
+      ['<Leader>rs'] = { ':%S//', { desc = 'Substitute (Abolish)' } },
+
       ['<RightMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.hover({border = "single"})<CR>',
       ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
 
@@ -248,6 +256,13 @@ function M.config_keys()
 
       -- system yank
       ['<C-y>'] = '"+y',
+
+      -- Quick Substitute (substitutes last search)
+      ['<Leader>rr'] = {
+        [[:s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]],
+        { desc = 'Substitute in Selection (Edit)' },
+      },
+      ['<Leader>rs'] = { ':S//', { desc = 'Substitute in Selection (Abolish)' } },
 
       -- Replace word with last yank (repeatable)
       -- ['<Leader>v'] = 'c<C-r>0<Esc>',

@@ -167,6 +167,7 @@ return {
       'nvim-telescope/telescope.nvim',
     },
     keys = {
+      { 'y', '<Plug>(YankyYank)', mode = { 'n', 'x' }, desc = 'Yank text' },
       { 'p', '<Plug>(YankyPutAfter)', mode = { 'n', 'x' } },
       { 'P', '<Plug>(YankyPutBefore)', mode = { 'n', 'x' } },
       { ']p', '<Plug>(YankyPutIndentAfterLinewise)', mode = { 'n' } },
@@ -236,19 +237,19 @@ return {
   },
 
   -- Interactive Replacements
-  {
-    'AckslD/muren.nvim',
-    opts = {
-      patterns_width = 50,
-      patterns_height = 20,
-      options_width = 35,
-      preview_height = 22,
-      keys = {
-        toggle_options_focus = '<C-e>',
-      },
-    },
-    keys = {
-      { '<leader>rr', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
-    },
-  },
+  -- {
+  --   'AckslD/muren.nvim',
+  --   opts = {
+  --     patterns_width = 50,
+  --     patterns_height = 20,
+  --     options_width = 35,
+  --     preview_height = 22,
+  --     keys = {
+  --       toggle_options_focus = '<C-e>',
+  --     },
+  --   },
+  --   keys = {
+  --     { '<leader>rr', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
+  --   },
+  -- },
 }
