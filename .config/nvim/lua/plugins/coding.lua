@@ -120,7 +120,35 @@ return {
 
   -- autopair
   {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    opts = {
+      check_ts = false,
+      enable_check_bracket_line = false,
+      map_c_h = false, -- Map the <C-h> key to delete a pair
+      map_c_w = false, -- map <c-w> to delete a pair if possible
+      fast_wrap = {
+        map = '<M-l>',
+        chars = { '{', '[', '(', '"', "'" },
+        pattern = [=[[%'%"%>%]%)%}%,]]=],
+        end_key = '$',
+        before_key = 'h',
+        after_key = 'l',
+        cursor_pos_before = true,
+        keys = 'qwertyuiopzxcvbnmasdfghjkl',
+        manual_position = true,
+        highlight = 'Search',
+        highlight_grey = 'Comment',
+      },
+    },
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+  },
+
+  {
     'altermo/ultimate-autopair.nvim',
+    enable = false,
     event = { 'InsertEnter', 'CmdlineEnter' },
     -- branch = 'v0.6',
     opts = {

@@ -15,7 +15,7 @@ return {
       'hrsh7th/cmp-cmdline',
       'luckasRanarison/tailwind-tools.nvim',
       'onsails/lspkind-nvim',
-      -- { 'windwp/nvim-autopairs', config = true },
+      { 'windwp/nvim-autopairs' },
     },
     config = function()
       local cmp = require('cmp')
@@ -200,8 +200,8 @@ return {
       --   }),
       -- })
 
-      -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-      -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
     end,
   },
 }

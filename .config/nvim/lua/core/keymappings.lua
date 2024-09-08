@@ -213,6 +213,14 @@ function M.config_keys()
       -- Undo all unsaved changes
       ['<A-u>'] = ':earlier 1f<CR>',
 
+      -- Mouse support
+      ['<LeftMouse>'] = "m'<LeftMouse>",
+      ['<C-ScrollWheelUp>'] = '<C-i>',
+      ['<C-ScrollWheelDown>'] = '<C-o>',
+
+      ['<RightMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.hover({border = "single"})<CR>',
+      ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
+
       -- QuickFix
       -- [']q'] = ':cnext<CR>',
       -- ['[q'] = ':cprev<CR>',
@@ -225,9 +233,6 @@ function M.config_keys()
       },
       ['<Leader>rl'] = { [[:s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]], { desc = 'Substitute in Line (Edit)' } },
       ['<Leader>rs'] = { ':%S//', { desc = 'Substitute (Abolish)' } },
-
-      ['<RightMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.hover({border = "single"})<CR>',
-      ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
 
       -- Open definition in vertial split
       ['gD'] = '<C-w>o<C-w>]<C-w>L',
