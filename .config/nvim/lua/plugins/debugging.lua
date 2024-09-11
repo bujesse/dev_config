@@ -7,17 +7,59 @@ return {
       'mfussenegger/nvim-dap-python',
       {
         'leoluz/nvim-dap-go',
-        opts = {
-          dap_configurations = {
-            {
-              -- Must be "go" or it will be ignored by the plugin
-              type = 'go',
-              name = 'Attach remote',
-              mode = 'remote',
-              request = 'attach',
-            },
-          },
+        dependencies = {
+          'rcarriga/nvim-dap-ui',
         },
+        opts = {},
+        config = function(_, opts)
+          require('dap-go').setup(opts)
+          table.insert(require('dap').configurations.go, 1, {
+            name = 'Delve Remote',
+            type = 'go',
+            request = 'attach',
+            mode = 'remote',
+            remotePath = '${workspaceFolder}',
+            port = 2345,
+            host = '127.0.0.1',
+          })
+
+          local augroup = vim.api.nvim_create_augroup('dap_ui', { clear = true })
+          local dap, dapui = require('dap'), require('dapui')
+          dap.listeners.after.event_initialized['dapui_config'] = function()
+            dapui.open()
+
+            -- Try to rerun if the termination was because of a save
+            vim.api.nvim_create_autocmd('BufWritePost', {
+              group = augroup,
+              callback = function()
+                vim.defer_fn(function()
+                  if vim.tbl_isempty(require('dap').sessions()) then
+                    local output = vim.fn.system('lsof -i -P -n | grep 2345')
+                    if string.match(output, '2345') then
+                      print('Debugger on port 2345 found. Restarting DAP...')
+                      dap.run_last()
+                    else
+                      dapui.close()
+                    end
+                  end
+                end, 3000)
+              end,
+            })
+          end
+
+          dap.listeners.after.event_terminated['dapui_config'] = function(session, body)
+            vim.defer_fn(function()
+              if vim.tbl_isempty(require('dap').sessions()) then
+                dapui.close()
+                vim.api.nvim_clear_autocmds({ group = augroup })
+              end
+            end, 2000)
+          end
+
+          dap.listeners.before.event_exited['dapui_config'] = function()
+            dapui.close()
+          end
+        end,
       },
       {
         'ofirgall/goto-breakpoints.nvim',
