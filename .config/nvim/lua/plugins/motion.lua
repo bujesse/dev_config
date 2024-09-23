@@ -7,14 +7,28 @@ return {
     opts = {
       modes = {
         char = {
-          enabled = false,
+          -- enabled = true,
+          -- config = function(opts)
+          --   -- autohide flash when in operator-pending mode
+          --   opts.autohide = opts.autohide or (vim.fn.mode(true):find('no') and vim.v.operator == 'y')
+
+          --   -- disable jump labels when not enabled, when using a count,
+          --   -- or when recording/executing registers
+          --   opts.jump_labels = opts.jump_labels
+          --     and vim.v.count == 0
+          --     and vim.fn.reg_executing() == ''
+          --     and vim.fn.reg_recording() == ''
+
+          --   -- Show jump labels only in operator-pending mode
+          --   -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
+          -- end,
           autohide = true,
-          jump_labels = true,
-          multi_line = true,
-          -- by default all keymaps are enabled, but you can disable some of them,
-          -- by removing them from the list.
-          keys = { 'f', 'F', 't', 'T', ';' },
-          highlight = { backdrop = false },
+          -- jump_labels = true,
+          -- multi_line = true,
+          -- -- by default all keymaps are enabled, but you can disable some of them,
+          -- -- by removing them from the list.
+          -- keys = { 'f', 'F', 't', 'T', ';' },
+          -- highlight = { backdrop = false, matches = false },
         },
         search = {
           enabled = false, -- enable flash for search

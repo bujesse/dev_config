@@ -65,14 +65,14 @@ return {
         'ofirgall/goto-breakpoints.nvim',
         keys = {
           {
-            ']b',
+            ']B',
             function()
               require('goto-breakpoints').next()
             end,
             desc = 'Next Breakpoint',
           },
           {
-            '[b',
+            '[B',
             function()
               require('goto-breakpoints').prev()
             end,
@@ -82,9 +82,9 @@ return {
       },
     },
     keys = {
-      { '<Space>b', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = 'Toggle Breakpoint' },
+      { '<Space>db', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = 'Toggle Breakpoint' },
       {
-        '<Space>B',
+        '<Space>dB',
         "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
         desc = 'Toggle Breakpoint',
       },
@@ -101,7 +101,7 @@ return {
       { '<F1>', "<cmd>lua require'dap'.continue()<cr>", desc = 'Continue' },
       { '<Space>dg', "<cmd>lua require'dap'.continue()<cr>", desc = 'DAP Go' },
 
-      { '<Space>db', "<cmd>lua require'dap'.step_back()<cr>", desc = 'Step Back' },
+      -- { '<Space>db', "<cmd>lua require'dap'.step_back()<cr>", desc = 'Step Back' },
       {
         '<Space>ds',
         "<cmd>lua require'dap'.disconnect({restart = true, terminateDebuggee = false})<cr>",

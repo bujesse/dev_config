@@ -189,6 +189,10 @@ function M.config_keys()
       [']t'] = '<Cmd>tabn<CR>',
       ['[t'] = '<Cmd>tabp<CR>',
 
+      -- Quick Begin/End of line
+      ['L'] = '$',
+      ['H'] = '^',
+
       -- Fix the last paste
       ['gp'] = '`[v`]=',
 
@@ -202,7 +206,7 @@ function M.config_keys()
       -- system yank
       ['<C-y>'] = '"+y',
 
-      -- Move current line / block with Alt-j/k a la vscode.
+      -- Move current line
       ['<A-j>'] = ':<C-u>call MoveLineDown()<CR>',
       ['<A-k>'] = ':<C-u>call MoveLineUp()<CR>',
 

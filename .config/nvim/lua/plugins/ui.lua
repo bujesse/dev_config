@@ -56,11 +56,7 @@ return {
           { "X", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
         },
       },
-      {
-        -- Keep buffers in their own tabs
-        'tiagovla/scope.nvim',
-        config = true,
-      },
+      'tiagovla/scope.nvim',
     },
     keys = {
       { 'L', '<Cmd>keepjumps BufferLineCycleNext<CR>', desc = 'Next buffer' },
@@ -104,15 +100,19 @@ return {
   },
 
   {
+    'tiagovla/scope.nvim',
+    config = true,
+    keys = {
+      { '<Leader>bm', '<CMD>ScopeMoveBuf<CR>', desc = 'Move Buffer to Tab' },
+    },
+  },
+
+  {
     'romgrk/barbar.nvim',
     lazy = false,
     dependencies = {
       'kyazdani42/nvim-web-devicons',
-      {
-        -- Keep buffers in their own tabs
-        'tiagovla/scope.nvim',
-        config = true,
-      },
+      'tiagovla/scope.nvim',
     },
     init = function()
       vim.g.barbar_auto_setup = false
@@ -133,8 +133,10 @@ return {
       },
     },
     keys = {
-      { 'L', '<Cmd>keepjumps BufferNext<CR>', desc = 'Next buffer' },
-      { 'H', '<Cmd>keepjumps BufferPrevious<CR>', desc = 'Prev buffer' },
+      -- { 'L', '<Cmd>keepjumps BufferNext<CR>', desc = 'Next buffer' },
+      -- { 'H', '<Cmd>keepjumps BufferPrevious<CR>', desc = 'Prev buffer' },
+      { ']b', '<Cmd>keepjumps BufferNext<CR>', desc = 'Next buffer' },
+      { '[b', '<Cmd>keepjumps BufferPrevious<CR>', desc = 'Prev buffer' },
       { '<C-Left>', '<Cmd>BufferMovePrevious<CR>', desc = 'Move buffer prev' },
       { '<C-Right>', '<Cmd>BufferMoveNext<CR>', desc = 'Move buffer next' },
       { 'X', '<Cmd>BufferClose<CR>', desc = 'Close Buffer' },
@@ -205,13 +207,23 @@ return {
   {
     'karb94/neoscroll.nvim',
     config = function()
-      require('neoscroll').setup({
+      local neoscroll = require('neoscroll')
+      neoscroll.setup({
         mappings = {},
+        easing = 'sine',
       })
-      local t = {}
-      t['<C-u>'] = { 'scroll', { '-vim.wo.scroll', 'true', '60', 'sine' } }
-      t['<C-d>'] = { 'scroll', { 'vim.wo.scroll', 'true', '60', 'sine' } }
-      require('neoscroll.config').set_mappings(t)
+      local keymap = {
+        ['<C-u>'] = function()
+          neoscroll.ctrl_u({ duration = 60 })
+        end,
+        ['<C-d>'] = function()
+          neoscroll.ctrl_d({ duration = 60 })
+        end,
+      }
+      local modes = { 'n', 'v', 'x' }
+      for key, func in pairs(keymap) do
+        vim.keymap.set(modes, key, func)
+      end
     end,
   },
 

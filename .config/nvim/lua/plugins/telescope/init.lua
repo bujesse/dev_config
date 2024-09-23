@@ -111,6 +111,7 @@ return {
     'molecule-man/telescope-menufacture',
     -- { 'nvim-telescope/telescope-frecency.nvim' },
     { 'smartpde/telescope-recent-files' },
+    'tiagovla/scope.nvim',
   },
   config = function()
     local actions = require('telescope.actions')
@@ -318,6 +319,7 @@ return {
     require('telescope').load_extension('menufacture')
     require('telescope').load_extension('recent_files')
     -- require('telescope').load_extension('frecency')
+    require('telescope').load_extension('scope')
 
     -- Essential
     vim.keymap.set('n', "<Space>'", '<cmd>lua require("telescope.builtin").resume()<CR>', { desc = 'Telescope Resume' })
@@ -409,6 +411,7 @@ return {
       },
       { '<Space>ta', '<cmd>lua require("telescope.builtin").autocommands()<CR>', desc = 'Autocommands' },
       { '<Space>tb', '<cmd>lua require("telescope.builtin").buffers()<CR>', desc = 'Buffers' },
+      { '<Space>b', '<cmd>Telescope scope buffers<CR>', desc = 'Buffers' },
       { '<Space>tg', group = 'git' },
       { '<Space>tgb', '<cmd>lua require("telescope.builtin").git_bcommits()<CR>', desc = 'Git Buffer Commits' },
       { '<Space>tgc', '<cmd>lua require("telescope.builtin").git_commits()<CR>', desc = 'Git Commits' },
