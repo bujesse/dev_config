@@ -223,7 +223,7 @@ function M.config_keys()
       ['<C-ScrollWheelDown>'] = '<C-o>',
 
       ['<RightMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.hover({border = "single"})<CR>',
-      ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
+      -- ['<C-LeftMouse>'] = '<LeftMouse><cmd>lua vim.lsp.buf.definition()<CR>',
 
       -- QuickFix
       -- [']q'] = ':cnext<CR>',

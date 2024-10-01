@@ -119,32 +119,119 @@ return {
   { 'michaeljsmith/vim-indent-object' },
   { 'dbakker/vim-paragraph-motion' },
 
-  {
-    'mg979/vim-visual-multi',
-    -- https://github.com/mg979/vim-visual-multi/blob/b84a6d42c1c10678928b0bf8327f378c8bc8af5a/autoload/vm/plugs.vim
-    lazy = false,
-    keys = {
-      { '<C-A-k>', '<Plug>(VM-Add-Cursor-Up)', desc = 'VM Add Cursor Up' },
-      { '<C-A-j>', '<Plug>(VM-Add-Cursor-Down)', desc = 'VM Add Cursor Down' },
-      { '<C-A-l>', '<Plug>(VM-Reselect-Last)', desc = 'VM Reselect' },
-      { '<C-A-]>', '<Plug>(VM-Goto-Next)', desc = 'VM Next Cursor' },
-      { '<C-A-[>', '<Plug>(VM-Goto-Prev)', desc = 'VM Prev Cursor' },
-      -- Skip with q, Q <CA]> to go next cursor, and Tab to switch between extend mode and cursor mode
-    },
-    init = function()
-      vim.g.VM_default_mappings = 0
-      vim.g.VM_silent_exit = 1
-      -- vim.cmd([[
-      --   function! VM_Start()
-      --   nmap <buffer> <C-C> <Esc>
-      --   imap <buffer> <C-C> <Esc>
-      --   endfunction
+  -- {
+  --   'mg979/vim-visual-multi',
+  --   -- https://github.com/mg979/vim-visual-multi/blob/b84a6d42c1c10678928b0bf8327f378c8bc8af5a/autoload/vm/plugs.vim
+  --   lazy = false,
+  --   keys = {
+  --     { '<C-A-k>', '<Plug>(VM-Add-Cursor-Up)', desc = 'VM Add Cursor Up' },
+  --     { '<C-A-j>', '<Plug>(VM-Add-Cursor-Down)', desc = 'VM Add Cursor Down' },
+  --     { '<C-A-l>', '<Plug>(VM-Reselect-Last)', desc = 'VM Reselect' },
+  --     { '<C-A-]>', '<Plug>(VM-Goto-Next)', desc = 'VM Next Cursor' },
+  --     { '<C-A-[>', '<Plug>(VM-Goto-Prev)', desc = 'VM Prev Cursor' },
+  --     -- Skip with q, Q <CA]> to go next cursor, and Tab to switch between extend mode and cursor mode
+  --   },
+  --   init = function()
+  --     vim.g.VM_default_mappings = 0
+  --     vim.g.VM_silent_exit = 1
+  --     -- vim.cmd([[
+  --     --   function! VM_Start()
+  --     --   nmap <buffer> <C-C> <Esc>
+  --     --   imap <buffer> <C-C> <Esc>
+  --     --   endfunction
 
-      --   function! VM_Exit()
-      --   nunmap <buffer> <C-C>
-      --   iunmap <buffer> <C-C>
-      --   endfunction
-      -- ]])
+  --     --   function! VM_Exit()
+  --     --   nunmap <buffer> <C-C>
+  --     --   iunmap <buffer> <C-C>
+  --     --   endfunction
+  --     -- ]])
+  --   end,
+  -- },
+  {
+    'jake-stewart/multicursor.nvim',
+    config = function()
+      local mc = require('multicursor-nvim')
+
+      mc.setup()
+
+      -- Add cursors above/below the main cursor.
+      vim.keymap.set({ 'n', 'v' }, '<C-A-k>', function()
+        mc.addCursor('k')
+      end)
+      vim.keymap.set({ 'n', 'v' }, '<C-A-j>', function()
+        mc.addCursor('j')
+      end)
+
+      -- Add a cursor and jump to the next word under cursor.
+      vim.keymap.set({ 'n', 'v' }, '<C-A-n>', function()
+        mc.addCursor('*')
+      end)
+
+      vim.keymap.set({ 'n', 'v' }, '<C-A-p>', function()
+        mc.addCursor('#')
+      end)
+
+      -- Jump to the next word under cursor but do not add a cursor.
+      vim.keymap.set({ 'n', 'v' }, '<C-A-s>', function()
+        mc.skipCursor('*')
+      end)
+
+      -- Rotate the main cursor.
+      vim.keymap.set({ 'n', 'v' }, '<C-A-l>', mc.nextCursor)
+      vim.keymap.set({ 'n', 'v' }, '<C-A-h>', mc.prevCursor)
+
+      -- Delete the main cursor.
+      vim.keymap.set({ 'n', 'v' }, '<C-A-x>', mc.deleteCursor)
+
+      -- Add and remove cursors with control + left click.
+      vim.keymap.set('n', '<c-leftmouse>', mc.handleMouse)
+
+      vim.keymap.set({ 'n', 'v' }, '<C-A-u>', function()
+        if mc.cursorsEnabled() then
+          -- Stop other cursors from moving.
+          -- This allows you to reposition the main cursor.
+          mc.disableCursors()
+        else
+          mc.addCursor()
+        end
+      end)
+
+      vim.keymap.set('n', '<esc>', function()
+        if not mc.cursorsEnabled() then
+          mc.enableCursors()
+        elseif mc.hasCursors() then
+          mc.clearCursors()
+        else
+          -- Default <esc> handler.
+        end
+      end)
+
+      -- Align cursor columns.
+      -- vim.keymap.set('n', '<C-A-a>', mc.alignCursors)
+
+      -- Split visual selections by regex.
+      vim.keymap.set('v', '<C-A-s>', mc.splitCursors)
+
+      -- Append/insert for each line of visual selections.
+      vim.keymap.set('v', 'I', mc.insertVisual)
+      vim.keymap.set('v', 'A', mc.appendVisual)
+
+      -- match new cursors within visual selections by regex.
+      vim.keymap.set('v', 'M', mc.matchCursors)
+
+      -- Rotate visual selection contents.
+      vim.keymap.set('v', '<leader>Vt', function()
+        mc.transposeCursors(1)
+      end)
+      vim.keymap.set('v', '<leader>VT', function()
+        mc.transposeCursors(-1)
+      end)
+
+      -- Customize how cursors look.
+      -- vim.api.nvim_set_hl(0, 'MultiCursorCursor', { link = 'Cursor' })
+      -- vim.api.nvim_set_hl(0, 'MultiCursorVisual', { link = 'Visual' })
+      -- vim.api.nvim_set_hl(0, 'MultiCursorDisabledCursor', { link = 'Visual' })
+      -- vim.api.nvim_set_hl(0, 'MultiCursorDisabledVisual', { link = 'Visual' })
     end,
   },
 

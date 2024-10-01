@@ -7,7 +7,7 @@ return {
     opts = {
       modes = {
         char = {
-          -- enabled = true,
+          enabled = false,
           -- config = function(opts)
           --   -- autohide flash when in operator-pending mode
           --   opts.autohide = opts.autohide or (vim.fn.mode(true):find('no') and vim.v.operator == 'y')
@@ -129,6 +129,7 @@ return {
 
   {
     'kevinhwang91/nvim-hlslens',
+    enabled = false,
     dependencies = {
       'haya14busa/vim-asterisk',
       'petertriho/nvim-scrollbar',
