@@ -7,28 +7,35 @@ return {
     opts = {
       modes = {
         char = {
-          -- enabled = true,
-          -- config = function(opts)
-          --   -- autohide flash when in operator-pending mode
-          --   opts.autohide = opts.autohide or (vim.fn.mode(true):find('no') and vim.v.operator == 'y')
-
-          --   -- disable jump labels when not enabled, when using a count,
-          --   -- or when recording/executing registers
-          --   opts.jump_labels = opts.jump_labels
-          --     and vim.v.count == 0
-          --     and vim.fn.reg_executing() == ''
-          --     and vim.fn.reg_recording() == ''
-
-          --   -- Show jump labels only in operator-pending mode
-          --   -- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
-          -- end,
           autohide = true,
-          -- jump_labels = true,
-          -- multi_line = true,
-          -- -- by default all keymaps are enabled, but you can disable some of them,
-          -- -- by removing them from the list.
-          -- keys = { 'f', 'F', 't', 'T', ';' },
-          -- highlight = { backdrop = false, matches = false },
+          jump_labels = true,
+          ---@alias Flash.CharActions table<string, "next" | "prev" | "right" | "left">
+          keys = { 'f', 'F', 't', 'T', ';' },
+          label = { exclude = 'hjkliardcebwWBEg' },
+          char_actions = function(motion)
+            return {
+              --[[ [";"] = "next", -- set to `right` to always go right ]]
+              --[[ [","] = "prev", -- set to `left` to always go left ]]
+              -- clever-f style
+              [motion:lower()] = 'next',
+              [motion:upper()] = 'prev',
+            }
+          end,
+          -- dynamic configuration for ftFT motions
+          config = function(opts)
+            -- autohide flash when in operator-pending mode
+            -- opts.autohide = (vim.fn.mode(true):find('no') and vim.v.operator == 'y')
+
+            -- Show jump labels when not in operator-pending mode, not recording, and not executing
+            opts.jump_labels = vim.v.count == 0
+              and not vim.fn.mode(true):find('o')
+              and vim.fn.reg_executing() == ''
+              and vim.fn.reg_recording() == ''
+          end,
+          highlight = {
+            backdrop = false,
+            matches = false,
+          },
         },
         search = {
           enabled = false, -- enable flash for search
@@ -51,6 +58,15 @@ return {
           require('flash').jump()
         end,
         desc = 'Flash',
+      },
+      {
+        'S',
+        mode = { 'o' },
+        function()
+          -- show labeled treesitter nodes around the cursor
+          require('flash').jump()
+        end,
+        desc = 'Flash Treesitter',
       },
       {
         'S',

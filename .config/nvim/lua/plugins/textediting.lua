@@ -5,18 +5,33 @@ return {
     -- cr_ to change between cases
     'tpope/vim-abolish',
     lazy = false,
-    keys = {
-      { 'crs', '<Plug>(abolish-coerce-word)s', desc = 'snake_case', mode = { 'n', 'x' } },
-      { 'crm', '<Plug>(abolish-coerce-word)m', desc = 'MixedCase', mode = { 'n', 'x' } },
-      { 'crc', '<Plug>(abolish-coerce-word)c', desc = 'camelCase', mode = { 'n', 'x' } },
-      { 'cru', '<Plug>(abolish-coerce-word)u', desc = 'SNAKE_UPPERCASE', mode = { 'n', 'x' } },
-      { 'crd', '<Plug>(abolish-coerce-word)d', desc = 'dash-case (irreversible)', mode = { 'n', 'x' } },
-      { 'crt', '<Plug>(abolish-coerce-word)t', desc = 'Title Case (irreversible)', mode = { 'n', 'x' } },
-      { 'cr<Space>', '<Plug>(abolish-coerce-word)<Space>', desc = 'Space Case (irreversible)', mode = { 'n', 'x' } },
-    },
     config = function()
       -- Remap with which-key because I never remember these
       vim.g.abolish_no_mappings = 1
+    end,
+  },
+
+  {
+    'gregorias/coerce.nvim',
+    lazy = false,
+    keys = {
+      {
+        'gcr',
+        function()
+          vim.api.nvim_feedkeys('`[' .. vim.fn.strpart(vim.fn.getregtype(), 0, 1) .. '`]', 'n', false)
+        end,
+        desc = 'Visually select last coersion',
+      },
+    },
+    opts = {
+      default_mode_keymap_prefixes = {
+        normal_mode = 'cr',
+        motion_mode = '<leader>C',
+        visual_mode = 'gr',
+      },
+    },
+    init = function()
+      vim.keymap.del('v', 'gra')
     end,
   },
 
