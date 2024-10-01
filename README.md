@@ -9,17 +9,18 @@
    - nerd font (operator mono)
 
 1. Ubuntu setup:
-  - `sudo apt install fzf libfuse2 exa gcc bat`
-  - `sudo apt-get install -y make build-essential fd-find ripgrep libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev`
-  - `curl https://pyenv.run | bash`
-    - `pyenv install 3.12`
-    - `pyenv virtualenv nvim` `pyenv activate nvim`
-    - `pip install -r .config/nvim/requrements.txt`
-  - neovim
-    - `wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim.appimage`
-    - `chmod u+x nvim.appimage`
-    - `sudo mv nvim.appimage /usr/local/bin/nvim`
- - nvm (check version) `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash`
+
+- `sudo apt install fzf libfuse2 exa gcc bat`
+- `sudo apt-get install -y make build-essential fd-find ripgrep libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev`
+- `curl https://pyenv.run | bash`
+  - `pyenv install 3.12`
+  - `pyenv virtualenv nvim` `pyenv activate nvim`
+  - `pip install -r .config/nvim/requrements.txt`
+- neovim
+  - `wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim.appimage`
+  - `chmod u+x nvim.appimage`
+  - `sudo mv nvim.appimage /usr/local/bin/nvim`
+- nvm (check version) `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash`
 
 1. Shell:
 
@@ -71,6 +72,8 @@
       - [git-cliff](https://github.com/orhun/git-cliff) - A highly customizable Changelog Generator that follows Conventional Commit specifications ⛰️
       - [just](https://github.com/casey/just) - Just a command runner
       - [gitoxide](https://github.com/Byron/gitoxide) - An idiomatic, lean, fast & safe pure Rust implementation of Git
+      - [delta](https://github.com/dandavison/delta/releases) - A syntax-highlighting pager for git, diff, grep, and blame output
+        - setup: <https://dandavison.github.io/delta/configuration.html>
 - Other shell tools
   - [fzf](https://github.com/junegunn/fzf) fuzzy finder for shell and integrates with other tools
   - [helix editor](https://docs.helix-editor.com/install.html) nice multi-cursor editing; useful inside neovim

@@ -51,7 +51,7 @@ return {
           ['<Down>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           ['<C-c>'] = cmp.mapping.close(),
           ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-A-s>'] = cmp.mapping.complete({
+          ['<A-s>'] = cmp.mapping.complete({
             config = {
               sources = {
                 { name = 'luasnip' },
