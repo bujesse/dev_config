@@ -1,12 +1,12 @@
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
-  vim.keymap.set('t', [[<C-\>]], [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', [[<C-x>]], [[<C-\><C-n>]], opts)
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
   vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
   vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
   vim.keymap.set('t', '<C-q>', [[<Cmd>wincmd q<CR>]], opts)
-  vim.keymap.set('t', '<C-\\><C-\\>', [[<Cmd>wincmd q<CR>]], opts)
+  vim.keymap.set('t', '<C-f>', [[<Cmd>wincmd q<CR>]], opts)
 end
 
 return {
@@ -17,11 +17,11 @@ return {
     config = function()
       require('toggleterm').setup({
         shell = '/usr/bin/zsh',
-        open_mapping = [[<leader>tt]],
+        open_mapping = [[<c-f>]],
         insert_mappings = false,
         size = function(term)
           if term.direction == 'horizontal' then
-            return 15
+            return 20
           elseif term.direction == 'vertical' then
             return vim.o.columns * 0.4
           end
@@ -58,7 +58,7 @@ return {
 
       function _helix_toggle()
         local filename = vim.api.nvim_buf_get_name(0)
-        local line, column = unpack(vim.api.nvim_win_get_cursor(0))
+        local line, column = unpack(vim.api.nvim_win_get_cursor(-1))
         local helix = Terminal:new({
           cmd = 'hx ' .. filename .. ':' .. line .. ':' .. column,
           dir = 'git_dir',

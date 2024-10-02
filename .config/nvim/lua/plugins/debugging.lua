@@ -82,16 +82,16 @@ return {
       },
     },
     keys = {
-      { '<Space>db', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = 'Toggle Breakpoint' },
+      { '<C-b>', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = 'Toggle Breakpoint' },
       {
         '<Space>dB',
         "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>",
-        desc = 'Toggle Breakpoint',
+        desc = 'Breakpoint Condition',
       },
       {
         '<Space>dL',
         "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>",
-        desc = 'Toggle Breakpoint',
+        desc = 'Breakpoint Log',
       },
 
       { '<F5>', "<cmd>lua require'dap'.step_into()<cr>", desc = 'Step Into' },

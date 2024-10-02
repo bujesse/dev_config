@@ -30,6 +30,6 @@ windows:
     options: {}
     panes:
       - focus: "true"
-        shell_command: docker compose up
+        shell_command: docker compose -f docker-compose.dev.yml up
     start_directory: /home/bujesse/dev/execution-ui
     window_name: ui-docker
