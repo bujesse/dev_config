@@ -76,6 +76,26 @@ return {
         helix:toggle()
       end
 
+      function _typing_test_toggle()
+        local tt = Terminal:new({
+          cmd = 'tt',
+          dir = 'git_dir',
+          hidden = true,
+          direction = 'float',
+          size = 10,
+          float_opts = {
+            border = 'double',
+            width = 80,
+            height = 5,
+            col = 10,
+          },
+          on_open = function(term)
+            vim.keymap.set('t', '<C-Backspace>', '<C-w>', { buffer = term.bufnr })
+          end,
+        })
+        tt:toggle()
+      end
+
       local vertical = Terminal:new({
         cmd = 'zsh',
         dir = 'git_dir',
@@ -94,6 +114,12 @@ return {
         '<leader>h',
         '<cmd>lua _helix_toggle()<CR>',
         { desc = 'Helix editor', noremap = true, silent = true }
+      )
+      vim.api.nvim_set_keymap(
+        'n',
+        '<leader>tt',
+        '<cmd>lua _typing_test_toggle()<CR>',
+        { desc = 'Typing Test', noremap = true, silent = true }
       )
       vim.api.nvim_set_keymap(
         'n',

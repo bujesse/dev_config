@@ -91,7 +91,7 @@ return {
       },
     }, -- your configuration
     keys = {
-      { 'yot', '<cmd>TailwindConcealToggle<CR>', desc = 'Toggle TailwindCSS Concealer' },
+      { 'yoT', '<cmd>TailwindConcealToggle<CR>', desc = 'Toggle TailwindCSS Concealer' },
       { '<Space>tt', '<cmd>Telescope tailwind classes<CR>', desc = 'Search TailwindCSS classes' },
     },
   },

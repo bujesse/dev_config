@@ -243,7 +243,7 @@ return {
       render = 'virtual',
     },
     keys = {
-      { 'yoc', '<CMD>HighlightColors Toggle<CR>', desc = 'Toggle Colorizer' },
+      { 'yoC', '<CMD>HighlightColors Toggle<CR>', desc = 'Toggle Colorizer' },
     },
   },
 }
