@@ -9,7 +9,7 @@ M.autocommands = {
     },
     {
       event = 'TextYankPost',
-      opts = { pattern = '*', command = "lua require('vim.highlight').on_yank({higroup = 'IncSearch', timeout = 300})" },
+      opts = { pattern = '*', command = "lua require('vim.hl').on_yank({higroup = 'IncSearch', timeout = 300})" },
     },
     { event = 'FileType', opts = { pattern = 'qf', command = 'set nobuflisted' } },
     {

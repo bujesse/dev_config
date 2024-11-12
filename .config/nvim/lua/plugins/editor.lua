@@ -523,39 +523,6 @@ return {
     },
   },
 
-  -- symbols outline
-  {
-    'simrat39/symbols-outline.nvim',
-    opts = {
-      autofold_depth = 1,
-      keymaps = {
-        close = { '<Esc>', 'q' },
-        goto_location = '<Cr>',
-        focus_location = 'o',
-        hover_symbol = 'gh',
-        toggle_preview = 'P',
-        rename_symbol = 'r',
-        code_actions = 'a',
-        fold = 'h',
-        unfold = 'l',
-        fold_all = 'zM',
-        unfold_all = 'zR',
-        fold_reset = 'R',
-      },
-    },
-    keys = {
-      { '<Leader>2', '<Cmd>SymbolsOutline<CR>', desc = 'Symbols Outline' },
-    },
-    init = function()
-      local augroup = vim.api.nvim_create_augroup('CustomSymbolsOutline', { clear = true })
-      vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
-        group = augroup,
-        pattern = 'Outline',
-        command = 'set foldcolumn=0',
-      })
-    end,
-  },
-
   -- harpoon
   {
     'ThePrimeagen/harpoon',

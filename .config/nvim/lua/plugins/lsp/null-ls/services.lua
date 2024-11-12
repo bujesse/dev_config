@@ -128,7 +128,7 @@ function M.register_custom_sources()
         fn = require('ts-node-action').available_actions,
       },
     },
-    require('typescript.extensions.null-ls.code-actions'),
+    -- require('typescript.extensions.null-ls.code-actions'),
     {
       name = 'templ',
       meta = {
