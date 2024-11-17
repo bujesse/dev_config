@@ -335,32 +335,20 @@ return {
   {
     'andrewferrier/debugprint.nvim',
     opts = {
-      create_keymaps = false,
+      keymaps = {
+        normal = {
+          delete_debug_prints = '<Space>-',
+          plain_below = '<Space>dP',
+          plain_above = nil,
+          variable_below = '<Space>dp',
+          variable_above = 'nil',
+          variable_below_alwaysprompt = nil,
+          variable_above_alwaysprompt = nil,
+          textobj_below = nil,
+          textobj_above = nil,
+        },
+      },
       move_to_debugline = true,
-    },
-    keys = {
-      -- {
-      --   '<Space>dp',
-      --   function()
-      --     return require('debugprint').debugprint()
-      --   end,
-      --   expr = true,
-      --   desc = 'Debug print string',
-      -- },
-      {
-        '<Space>dp',
-        function()
-          return require('debugprint').debugprint({ variable = true })
-        end,
-        expr = true,
-        mode = { 'n', 'x' },
-        desc = 'Debug print variable',
-      },
-      {
-        '<Space>d-',
-        ':DeleteDebugPrints<CR>',
-        desc = 'Delete debug prints',
-      },
     },
   },
 }

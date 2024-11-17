@@ -314,19 +314,21 @@ return {
           },
         },
         undo = {
-          use_delta = true,
-          use_custom_command = nil, -- setting this implies `use_delta = false`. Accepted format is: { "bash", "-c", "echo '$DIFF' | delta" }
-          side_by_side = true,
-          layout_strategy = 'vertical',
-          layout_config = {
-            preview_height = 0.8,
+          mappings = {
+            i = {
+              ['<cr>'] = require('telescope-undo.actions').restore,
+              ['<C-y>'] = require('telescope-undo.actions').yank_deletions,
+              ['<C-r>'] = require('telescope-undo.actions').yank_additions,
+            },
           },
+          side_by_side = true,
+          -- layout_strategy = 'vertical',
+          -- layout_config = {
+          --   preview_height = 0.8,
+          -- },
           vim_diff_opts = {
             ctxlen = vim.o.scrolloff,
           },
-          entry_format = 'state #$ID, $STAT, $TIME',
-          time_format = '',
-          saved_only = false,
         },
       },
     })
@@ -364,7 +366,12 @@ return {
       '<Cmd>lua require("telescope").extensions.recent_files.pick({ only_cwd = true })<CR>',
       { desc = 'Recent Files' }
     )
-    vim.keymap.set('n', '<Space>u', '<Cmd>Telescope undo<CR>', { desc = 'Undo' })
+    vim.keymap.set(
+      'n',
+      '<Space>u',
+      '<Cmd>lua require("telescope").extensions.undo.undo({ side_by_side = true })<CR>',
+      { desc = 'Undo' }
+    )
 
     -- Currently using Glance for goto lsp
     -- vim.keymap.set('n', 'gr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', { desc = 'Lsp References' })

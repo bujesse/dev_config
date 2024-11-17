@@ -11,7 +11,7 @@ return {
           jump_labels = true,
           ---@alias Flash.CharActions table<string, "next" | "prev" | "right" | "left">
           keys = { 'f', 'F', 't', 'T', ';' },
-          label = { exclude = 'hjkliardcebwWBEg' },
+          label = { exclude = 'hjkliardcebwWBEgx' },
           char_actions = function(motion)
             return {
               --[[ [";"] = "next", -- set to `right` to always go right ]]
