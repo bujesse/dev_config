@@ -161,6 +161,7 @@ return {
   -- indent guides
   {
     'lukas-reineke/indent-blankline.nvim',
+    enabled = false,
     main = 'ibl',
     event = 'BufReadPost',
     opts = {
@@ -206,6 +207,7 @@ return {
   -- smooth scroll
   {
     'karb94/neoscroll.nvim',
+    enabled = false,
     config = function()
       local neoscroll = require('neoscroll')
       neoscroll.setup({

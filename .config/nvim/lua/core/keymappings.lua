@@ -171,8 +171,8 @@ function M.config_keys()
       -- format entire file
       ['+'] = 'gg=G<C-o>zz',
 
-      -- Move buf to new tab
-      ['<C-z>'] = { '<Plug>Zoom', { noremap = false } },
+      -- Move buf to new tab (replaced with snacks.nvim zoom)
+      -- ['<C-z>'] = { '<Plug>Zoom', { noremap = false } },
 
       -- Close win
       ['<C-q>'] = '<C-w>q',
@@ -246,9 +246,9 @@ function M.config_keys()
       ['gD'] = '<C-w>o<C-w>]<C-w>L',
 
       -- Reload keymappings
-      ['<Leader>.k'] = ':lua R("core.keymappings").config()<CR>',
+      -- ['<Leader>rk'] = ':lua R("core.keymappings").config()<CR>',
 
-      ['<Leader>.,'] = ':wa<CR>:lua R("what-key").setup()<CR>',
+      -- ['<Leader>.,'] = ':wa<CR>:lua R("what-key").setup()<CR>',
 
       ['yor'] = { '<Cmd>set rnu!<Cr>', { desc = 'Toggle Relative Line #' } },
 
