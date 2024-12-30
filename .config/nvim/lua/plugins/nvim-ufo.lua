@@ -35,6 +35,7 @@ return {
       'kevinhwang91/promise-async',
       {
         'luukvbaal/statuscol.nvim',
+        enabled = false,
         dependencies = {
           'gitsigns.nvim',
         },

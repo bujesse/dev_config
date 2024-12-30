@@ -318,8 +318,8 @@ function M.setup_servers()
         },
       })
     end,
-    ['ruff_lsp'] = function()
-      lspconfig.ruff_lsp.setup({})
+    ['ruff'] = function()
+      lspconfig.ruff.setup({})
     end,
     ['rust_analyzer'] = function()
       -- set up by rust-tools

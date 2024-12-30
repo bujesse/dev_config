@@ -137,9 +137,13 @@ return {
   {
     'petertriho/nvim-scrollbar',
     config = function()
-      require('scrollbar').setup()
-      require('scrollbar.handlers.gitsigns').setup()
-      require('scrollbar.handlers.search').setup()
+      require('scrollbar').setup({
+        handlers = {
+          diagnostic = false,
+          gitsigns = true, -- Requires gitsigns
+          search = true, -- Requires hlslens
+        },
+      })
     end,
   },
 
