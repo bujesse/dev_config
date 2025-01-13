@@ -190,8 +190,8 @@ function M.config_keys()
       ['[t'] = '<Cmd>tabp<CR>',
 
       -- Quick Begin/End of line
-      ['L'] = '$',
-      ['H'] = '^',
+      -- ['L'] = '$',
+      -- ['H'] = '^',
 
       -- Fix the last paste
       ['gp'] = '`[v`]=',

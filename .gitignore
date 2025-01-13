@@ -40,3 +40,4 @@ lazygit.tar.gz
 .config/sqlitebrowser
 .config/QtProject.conf
 .config/dlv
+.config/htop/htoprc
