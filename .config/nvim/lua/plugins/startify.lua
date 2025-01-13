@@ -15,6 +15,8 @@ return {
       }
 
       vim.g.startify_bookmarks = {
+        { gt = '~/dev_config/.config/tmuxp' },
+        { gT = '~/dev_config/.config/tmux/tmux.conf' },
         { gn = '~/dev_config/.config/nvim/init.lua' },
         { gi = '~/.ideavimrc' },
         { gz = '~/.zshrc' },
@@ -22,7 +24,6 @@ return {
         { ga = '/mnt/c/Users/Jesse/AppData/Roaming/alacritty/alacritty.yml' },
         { gf = '~/dev_config/.config/fish/config.fish' },
         { gr = '~/dev_config/README.md' },
-        { gt = '~/dev_config/.config/tmux/tmux.conf' },
       }
 
       vim.g.startify_commands = {

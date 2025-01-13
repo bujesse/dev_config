@@ -121,12 +121,13 @@ return {
   -- autopair
   {
     'windwp/nvim-autopairs',
-    event = 'InsertEnter',
     config = true,
     opts = {
-      check_ts = false,
-      enable_check_bracket_line = false,
-      map_c_h = false, -- Map the <C-h> key to delete a pair
+      disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
+      disable_in_visualblock = true,
+      check_ts = true,
+      enable_check_bracket_line = true,
+      map_c_h = true, -- Map the <C-h> key to delete a pair
       map_c_w = false, -- map <c-w> to delete a pair if possible
       fast_wrap = {
         map = '<M-l>',
@@ -144,28 +145,6 @@ return {
     },
     -- use opts = {} for passing setup options
     -- this is equivalent to setup({}) function
-  },
-
-  {
-    'altermo/ultimate-autopair.nvim',
-    enable = false,
-    event = { 'InsertEnter', 'CmdlineEnter' },
-    -- branch = 'v0.6',
-    opts = {
-      fastwarp = {
-        faster = true,
-        map = '<A-l>',
-        rmap = '<A-h>',
-        nocursormove = false,
-      },
-      tabout = {
-        enable = true,
-        map = "<A-'>", --string or table
-        cmap = "<A-'>", --string or table
-        hopout = true,
-        -- (|) > tabout > ()|
-      },
-    },
   },
 
   -- guess indent
