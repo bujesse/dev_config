@@ -52,6 +52,10 @@ function M.load(keymaps)
   end
 end
 
+function M.unmap()
+  vim.keymap.del('n', 'nil')
+end
+
 M.keys = {}
 
 function M.config_keys()
@@ -333,6 +337,8 @@ end
 function M.config()
   M.config_keys()
   M.load(M.keys)
+
+  M.unmap()
 end
 
 return M
