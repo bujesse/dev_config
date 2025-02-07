@@ -61,7 +61,18 @@ return {
               ['<m-i>'] = { 'toggle_ignored', mode = { 'i', 'n' } },
               ['<C-m>'] = { 'toggle_maximize', mode = { 'i', 'n' } },
               ['<C-f>'] = { 'toggle_live', mode = { 'i', 'n' } },
-              ['<C-g>'] = { { 'pick_win', 'jump' } },
+              ['<C-g>'] = {
+                function(picker)
+                  picker:close()
+                  local picked_window_id = require('window-picker').pick_window({
+                    autoselect_one = true,
+                    include_current_win = true,
+                  }) or vim.api.nvim_get_current_win()
+                  vim.api.nvim_set_current_win(picked_window_id)
+                  picker:action('edit')
+                end,
+                mode = { 'i', 'n' },
+              },
             },
           },
         },
@@ -127,9 +138,9 @@ return {
       {
         '<Space>g',
         function()
-          Snacks.picker.git_files()
+          jnacks.picker.git_status()
         end,
-        desc = 'Git Files',
+        desc = 'Git Status',
       },
       {
         '<Space>G',
@@ -171,8 +182,16 @@ return {
         function()
           Snacks.picker.grep_word()
         end,
-        desc = 'Visual selection or word under cursor',
+        desc = 'Word under cursor',
         mode = { 'n', 'x' },
+      },
+      {
+        '<Space>f',
+        function()
+          Snacks.picker.grep_word()
+        end,
+        desc = 'Visual selection',
+        mode = { 'x' },
       },
       {
         '<Space>ti',
@@ -182,11 +201,18 @@ return {
         desc = 'Icons',
       },
       {
-        '<Space>tj',
+        '<Space>j',
         function()
           Snacks.picker.jumps()
         end,
         desc = 'Jumps',
+      },
+      {
+        '<Space>p',
+        function()
+          Snacks.picker.pickers()
+        end,
+        desc = 'Pickers',
       },
       {
         '<Space>tk',
