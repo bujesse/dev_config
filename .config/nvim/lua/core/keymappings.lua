@@ -53,7 +53,9 @@ function M.load(keymaps)
 end
 
 function M.unmap()
-  vim.keymap.del('n', 'nil')
+  pcall(function()
+    vim.keymap.del('n', 'nil')
+  end)
 end
 
 M.keys = {}

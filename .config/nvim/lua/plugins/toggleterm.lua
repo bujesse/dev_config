@@ -158,7 +158,7 @@ return {
         open = 'current',
         focus = 'first',
       },
-      callbacks = {
+      hooks = {
         pre_open = function()
           -- Close toggleterm when an external open request is received
           require('toggleterm').toggle(0)

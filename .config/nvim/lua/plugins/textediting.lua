@@ -201,7 +201,7 @@ return {
     },
     opts = function()
       local utils = require('yanky.utils')
-      local mapping = require('yanky.telescope.mapping')
+      -- local mapping = require('yanky.telescope.mapping')
       return {
         highlight = {
           on_put = false,
@@ -214,13 +214,13 @@ return {
         preserve_cursor_position = {
           enabled = true,
         },
-        picker = {
-          telescope = {
-            mappings = {
-              default = mapping.set_register(utils.get_default_register()),
-            },
-          },
-        },
+        -- picker = {
+        --   telescope = {
+        --     mappings = {
+        --       default = mapping.set_register(utils.get_default_register()),
+        --     },
+        --   },
+        -- },
       }
     end,
   },

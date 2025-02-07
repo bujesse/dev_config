@@ -65,33 +65,33 @@ function M.table_contains(table, val)
   return false
 end
 
--- Move hover docs to new buffer
-M.hover = function()
-  local vim_util = require('vim.lsp.util')
-  vim.lsp.buf_request(0, 'textDocument/hover', vim_util.make_position_params(), function(_, result, ctx, config)
-    config = config or {}
-    config.focus_id = ctx.method
-    if not (result and result.contents) then
-      -- return { 'No information available' }
-      return
-    end
-    local markdown_lines = vim_util.convert_input_to_markdown_lines(result.contents)
-    -- trims beg and end of whole content
-    markdown_lines = vim_util.trim_empty_lines(markdown_lines)
-    if vim.tbl_isempty(markdown_lines) then
-      return
-    end
+-- -- Move hover docs to new buffer
+-- M.hover = function()
+--   local vim_util = require('vim.lsp.util')
+--   vim.lsp.buf_request(0, 'textDocument/hover', vim_util.make_position_params(0, 'utf-8'), function(_, result, ctx, config)
+--     config = config or {}
+--     config.focus_id = ctx.method
+--     if not (result and result.contents) then
+--       -- return { 'No information available' }
+--       return
+--     end
+--     local markdown_lines = vim_util.convert_input_to_markdown_lines(result.contents)
+--     -- trims beg and end of whole content
+--     markdown_lines = vim_util.trim_empty_lines(markdown_lines)
+--     if vim.tbl_isempty(markdown_lines) then
+--       return
+--     end
 
-    local ft = vim.bo.filetype
+--     local ft = vim.bo.filetype
 
-    -- print(dump(markdown_lines))
-    vim.api.nvim_command([[ new ]])
-    vim.api.nvim_buf_set_lines(0, 0, 1, false, markdown_lines)
-    vim.api.nvim_command('setlocal ft=' .. ft .. ' buftype+=nofile nobl conceallevel=2 concealcursor+=n')
-    vim.api.nvim_command([[ nnoremap <buffer>q <C-W>c ]])
-    -- vim.api.nvim_command [[ setlocal ft=lsp_markdown ]]
-  end)
-end
+--     -- print(dump(markdown_lines))
+--     vim.api.nvim_command([[ new ]])
+--     vim.api.nvim_buf_set_lines(0, 0, 1, false, markdown_lines)
+--     vim.api.nvim_command('setlocal ft=' .. ft .. ' buftype+=nofile nobl conceallevel=2 concealcursor+=n')
+--     vim.api.nvim_command([[ nnoremap <buffer>q <C-W>c ]])
+--     -- vim.api.nvim_command [[ setlocal ft=lsp_markdown ]]
+--   end)
+-- end
 
 -- Return the directory of the current buffer
 M.get_buffer_dir = function()

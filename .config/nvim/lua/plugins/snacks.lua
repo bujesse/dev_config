@@ -42,8 +42,166 @@ return {
       statuscolumn = { enabled = true },
       words = { enabled = false },
       styles = {},
+      explorer = {
+        replace_netrw = true,
+      },
+      picker = {
+        win = {
+          -- input window
+          input = {
+            keys = {
+              -- close the picker on ESC instead of going to normal mode,
+              ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
+              ['<c-d>'] = { 'preview_scroll_down', mode = { 'i', 'n' } },
+              ['<c-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
+              ['<C-_>'] = { 'toggle_focus', mode = { 'i', 'n' } },
+              ['<C-p>'] = { 'history_back', mode = { 'i', 'n' } },
+              ['<C-n>'] = { 'history_forward', mode = { 'i', 'n' } },
+              ['<m-h>'] = { 'toggle_hidden', mode = { 'i', 'n' } },
+              ['<m-i>'] = { 'toggle_ignored', mode = { 'i', 'n' } },
+              ['<C-m>'] = { 'toggle_maximize', mode = { 'i', 'n' } },
+              ['<C-f>'] = { 'toggle_live', mode = { 'i', 'n' } },
+              ['<C-g>'] = { { 'pick_win', 'jump' } },
+            },
+          },
+        },
+      },
     },
     keys = {
+      {
+        '<Space>o',
+        function()
+          Snacks.picker.smart()
+        end,
+        desc = 'Smart Find Files',
+      },
+      {
+        '<Space>O',
+        function()
+          Snacks.picker.files({ hidden = true, ignored = true })
+        end,
+        desc = 'Find All Files',
+      },
+      {
+        '<Space>m',
+        function()
+          Snacks.picker.recent()
+        end,
+        desc = 'Recent Files',
+      },
+      {
+        '<Space>tm',
+        function()
+          Snacks.picker.marks()
+        end,
+        desc = 'Marks',
+      },
+      {
+        '<Space>f',
+        function()
+          Snacks.picker.grep({ regex = false })
+        end,
+        desc = 'Fuzzy Grep',
+      },
+      {
+        '<Space>tr',
+        function()
+          Snacks.picker.grep()
+        end,
+        desc = 'Grep Regex',
+      },
+      {
+        '<Space>h',
+        function()
+          Snacks.picker.help()
+        end,
+        desc = 'Help',
+      },
+      {
+        "<Space>'",
+        function()
+          Snacks.picker.resume()
+        end,
+        desc = 'Resume',
+      },
+      {
+        '<Space>g',
+        function()
+          Snacks.picker.git_files()
+        end,
+        desc = 'Git Files',
+      },
+      {
+        '<Space>G',
+        function()
+          Snacks.picker.git_diff()
+        end,
+        desc = 'Git Diff (Hunks)',
+      },
+      {
+        '<Space>u',
+        function()
+          Snacks.picker.undo()
+        end,
+        desc = 'Undo History',
+      },
+      {
+        '<Space>/',
+        function()
+          Snacks.picker.lines()
+        end,
+        desc = 'Buffer Lines',
+      },
+      {
+        '<Space>tb',
+        function()
+          Snacks.picker.buffers()
+        end,
+        desc = 'Buffers',
+      },
+      {
+        '<Space>tB',
+        function()
+          Snacks.picker.grep_buffers()
+        end,
+        desc = 'Grep Open Buffers',
+      },
+      {
+        '<Space>tu',
+        function()
+          Snacks.picker.grep_word()
+        end,
+        desc = 'Visual selection or word under cursor',
+        mode = { 'n', 'x' },
+      },
+      {
+        '<Space>ti',
+        function()
+          Snacks.picker.icons()
+        end,
+        desc = 'Icons',
+      },
+      {
+        '<Space>tj',
+        function()
+          Snacks.picker.jumps()
+        end,
+        desc = 'Jumps',
+      },
+      {
+        '<Space>tk',
+        function()
+          Snacks.picker.keymaps()
+        end,
+        desc = 'Keymaps',
+      },
+      {
+        '<leader>n',
+        function()
+          Snacks.picker.explorer()
+        end,
+        desc = 'Toggle Explorer',
+      },
       {
         '<leader>z',
         function()
@@ -135,8 +293,6 @@ return {
           Snacks.toggle.inlay_hints():map('yoh')
           Snacks.toggle.indent():map('yoi')
           Snacks.toggle.dim():map('yoD')
-
-          vim.keymap.del('n', 'nil')
         end,
       })
     end,

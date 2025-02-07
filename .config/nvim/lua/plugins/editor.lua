@@ -2,6 +2,7 @@ return {
   -- file explorer
   {
     'nvim-neo-tree/neo-tree.nvim',
+    enabled = false,
     dependencies = {
       's1n7ax/nvim-window-picker',
     },

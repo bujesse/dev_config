@@ -105,6 +105,7 @@ end
 
 return {
   'nvim-telescope/telescope.nvim',
+  enabled = false,
   dependencies = {
     'plenary.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
