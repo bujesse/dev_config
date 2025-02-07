@@ -46,14 +46,26 @@ return {
         replace_netrw = true,
       },
       picker = {
+        actions = {
+          find_in_dir = function(picker)
+            local target_dir = picker:dir()
+            print('Find in dir:', target_dir)
+            Snacks.picker.grep({
+              regex = false,
+              dirs = { target_dir },
+            })
+          end,
+        },
         win = {
           -- input window
           input = {
             keys = {
               -- close the picker on ESC instead of going to normal mode,
               ['<Esc>'] = { 'close', mode = { 'n', 'i' } },
-              ['<c-d>'] = { 'preview_scroll_down', mode = { 'i', 'n' } },
-              ['<c-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
+              ['<C-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
+              ['<C-d>'] = { 'preview_scroll_down', mode = { 'i', 'n' } },
+              ['<C-Up>'] = { 'list_scroll_up', mode = { 'i', 'n' } },
+              ['<C-Down>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
               ['<C-_>'] = { 'toggle_focus', mode = { 'i', 'n' } },
               ['<C-p>'] = { 'history_back', mode = { 'i', 'n' } },
               ['<C-n>'] = { 'history_forward', mode = { 'i', 'n' } },
@@ -67,6 +79,7 @@ return {
           list = {
             keys = {
               ['<C-g>'] = { { 'pick_win', 'edit' }, mode = { 'i', 'n' } },
+              ['<Space>f'] = { 'find_in_dir', mode = { 'n' } },
             },
           },
         },
@@ -132,9 +145,16 @@ return {
       {
         '<Space>g',
         function()
-          jnacks.picker.git_status()
+          Snacks.picker.git_status()
         end,
         desc = 'Git Status',
+      },
+      {
+        '<Space>tl',
+        function()
+          Snacks.picker.git_log()
+        end,
+        desc = 'Git Log',
       },
       {
         '<Space>G',
@@ -158,9 +178,23 @@ return {
         desc = 'Buffer Lines',
       },
       {
-        '<Space>tb',
+        '<Space><Space>',
         function()
-          Snacks.picker.buffers()
+          Snacks.picker.buffers({
+            focus = 'list',
+            win = {
+              input = {
+                keys = {
+                  ['d'] = 'bufdelete',
+                },
+              },
+              list = {
+                keys = {
+                  ['d'] = 'bufdelete',
+                },
+              },
+            },
+          })
         end,
         desc = 'Buffers',
       },
@@ -219,9 +253,9 @@ return {
         '<Space>s',
         function()
           Snacks.picker.lsp_symbols({
+            focus = 'list',
             layout = {
-              preset = 'sidebar',
-              position = 'right',
+              preset = 'right',
               preview = 'main',
             },
           })
