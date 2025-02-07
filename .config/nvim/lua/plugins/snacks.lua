@@ -61,18 +61,12 @@ return {
               ['<m-i>'] = { 'toggle_ignored', mode = { 'i', 'n' } },
               ['<C-m>'] = { 'toggle_maximize', mode = { 'i', 'n' } },
               ['<C-f>'] = { 'toggle_live', mode = { 'i', 'n' } },
-              ['<C-g>'] = {
-                function(picker)
-                  picker:close()
-                  local picked_window_id = require('window-picker').pick_window({
-                    autoselect_one = true,
-                    include_current_win = true,
-                  }) or vim.api.nvim_get_current_win()
-                  vim.api.nvim_set_current_win(picked_window_id)
-                  picker:action('edit')
-                end,
-                mode = { 'i', 'n' },
-              },
+              ['<C-g>'] = { { 'pick_win', 'edit' }, mode = { 'i', 'n' } },
+            },
+          },
+          list = {
+            keys = {
+              ['<C-g>'] = { { 'pick_win', 'edit' }, mode = { 'i', 'n' } },
             },
           },
         },
@@ -224,7 +218,9 @@ return {
       {
         '<leader>n',
         function()
-          Snacks.picker.explorer()
+          Snacks.picker.explorer({
+            auto_close = true,
+          })
         end,
         desc = 'Toggle Explorer',
       },

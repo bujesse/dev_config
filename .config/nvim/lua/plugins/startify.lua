@@ -53,7 +53,6 @@ return {
       -- Help texts should not be added to the session
       vim.g.startify_session_before_save = {
         'silent! helpclose',
-        'silent! Neotree action=close',
         'silent! cclose',
         'silent! SymbolsOutlineClose',
         'silent! BuCloseDiffview',
