@@ -129,7 +129,6 @@ return {
       },
       sidebar_filetypes = {
         ['neo-tree'] = { event = 'BufWipeout' },
-        Outline = { event = 'BufWinLeave', text = 'symbols-outline' },
       },
     },
     keys = {

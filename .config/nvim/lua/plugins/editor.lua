@@ -402,7 +402,7 @@ return {
     cmd = { 'BlameToggle' },
     opts = {},
     keys = {
-      { '<Leader>gb', '<CMD>BlameToggle virtual<CR>', desc = 'Blame virtual' },
+      -- { '<Leader>gb', '<CMD>BlameToggle virtual<CR>', desc = 'Blame virtual' },
       { '<Leader>B', '<CMD>BlameToggle window<CR>', desc = 'Blame window' },
     },
   },

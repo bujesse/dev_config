@@ -216,6 +216,26 @@ return {
         desc = 'Keymaps',
       },
       {
+        '<Space>s',
+        function()
+          Snacks.picker.lsp_symbols({
+            layout = {
+              preset = 'sidebar',
+              position = 'right',
+              preview = 'main',
+            },
+          })
+        end,
+        desc = 'Keymaps',
+      },
+      {
+        '<Space>S',
+        function()
+          Snacks.picker.lsp_workspace_symbols()
+        end,
+        desc = 'Keymaps',
+      },
+      {
         '<leader>n',
         function()
           Snacks.picker.explorer({
@@ -273,6 +293,13 @@ return {
           Snacks.lazygit.log_file()
         end,
         desc = 'Lazygit Current File History',
+      },
+      {
+        '<leader>gb',
+        function()
+          Snacks.git.blame_line()
+        end,
+        desc = 'Git Blame',
       },
       {
         '<leader>gg',

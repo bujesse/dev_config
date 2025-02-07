@@ -56,7 +56,6 @@ return {
           'neo-tree',
           'quickfix',
           'nvim-dap-ui',
-          'symbols-outline',
           'toggleterm',
         },
       }

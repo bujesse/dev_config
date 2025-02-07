@@ -115,25 +115,6 @@ return {
       'b0o/schemastore.nvim',
       'jose-elias-alvarez/typescript.nvim',
       'ray-x/lsp_signature.nvim',
-      'nvim-navbuddy',
-    },
-  },
-
-  -- display that provides breadcrumbs feature using LSP server
-  {
-    'SmiteshP/nvim-navbuddy',
-    keys = {
-      { '<Space>s', ':Navbuddy<CR>' },
-    },
-    dependencies = {
-      'neovim/nvim-lspconfig',
-      'SmiteshP/nvim-navic',
-      'MunifTanjim/nui.nvim',
-    },
-    opts = {
-      lsp = {
-        auto_attach = true,
-      },
     },
   },
 
