@@ -98,6 +98,7 @@ return {
       'neodev.nvim',
       {
         'RRethy/vim-illuminate',
+        enabled = false,
         keys = {
           { ']r', '<CMD>lua require("illuminate").goto_next_reference(true)<CR>', mode = { 'n', 'x' } },
           { '[r', '<CMD>lua require("illuminate").goto_prev_reference(true)<CR>', mode = { 'n', 'x' } },
@@ -123,6 +124,7 @@ return {
     dependencies = {
       's1n7ax/nvim-window-picker',
     },
+    enabled = false,
     opts = {
       folds = {
         folded = false, -- Automatically unfold list on startup

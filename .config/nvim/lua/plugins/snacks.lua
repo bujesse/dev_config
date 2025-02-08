@@ -40,7 +40,10 @@ return {
         },
       },
       statuscolumn = { enabled = true },
-      words = { enabled = false },
+      words = {
+        enabled = true,
+        notify_jump = true,
+      },
       styles = {},
       explorer = {
         replace_netrw = true,
@@ -53,6 +56,24 @@ return {
             Snacks.picker.grep({
               regex = false,
               dirs = { target_dir },
+            })
+          end,
+          flash = function(picker)
+            require('flash').jump({
+              pattern = '^',
+              label = { after = { 0, 0 } },
+              search = {
+                mode = 'search',
+                exclude = {
+                  function(win)
+                    return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= 'snacks_picker_list'
+                  end,
+                },
+              },
+              action = function(match)
+                local idx = picker.list:row2idx(match.pos[1])
+                picker.list:_move(idx, true, true)
+              end,
             })
           end,
         },
@@ -74,6 +95,8 @@ return {
               ['<C-m>'] = { 'toggle_maximize', mode = { 'i', 'n' } },
               ['<C-f>'] = { 'toggle_live', mode = { 'i', 'n' } },
               ['<C-g>'] = { { 'pick_win', 'edit' }, mode = { 'i', 'n' } },
+              ['<a-s>'] = { 'flash', mode = { 'n', 'i' } },
+              ['s'] = { 'flash' },
             },
           },
           list = {
@@ -89,7 +112,12 @@ return {
       {
         '<Space>o',
         function()
-          Snacks.picker.smart()
+          Snacks.picker.smart({
+            matcher = {
+              frecency = true, -- frecency bonus
+              history_bonus = true, -- give more weight to chronological order
+            },
+          })
         end,
         desc = 'Smart Find Files',
       },
@@ -122,7 +150,7 @@ return {
         desc = 'Fuzzy Grep',
       },
       {
-        '<Space>tr',
+        '<Space>F',
         function()
           Snacks.picker.grep()
         end,
@@ -181,7 +209,7 @@ return {
         '<Space><Space>',
         function()
           Snacks.picker.buffers({
-            focus = 'list',
+            -- focus = 'list',
             win = {
               input = {
                 keys = {
@@ -263,6 +291,46 @@ return {
         desc = 'Keymaps',
       },
       {
+        'gr',
+        function()
+          Snacks.picker.lsp_references({
+            focus = 'list',
+            layout = { preset = 'ivy' },
+          })
+        end,
+        desc = 'LSP References',
+      },
+      {
+        'gd',
+        function()
+          Snacks.picker.lsp_definitions({
+            focus = 'list',
+            layout = { preset = 'ivy' },
+          })
+        end,
+        desc = 'LSP definitions',
+      },
+      {
+        'gm',
+        function()
+          Snacks.picker.lsp_implementations({
+            focus = 'list',
+            layout = { preset = 'ivy' },
+          })
+        end,
+        desc = 'LSP Implementations',
+      },
+      {
+        'gy',
+        function()
+          Snacks.picker.lsp_type_definitions({
+            focus = 'list',
+            layout = { preset = 'ivy' },
+          })
+        end,
+        desc = 'LSP Type Definitions',
+      },
+      {
         '<Space>S',
         function()
           Snacks.picker.lsp_workspace_symbols()
@@ -307,11 +375,36 @@ return {
         desc = 'Select Scratch Buffer',
       },
       {
-        '<leader>gR',
+        '[s',
         function()
-          Snacks.rename.rename_file()
+          Snacks.scope.jump()
         end,
-        desc = 'Rename File',
+        desc = 'Top of scope',
+        mode = { 'n', 'x', 'o' },
+      },
+      {
+        ']s',
+        function()
+          Snacks.scope.jump({ bottom = true })
+        end,
+        desc = 'Bottom of scope',
+        mode = { 'n', 'x', 'o' },
+      },
+      {
+        'is',
+        function()
+          Snacks.scope.textobject({ edge = false })
+        end,
+        desc = 'Inner scope',
+        mode = { 'x', 'o' },
+      },
+      {
+        'as',
+        function()
+          Snacks.scope.textobject()
+        end,
+        desc = 'Around scope',
+        mode = { 'x', 'o' },
       },
       {
         '<leader>gB',
@@ -348,6 +441,20 @@ return {
           Snacks.lazygit.log()
         end,
         desc = 'Lazygit Log (cwd)',
+      },
+      {
+        ']r',
+        function()
+          Snacks.words.jump(1, true)
+        end,
+        desc = 'Next Reference',
+      },
+      {
+        '[r',
+        function()
+          Snacks.words.jump(-1, true)
+        end,
+        desc = 'Prev Reference',
       },
     },
     init = function()
