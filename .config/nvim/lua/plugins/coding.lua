@@ -120,7 +120,14 @@ return {
 
   -- autopair
   {
+    'echasnovski/mini.pairs',
+    version = false,
+    opts = {},
+  },
+
+  {
     'windwp/nvim-autopairs',
+    enabled = false,
     config = true,
     opts = {
       disable_filetype = { 'TelescopePrompt', 'spectre_panel' },

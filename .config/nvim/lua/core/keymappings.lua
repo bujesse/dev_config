@@ -237,10 +237,10 @@ function M.config_keys()
       ['<Leader>q'] = ':call QuickFixToggle()<CR>',
 
       -- Quick Substitute (substitutes last search)
-      ['<Leader>rr'] = {
-        [[:%s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]],
-        { desc = 'Substitute in Buffer (Edit)' },
-      },
+      -- ['<Leader>rr'] = {
+      --   [[:%s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]],
+      --   { desc = 'Substitute in Buffer (Edit)' },
+      -- },
       ['<Leader>rl'] = { [[:s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]], { desc = 'Substitute in Line (Edit)' } },
       ['<Leader>rs'] = { ':%S//', { desc = 'Substitute (Abolish)' } },
 
@@ -273,10 +273,10 @@ function M.config_keys()
       ['<C-y>'] = '"+y',
 
       -- Quick Substitute (substitutes last search)
-      ['<Leader>rr'] = {
-        [[:s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]],
-        { desc = 'Substitute in Selection (Edit)' },
-      },
+      -- ['<Leader>rr'] = {
+      --   [[:s//<C-r>=substitute(@/,'[V<>\\]','','g')<CR>]],
+      --   { desc = 'Substitute in Selection (Edit)' },
+      -- },
       ['<Leader>rs'] = { ':S//', { desc = 'Substitute in Selection (Abolish)' } },
 
       -- Replace word with last yank (repeatable)

@@ -125,7 +125,7 @@ return {
           enabled = false,
         },
         -- modified = { separator = '⋄' },
-        pinned = { button = '車', filename = true },
+        pinned = { button = '', filename = true },
       },
       sidebar_filetypes = {
         ['neo-tree'] = { event = 'BufWipeout' },

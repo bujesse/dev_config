@@ -211,28 +211,92 @@ return {
 
   -- search/replace in multiple files
   {
+    'MagicDuck/grug-far.nvim',
+    opts = {},
+    keys = {
+      {
+        '<Leader>rr',
+        function()
+          require('grug-far').open({
+            prefills = {
+              search = vim.fn.expand('<cword>'),
+              paths = vim.fn.expand('%'),
+              flags = '--fixed-strings',
+            },
+            transient = true,
+          })
+        end,
+        desc = 'Replace in file',
+        mode = { 'n' },
+      },
+      {
+        '<Leader>rr',
+        function()
+          require('grug-far').with_visual_selection({
+            prefills = {
+              paths = vim.fn.expand('%'),
+              flags = '--fixed-strings',
+            },
+            transient = true,
+          })
+        end,
+        desc = 'Replace in file',
+        mode = { 'v' },
+      },
+      {
+        '<Leader>rR',
+        function()
+          require('grug-far').open({
+            prefills = {
+              search = vim.fn.expand('<cword>'),
+              flags = '--fixed-strings',
+            },
+            transient = true,
+          })
+        end,
+        desc = 'Replace in files',
+        mode = { 'n' },
+      },
+      {
+        '<Leader>rR',
+        function()
+          require('grug-far').with_visual_selection({
+            prefills = {
+              paths = vim.fn.expand('%'),
+              flags = '--fixed-strings',
+            },
+            transient = true,
+            flags = '--fixed-strings',
+          })
+        end,
+        desc = 'Replace in files',
+        mode = { 'v' },
+      },
+    },
+    config = function(_, opts)
+      require('grug-far').setup(opts)
+
+      -- Create a buffer local keybinding to toggle --fixed-strings flag
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('my-grug-far-custom-keybinds', { clear = true }),
+        pattern = { 'grug-far' },
+        callback = function()
+          vim.keymap.set('n', '<localleader>w', function()
+            local state = unpack(require('grug-far').toggle_flags({ '--fixed-strings' }))
+            vim.notify('grug-far: toggled --fixed-strings ' .. (state and 'ON' or 'OFF'))
+          end, { buffer = true })
+        end,
+      })
+    end,
+  },
+
+  {
     'windwp/nvim-spectre',
+    enabled = false,
     -- stylua: ignore
     keys = {
       { "<leader>rR", function() require("spectre").open({ is_insert_mode = true, })
       end, desc = "Replace in files (Spectre)" },
     },
   },
-
-  -- Interactive Replacements
-  -- {
-  --   'AckslD/muren.nvim',
-  --   opts = {
-  --     patterns_width = 50,
-  --     patterns_height = 20,
-  --     options_width = 35,
-  --     preview_height = 22,
-  --     keys = {
-  --       toggle_options_focus = '<C-e>',
-  --     },
-  --   },
-  --   keys = {
-  --     { '<leader>rr', ':MurenToggle<CR>', desc = 'Multi-interactive Replacements (Muren)' },
-  --   },
-  -- },
 }

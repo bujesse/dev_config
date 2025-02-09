@@ -103,6 +103,10 @@ return {
             keys = {
               ['<C-g>'] = { { 'pick_win', 'edit' }, mode = { 'i', 'n' } },
               ['<Space>f'] = { 'find_in_dir', mode = { 'n' } },
+              ['<C-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
+              ['<C-d>'] = { 'preview_scroll_down', mode = { 'i', 'n' } },
+              ['<C-Up>'] = { 'list_scroll_up', mode = { 'i', 'n' } },
+              ['<C-Down>'] = { 'list_scroll_down', mode = { 'i', 'n' } },
             },
           },
         },
