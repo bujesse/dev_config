@@ -37,6 +37,7 @@ return {
       vim.keymap.del('i', '<S-Tab>')
 
       cmp.setup({
+        completion = { completeopt = 'menu,menuone,noselect' },
         snippet = {
           expand = function(args)
             require('luasnip').lsp_expand(args.body)

@@ -101,6 +101,7 @@ return {
           },
           list = {
             keys = {
+              ['<c-q>'] = { 'qflist', mode = { 'i', 'n' } },
               ['<C-g>'] = { { 'pick_win', 'edit' }, mode = { 'i', 'n' } },
               ['<Space>f'] = { 'find_in_dir', mode = { 'n' } },
               ['<C-u>'] = { 'preview_scroll_up', mode = { 'i', 'n' } },
@@ -213,7 +214,7 @@ return {
         '<Space><Space>',
         function()
           Snacks.picker.buffers({
-            -- focus = 'list',
+            focus = 'list',
             win = {
               input = {
                 keys = {
