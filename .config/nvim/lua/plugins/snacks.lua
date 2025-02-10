@@ -342,6 +342,13 @@ return {
         desc = 'Keymaps',
       },
       {
+        '<Space>:',
+        function()
+          Snacks.picker.commands()
+        end,
+        desc = 'Commands',
+      },
+      {
         '<leader>n',
         function()
           Snacks.picker.explorer({
@@ -349,6 +356,15 @@ return {
           })
         end,
         desc = 'Toggle Explorer',
+      },
+      {
+        '<leader>N',
+        function()
+          Snacks.explorer.reveal({
+            auto_close = true,
+          })
+        end,
+        desc = 'Reveal current file',
       },
       {
         '<leader>z',
@@ -419,18 +435,18 @@ return {
         mode = { 'n', 'v' },
       },
       {
-        '<leader>gf',
-        function()
-          Snacks.lazygit.log_file()
-        end,
-        desc = 'Lazygit Current File History',
-      },
-      {
         '<leader>gb',
         function()
           Snacks.git.blame_line()
         end,
         desc = 'Git Blame',
+      },
+      {
+        '<leader>gf',
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = 'Lazygit Current File History',
       },
       {
         '<leader>gg',
