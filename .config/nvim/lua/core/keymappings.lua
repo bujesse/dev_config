@@ -103,12 +103,6 @@ function M.config_keys()
       -- turn of search highlight
       ['<Leader>/'] = ':noh<CR>',
 
-      -- Easier switching between files
-      ['<Backspace>'] = '<C-^>',
-
-      -- Y should behave like D and C
-      ['Y'] = 'y$',
-
       ['^'] = 'g^',
       ['0'] = 'g0',
 
@@ -136,12 +130,6 @@ function M.config_keys()
 
       [']<Space>'] = { '<Plug>unimpairedBlankDown', { noremap = false } },
       ['[<Space>'] = { '<Plug>unimpairedBlankUp', { noremap = false } },
-
-      [']q'] = '<CMD>cnext<CR>',
-      ['[q'] = '<CMD>cprev<CR>',
-
-      [']Q'] = '<CMD>clast<CR>',
-      ['[Q'] = '<CMD>cfirst<CR>',
 
       -- Resize with arrows
       ['<Up>'] = '<C-W>5+',

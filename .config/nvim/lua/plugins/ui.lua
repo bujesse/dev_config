@@ -48,14 +48,7 @@ return {
     enabled = false,
     event = 'VeryLazy',
     dependencies = {
-      -- buffer remove
-      {
-        'echasnovski/mini.bufremove',
-        -- stylua: ignore
-        keys = {
-          { "X", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
-        },
-      },
+      'echasnovski/mini.bufremove',
       'tiagovla/scope.nvim',
     },
     keys = {
@@ -138,7 +131,7 @@ return {
       -- { '[b', '<Cmd>keepjumps BufferPrevious<CR>', desc = 'Prev buffer' },
       { '<C-Left>', '<Cmd>BufferMovePrevious<CR>', desc = 'Move buffer prev' },
       { '<C-Right>', '<Cmd>BufferMoveNext<CR>', desc = 'Move buffer next' },
-      { 'X', '<Cmd>BufferClose<CR>', desc = 'Close Buffer' },
+      -- { 'X', '<Cmd>BufferClose<CR>', desc = 'Close Buffer' },
       { '<Leader>br', '<Cmd>BufferRestore<CR>', desc = 'Restore Buffer' },
       { 'gb', '<Cmd>BufferPick<CR>', desc = 'Go to Buffer' },
       { '<Leader>bl', '<Cmd>BufferCloseBuffersRight<CR>', desc = 'Close all buffers right' },
@@ -248,7 +241,7 @@ return {
     },
   },
 
-  -- highlight undo
+  -- highlight text changes
   {
     'tzachar/highlight-undo.nvim',
     opts = {

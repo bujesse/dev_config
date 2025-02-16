@@ -295,26 +295,6 @@ return {
     'lewis6991/gitsigns.nvim',
     dependencies = {
       { 'petertriho/nvim-scrollbar' },
-      {
-        'echasnovski/mini.diff',
-        enabled = false,
-        version = false,
-        opts = {
-          view = {
-            style = 'sign',
-            signs = { add = '┃', change = '┃', delete = '▒' },
-          },
-          mappings = {
-            goto_first = '',
-            goto_prev = '',
-            goto_next = '',
-            goto_last = '',
-          },
-        },
-        keys = {
-          { '<Leader>gd', '<CMD>lua require("mini.diff").toggle_overlay()<CR>', desc = 'Toggle MiniDiff' },
-        },
-      },
     },
     opts = {
       -- signs = {
