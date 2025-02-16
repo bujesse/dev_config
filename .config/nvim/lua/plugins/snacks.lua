@@ -283,7 +283,7 @@ return {
         desc = 'Keymaps',
       },
       {
-        '<Space>s',
+        '<Space>ts',
         function()
           Snacks.picker.lsp_symbols({
             focus = 'list',
@@ -293,7 +293,7 @@ return {
             },
           })
         end,
-        desc = 'Keymaps',
+        desc = 'Snacks Symbols',
       },
       {
         'gr',

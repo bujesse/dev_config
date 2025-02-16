@@ -268,6 +268,19 @@ return {
       local dap, dapui = require('dap'), require('dapui')
       dapui.setup(opts)
 
+      -- Fix for starting debugger in insert mode
+      -- https://github.com/mfussenegger/nvim-dap/issues/439
+      vim.api.nvim_create_autocmd('TermOpen', {
+        group = augroup,
+        callback = function()
+          if opts.file:match('dap%-terminal') then
+            return
+          end
+          vim.cmd('startinsert')
+          vim.cmd('setlocal nonu')
+        end,
+      })
+
       dap.listeners.after.event_initialized['dapui_config'] = function()
         dapui.open()
 
