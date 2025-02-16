@@ -149,9 +149,6 @@ function M.config_keys()
       ['<Left>'] = '<C-W>5<',
       ['<Right>'] = '<C-W>5>',
 
-      -- Run the last command
-      ['<Leader>;'] = { 'q:k', { silent = false } },
-
       -- Move to or create split
       ['<C-w><C-h>'] = { '<Plug>WinMoveLeft', { noremap = false } },
       ['<C-w><C-j>'] = { '<Plug>WinMoveDown', { noremap = false } },
@@ -207,7 +204,7 @@ function M.config_keys()
 
       ['<C-t>'] = '<Cmd>tabe<Cr>',
 
-      ['<space>;'] = { ':<Up><CR>', { desc = 'Run last command' } },
+      ['<Leader>;'] = { ':<Up><CR>', { desc = 'Run last command' } },
 
       -- system yank
       ['<C-y>'] = '"+y',
@@ -287,8 +284,6 @@ function M.config_keys()
 
       -- save all
       ['<C-s>'] = '<C-c>:wa!<cr>gv',
-
-      ['<Leader>;'] = { 'q:k', { silent = false } },
 
       -- Move current line / block with Alt-j/k ala vscode.
       ['<A-j>'] = ':<C-u>call MoveVisualDown()<CR>',

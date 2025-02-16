@@ -343,7 +343,7 @@ return {
         desc = 'Keymaps',
       },
       {
-        '<Space>:',
+        '<Space>;',
         function()
           Snacks.picker.commands()
         end,
