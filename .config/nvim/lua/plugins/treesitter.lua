@@ -43,7 +43,7 @@ return {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-              [']m'] = '@function.outer',
+              [']f'] = '@function.outer',
               [']]'] = { query = '@class.outer', desc = 'Next class start' },
               --
               -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
@@ -56,15 +56,15 @@ return {
               -- [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next fold' },
             },
             goto_next_end = {
-              [']M'] = '@function.outer',
+              [']F'] = '@function.outer',
               [']['] = '@class.outer',
             },
             goto_previous_start = {
-              ['[m'] = '@function.outer',
+              ['[f'] = '@function.outer',
               ['[['] = '@class.outer',
             },
             goto_previous_end = {
-              ['[M'] = '@function.outer',
+              ['[F'] = '@function.outer',
               ['[]'] = '@class.outer',
             },
             -- Below will go to either the start or the end, whichever is closer.
@@ -171,7 +171,7 @@ return {
           enable = true,
           set_jumps = true, -- whether to set jumps in the jumplist
           goto_next_start = {
-            [']m'] = { query = '@function.outer', desc = 'Next Method start' },
+            [']f'] = { query = '@function.outer', desc = 'Next Method start' },
             [']]'] = { query = '@class.outer', desc = 'Next Class start' },
             --
             -- You can use regex matching and/or pass a list in a "query" key to group multiple queires.
@@ -179,15 +179,15 @@ return {
             -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
           },
           goto_next_end = {
-            [']M'] = { query = '@function.outer', desc = 'Next Method end' },
+            [']F'] = { query = '@function.outer', desc = 'Next Method end' },
             [']['] = { query = '@class.outer', desc = 'Next Class end' },
           },
           goto_previous_start = {
-            ['[m'] = { query = '@function.outer', desc = 'Prev Method start' },
+            ['[f'] = { query = '@function.outer', desc = 'Prev Method start' },
             ['[['] = { query = '@class.outer', desc = 'Prev Class start' },
           },
           goto_previous_end = {
-            ['[M'] = { query = '@function.outer', desc = 'Prev Method end' },
+            ['[F'] = { query = '@function.outer', desc = 'Prev Method end' },
             ['[]'] = { query = '@class.outer', desc = 'Prev Class end' },
           },
           -- Below will go to either the start or the end, whichever is closer.
