@@ -42,6 +42,10 @@ return {
   {
     'kylechui/nvim-surround',
     -- version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-treesitter-textobjects',
+    },
     opts = {
       aliases = {
         ['q'] = { '"', "'", '`' },
@@ -60,7 +64,7 @@ return {
         change = 'cs',
         change_line = 'cS',
       },
-      -- move_cursor = false,
+      move_cursor = false,
     },
     config = function(_, opts)
       require('nvim-surround').setup(opts)

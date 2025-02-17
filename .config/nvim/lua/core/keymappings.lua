@@ -74,10 +74,6 @@ function M.config_keys()
       ['kJ'] = '<ESC>',
       ['KJ'] = '<ESC>',
 
-      -- Move current line / block with Alt-j/k ala vscode.
-      ['<A-j>'] = '<C-o>:call MoveLineDown()<CR>',
-      ['<A-k>'] = '<C-o>:call MoveLineUp()<CR>',
-
       -- runs conditionally
       ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
       ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },

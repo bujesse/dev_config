@@ -525,31 +525,47 @@ return {
   -- harpoon
   {
     'ThePrimeagen/harpoon',
-    opts = {
-      menu = {
-        width = vim.api.nvim_win_get_width(0) - 4,
-      },
-    },
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
       {
         '<Leader>ma',
         function()
-          require('harpoon.mark').add_file()
+          local harpoon = require('harpoon')
+          harpoon:list():add()
           local filename = vim.api.nvim_buf_get_name(0)
           print('Harpoon Add: ' .. filename)
         end,
       },
-      { '<Leader>mm', ':lua require("harpoon.ui").toggle_quick_menu()<CR>' },
-      { '<Leader>m1', ':lua require("harpoon.ui").nav_file(1)<CR>' },
-      { '<Leader>m2', ':lua require("harpoon.ui").nav_file(2)<CR>' },
-      { '<Leader>m3', ':lua require("harpoon.ui").nav_file(3)<CR>' },
-      { '<Leader>m4', ':lua require("harpoon.ui").nav_file(4)<CR>' },
-      { '<Leader>m5', ':lua require("harpoon.ui").nav_file(5)<CR>' },
-      { '<Leader>m6', ':lua require("harpoon.ui").nav_file(6)<CR>' },
-      { '<Leader>m7', ':lua require("harpoon.ui").nav_file(7)<CR>' },
-      { '<Leader>m8', ':lua require("harpoon.ui").nav_file(8)<CR>' },
-      { '<Leader>m9', ':lua require("harpoon.ui").nav_file(9)<CR>' },
+      {
+        '<Leader>mm',
+        function()
+          local harpoon = require('harpoon')
+          harpoon.ui:toggle_quick_menu(harpoon:list(), {
+            title = ' Harpoon Marks ',
+          })
+        end,
+      },
     },
+    config = function()
+      local harpoon = require('harpoon')
+      harpoon:setup({
+        settings = {
+          save_on_toggle = true,
+          sync_on_ui_close = true,
+        },
+        default = {
+          select = function(list_item, list, options)
+            -- Ignore comments
+            local comment_char = '#'
+            if list_item.value ~= nil and string.sub(list_item.value, 1, 1) == comment_char then
+              return
+            end
+            require('harpoon.config').get_default_config().default.select(list_item, list, options)
+          end,
+        },
+      })
+    end,
   },
 
   {
