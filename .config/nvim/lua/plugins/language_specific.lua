@@ -99,6 +99,7 @@ return {
   -- format tailwind css on save
   {
     'laytan/tailwind-sorter.nvim',
+    enabled = false,
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
     build = 'cd formatter && npm ci && npm run build',
     opts = {

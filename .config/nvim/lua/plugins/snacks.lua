@@ -354,6 +354,18 @@ return {
         function()
           Snacks.picker.explorer({
             auto_close = true,
+            win = {
+              input = {
+                keys = {
+                  ['.'] = 'tcd',
+                },
+              },
+              list = {
+                keys = {
+                  ['.'] = 'tcd',
+                },
+              },
+            },
           })
         end,
         desc = 'Toggle Explorer',

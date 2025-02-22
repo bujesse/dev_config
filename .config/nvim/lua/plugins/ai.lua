@@ -35,7 +35,11 @@ return {
     cmd = 'Copilot',
     event = 'InsertEnter',
     keys = {
-      { 'yoG', 'require("copilot.suggestion").toggle_auto_trigger()', desc = 'Toggle Copilot Auto-trigger' },
+      {
+        'yoG',
+        '<CMD>lua require("copilot.suggestion").toggle_auto_trigger()<CR>',
+        desc = 'Toggle Copilot Auto-trigger',
+      },
     },
     opts = {
       suggestion = {

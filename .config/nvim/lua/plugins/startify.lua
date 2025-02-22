@@ -42,6 +42,7 @@ return {
         { type = 'sessions', header = { '  Sessions' } },
         { type = 'bookmarks', header = { '  Bookmarks' } },
         { type = 'commands', header = { '  Commands' } },
+        { type = 'files', header = { '  Recent Files' } },
       }
 
       vim.g.startify_session_autoload = 1
