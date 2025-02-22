@@ -23,6 +23,10 @@ local core_modules = {
   'core.macros',
 }
 
+if vim.g.neovide then
+  table.insert(core_modules, 'core.neovide')
+end
+
 for _, module_name in ipairs(core_modules) do
   local ok, module = pcall(require, module_name)
   if ok then
