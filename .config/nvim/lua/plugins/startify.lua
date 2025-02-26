@@ -36,6 +36,7 @@ return {
         { G = { '  Git (Fugitive)', 'G' } },
         { ch = { '  Check Health', 'checkhealth' } },
         { m = { '  Mason', 'Mason' } },
+        { L = { '🧑‍🎓  Leetcode', 'Leet' } },
       }
 
       vim.g.startify_lists = {
