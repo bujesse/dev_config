@@ -57,7 +57,7 @@ fi
 # Update function
 update_neovim() {
   printf "${RED}Updating Neovim Nightly...${NC}\n"
-  HTTPS_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage"
+  HTTPS_URL="https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage"
   CURL_CMD="curl -L -w http_code=%{http_code}"
   CURL_OUTPUT=`${CURL_CMD} ${HTTPS_URL} -o /tmp/nvim`
   HTTP_CODE=$(echo "${CURL_OUTPUT}" | sed -e 's/.*\http_code=//')
