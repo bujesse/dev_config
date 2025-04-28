@@ -95,6 +95,7 @@ return {
     end,
     dependencies = {
       'mason-lspconfig.nvim',
+      'saghen/blink.cmp',
       'neodev.nvim',
       {
         'RRethy/vim-illuminate',

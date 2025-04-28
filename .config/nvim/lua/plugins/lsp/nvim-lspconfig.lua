@@ -78,21 +78,6 @@ function M.common_on_attach(client, bufnr)
       M.lsp_formatting()
     end, vim.tbl_deep_extend('force', opts, { desc = 'Format file' }))
   end
-  -- This doesn't work - it's supposed to format with '=' if there's no lsp formatter
-  -- vim.keymap.set('n', '<Leader>f', function()
-  --   local clients = vim.lsp.get_active_clients({ buffer = vim.api.nvim_buf_get_number(0) })
-  --   if clients ~= nil then
-  --     for _, c in ipairs(clients) do
-  --       if c ~= nil and c.supports_method("textDocument/formatting") then
-  --         P(c)
-  --         vim.lsp.buf.format()
-  --         return
-  --       end
-  --     end
-  --   end
-  --   vim.cmd([[norm! gg=G<C-o>]])
-  -- end, opts)
-  -- end
 
   -- Enable lsp_signature.nvim
   require('lsp_signature').on_attach({
@@ -244,11 +229,14 @@ M.common_capabilities = function()
     lineFoldingOnly = true,
   }
 
-  local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-  if not status_ok then
-    return capabilities
-  end
-  capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+  -- Using blink.cmp instead of nvim-cmp
+  -- local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+  -- if not status_ok then
+  --   return capabilities
+  -- end
+  -- capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+
+  capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
   return capabilities
 end
 
@@ -305,7 +293,8 @@ function M.setup_servers()
       lspconfig.jsonls.setup(config)
     end,
     ['lua_ls'] = function()
-      lspconfig.lua_ls.setup({
+      local config = M.make_config()
+      config = vim.tbl_deep_extend('force', config, {
         settings = {
           Lua = {
             hint = {
@@ -317,16 +306,50 @@ function M.setup_servers()
           },
         },
       })
+      lspconfig.lua_ls.setup(config)
     end,
     ['ruff'] = function()
-      lspconfig.ruff.setup({})
+      local config = M.make_config()
+      lspconfig.ruff.setup(config)
+      M.config_client_specific_capabilities('ruff', function(client)
+        client.server_capabilities.hoverProvider = false
+      end, 'LSP: Disable hover for Ruff')
     end,
     ['rust_analyzer'] = function()
       -- set up by rust-tools
     end,
     ['basedpyright'] = function()
-      lspconfig.basedpyright.setup({})
+      local config = M.make_config()
+      config = vim.tbl_deep_extend('force', config, {
+        settings = {
+          basedpyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+            analysis = {
+              -- Ignore all files for analysis to exclusively use Ruff for linting
+              ignore = { '*' },
+            },
+          },
+        },
+      })
+      lspconfig.basedpyright.setup(config)
     end,
+  })
+end
+
+function M.config_client_specific_capabilities(client_name, callback, desc)
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client == nil then
+        return
+      end
+      if client.name == client_name then
+        callback(client)
+      end
+    end,
+    desc = desc,
   })
 end
 

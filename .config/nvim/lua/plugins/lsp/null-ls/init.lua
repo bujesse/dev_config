@@ -17,7 +17,8 @@ function M.config()
       -- python
       'basedpyright',
       'debugpy',
-      'ruff_lsp',
+      'ruff',
+      'blackd-client',
 
       -- golang
       'delve', -- go debugger

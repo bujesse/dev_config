@@ -4,6 +4,7 @@ return {
   {
     -- 'hrsh7th/nvim-cmp',
     'yioneko/nvim-cmp',
+    enabled = false,
     branch = 'perf',
     dependencies = {
       'LuaSnip',

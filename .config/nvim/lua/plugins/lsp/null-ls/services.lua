@@ -48,7 +48,7 @@ local local_providers = {
   flake8 = { find = M.from_nvim_venv },
 
   -- rust
-  ['blackd-client'] = { find = M.from_rust },
+  -- ['blackd-client'] = { find = M.from_rust },
 }
 
 function M.find_command(command)

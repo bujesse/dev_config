@@ -75,8 +75,8 @@ function M.config_keys()
       ['KJ'] = '<ESC>',
 
       -- runs conditionally
-      ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
-      ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
+      -- ['<C-j>'] = { 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', { expr = true, noremap = true } },
+      -- ['<C-k>'] = { 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', { expr = true, noremap = true } },
 
       -- save all
       ['<C-s>'] = '<C-o>:wa!<cr>',
