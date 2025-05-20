@@ -44,7 +44,7 @@ local local_providers = {
   stylelint = { find = M.from_node_modules },
 
   -- Python
-  black = { find = M.from_nvim_venv },
+  -- black = { find = M.from_nvim_venv },
   flake8 = { find = M.from_nvim_venv },
 
   -- rust
@@ -102,6 +102,7 @@ function M.register_custom_sources()
       }),
     },
     {
+      enabled = true,
       name = 'black',
       filetypes = { 'python' },
       method = { null_ls.methods.FORMATTING },

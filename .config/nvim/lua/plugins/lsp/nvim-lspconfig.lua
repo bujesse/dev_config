@@ -3,9 +3,16 @@ local Log = require('core.log')
 M = {}
 
 M.lsp_formatting = function(bufnr)
+  local utils = require('core.utils')
   vim.lsp.buf.format({
     filter = function(client)
-      return client.name == 'null-ls'
+      local cwd = vim.fn.getcwd()
+      local dir_name = vim.fn.fnamemodify(cwd, ':t')
+      if string.find(cwd, 'pv_upload') then
+        return utils.table_contains({ 'ruff' }, client.name)
+      else
+        return utils.table_contains({ 'null-ls', 'rust_analyzer' }, client.name)
+      end
     end,
     bufnr = bufnr or vim.api.nvim_get_current_buf(),
     timeout_ms = 10000, -- Let null-ls decide on timeouts
@@ -311,7 +318,7 @@ function M.setup_servers()
     ['ruff'] = function()
       local config = M.make_config()
       lspconfig.ruff.setup(config)
-      M.config_client_specific_capabilities('ruff', function(client)
+      M.config_client_specific_capabilities('lsp_attach_disable_ruff_hover', 'ruff', function(client)
         client.server_capabilities.hoverProvider = false
       end, 'LSP: Disable hover for Ruff')
     end,
@@ -337,9 +344,9 @@ function M.setup_servers()
   })
 end
 
-function M.config_client_specific_capabilities(client_name, callback, desc)
+function M.config_client_specific_capabilities(augroup_name, client_name, callback, desc)
   vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+    group = vim.api.nvim_create_augroup(augroup_name, { clear = true }),
     callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       if client == nil then
