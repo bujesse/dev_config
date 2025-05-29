@@ -114,7 +114,7 @@ function M.common_on_attach(client, bufnr)
   -- end, { desc = 'Toggle Diagnostics', noremap = true, silent = true })
 
   -- Setup auto format on save
-  if client.supports_method('textDocument/formatting') then
+  if client:supports_method('textDocument/formatting') then
     local augroup = vim.api.nvim_create_augroup('LspFormatting', { clear = false })
     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
@@ -268,7 +268,7 @@ end
 -- mason-lspconfig
 function M.setup_servers()
   local lspconfig = require('lspconfig')
-  require('mason-lspconfig').setup_handlers({
+  require('mason-lspconfig').setup({
     -- The first entry (without a key) will be the default handler
     -- and will be called for each installed server that doesn't have
     -- a dedicated handler.
