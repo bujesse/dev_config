@@ -207,6 +207,7 @@ return {
   -- Edit filesystem like buffer
   {
     'stevearc/oil.nvim',
+    enabled = false,
     opts = {
       default_file_explorer = true,
       keymaps = {
@@ -232,6 +233,22 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
       { '<Leader>o', '<CMD>Oil --float<CR>', desc = 'Open Oil' },
+    },
+  },
+
+  {
+    'A7Lavinraj/fyler.nvim',
+    opts = {
+      views = {
+        mappings = {
+          explorer = {
+            ['<leader>o'] = 'CloseView',
+          },
+        },
+      },
+    },
+    keys = {
+      { '<leader>o', '<cmd>Fyler kind=float<cr>', desc = 'Fyler.nvim' },
     },
   },
 
