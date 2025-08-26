@@ -99,7 +99,10 @@ return {
   },
 
   -- Text objects
-  { 'michaeljsmith/vim-indent-object' },
+  {
+    'michaeljsmith/vim-indent-object',
+    cond = true,
+  },
   { 'dbakker/vim-paragraph-motion' },
 
   {
@@ -134,6 +137,7 @@ return {
   {
     'Wansmer/treesj',
     dependencies = { 'nvim-treesitter' },
+    cond = true,
     opts = {
       use_default_keymaps = false,
       max_join_length = 1500,

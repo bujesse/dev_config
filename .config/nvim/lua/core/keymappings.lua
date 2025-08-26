@@ -304,6 +304,23 @@ function M.config_keys()
     M.keys.normal_mode['<A-Right>'] = M.keys.normal_mode['<C-Right>']
     Log:debug('Activated mac keymappings')
   end
+
+  if vim.g.vscode then
+    -- https://github.com/vscode-neovim/vscode-neovim/tree/master/runtime/vscode/overrides
+    M.keys.normal_mode['H'] = '<Cmd>Tabprevious<CR>'
+    M.keys.normal_mode['L'] = '<Cmd>Tabnext<CR>'
+    M.keys.normal_mode['X'] = '<Cmd>Tabclose<CR>'
+    M.keys.normal_mode['<Space><Space>'] = '<Cmd>Tabfind<CR>'
+    M.keys.normal_mode['<Space>f'] = '<Cmd>lua require("vscode").action("workbench.action.findInFiles")<CR>'
+    M.keys.normal_mode['<Space>o'] = '<Cmd>lua require("vscode").action("workbench.action.quickOpen")<CR>'
+
+    -- VSCode stops listening in insert mode - map those in the editor
+    --  {
+    --   "key": "right",
+    --   "command": "editor.action.inlineSuggest.commit",
+    --   "when": "inInlineEditsPreviewEditor || textInputFocus"
+    --  }
+  end
 end
 
 function M.print(mode)

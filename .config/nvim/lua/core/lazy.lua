@@ -3,6 +3,11 @@ local M = {}
 M.config = function()
   -- Load everything in lua/plugins/
   require('lazy').setup('plugins', {
+    defaults = {
+      cond = function()
+        return not vim.g.vscode
+      end,
+    },
     git = {
       -- defaults for the `Lazy log` command
       log = { '-5' }, -- show the last 5 commits

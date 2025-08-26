@@ -214,7 +214,6 @@ return {
         '<Space><Space>',
         function()
           Snacks.picker.buffers({
-            focus = 'list',
             win = {
               input = {
                 keys = {
