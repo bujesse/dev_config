@@ -6,10 +6,42 @@ return {
     dependencies = {
       'mfussenegger/nvim-dap-python',
       {
-        'leoluz/nvim-dap-go',
-        dependencies = {
-          'rcarriga/nvim-dap-ui',
+        'igorlfs/nvim-dap-view',
+        enabled = false,
+        opts = {
+          winbar = {
+            show = true,
+            sections = { 'watches', 'exceptions', 'breakpoints', 'threads', 'repl' },
+            default_section = 'watches',
+          },
+          windows = {
+            height = 12,
+            terminal = {
+              -- 'left'|'right': Terminal position in layout
+              position = 'right',
+              -- List of debug adapters for which the terminal should be ALWAYS hidden
+              hide = {},
+              -- Hide the terminal when starting a new session
+              start_hidden = false,
+            },
+          },
         },
+        keys = {
+          {
+            '<Space>du',
+            '<cmd>lua require"dap-view".toggle()<CR>',
+            desc = 'Toggle DAP UI',
+          },
+          {
+            '<Space>da',
+            '<cmd>lua require"dap-view".add_expr()<CR>',
+            desc = 'Add to Watches',
+            mode = { 'n', 'v' },
+          },
+        },
+      },
+      {
+        'leoluz/nvim-dap-go',
         opts = {},
         config = function(_, opts)
           require('dap-go').setup(opts)
@@ -24,28 +56,29 @@ return {
           })
 
           local augroup = vim.api.nvim_create_augroup('dap_ui', { clear = true })
-          local dap, dapui = require('dap'), require('dapui')
-          dap.listeners.after.event_initialized['dapui_config'] = function()
-            dapui.open()
+          local dap = require('dap')
+          -- local dap, dapui = require('dap'), require('dapui')
+          -- dap.listeners.after.event_initialized['dapui_config'] = function()
+          --   dapui.open()
 
-            -- Try to rerun if the termination was because of a save
-            vim.api.nvim_create_autocmd('BufWritePost', {
-              group = augroup,
-              callback = function()
-                vim.defer_fn(function()
-                  if vim.tbl_isempty(require('dap').sessions()) then
-                    local output = vim.fn.system('lsof -i -P -n | grep 2345')
-                    if string.match(output, '2345') then
-                      print('Debugger on port 2345 found. Restarting DAP...')
-                      dap.run_last()
-                    else
-                      dapui.close()
-                    end
-                  end
-                end, 3000)
-              end,
-            })
-          end
+          --   -- Try to rerun if the termination was because of a save
+          --   vim.api.nvim_create_autocmd('BufWritePost', {
+          --     group = augroup,
+          --     callback = function()
+          --       vim.defer_fn(function()
+          --         if vim.tbl_isempty(require('dap').sessions()) then
+          --           local output = vim.fn.system('lsof -i -P -n | grep 2345')
+          --           if string.match(output, '2345') then
+          --             print('Debugger on port 2345 found. Restarting DAP...')
+          --             dap.run_last()
+          --           else
+          --             dapui.close()
+          --           end
+          --         end
+          --       end, 3000)
+          --     end,
+          --   })
+          -- end
 
           dap.listeners.after.event_terminated['dapui_config'] = function(session, body)
             vim.defer_fn(function()
@@ -82,6 +115,14 @@ return {
       },
     },
     keys = {
+      {
+        '<Space>dv',
+        function()
+          local widgets = require('dap.ui.widgets')
+          widgets.centered_float(widgets.scopes, { border = 'rounded' })
+        end,
+        desc = 'DAP Scopes',
+      },
       { '<Space>b', "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = 'Toggle Breakpoint' },
       {
         '<Space>dB',
@@ -102,6 +143,7 @@ return {
       { '<Space>dg', "<cmd>lua require'dap'.continue()<cr>", desc = 'DAP Go' },
 
       -- { '<Space>db', "<cmd>lua require'dap'.step_back()<cr>", desc = 'Step Back' },
+      { '<Space>dd', "<cmd>lua require'dap'.run_last()<cr>", desc = 'DAP Last' },
       {
         '<Space>ds',
         "<cmd>lua require'dap'.disconnect({restart = true, terminateDebuggee = false})<cr>",
@@ -112,10 +154,9 @@ return {
         "<cmd>lua require'dap'.terminate()<cr>",
         desc = 'Stop Debuggee',
       },
-      { '<Space>dP', "<cmd>lua require'dap'.pause()<cr>", desc = 'Pause' },
+      -- { '<Space>dP', "<cmd>lua require'dap'.pause()<cr>", desc = 'Pause' },
       { '<Space>dr', "<cmd>lua require'dap'.repl.toggle()<cr>", desc = 'Toggle Repl' },
       { '<Space>dq', "<cmd>lua require'dap'.close()<cr>", desc = 'Quit' },
-      { '<Space>dd', "<cmd>lua require'dap'.run_last()<cr>", desc = 'DAP Last' },
       { '<Space>d-', "<cmd>lua require'dap'.clear_breakpoints()<cr>", desc = 'Clear Breakpoints' },
       { '<Space>du', "<cmd>lua require'dapui'.toggle({reset = true})<cr>", desc = 'Toggle UI' },
       { '<Space>dN', '<Cmd>lua require("dap-python").test_method()<Cr>', desc = 'Debug Nearest Test (dap-python)' },
@@ -181,7 +222,7 @@ return {
         },
         connect = {
           host = '127.0.0.1',
-          port = 5678,
+          port = 5679,
         },
       })
       table.insert(
@@ -197,6 +238,7 @@ return {
 
   {
     'rcarriga/nvim-dap-ui',
+    enabled = true,
     event = 'VeryLazy',
     opts = {
       controls = {
@@ -220,10 +262,6 @@ return {
         {
           elements = {
             {
-              id = 'scopes',
-              size = 0.70,
-            },
-            {
               id = 'breakpoints',
               size = 0.15,
             },
@@ -233,21 +271,21 @@ return {
             },
           },
           position = 'left',
-          size = 30,
+          size = 20,
         },
         {
           elements = {
             {
               id = 'watches',
-              size = 0.5,
+              size = 0.7,
             },
             {
               id = 'repl',
-              size = 0.5,
+              size = 0.3,
             },
           },
           position = 'bottom',
-          size = 10,
+          size = 15,
         },
       },
       mappings = {
@@ -270,16 +308,16 @@ return {
 
       -- Fix for starting debugger in insert mode
       -- https://github.com/mfussenegger/nvim-dap/issues/439
-      vim.api.nvim_create_autocmd('TermOpen', {
-        group = augroup,
-        callback = function()
-          if opts.file:match('dap%-terminal') then
-            return
-          end
-          vim.cmd('startinsert')
-          vim.cmd('setlocal nonu')
-        end,
-      })
+      -- vim.api.nvim_create_autocmd('TermOpen', {
+      --   group = augroup,
+      --   callback = function()
+      --     if opts.file:match('dap%-terminal') then
+      --       return
+      --     end
+      --     vim.cmd('startinsert')
+      --     vim.cmd('setlocal nonu')
+      --   end,
+      -- })
 
       dap.listeners.after.event_initialized['dapui_config'] = function()
         dapui.open()
