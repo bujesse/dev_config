@@ -1,0 +1,55 @@
+session_name: execution
+windows:
+- layout: c19e,229x54,0,0,1
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev/execution-ui
+  window_name: ui
+- layout: c19f,229x54,0,0,2
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev/execution
+  window_name: api
+- layout: c1a0,229x54,0,0,3
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev/reconciliation
+  window_name: rec
+- focus: 'true'
+  layout: 60ff,229x54,0,0,10
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev/pv_upload-function
+  window_name: pv
+- layout: c1a1,229x54,0,0,4
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: nvim
+  start_directory: /home/bujesse/dev_config/.config/nvim
+  window_name: nvim
+- layout: fac2,252x57,0,0{174x57,0,0,5,77x57,175,0[77x28,175,0,6,77x14,175,29,7,77x13,175,44,8]}
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: docker
+  - just
+  - just
+  - just
+  start_directory: /home/bujesse/dev/execution
+  window_name: api-docker
+- layout: cae6,252x57,0,0,9
+  options: {}
+  panes:
+  - focus: 'true'
+    shell_command: docker
+  start_directory: /home/bujesse/dev/execution-ui
+  window_name: ui-docker

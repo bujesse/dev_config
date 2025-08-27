@@ -29,6 +29,15 @@ windows:
     options: {}
     panes:
       - focus: "true"
+        shell_command:
+          - pyenv activate reconciliation-3.8
+          - n -S ~/.cache/nvim/sessions/rec
+    start_directory: /home/bujesse/dev/reconciliation
+    window_name: rec
+  - layout: cadd,252x57,0,0,0
+    options: {}
+    panes:
+      - focus: "true"
         shell_command: n -S ~/.cache/nvim/sessions/nvim
     start_directory: /home/bujesse
     window_name: nvim

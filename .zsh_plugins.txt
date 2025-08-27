@@ -1,11 +1,20 @@
 # Theme
-romkatv/powerlevel10k
+# romkatv/powerlevel10k
+mafredri/zsh-async
+sindresorhus/pure
 
 # Essential
-zsh-users/zsh-syntax-highlighting
+zdharma-continuum/fast-syntax-highlighting
+# zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
-zsh-users/zsh-history-substring-search
+zsh-users/zsh-completions
 joshskidmore/zsh-fzf-history-search
+zsh-users/zsh-history-substring-search
+
+# Ohmyzsh Plugins
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:plugins/common-aliases
+ohmyzsh/ohmyzsh path:plugins/git
 
 # Extra
 Aloxaf/fzf-tab
