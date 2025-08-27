@@ -1,4 +1,46 @@
 return {
+  {
+    'dmtrKovalenko/fff.nvim',
+    build = 'cargo build --release',
+    opts = {
+      debug = {
+        enabled = true, -- we expect your collaboration at least during the beta
+        show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+      },
+    },
+    -- This plugin initializes itself lazily.
+    lazy = false,
+    keys = {
+      {
+        '<Space>o', -- try it if you didn't it is a banger keybinding for a picker
+        function()
+          require('fff').find_files()
+        end,
+        desc = 'FFFind files',
+      },
+    },
+  },
+
+  -- dynamically resizes your 'cmdheight' to fit the content of messages
+  {
+    'jake-stewart/auto-cmdheight.nvim',
+    lazy = false,
+    opts = {
+      -- max cmdheight before displaying hit enter prompt.
+      max_lines = 5,
+
+      -- number of seconds until the cmdheight can restore.
+      duration = 2,
+
+      -- whether key press is required to restore cmdheight.
+      remove_on_key = false,
+
+      -- always clear the cmdline after duration and key press.
+      -- by default it will only happen when cmdheight changed.
+      clear_always = false,
+    },
+  },
+
   -- file explorer
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -596,14 +638,6 @@ return {
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf', -- filetype: quickfix
-    dependencies = {
-      {
-        'junegunn/fzf',
-        build = function()
-          vim.fn['fzf#install']()
-        end,
-      },
-    },
     opts = {
       auto_resize_height = true,
       func_map = {

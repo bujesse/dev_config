@@ -20,8 +20,8 @@ function M.config()
   opt.breakindentopt = 'shift:2'
   opt.completeopt = { 'menu', 'menuone', 'noinsert', 'noselect' }
 
-  -- more space in the neovim command line for displaying messages
-  opt.cmdheight = 2
+  -- Get one line back
+  opt.cmdheight = 0
 
   -- Ask for confirmation when handling unsaved or read-only files
   opt.confirm = true

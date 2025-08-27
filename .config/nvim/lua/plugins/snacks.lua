@@ -114,25 +114,25 @@ return {
       },
     },
     keys = {
-      {
-        '<Space>o',
-        function()
-          Snacks.picker.smart({
-            matcher = {
-              frecency = true, -- frecency bonus
-              history_bonus = true, -- give more weight to chronological order
-            },
-          })
-        end,
-        desc = 'Smart Find Files',
-      },
-      {
-        '<Space>O',
-        function()
-          Snacks.picker.files({ hidden = true, ignored = true })
-        end,
-        desc = 'Find All Files',
-      },
+      -- {
+      --   '<Space>o',
+      --   function()
+      --     Snacks.picker.smart({
+      --       matcher = {
+      --         frecency = true, -- frecency bonus
+      --         history_bonus = true, -- give more weight to chronological order
+      --       },
+      --     })
+      --   end,
+      --   desc = 'Smart Find Files',
+      -- },
+      -- {
+      --   '<Space>O',
+      --   function()
+      --     Snacks.picker.files({ hidden = true, ignored = true })
+      --   end,
+      --   desc = 'Find All Files',
+      -- },
       {
         '<Space>m',
         function()
@@ -352,7 +352,7 @@ return {
         '<leader>n',
         function()
           Snacks.picker.explorer({
-            auto_close = true,
+            auto_close = false,
             win = {
               input = {
                 keys = {
@@ -373,7 +373,7 @@ return {
         '<leader>N',
         function()
           Snacks.explorer.reveal({
-            auto_close = true,
+            auto_close = false,
           })
         end,
         desc = 'Reveal current file',
@@ -454,14 +454,14 @@ return {
         desc = 'Git Blame',
       },
       {
-        '<leader>gf',
+        '<leader>L',
         function()
           Snacks.lazygit.log_file()
         end,
         desc = 'Lazygit Current File History',
       },
       {
-        '<leader>gg',
+        '<leader>l',
         function()
           Snacks.lazygit()
         end,
