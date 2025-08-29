@@ -49,6 +49,16 @@ return {
         replace_netrw = true,
       },
       picker = {
+        formatters = {
+          -- For fff.lua picker
+          file = {
+            filename_first = true,
+            truncate = 40,
+            filename_only = false,
+            icon_width = 2,
+            git_status_hl = true,
+          },
+        },
         actions = {
           find_in_dir = function(picker)
             local target_dir = picker:dir()
@@ -114,25 +124,20 @@ return {
       },
     },
     keys = {
-      -- {
-      --   '<Space>o',
-      --   function()
-      --     Snacks.picker.smart({
-      --       matcher = {
-      --         frecency = true, -- frecency bonus
-      --         history_bonus = true, -- give more weight to chronological order
-      --       },
-      --     })
-      --   end,
-      --   desc = 'Smart Find Files',
-      -- },
-      -- {
-      --   '<Space>O',
-      --   function()
-      --     Snacks.picker.files({ hidden = true, ignored = true })
-      --   end,
-      --   desc = 'Find All Files',
-      -- },
+      {
+        '<Space>o',
+        function()
+          require('plugins.snacks.fff').fff()
+        end,
+        desc = 'Smart Find Files',
+      },
+      {
+        '<Space>O',
+        function()
+          Snacks.picker.files({ hidden = true, ignored = true })
+        end,
+        desc = 'Find All Files',
+      },
       {
         '<Space>m',
         function()
@@ -373,6 +378,8 @@ return {
         '<leader>N',
         function()
           Snacks.explorer.reveal({
+            hidden = true,
+            ignored = true,
             auto_close = false,
           })
         end,

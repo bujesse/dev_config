@@ -10,15 +10,15 @@ return {
     },
     -- This plugin initializes itself lazily.
     lazy = false,
-    keys = {
-      {
-        '<Space>o', -- try it if you didn't it is a banger keybinding for a picker
-        function()
-          require('fff').find_files()
-        end,
-        desc = 'FFFind files',
-      },
-    },
+    -- keys = {
+    --   {
+    --     '<Space>o', -- try it if you didn't it is a banger keybinding for a picker
+    --     function()
+    --       require('fff').find_files()
+    --     end,
+    --     desc = 'FFFind files',
+    --   },
+    -- },
   },
 
   -- dynamically resizes your 'cmdheight' to fit the content of messages
@@ -27,7 +27,7 @@ return {
     lazy = false,
     opts = {
       -- max cmdheight before displaying hit enter prompt.
-      max_lines = 5,
+      max_lines = 10,
 
       -- number of seconds until the cmdheight can restore.
       duration = 2,
