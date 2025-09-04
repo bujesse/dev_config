@@ -116,6 +116,32 @@ return {
     end,
   },
 
+  -- Preview jumplist
+  {
+    'suliatis/Jumppack.nvim',
+    opts = {
+      options = {
+        global_mappings = false,
+      },
+    },
+    keys = {
+      {
+        '<C-A-o>',
+        function()
+          require('Jumppack').start({ offset = -1 })
+        end,
+        mode = { 'n' },
+      },
+      {
+        '<C-A-i>',
+        function()
+          require('Jumppack').start({ offset = 1 })
+        end,
+        mode = { 'n' },
+      },
+    },
+  },
+
   {
     'haya14busa/vim-asterisk',
     keys = {

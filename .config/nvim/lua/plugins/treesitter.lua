@@ -153,10 +153,10 @@ return {
       incremental_selection = {
         enable = false,
         keymaps = {
-          init_selection = '<C-A-o>',
-          node_incremental = '<C-A-o>',
+          init_selection = '<nop>',
+          node_incremental = '<nop>',
           -- scope_incremental = '<nop>',
-          node_decremental = '<C-A-i>',
+          node_decremental = '<nop>',
         },
         is_supported = function()
           -- disable for command history window
