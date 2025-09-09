@@ -122,6 +122,7 @@ return {
     opts = {
       options = {
         global_mappings = false,
+        wrap_edges = false,
       },
     },
     keys = {

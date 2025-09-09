@@ -244,6 +244,9 @@ M.common_capabilities = function()
   -- capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
   capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+  capabilities.textDocument.onTypeFormatting = { dynamicRegistration = false }
+  vim.lsp.on_type_formatting.enable()
+
   return capabilities
 end
 
