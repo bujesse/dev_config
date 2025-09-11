@@ -27,17 +27,17 @@ return {
     lazy = false,
     opts = {
       -- max cmdheight before displaying hit enter prompt.
-      max_lines = 10,
+      max_lines = 1000,
 
       -- number of seconds until the cmdheight can restore.
-      duration = 2,
+      duration = 0,
 
       -- whether key press is required to restore cmdheight.
       remove_on_key = false,
 
       -- always clear the cmdline after duration and key press.
       -- by default it will only happen when cmdheight changed.
-      clear_always = false,
+      clear_always = true,
     },
   },
 
