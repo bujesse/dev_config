@@ -270,7 +270,7 @@ end
 
 -- mason-lspconfig
 function M.setup_servers()
-  local lspconfig = require('lspconfig')
+  local lspconfig = vim.lsp.config
   require('mason-lspconfig').setup({
     -- The first entry (without a key) will be the default handler
     -- and will be called for each installed server that doesn't have
@@ -368,7 +368,6 @@ function M.config()
   M.diagnostics_visible = not GLOBAL_CONFIG.diagnostics_visible
   M.formatting_on = not GLOBAL_CONFIG.format_on_save
 
-  require('lspconfig')
   require('plugins.lsp.null-ls').config()
   M.setup_servers()
   vim.cmd([[highlight DiagnosticUnderlineError cterm=undercurl gui=undercurl guisp=Red]])

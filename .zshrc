@@ -92,11 +92,12 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 # NVM: true lazy-load (keep OMZ nvm plugin disabled)
 export NVM_DIR="$HOME/.nvm"
 source "$NVM_DIR/nvm.sh"
-# _nvm_lazy_load(){ unset -f nvm node npm npx; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; }
-# nvm(){  _nvm_lazy_load; nvm "$@"; }
-# node(){ _nvm_lazy_load; command node "$@"; }
-# npm(){  _nvm_lazy_load; command npm "$@"; }
-# npx(){  _nvm_lazy_load; command npx "$@"; }
+_nvm_lazy_load(){ unset -f nvm node npm npx; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; }
+nvm(){  _nvm_lazy_load; nvm "$@"; }
+node(){ _nvm_lazy_load; command node "$@"; }
+npm(){  _nvm_lazy_load; command npm "$@"; }
+npx(){  _nvm_lazy_load; command npx "$@"; }
+nvim(){  _nvm_lazy_load; command nvim "$@"; }
 
 # ──[ 11) PROMPT / THEME ]──────────────────────────────────────────────────────
 # If using powerlevel10k, uncomment next line (Antidote loads p10k theme repo).

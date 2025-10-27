@@ -23,6 +23,7 @@ return {
   -- rust
   {
     'simrat39/rust-tools.nvim',
+    enabled = false,
     config = function()
       local rt = require('rust-tools')
       -- make sure to install coddelldb with mason, and update these paths

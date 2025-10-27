@@ -1,0 +1,19 @@
+session_name: "0"
+windows:
+  - focus: "true"
+    layout: cade,252x57,0,0,1
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: n -S ~/.cache/nvim/sessions/movieclub
+    start_directory: /home/bujesse/dev/movieclub
+    window_name: nvim
+  - layout: db3a,252x57,0,0{126x57,0,0[126x19,0,0,2,126x37,0,20,6],125x57,127,0,5}
+    options: {}
+    panes:
+      - npm run dev
+      - focus: "true"
+        shell_command: l
+      - npm run prisma:studio
+    start_directory: /home/bujesse/dev/movieclub
+    window_name: run
