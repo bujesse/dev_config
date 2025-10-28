@@ -37,8 +37,8 @@ function M.common_on_attach(client, bufnr)
   end, vim.tbl_deep_extend('force', opts, { desc = 'Hover in new window' }))
   vim.keymap.set('n', '<C-_>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   vim.keymap.set('n', 'gh', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.jump({count=-1, float=true})<CR>', opts)
-  vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.jump({count=1, float=true})<CR>', opts)
+  vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.jump({count=-1, float=false})<CR>', opts)
+  vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.jump({count=1, float=false})<CR>', opts)
   vim.keymap.set(
     'n',
     '[D',

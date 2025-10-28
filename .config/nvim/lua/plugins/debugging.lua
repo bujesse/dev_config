@@ -177,11 +177,13 @@ return {
         numhl = 'DiagnosticSignWarn',
       })
 
-      require('dap-python').setup()
+      require('dap-python').setup(vim.g.python3_host_prog)
       require('dap-python').test_runner = 'pytest'
-      require('dap-python').resolve_python = function()
-        return '/home/bujesse/dev/execution/venv/bin/python'
-      end
+      require('dap-python').default_port = 38000
+
+      -- require('dap-python').resolve_python = function()
+      --   return '/home/bujesse/dev/execution/venv/bin/python'
+      -- end
 
       local base_script_config = {
         type = 'python',

@@ -400,7 +400,7 @@ return {
         desc = 'Toggle Zoom',
       },
       {
-        '<leader>.',
+        '<leader><Space>',
         function()
           Snacks.scratch()
         end,
@@ -494,6 +494,25 @@ return {
           Snacks.words.jump(-1, true)
         end,
         desc = 'Prev Reference',
+      },
+      {
+        '<C-f>',
+        function()
+          function _G.set_terminal_keymaps()
+            local opts = { buffer = 0 }
+            -- vim.keymap.set('t', [[<C-x>]], [[<C-\><C-n>]], opts)
+            vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+            vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+            vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+            vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+            vim.keymap.set('t', '<C-q>', [[<Cmd>wincmd q<CR>]], opts)
+            vim.keymap.set('t', '<C-f>', [[<Cmd>wincmd q<CR>]], opts)
+          end
+          vim.cmd('autocmd! FileType snacks_terminal lua set_terminal_keymaps()')
+          -- Snacks.terminal.toggle('btm')
+          Snacks.terminal.toggle()
+        end,
+        desc = 'Toggle Term',
       },
     },
     init = function()

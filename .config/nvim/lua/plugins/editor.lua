@@ -280,6 +280,7 @@ return {
 
   {
     'A7Lavinraj/fyler.nvim',
+    dependencies = { 'nvim-mini/mini.icons' },
     opts = {
       views = {
         mappings = {
@@ -670,6 +671,7 @@ return {
   -- better visuals for diagnostics
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    enabled = false,
     opts = {},
     keys = {
       {
@@ -678,6 +680,26 @@ return {
           require('lsp_lines').toggle()
         end,
         desc = 'Toggle lsp_lines',
+      },
+    },
+  },
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    event = 'VeryLazy',
+    priority = 1000,
+    config = function()
+      require('tiny-inline-diagnostic').setup({
+        preset = 'classic',
+      })
+      vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+    end,
+    keys = {
+      {
+        'yod',
+        function()
+          require('tiny-inline-diagnostic').toggle()
+        end,
+        desc = 'Toggle tiny-inline-diagnostic',
       },
     },
   },
