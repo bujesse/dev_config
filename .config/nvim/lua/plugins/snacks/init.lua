@@ -310,6 +310,26 @@ return {
         desc = 'LSP References',
       },
       {
+        'gi',
+        function()
+          Snacks.picker.lsp_incoming_calls({
+            focus = 'list',
+            layout = { preset = 'ivy' },
+          })
+        end,
+        desc = 'LSP References',
+      },
+      {
+        'go',
+        function()
+          Snacks.picker.lsp_outgoing_calls({
+            focus = 'list',
+            layout = { preset = 'ivy' },
+          })
+        end,
+        desc = 'LSP References',
+      },
+      {
         'gd',
         function()
           Snacks.picker.lsp_definitions({
