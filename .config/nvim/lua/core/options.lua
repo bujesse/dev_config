@@ -21,7 +21,7 @@ function M.config()
   opt.completeopt = { 'menu', 'menuone', 'noinsert', 'noselect' }
 
   -- Get one line back
-  opt.cmdheight = 0
+  opt.cmdheight = 1
 
   -- Ask for confirmation when handling unsaved or read-only files
   opt.confirm = true
