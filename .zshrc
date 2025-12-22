@@ -40,6 +40,12 @@ bindkey "${terminfo[kcud1]}" history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
+# Fix Ctrl+Arrow keys for word navigation
+bindkey '^[[1;5D' backward-word   # Ctrl+Left
+bindkey '^[[1;5C' forward-word    # Ctrl+Right
+bindkey '^[[1;5A' beginning-of-line
+bindkey '^[[1;5B' end-of-line
+
 # ──[ 5) FZF: keybindings (guarded) ]───────────────────────────────────────────
 [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
