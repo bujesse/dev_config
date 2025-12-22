@@ -15,7 +15,8 @@ function M.config()
       'sqlfluff',
 
       -- python
-      'basedpyright',
+      -- 'basedpyright',
+      'ty',
       'debugpy',
       'ruff',
       'blackd-client',

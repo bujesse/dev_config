@@ -37,7 +37,7 @@ return {
 
       -- always clear the cmdline after duration and key press.
       -- by default it will only happen when cmdheight changed.
-      clear_always = true,
+      clear_always = false,
     },
   },
 
