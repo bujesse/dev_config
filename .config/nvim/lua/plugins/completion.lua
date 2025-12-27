@@ -32,6 +32,10 @@ return {
         ['<C-d>'] = { 'scroll_documentation_down' },
       },
 
+      enabled = function()
+        return not vim.tbl_contains({ 'markdown' }, vim.bo.filetype) and vim.bo.buftype ~= 'prompt'
+      end,
+
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned

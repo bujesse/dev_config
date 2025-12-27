@@ -146,7 +146,7 @@ function M.config_keys()
       ['<C-l>'] = { '<C-w><C-l>', { noremap = true } },
 
       -- Zoom in to a buffer. Toggle again to put it back
-      ['<Leader>z'] = { '<Plug>Zoom', { noremap = false } },
+      -- ['<Leader>z'] = { '<Plug>Zoom', { noremap = false } },
 
       -- Source
       -- ['<Leader>.'] = { ':source ~/.config/nvim/init.vim<CR>', { noremap = false, silent = true } },

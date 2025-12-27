@@ -1,0 +1,24 @@
+session_name: "0"
+windows:
+  - focus: "true"
+    layout: cadd,252x57,0,0,0
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: n -S ~/.cache/nvim/sessions/blog
+    start_directory: /home/bujesse/dev/blog
+    window_name: nvim
+  - layout: cadf,252x57,0,0,2
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: codex --yolo
+    start_directory: /home/bujesse/dev/blog
+    window_name: codex
+  - layout: b311,252x57,0,0{126x57,0,0,1,125x57,127,0,3}
+    options: {}
+    panes:
+      - npm run dev
+      - l
+    start_directory: /home/bujesse/dev/blog
+    window_name: run
