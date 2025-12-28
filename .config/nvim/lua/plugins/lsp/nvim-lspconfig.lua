@@ -268,83 +268,110 @@ function M.make_config(server_name)
   return config
 end
 
--- mason-lspconfig
 function M.setup_servers()
-  local lspconfig = vim.lsp.config
   require('mason-lspconfig').setup({
-    -- The first entry (without a key) will be the default handler
-    -- and will be called for each installed server that doesn't have
-    -- a dedicated handler.
-    function(server_name) -- default handler (optional)
-      local config = M.make_config(server_name)
-      lspconfig[server_name].setup(config)
-    end,
-    -- Next, you can provide a dedicated handler for specific servers.
-    -- For example, a handler override for the `rust_analyzer`:
-    -- ['tsserver'] = function()
-    --   require('typescript').setup({
-    --     disable_commands = false, -- prevent the plugin from creating Vim commands
-    --     go_to_source_definition = {
-    --       fallback = true, -- fall back to standard LSP definition on failure
-    --     },
-    --     server = M.make_config(),
-    --   })
-    -- end,
-    ['jsonls'] = function()
-      local config = M.make_config()
-      config = vim.tbl_deep_extend('force', config, {
-        settings = {
-          json = {
-            schemas = require('schemastore').json.schemas(),
-            validate = { enable = true },
-          },
-        },
-      })
-      lspconfig.jsonls.setup(config)
-    end,
-    ['lua_ls'] = function()
-      local config = M.make_config()
-      config = vim.tbl_deep_extend('force', config, {
-        settings = {
-          Lua = {
-            hint = {
-              enable = true,
-            },
-            diagnostics = {
-              globals = { 'vim' },
-            },
-          },
-        },
-      })
-      lspconfig.lua_ls.setup(config)
-    end,
-    ['ruff'] = function()
-      local config = M.make_config()
-      lspconfig.ruff.setup(config)
-      M.config_client_specific_capabilities('lsp_attach_disable_ruff_hover', 'ruff', function(client)
-        client.server_capabilities.hoverProvider = false
-      end, 'LSP: Disable hover for Ruff')
-    end,
-    ['rust_analyzer'] = function()
-      -- set up by rust-tools
-    end,
-    ['basedpyright'] = function()
-      local config = M.make_config()
-      config = vim.tbl_deep_extend('force', config, {
-        settings = {
-          basedpyright = {
-            -- Using Ruff's import organizer
-            disableOrganizeImports = true,
-            analysis = {
-              -- Ignore all files for analysis to exclusively use Ruff for linting
-              ignore = { '*' },
-            },
-          },
-        },
-      })
-      lspconfig.basedpyright.setup(config)
-    end,
+    ensure_installed = {
+      'lua_ls',
+      'jsonls',
+      'tailwindcss',
+      'harper_ls',
+      'ty',
+    },
+    automatic_enable = {
+      -- disable for configured servers
+      exclude = {
+        'jsonls',
+        'lua_ls',
+        'ruff',
+        'basedpyright',
+        'harper_ls',
+      },
+    },
   })
+
+  -- jsonls
+  do
+    local config = M.make_config()
+    config.settings = {
+      json = {
+        schemas = require('schemastore').json.schemas(),
+        validate = { enable = true },
+      },
+    }
+    vim.lsp.config('jsonls', config)
+    vim.lsp.enable('jsonls')
+  end
+
+  -- lua_ls
+  do
+    local config = M.make_config()
+    config.settings = {
+      Lua = {
+        hint = { enable = true },
+        diagnostics = { globals = { 'vim' } },
+      },
+    }
+    vim.lsp.config('lua_ls', config)
+    vim.lsp.enable('lua_ls')
+  end
+
+  -- ruff
+  do
+    local config = M.make_config()
+    vim.lsp.config('ruff', config)
+    M.config_client_specific_capabilities('lsp_attach_disable_ruff_hover', 'ruff', function(client)
+      client.server_capabilities.hoverProvider = false
+    end, 'LSP: Disable hover for Ruff')
+  end
+
+  -- basedpyright
+  -- 12/28/2025 We use ty now
+  -- do
+  --   local config = M.make_config()
+  --   config.settings = {
+  --     basedpyright = {
+  --       disableOrganizeImports = true,
+  --       analysis = { ignore = { '*' } },
+  --     },
+  --   }
+  --   vim.lsp.config.basedpyright.setup(config)
+  -- end
+
+  -- harper_ls (only for markdown/text)
+  do
+    local config = M.make_config()
+    config.filetypes = { 'markdown', 'text', 'mdx' }
+    config.settings = {
+      ['harper-ls'] = {
+        userDictPath = '',
+        workspaceDictPath = '',
+        fileDictPath = '',
+        linters = {
+          SpellCheck = true,
+          SpelledNumbers = false,
+          AnA = true,
+          SentenceCapitalization = true,
+          UnclosedQuotes = true,
+          WrongQuotes = false,
+          LongSentences = true,
+          RepeatedWords = true,
+          Spaces = true,
+          Matcher = true,
+          CorrectNumberSuffix = true,
+        },
+        codeActions = { ForceStable = false },
+        markdown = { IgnoreLinkTitle = false },
+        diagnosticSeverity = 'hint',
+        isolateEnglish = false,
+        dialect = 'American',
+        maxFileLength = 120000,
+        ignoredLintsPath = '',
+        excludePatterns = {},
+      },
+    }
+    vim.lsp.config('harper_ls', config)
+    vim.lsp.enable('harper_ls')
+  end
 end
 
 function M.config_client_specific_capabilities(augroup_name, client_name, callback, desc)

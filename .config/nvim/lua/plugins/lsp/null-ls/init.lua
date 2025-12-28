@@ -16,7 +16,6 @@ function M.config()
 
       -- python
       -- 'basedpyright',
-      'ty',
       'debugpy',
       'ruff',
       'blackd-client',

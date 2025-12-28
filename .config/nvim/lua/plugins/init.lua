@@ -58,16 +58,6 @@ return {
         },
       })
 
-      require('mason-lspconfig').setup({
-        ensure_installed = {
-          -- lua
-          'lua_ls',
-          -- 'tsserver',
-          'jsonls',
-          'tailwindcss',
-        },
-      })
-
       require('neodev').setup({
         override = function(root_dir, library)
           -- TODO: Configure to turn these on when in lua development; doesn't work for plugin dirs
