@@ -127,7 +127,8 @@ return {
       {
         '<Space>o',
         function()
-          require('plugins.snacks.fff').fff()
+          -- require('plugins.snacks.fff').fff()
+          require('fff').find_files() -- Find files in current directory
         end,
         desc = 'Smart Find Files',
       },

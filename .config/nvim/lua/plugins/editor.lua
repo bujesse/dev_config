@@ -3,8 +3,31 @@ return {
     'dmtrKovalenko/fff.nvim',
     build = 'cargo build --release',
     opts = {
+      layout = {
+        height = 0.8,
+        width = 0.8,
+        prompt_position = 'top', -- or 'top'
+        preview_position = 'right', -- or 'left', 'right', 'top', 'bottom'
+        preview_size = 0.5,
+        show_scrollbar = true, -- Show scrollbar for pagination
+      },
+      preview = {
+        enabled = true,
+        max_size = 10 * 1024 * 1024, -- Do not try to read files larger than 10MB
+        chunk_size = 8192, -- Bytes per chunk for dynamic loading (8kb - fits ~100-200 lines)
+        binary_file_threshold = 1024, -- amount of bytes to scan for binary content (set 0 to disable)
+        imagemagick_info_format_str = '%m: %wx%h, %[colorspace], %q-bit',
+        line_numbers = false,
+        wrap_lines = false,
+        show_file_info = false,
+        filetypes = {
+          svg = { wrap_lines = true },
+          markdown = { wrap_lines = true },
+          text = { wrap_lines = true },
+        },
+      },
       debug = {
-        enabled = true, -- we expect your collaboration at least during the beta
+        enabled = false, -- we expect your collaboration at least during the beta
         show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
       },
     },
