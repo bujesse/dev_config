@@ -1,0 +1,19 @@
+session_name: "latch"
+windows:
+  - focus: "true"
+    layout: cadd,252x57,0,0,0
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: n -S ~/.cache/nvim/sessions/latch
+    start_directory: /home/bujesse/dev/latch-notes
+    window_name: nvim
+  - layout: 3369,252x57,0,0{126x57,0,0,1,125x57,127,0[125x28,127,0,2,125x28,127,29,3]}
+    options: {}
+    panes:
+      - focus: "true"
+        shell_command: codex --yolo
+      - pnpm run dev
+      - l
+    start_directory: /home/bujesse/dev/latch-notes
+    window_name: zsh

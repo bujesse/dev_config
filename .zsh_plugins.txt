@@ -1,11 +1,9 @@
 # Theme
-# romkatv/powerlevel10k
 mafredri/zsh-async
 sindresorhus/pure
 
 # Essential
 zdharma-continuum/fast-syntax-highlighting
-# zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 joshskidmore/zsh-fzf-history-search

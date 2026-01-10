@@ -3,7 +3,24 @@
 ################################################################################
 
 # ──[ 0) PATH & BASIC ENV ]──────────────────────────────────────────────────────
-export PATH="$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/scripts:$HOME/.cargo/bin:$PATH"
+typeset -U path PATH
+path=(
+  $HOME/bin
+  $HOME/.local/bin
+  $HOME/scripts
+  $HOME/.cargo/bin
+  /usr/local/bin
+  /usr/local/sbin
+  /usr/bin
+  /usr/sbin
+  /bin
+  /sbin
+  $path
+)
+
+if [[ -o interactive ]]; then
+  path=(${path:#/mnt/c/*})
+fi
 
 # ──[ 1) HISTORY: big, shared, immediate write ]────────────────────────────────
 export HISTFILE="$HOME/.zsh_history"
@@ -47,9 +64,9 @@ bindkey '^[[1;5A' beginning-of-line
 bindkey '^[[1;5B' end-of-line
 
 # ──[ 5) FZF: keybindings (guarded) ]───────────────────────────────────────────
-[[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+# [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-[[ -f ~/.fzf/shell/key-bindings.zsh ]] && source ~/.fzf/shell/key-bindings.zsh
+# [[ -f ~/.fzf/shell/key-bindings.zsh ]] && source ~/.fzf/shell/key-bindings.zsh
 
 # ──[ 6) ALIASES: quality-of-life ]─────────────────────────────────────────────
 alias zshrc="nvim ~/.zshrc"
@@ -59,6 +76,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
+alias lg='lazygit'
 alias n="nvim"
 if [[ "$OSTYPE" != "darwin"* ]]; then
   alias open="explorer.exe"
@@ -82,11 +100,15 @@ export LS_COLORS=$LS_COLORS:'ow=1;34:'
 # ──[ 9) LANG TOOLCHAINS ]──────────────────────────────────────────────────────
 # Go
 export GOPATH="$HOME/go"
-export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+path=(
+  /usr/local/go/bin
+  $GOPATH/bin
+  $path
+)
 
 # Pyenv (guarded)
 export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+[[ -d "$PYENV_ROOT/bin" ]] && path=("$PYENV_ROOT/bin" $path)
 command -v pyenv >/dev/null && eval "$(pyenv init -)"
 command -v pyenv >/dev/null && eval "$(pyenv virtualenv-init -)"
 export PYENV_VERSION="3.12"
@@ -95,22 +117,22 @@ export PYENV_VERSION="3.12"
 # zoxide (guarded)
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
-# NVM: true lazy-load (keep OMZ nvm plugin disabled)
-export NVM_DIR="$HOME/.nvm"
-source "$NVM_DIR/nvm.sh"
-_nvm_lazy_load(){ unset -f nvm node npm npx; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; }
-nvm(){  _nvm_lazy_load; nvm "$@"; }
-node(){ _nvm_lazy_load; command node "$@"; }
-npm(){  _nvm_lazy_load; command npm "$@"; }
-npx(){  _nvm_lazy_load; command npx "$@"; }
-nvim(){  _nvm_lazy_load; command nvim "$@"; }
+# fnm
+if command -v fnm >/dev/null; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
 
 # ──[ 11) PROMPT / THEME ]──────────────────────────────────────────────────────
-# If using powerlevel10k, uncomment next line (Antidote loads p10k theme repo).
-# [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh || PROMPT='%n@%m:%~ %# '
 # If using Pure via Antidote, no extra sourcing needed.
 
 # ──[ 12) PROFILING (off by default) ]──────────────────────────────────────────
 # zmodload zsh/zprof
 # zprof
 
+
+# Added by flyctl installer
+export FLYCTL_INSTALL="/home/bujesse/.fly"
+[[ -d "$FLYCTL_INSTALL/bin" ]] && path=("$FLYCTL_INSTALL/bin" $path)
+
+path=(${(u)path})
+export PATH
