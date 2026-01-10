@@ -1,7 +1,7 @@
 local M = {}
 
 function M.config()
-  -- vim.o.clipboard = 'unnamed'
+  vim.o.clipboard = 'unnamedplus'
 
   vim.g.python3_host_prog = '~/.pyenv/versions/nvim/bin/python'
 
@@ -22,37 +22,19 @@ function M.config()
     diagnostics_visible = false,
   }
 
-  -- vim.cmd([[set shell=/usr/local/bin/fish]])
-  -- vim.cmd([[
-  --   let g:clipboard = {
-  --                 \   'name': 'WslClipboard',
-  --                 \   'copy': {
-  --                 \      '+': 'clip.exe',
-  --                 \      '*': 'clip.exe',
-  --                 \    },
-  --                 \   'paste': {
-  --                 \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  --                 \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  --                 \   },
-  --                 \   'cache_enabled': 0,
-  --                 \ }
-  -- ]])
-
-  -- This is necesary for copying to a clipboard outside of VAGRANT
-  -- vim.cmd([[
-  --   let g:clipboard = {
-  --         \   'name': 'cbcopy',
-  --         \   'copy': {
-  --         \      '+': ['/home/vagrant/.config/nvim/scripts/copy.sh'],
-  --         \      '*': ['/home/vagrant/.config/nvim/scripts/copy.sh'],
-  --         \    },
-  --         \   'paste': {
-  --         \      '+': 'echo',
-  --         \      '*': 'echo',
-  --         \   },
-  --         \   'cache_enabled': 1,
-  --         \ }
-  -- ]])
+  -- https://github.com/equalsraf/win32yank/releases
+  vim.g.clipboard = {
+    name = 'win32yank-wsl',
+    copy = {
+      ['+'] = 'win32yank.exe -i --crlf',
+      ['*'] = 'win32yank.exe -i --crlf',
+    },
+    paste = {
+      ['+'] = 'win32yank.exe -o --lf',
+      ['*'] = 'win32yank.exe -o --lf',
+    },
+    cache_enabled = 0,
+  }
 end
 
 return M
