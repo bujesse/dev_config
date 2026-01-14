@@ -115,6 +115,7 @@ return {
       { '<C-A-l>', '<Plug>(VM-Reselect-Last)', desc = 'VM Reselect' },
       { '<C-A-]>', '<Plug>(VM-Goto-Next)', desc = 'VM Next Cursor' },
       { '<C-A-[>', '<Plug>(VM-Goto-Prev)', desc = 'VM Prev Cursor' },
+      { '<C-A-j>', '<Plug>(VM-Visual-Cursors)', desc = 'VM-Visual-Cursors', mode = 'x' },
       -- Skip with q, Q <CA]> to go next cursor, and Tab to switch between extend mode and cursor mode
     },
     init = function()

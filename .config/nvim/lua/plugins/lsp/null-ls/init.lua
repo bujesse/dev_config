@@ -19,11 +19,12 @@ function M.config()
       'debugpy',
       'ruff',
       'blackd-client',
+      'ty',
 
       -- golang
-      'delve', -- go debugger
-      'gopls',
-      'templ',
+      -- 'delve', -- go debugger
+      -- 'gopls',
+      -- 'templ',
 
       'stylua',
       -- 'ruff',

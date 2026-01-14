@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+STATE_DIR="/tmp/codex"
+mkdir -p "$STATE_DIR"
+
+LOG_FILE="$STATE_DIR/codex.current.log"
+META_FILE="$STATE_DIR/codex.current.meta"
+
+trap 'rm -rf "$STATE_DIR"' EXIT
+
+die(){ printf '%s\n' "$*" >&2; exit 1; }
+have(){ command -v "$1" >/dev/null 2>&1; }
+
+have codex  || die "'codex' not found on PATH."
+have script || die "'script' not found."
+
+: >"$LOG_FILE"
+printf 'started_at=%s\n' "$(date -Is)" >"$META_FILE"
+
+cmd="codex"
+for a in "$@"; do cmd+=" $(printf '%q' "$a")"; done
+
+# macOS/BSD form
+if script -q -f "$LOG_FILE" -c "$cmd" /dev/null 2>/dev/null; then
+  exec script -q -f "$LOG_FILE" -c "$cmd" /dev/null
+fi
+
+# util-linux form
+if script -q -f -c "$cmd" "$LOG_FILE" 2>/dev/null; then
+  exec script -q -f -c "$cmd" "$LOG_FILE"
+fi
+
+die "Your 'script' does not support required flags (-f and -c)."
+
