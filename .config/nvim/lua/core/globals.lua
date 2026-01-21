@@ -1,8 +1,6 @@
 local M = {}
 
 function M.config()
-  vim.o.clipboard = 'unnamedplus'
-
   vim.g.python3_host_prog = '~/.pyenv/versions/nvim/bin/python'
 
   -- Disable python 2
