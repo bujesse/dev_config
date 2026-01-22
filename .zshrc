@@ -18,6 +18,7 @@ path=(
   $path
 )
 
+# WSL: de-prioritize /mnt/c/ paths in interactive shells
 if [[ -o interactive ]]; then
   path=(${path:#/mnt/c/*})
 fi
@@ -118,7 +119,9 @@ export PYENV_VERSION="3.12"
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 # fnm
-if command -v fnm >/dev/null; then
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
   eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 

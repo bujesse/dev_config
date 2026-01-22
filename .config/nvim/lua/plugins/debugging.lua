@@ -235,6 +235,65 @@ return {
           args = { 'create_txn_step_generation_migration' },
         })
       )
+
+      -- Typescript
+      require('dap').adapters['pwa-node'] = {
+        type = 'server',
+        host = 'localhost',
+        port = '${port}',
+        executable = {
+          command = 'node',
+          args = { os.getenv('HOME') .. '/dev/js-debug/src/dapDebugServer.js', '${port}' },
+        },
+      }
+      local js_based_languages = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }
+      for _, language in ipairs(js_based_languages) do
+        require('dap').configurations[language] = {
+          {
+            name = 'Next.js: debug server-side',
+            type = 'pwa-node',
+            request = 'attach',
+            port = 9231,
+            skipFiles = { '<node_internals>/**' },
+            cwd = '${workspaceFolder}',
+          },
+          {
+            name = 'Next.js: debug server',
+            type = 'pwa-node',
+            request = 'launch',
+            program = '${workspaceFolder}/node_modules/next/dist/bin/next',
+            runtimeArgs = { '--inspect' },
+            skipFiles = { '<node_internals>/**' },
+            serverReadyAction = {
+              action = 'debugWithChrome',
+              killOnServerStop = true,
+              pattern = '- Local:.+(https?://.+)',
+              uriFormat = '%s',
+              webRoot = '${workspaceFolder}',
+            },
+            cwd = '${workspaceFolder}',
+          },
+          {
+            type = 'pwa-node',
+            request = 'attach',
+            name = 'Node Attach',
+            processId = require('dap.utils').pick_process,
+            cwd = '${workspaceFolder}',
+            skipFiles = { '<node_internals>/**', 'node_modules/**' },
+          },
+          {
+            name = 'Next.js: debug client-side',
+            type = 'chrome',
+            request = 'launch',
+            url = 'http://localhost:3000',
+            webRoot = '${workspaceFolder}',
+            sourceMaps = true,
+            sourceMapPathOverrides = {
+              ['webpack://_N_E/*'] = '${webRoot}/*',
+            },
+          },
+        }
+      end
     end,
   },
 

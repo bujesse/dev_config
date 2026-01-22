@@ -65,7 +65,9 @@ return {
         ['enter'] = {
           function()
             vim.cmd([[Copilot disable]])
-            vim.keymap.set('n', '<Space><CR>', '<CMD>Leet run<CR>', { buffer = true })
+            vim.cmd([[LspStop]])
+            vim.keymap.set('n', '<Space>rn', '<CMD>Leet test<CR>', { buffer = true })
+            vim.keymap.set('n', '<Space>ro', '<CMD>Leet console<CR>', { buffer = true })
           end,
         },
 
