@@ -86,6 +86,7 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
 fi
 
 # ──[ 7) EXA ALIASES ]──────────────────────────────────────────────────────────
+alias exa="eza"
 alias ls='exa'                                               # ls
 alias l='exa -lbF'                                           # list, size, type, git
 alias lt='exa -lbF --tree --level=2'                         # tree
@@ -118,24 +119,32 @@ export PYENV_VERSION="3.12"
 # zoxide (guarded)
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
-# fnm
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "$(fnm env --use-on-cd --shell zsh)"
-fi
-
 # ──[ 11) PROMPT / THEME ]──────────────────────────────────────────────────────
 # If using Pure via Antidote, no extra sourcing needed.
 
 # ──[ 12) PROFILING (off by default) ]──────────────────────────────────────────
 # zmodload zsh/zprof
 # zprof
+#
+# uv (Python)
+export PATH="$HOME/.local/bin:$PATH"
 
+# fnm
+FNM_PATH="/opt/homebrew/opt/fnm/bin"
+if [ -d "$FNM_PATH" ]; then
+  eval "`fnm env`"
+fi
 
-# Added by flyctl installer
-export FLYCTL_INSTALL="/home/bujesse/.fly"
-[[ -d "$FLYCTL_INSTALL/bin" ]] && path=("$FLYCTL_INSTALL/bin" $path)
+# Go
+export PATH="$PATH:/usr/local/go/bin"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
 
-path=(${(u)path})
-export PATH
+# pnpm
+export PNPM_HOME="/Users/bujesse/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+

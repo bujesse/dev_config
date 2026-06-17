@@ -41,3 +41,5 @@ lazygit.tar.gz
 .config/QtProject.conf
 .config/dlv
 .config/htop/htoprc
+nvim-macos-arm64
+.DS_Store
